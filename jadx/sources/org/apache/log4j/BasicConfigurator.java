@@ -1,0 +1,20 @@
+package org.apache.log4j;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes4.dex */
+public class BasicConfigurator {
+    public static void configure() {
+        Logger.getRootLogger().addAppender(new ConsoleAppender(new PatternLayout("%r [%t] %p %c %x - %m%n")));
+    }
+
+    protected BasicConfigurator() {
+    }
+
+    public static void configure(Appender appender) {
+        Logger.getRootLogger().addAppender(appender);
+    }
+
+    public static void resetConfiguration() {
+        LogManager.resetConfiguration();
+    }
+}

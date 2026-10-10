@@ -1,0 +1,24 @@
+package org.apache.log4j.spi;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes4.dex */
+public abstract class Filter implements OptionHandler {
+    public static final int ACCEPT = 1;
+    public static final int DENY = -1;
+    public static final int NEUTRAL = 0;
+    public Filter next;
+
+    public abstract int decide(LoggingEvent loggingEvent);
+
+    public Filter getNext() {
+        return this.next;
+    }
+
+    public void setNext(Filter filter) {
+        this.next = filter;
+    }
+
+    @Override // org.apache.log4j.spi.OptionHandler
+    public void activateOptions() {
+    }
+}

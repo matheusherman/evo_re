@@ -1,0 +1,28 @@
+package com.pengrad.telegrambot.request;
+
+import com.pengrad.telegrambot.request.BaseRequest;
+import com.pengrad.telegrambot.response.BaseResponse;
+import java.io.File;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes2.dex */
+public abstract class AbstractUploadRequest<T extends BaseRequest<T, R>, R extends BaseResponse> extends BaseRequest<T, R> {
+    private final boolean isMultipart;
+
+    @Override // com.pengrad.telegrambot.request.BaseRequest
+    public boolean isMultipart() {
+        return this.isMultipart;
+    }
+
+    public AbstractUploadRequest(Class<? extends R> cls, String str, Object obj) {
+        super(cls);
+        if (obj instanceof String) {
+            this.isMultipart = false;
+        } else if ((obj instanceof File) || (obj instanceof byte[])) {
+            this.isMultipart = true;
+        } else {
+            throw new IllegalArgumentException("Sending data should be String, File or byte[]");
+        }
+        add(str, obj);
+    }
+}

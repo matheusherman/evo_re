@@ -1,0 +1,123 @@
+package androidx.core.os;
+
+import android.os.Build;
+import android.os.Trace;
+import android.util.Log;
+import androidx.annotation.DoNotInline;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import java.lang.reflect.Method;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes1.dex */
+@Deprecated
+public final class TraceCompat {
+    private static final String TAG = "TraceCompat";
+    private static Method sAsyncTraceBeginMethod;
+    private static Method sAsyncTraceEndMethod;
+    private static Method sIsTagEnabledMethod;
+    private static Method sTraceCounterMethod;
+    private static long sTraceTagApp;
+
+    /* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+    @RequiresApi(29)
+    static class Api29Impl {
+        private Api29Impl() {
+        }
+
+        @DoNotInline
+        static void beginAsyncSection(String str, int i10) {
+            Trace.beginAsyncSection(str, i10);
+        }
+
+        @DoNotInline
+        static void endAsyncSection(String str, int i10) {
+            Trace.endAsyncSection(str, i10);
+        }
+
+        @DoNotInline
+        static boolean isEnabled() {
+            return Trace.isEnabled();
+        }
+
+        @DoNotInline
+        static void setCounter(String str, long j10) {
+            Trace.setCounter(str, j10);
+        }
+    }
+
+    static {
+        if (Build.VERSION.SDK_INT < 29) {
+            try {
+                sTraceTagApp = Trace.class.getField("TRACE_TAG_APP").getLong(null);
+                Class cls = Long.TYPE;
+                sIsTagEnabledMethod = Trace.class.getMethod("isTagEnabled", cls);
+                Class cls2 = Integer.TYPE;
+                sAsyncTraceBeginMethod = Trace.class.getMethod("asyncTraceBegin", cls, String.class, cls2);
+                sAsyncTraceEndMethod = Trace.class.getMethod("asyncTraceEnd", cls, String.class, cls2);
+                sTraceCounterMethod = Trace.class.getMethod("traceCounter", cls, String.class, cls2);
+            } catch (Exception e10) {
+                Log.i(TAG, "Unable to initialize via reflection.", e10);
+            }
+        }
+    }
+
+    public static void beginAsyncSection(@NonNull String str, int i10) {
+        if (Build.VERSION.SDK_INT >= 29) {
+            Api29Impl.beginAsyncSection(str, i10);
+            return;
+        }
+        try {
+            sAsyncTraceBeginMethod.invoke(null, Long.valueOf(sTraceTagApp), str, Integer.valueOf(i10));
+        } catch (Exception unused) {
+            Log.v(TAG, "Unable to invoke asyncTraceBegin() via reflection.");
+        }
+    }
+
+    public static void endAsyncSection(@NonNull String str, int i10) {
+        if (Build.VERSION.SDK_INT >= 29) {
+            Api29Impl.endAsyncSection(str, i10);
+            return;
+        }
+        try {
+            sAsyncTraceEndMethod.invoke(null, Long.valueOf(sTraceTagApp), str, Integer.valueOf(i10));
+        } catch (Exception unused) {
+            Log.v(TAG, "Unable to invoke endAsyncSection() via reflection.");
+        }
+    }
+
+    public static boolean isEnabled() {
+        if (Build.VERSION.SDK_INT >= 29) {
+            return Api29Impl.isEnabled();
+        }
+        try {
+            return ((Boolean) sIsTagEnabledMethod.invoke(null, Long.valueOf(sTraceTagApp))).booleanValue();
+        } catch (Exception unused) {
+            Log.v(TAG, "Unable to invoke isTagEnabled() via reflection.");
+            return false;
+        }
+    }
+
+    public static void setCounter(@NonNull String str, int i10) {
+        if (Build.VERSION.SDK_INT >= 29) {
+            Api29Impl.setCounter(str, i10);
+            return;
+        }
+        try {
+            sTraceCounterMethod.invoke(null, Long.valueOf(sTraceTagApp), str, Integer.valueOf(i10));
+        } catch (Exception unused) {
+            Log.v(TAG, "Unable to invoke traceCounter() via reflection.");
+        }
+    }
+
+    private TraceCompat() {
+    }
+
+    public static void beginSection(@NonNull String str) {
+        Trace.beginSection(str);
+    }
+
+    public static void endSection() {
+        Trace.endSection();
+    }
+}

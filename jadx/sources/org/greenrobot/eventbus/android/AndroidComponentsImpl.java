@@ -1,0 +1,17 @@
+package org.greenrobot.eventbus.android;
+
+import ye.a;
+import ye.c;
+import ye.d;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes4.dex */
+public class AndroidComponentsImpl extends a {
+
+    /* JADX INFO: renamed from: d, reason: collision with root package name */
+    public static final /* synthetic */ int f17118d = 0;
+
+    public AndroidComponentsImpl() {
+        super(new c("EventBus"), new d());
+    }
+}

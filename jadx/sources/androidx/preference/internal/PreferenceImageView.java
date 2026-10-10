@@ -1,0 +1,80 @@
+package androidx.preference.internal;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
+import androidx.annotation.RestrictTo;
+import androidx.preference.R;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes1.dex */
+@SuppressLint({"AppCompatCustomView"})
+@RestrictTo({RestrictTo.Scope.LIBRARY_GROUP_PREFIX})
+public class PreferenceImageView extends ImageView {
+    private int mMaxHeight;
+    private int mMaxWidth;
+
+    public PreferenceImageView(Context context) {
+        this(context, null);
+    }
+
+    public PreferenceImageView(Context context, AttributeSet attributeSet) {
+        this(context, attributeSet, 0);
+    }
+
+    @Override // android.widget.ImageView
+    public int getMaxHeight() {
+        return this.mMaxHeight;
+    }
+
+    @Override // android.widget.ImageView
+    public int getMaxWidth() {
+        return this.mMaxWidth;
+    }
+
+    @Override // android.widget.ImageView
+    public void setMaxHeight(int i10) {
+        this.mMaxHeight = i10;
+        super.setMaxHeight(i10);
+    }
+
+    @Override // android.widget.ImageView
+    public void setMaxWidth(int i10) {
+        this.mMaxWidth = i10;
+        super.setMaxWidth(i10);
+    }
+
+    public PreferenceImageView(Context context, AttributeSet attributeSet, int i10) {
+        super(context, attributeSet, i10);
+        this.mMaxWidth = Integer.MAX_VALUE;
+        this.mMaxHeight = Integer.MAX_VALUE;
+        TypedArray typedArrayObtainStyledAttributes = context.obtainStyledAttributes(attributeSet, R.styleable.PreferenceImageView, i10, 0);
+        setMaxWidth(typedArrayObtainStyledAttributes.getDimensionPixelSize(R.styleable.PreferenceImageView_maxWidth, Integer.MAX_VALUE));
+        setMaxHeight(typedArrayObtainStyledAttributes.getDimensionPixelSize(R.styleable.PreferenceImageView_maxHeight, Integer.MAX_VALUE));
+        typedArrayObtainStyledAttributes.recycle();
+    }
+
+    @Override // android.widget.ImageView, android.view.View
+    protected void onMeasure(int i10, int i11) {
+        int mode = View.MeasureSpec.getMode(i10);
+        if (mode == Integer.MIN_VALUE || mode == 0) {
+            int size = View.MeasureSpec.getSize(i10);
+            int maxWidth = getMaxWidth();
+            if (maxWidth != Integer.MAX_VALUE && (maxWidth < size || mode == 0)) {
+                i10 = View.MeasureSpec.makeMeasureSpec(maxWidth, Integer.MIN_VALUE);
+            }
+        }
+        int mode2 = View.MeasureSpec.getMode(i11);
+        if (mode2 == Integer.MIN_VALUE || mode2 == 0) {
+            int size2 = View.MeasureSpec.getSize(i11);
+            int maxHeight = getMaxHeight();
+            if (maxHeight != Integer.MAX_VALUE && (maxHeight < size2 || mode2 == 0)) {
+                i11 = View.MeasureSpec.makeMeasureSpec(maxHeight, Integer.MIN_VALUE);
+            }
+        }
+        super.onMeasure(i10, i11);
+    }
+}

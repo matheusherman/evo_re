@@ -1,0 +1,21 @@
+package com.google.android.gms.common.internal;
+
+import android.accounts.Account;
+import android.os.IBinder;
+import android.os.Parcel;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes3.dex */
+public final class c0 extends y1.a implements e {
+    @Override // com.google.android.gms.common.internal.e
+    public final Account c() {
+        Parcel parcelA = a(2, f());
+        Account account = (Account) y1.e.a(parcelA, Account.CREATOR);
+        parcelA.recycle();
+        return account;
+    }
+
+    c0(IBinder iBinder) {
+        super(iBinder, "com.google.android.gms.common.internal.IAccountAccessor");
+    }
+}

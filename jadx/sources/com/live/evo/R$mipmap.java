@@ -1,0 +1,79 @@
+package com.live.evo;
+
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes3.dex */
+public final class R$mipmap {
+    public static final int about_us_icon = 2131755008;
+    public static final int bg_home = 2131755009;
+    public static final int check_update_icon = 2131755010;
+    public static final int delete_input = 2131755011;
+    public static final int full_screen_iv = 2131755012;
+    public static final int history_del_img = 2131755013;
+    public static final int history_del_img2 = 2131755014;
+    public static final int history_del_iv = 2131755015;
+    public static final int history_edit_iv = 2131755016;
+    public static final int ic_banner = 2131755017;
+    public static final int ic_banner_background = 2131755018;
+    public static final int ic_banner_foreground = 2131755019;
+    public static final int ic_launcher = 2131755020;
+    public static final int ic_launcher_background = 2131755021;
+    public static final int ic_launcher_foreground = 2131755022;
+    public static final int ic_launcher_round = 2131755023;
+    public static final int ic_right_arrow = 2131755024;
+    public static final int icon_selected = 2131755025;
+    public static final int iv_back = 2131755026;
+    public static final int iv_epg_back = 2131755027;
+    public static final int main_full_video_light = 2131755028;
+    public static final int main_full_video_list = 2131755029;
+    public static final int main_full_video_lock = 2131755030;
+    public static final int main_full_video_trasfer = 2131755031;
+    public static final int main_home_video_full = 2131755032;
+    public static final int main_home_video_icon = 2131755033;
+    public static final int main_home_video_love = 2131755034;
+    public static final int main_home_video_love2 = 2131755035;
+    public static final int main_home_video_love3 = 2131755036;
+    public static final int main_home_video_question = 2131755037;
+    public static final int main_home_video_share = 2131755038;
+    public static final int main_home_video_small = 2131755039;
+    public static final int main_home_video_sound = 2131755040;
+    public static final int main_me_favorite = 2131755041;
+    public static final int main_me_header_bg = 2131755042;
+    public static final int main_me_history = 2131755043;
+    public static final int main_me_invite = 2131755044;
+    public static final int main_me_notice = 2131755045;
+    public static final int main_me_notice_unread = 2131755046;
+    public static final int main_me_renew2 = 2131755047;
+    public static final int main_me_rennew = 2131755048;
+    public static final int main_me_right_iv = 2131755049;
+    public static final int main_me_scan = 2131755050;
+    public static final int main_setting_icon1 = 2131755051;
+    public static final int main_setting_icon2 = 2131755052;
+    public static final int main_setting_icon3 = 2131755053;
+    public static final int main_setting_icon4 = 2131755054;
+    public static final int main_setting_icon5 = 2131755055;
+    public static final int main_setting_icon6 = 2131755056;
+    public static final int main_setting_icon7 = 2131755057;
+    public static final int main_setting_icon8 = 2131755058;
+    public static final int main_tab_me_check = 2131755059;
+    public static final int main_tab_me_checked = 2131755060;
+    public static final int main_tab_tv_check = 2131755061;
+    public static final int main_tab_tv_checked = 2131755062;
+    public static final int ok_red = 2131755063;
+    public static final int playback_pause_icon = 2131755064;
+    public static final int playback_play_icon = 2131755065;
+    public static final int player_brightness_white = 2131755066;
+    public static final int player_volume_off_white = 2131755067;
+    public static final int player_volume_up_white = 2131755068;
+    public static final int search_del = 2131755069;
+    public static final int seasons_more_btn = 2131755070;
+    public static final int settings_menu_arrow_down = 2131755071;
+    public static final int settings_menu_arrow_right = 2131755072;
+    public static final int switch_language_icon = 2131755073;
+    public static final int vod_detail_play = 2131755074;
+    public static final int vod_search_iv = 2131755075;
+    public static final int vod_subtitle_icon = 2131755076;
+    public static final int voice_close = 2131755077;
+    public static final int voice_open = 2131755078;
+
+    private R$mipmap() {
+    }
+}

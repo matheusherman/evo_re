@@ -1,0 +1,162 @@
+package androidx.constraintlayout.utils.widget;
+
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Outline;
+import android.graphics.Path;
+import android.graphics.RectF;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewOutlineProvider;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.R;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes1.dex */
+public class MotionButton extends AppCompatButton {
+    private Path mPath;
+    RectF mRect;
+    private float mRound;
+    private float mRoundPercent;
+    ViewOutlineProvider mViewOutlineProvider;
+
+    public MotionButton(Context context) {
+        super(context);
+        this.mRoundPercent = 0.0f;
+        this.mRound = Float.NaN;
+        init(context, null);
+    }
+
+    private void init(Context context, AttributeSet attributeSet) {
+        setPadding(0, 0, 0, 0);
+        if (attributeSet != null) {
+            TypedArray typedArrayObtainStyledAttributes = context.obtainStyledAttributes(attributeSet, R.styleable.ImageFilterView);
+            int indexCount = typedArrayObtainStyledAttributes.getIndexCount();
+            for (int i10 = 0; i10 < indexCount; i10++) {
+                int index = typedArrayObtainStyledAttributes.getIndex(i10);
+                if (index == R.styleable.ImageFilterView_round) {
+                    setRound(typedArrayObtainStyledAttributes.getDimension(index, 0.0f));
+                } else if (index == R.styleable.ImageFilterView_roundPercent) {
+                    setRoundPercent(typedArrayObtainStyledAttributes.getFloat(index, 0.0f));
+                }
+            }
+            typedArrayObtainStyledAttributes.recycle();
+        }
+    }
+
+    public float getRound() {
+        return this.mRound;
+    }
+
+    public float getRoundPercent() {
+        return this.mRoundPercent;
+    }
+
+    @RequiresApi(21)
+    public void setRoundPercent(float f10) {
+        boolean z10 = this.mRoundPercent != f10;
+        this.mRoundPercent = f10;
+        if (f10 != 0.0f) {
+            if (this.mPath == null) {
+                this.mPath = new Path();
+            }
+            if (this.mRect == null) {
+                this.mRect = new RectF();
+            }
+            if (this.mViewOutlineProvider == null) {
+                ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() { // from class: androidx.constraintlayout.utils.widget.MotionButton.1
+                    @Override // android.view.ViewOutlineProvider
+                    public void getOutline(View view, Outline outline) {
+                        int width = MotionButton.this.getWidth();
+                        int height = MotionButton.this.getHeight();
+                        outline.setRoundRect(0, 0, width, height, (Math.min(width, height) * MotionButton.this.mRoundPercent) / 2.0f);
+                    }
+                };
+                this.mViewOutlineProvider = viewOutlineProvider;
+                setOutlineProvider(viewOutlineProvider);
+            }
+            setClipToOutline(true);
+            int width = getWidth();
+            int height = getHeight();
+            float fMin = (Math.min(width, height) * this.mRoundPercent) / 2.0f;
+            this.mRect.set(0.0f, 0.0f, width, height);
+            this.mPath.reset();
+            this.mPath.addRoundRect(this.mRect, fMin, fMin, Path.Direction.CW);
+        } else {
+            setClipToOutline(false);
+        }
+        if (z10) {
+            invalidateOutline();
+        }
+    }
+
+    @Override // android.view.View
+    public void draw(@NonNull Canvas canvas) {
+        super.draw(canvas);
+    }
+
+    @RequiresApi(21)
+    public void setRound(float f10) {
+        boolean z10;
+        if (Float.isNaN(f10)) {
+            this.mRound = f10;
+            float f11 = this.mRoundPercent;
+            this.mRoundPercent = -1.0f;
+            setRoundPercent(f11);
+            return;
+        }
+        if (this.mRound != f10) {
+            z10 = true;
+        } else {
+            z10 = false;
+        }
+        this.mRound = f10;
+        if (f10 != 0.0f) {
+            if (this.mPath == null) {
+                this.mPath = new Path();
+            }
+            if (this.mRect == null) {
+                this.mRect = new RectF();
+            }
+            if (this.mViewOutlineProvider == null) {
+                ViewOutlineProvider viewOutlineProvider = new ViewOutlineProvider() { // from class: androidx.constraintlayout.utils.widget.MotionButton.2
+                    @Override // android.view.ViewOutlineProvider
+                    public void getOutline(View view, Outline outline) {
+                        outline.setRoundRect(0, 0, MotionButton.this.getWidth(), MotionButton.this.getHeight(), MotionButton.this.mRound);
+                    }
+                };
+                this.mViewOutlineProvider = viewOutlineProvider;
+                setOutlineProvider(viewOutlineProvider);
+            }
+            setClipToOutline(true);
+            this.mRect.set(0.0f, 0.0f, getWidth(), getHeight());
+            this.mPath.reset();
+            Path path = this.mPath;
+            RectF rectF = this.mRect;
+            float f12 = this.mRound;
+            path.addRoundRect(rectF, f12, f12, Path.Direction.CW);
+        } else {
+            setClipToOutline(false);
+        }
+        if (z10) {
+            invalidateOutline();
+        }
+    }
+
+    public MotionButton(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+        this.mRoundPercent = 0.0f;
+        this.mRound = Float.NaN;
+        init(context, attributeSet);
+    }
+
+    public MotionButton(Context context, AttributeSet attributeSet, int i10) {
+        super(context, attributeSet, i10);
+        this.mRoundPercent = 0.0f;
+        this.mRound = Float.NaN;
+        init(context, attributeSet);
+    }
+}

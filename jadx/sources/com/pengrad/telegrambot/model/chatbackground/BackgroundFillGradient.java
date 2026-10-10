@@ -1,0 +1,53 @@
+package com.pengrad.telegrambot.model.chatbackground;
+
+import java.util.Objects;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes2.dex */
+public class BackgroundFillGradient extends BackgroundFill {
+    public static final String TYPE = "gradient";
+    private Integer bottom_color;
+    private Integer rotation_angle;
+    private Integer top_color;
+
+    @Override // com.pengrad.telegrambot.model.chatbackground.BackgroundFill
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass() || !super.equals(obj)) {
+            return false;
+        }
+        BackgroundFillGradient backgroundFillGradient = (BackgroundFillGradient) obj;
+        return Objects.equals(this.top_color, backgroundFillGradient.top_color) && Objects.equals(this.bottom_color, backgroundFillGradient.bottom_color) && Objects.equals(this.rotation_angle, backgroundFillGradient.rotation_angle);
+    }
+
+    public BackgroundFillGradient(Integer num, Integer num2, Integer num3) {
+        super(TYPE);
+        this.top_color = num;
+        this.bottom_color = num2;
+        this.rotation_angle = num3;
+    }
+
+    public Integer bottomColor() {
+        return this.bottom_color;
+    }
+
+    public Integer rotationAngle() {
+        return this.rotation_angle;
+    }
+
+    @Override // com.pengrad.telegrambot.model.chatbackground.BackgroundFill
+    public String toString() {
+        return "BackgroundFillGradient{type='" + type() + "', top_color=" + this.top_color + ", bottom_color=" + this.bottom_color + ", rotation_angle=" + this.rotation_angle + '}';
+    }
+
+    public Integer topColor() {
+        return this.top_color;
+    }
+
+    @Override // com.pengrad.telegrambot.model.chatbackground.BackgroundFill
+    public int hashCode() {
+        return Objects.hash(Integer.valueOf(super.hashCode()), this.top_color, this.bottom_color, this.rotation_angle);
+    }
+}

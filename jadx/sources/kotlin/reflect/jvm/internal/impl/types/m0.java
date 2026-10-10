@@ -1,0 +1,23 @@
+package kotlin.reflect.jvm.internal.impl.types;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes2.dex */
+final class m0 extends s {
+    @Override // kotlin.reflect.jvm.internal.impl.types.r, kotlin.reflect.jvm.internal.impl.types.g0
+    public boolean K0() {
+        return true;
+    }
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public m0(o0 delegate) {
+        super(delegate);
+        kotlin.jvm.internal.m.f(delegate, "delegate");
+    }
+
+    @Override // kotlin.reflect.jvm.internal.impl.types.r
+    /* JADX INFO: renamed from: V0, reason: merged with bridge method [inline-methods] */
+    public m0 U0(o0 delegate) {
+        kotlin.jvm.internal.m.f(delegate, "delegate");
+        return new m0(delegate);
+    }
+}

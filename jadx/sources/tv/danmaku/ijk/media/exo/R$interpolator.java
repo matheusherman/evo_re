@@ -1,0 +1,15 @@
+package tv.danmaku.ijk.media.exo;
+
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes4.dex */
+public final class R$interpolator {
+    public static final int btn_checkbox_checked_mtrl_animation_interpolator_0 = 2131558400;
+    public static final int btn_checkbox_checked_mtrl_animation_interpolator_1 = 2131558401;
+    public static final int btn_checkbox_unchecked_mtrl_animation_interpolator_0 = 2131558402;
+    public static final int btn_checkbox_unchecked_mtrl_animation_interpolator_1 = 2131558403;
+    public static final int btn_radio_to_off_mtrl_animation_interpolator_0 = 2131558404;
+    public static final int btn_radio_to_on_mtrl_animation_interpolator_0 = 2131558405;
+    public static final int fast_out_slow_in = 2131558406;
+
+    private R$interpolator() {
+    }
+}

@@ -1,0 +1,202 @@
+package androidx.core.location;
+
+import android.location.GpsSatellite;
+import android.location.GpsStatus;
+import android.os.Build;
+import androidx.annotation.GuardedBy;
+import androidx.annotation.RestrictTo;
+import androidx.core.util.Preconditions;
+import java.util.Iterator;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes1.dex */
+@RestrictTo({RestrictTo.Scope.LIBRARY})
+class GpsStatusWrapper extends GnssStatusCompat {
+    private static final int BEIDOU_PRN_COUNT = 35;
+    private static final int BEIDOU_PRN_OFFSET = 200;
+    private static final int GLONASS_PRN_COUNT = 24;
+    private static final int GLONASS_PRN_OFFSET = 64;
+    private static final int GPS_PRN_COUNT = 32;
+    private static final int GPS_PRN_OFFSET = 0;
+    private static final int QZSS_SVID_MAX = 200;
+    private static final int QZSS_SVID_MIN = 193;
+    private static final int SBAS_PRN_MAX = 64;
+    private static final int SBAS_PRN_MIN = 33;
+    private static final int SBAS_PRN_OFFSET = -87;
+
+    @GuardedBy("mWrapped")
+    private Iterator<GpsSatellite> mCachedIterator;
+
+    @GuardedBy("mWrapped")
+    private int mCachedIteratorPosition;
+
+    @GuardedBy("mWrapped")
+    private GpsSatellite mCachedSatellite;
+
+    @GuardedBy("mWrapped")
+    private int mCachedSatelliteCount;
+    private final GpsStatus mWrapped;
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public boolean hasBasebandCn0DbHz(int i10) {
+        return false;
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public boolean hasCarrierFrequencyHz(int i10) {
+        return false;
+    }
+
+    private static int getConstellationFromPrn(int i10) {
+        if (i10 > 0 && i10 <= 32) {
+            return 1;
+        }
+        if (i10 >= 33 && i10 <= 64) {
+            return 2;
+        }
+        if (i10 > 64 && i10 <= 88) {
+            return 3;
+        }
+        if (i10 <= 200 || i10 > 235) {
+            return (i10 < QZSS_SVID_MIN || i10 > 200) ? 0 : 4;
+        }
+        return 5;
+    }
+
+    private GpsSatellite getSatellite(int i10) {
+        GpsSatellite gpsSatellite;
+        synchronized (this.mWrapped) {
+            try {
+                if (i10 < this.mCachedIteratorPosition) {
+                    this.mCachedIterator = this.mWrapped.getSatellites().iterator();
+                    this.mCachedIteratorPosition = -1;
+                }
+                while (true) {
+                    int i11 = this.mCachedIteratorPosition;
+                    if (i11 >= i10) {
+                        break;
+                    }
+                    this.mCachedIteratorPosition = i11 + 1;
+                    if (!this.mCachedIterator.hasNext()) {
+                        this.mCachedSatellite = null;
+                        break;
+                    }
+                    this.mCachedSatellite = this.mCachedIterator.next();
+                }
+                gpsSatellite = this.mCachedSatellite;
+            } catch (Throwable th) {
+                throw th;
+            }
+        }
+        return (GpsSatellite) Preconditions.checkNotNull(gpsSatellite);
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof GpsStatusWrapper) {
+            return this.mWrapped.equals(((GpsStatusWrapper) obj).mWrapped);
+        }
+        return false;
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public float getBasebandCn0DbHz(int i10) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public float getCarrierFrequencyHz(int i10) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public int getConstellationType(int i10) {
+        if (Build.VERSION.SDK_INT < 24) {
+            return 1;
+        }
+        return getConstellationFromPrn(getSatellite(i10).getPrn());
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public int getSatelliteCount() {
+        int i10;
+        synchronized (this.mWrapped) {
+            try {
+                if (this.mCachedSatelliteCount == -1) {
+                    for (GpsSatellite gpsSatellite : this.mWrapped.getSatellites()) {
+                        this.mCachedSatelliteCount++;
+                    }
+                    this.mCachedSatelliteCount++;
+                }
+                i10 = this.mCachedSatelliteCount;
+            } catch (Throwable th) {
+                throw th;
+            }
+        }
+        return i10;
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public int getSvid(int i10) {
+        return Build.VERSION.SDK_INT < 24 ? getSatellite(i10).getPrn() : getSvidFromPrn(getSatellite(i10).getPrn());
+    }
+
+    public int hashCode() {
+        return this.mWrapped.hashCode();
+    }
+
+    GpsStatusWrapper(GpsStatus gpsStatus) {
+        GpsStatus gpsStatus2 = (GpsStatus) Preconditions.checkNotNull(gpsStatus);
+        this.mWrapped = gpsStatus2;
+        this.mCachedSatelliteCount = -1;
+        this.mCachedIterator = gpsStatus2.getSatellites().iterator();
+        this.mCachedIteratorPosition = -1;
+        this.mCachedSatellite = null;
+    }
+
+    private static int getSvidFromPrn(int i10) {
+        int constellationFromPrn = getConstellationFromPrn(i10);
+        if (constellationFromPrn != 2) {
+            if (constellationFromPrn != 3) {
+                if (constellationFromPrn != 5) {
+                    return i10;
+                }
+                return i10 - 200;
+            }
+            return i10 - 64;
+        }
+        return i10 + 87;
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public float getAzimuthDegrees(int i10) {
+        return getSatellite(i10).getAzimuth();
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public float getCn0DbHz(int i10) {
+        return getSatellite(i10).getSnr();
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public float getElevationDegrees(int i10) {
+        return getSatellite(i10).getElevation();
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public boolean hasAlmanacData(int i10) {
+        return getSatellite(i10).hasAlmanac();
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public boolean hasEphemerisData(int i10) {
+        return getSatellite(i10).hasEphemeris();
+    }
+
+    @Override // androidx.core.location.GnssStatusCompat
+    public boolean usedInFix(int i10) {
+        return getSatellite(i10).usedInFix();
+    }
+}

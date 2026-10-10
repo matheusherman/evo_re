@@ -1,0 +1,26 @@
+package io.netty.util.internal.shaded.org.jctools.util;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes2.dex */
+public final class RangeUtil {
+    public static int checkGreaterThanOrEqual(int i10, int i11, String str) {
+        if (i10 >= i11) {
+            return i10;
+        }
+        throw new IllegalArgumentException(str + ": " + i10 + " (expected: >= " + i11 + ')');
+    }
+
+    public static int checkLessThan(int i10, int i11, String str) {
+        if (i10 < i11) {
+            return i10;
+        }
+        throw new IllegalArgumentException(str + ": " + i10 + " (expected: < " + i11 + ')');
+    }
+
+    public static long checkPositive(long j10, String str) {
+        if (j10 > 0) {
+            return j10;
+        }
+        throw new IllegalArgumentException(str + ": " + j10 + " (expected: > 0)");
+    }
+}

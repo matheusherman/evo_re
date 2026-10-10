@@ -1,0 +1,71 @@
+package x.l1.b2;
+
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes4.dex */
+public final class R$integer {
+    public static final int abc_config_activityDefaultDur = 2131492864;
+    public static final int abc_config_activityShortDur = 2131492865;
+    public static final int app_bar_elevation_anim_duration = 2131492866;
+    public static final int bottom_sheet_slide_duration = 2131492867;
+    public static final int cancel_button_image_alpha = 2131492868;
+    public static final int config_tooltipAnimTime = 2131492870;
+    public static final int design_snackbar_text_max_lines = 2131492871;
+    public static final int design_tab_indicator_anim_duration_ms = 2131492872;
+    public static final int exo_media_button_opacity_percentage_disabled = 2131492875;
+    public static final int exo_media_button_opacity_percentage_enabled = 2131492876;
+    public static final int google_play_services_version = 2131492878;
+    public static final int hide_password_duration = 2131492879;
+    public static final int m3_btn_anim_delay_ms = 2131492920;
+    public static final int m3_btn_anim_duration_ms = 2131492921;
+    public static final int m3_card_anim_delay_ms = 2131492922;
+    public static final int m3_card_anim_duration_ms = 2131492923;
+    public static final int m3_chip_anim_duration = 2131492924;
+    public static final int m3_sys_motion_duration_extra_long1 = 2131492925;
+    public static final int m3_sys_motion_duration_extra_long2 = 2131492926;
+    public static final int m3_sys_motion_duration_extra_long3 = 2131492927;
+    public static final int m3_sys_motion_duration_extra_long4 = 2131492928;
+    public static final int m3_sys_motion_duration_long1 = 2131492929;
+    public static final int m3_sys_motion_duration_long2 = 2131492930;
+    public static final int m3_sys_motion_duration_long3 = 2131492931;
+    public static final int m3_sys_motion_duration_long4 = 2131492932;
+    public static final int m3_sys_motion_duration_medium1 = 2131492933;
+    public static final int m3_sys_motion_duration_medium2 = 2131492934;
+    public static final int m3_sys_motion_duration_medium3 = 2131492935;
+    public static final int m3_sys_motion_duration_medium4 = 2131492936;
+    public static final int m3_sys_motion_duration_short1 = 2131492937;
+    public static final int m3_sys_motion_duration_short2 = 2131492938;
+    public static final int m3_sys_motion_duration_short3 = 2131492939;
+    public static final int m3_sys_motion_duration_short4 = 2131492940;
+    public static final int material_motion_duration_long_1 = 2131492951;
+    public static final int material_motion_duration_long_2 = 2131492952;
+    public static final int material_motion_duration_medium_1 = 2131492953;
+    public static final int material_motion_duration_medium_2 = 2131492954;
+    public static final int material_motion_duration_short_1 = 2131492955;
+    public static final int material_motion_duration_short_2 = 2131492956;
+    public static final int material_motion_path = 2131492957;
+    public static final int mtrl_badge_max_character_count = 2131492958;
+    public static final int mtrl_btn_anim_delay_ms = 2131492959;
+    public static final int mtrl_btn_anim_duration_ms = 2131492960;
+    public static final int mtrl_calendar_header_orientation = 2131492961;
+    public static final int mtrl_calendar_selection_text_lines = 2131492962;
+    public static final int mtrl_calendar_year_selector_span = 2131492963;
+    public static final int mtrl_card_anim_delay_ms = 2131492964;
+    public static final int mtrl_card_anim_duration_ms = 2131492965;
+    public static final int mtrl_chip_anim_duration = 2131492966;
+    public static final int mtrl_switch_thumb_motion_duration = 2131492967;
+    public static final int mtrl_switch_thumb_post_morphing_duration = 2131492968;
+    public static final int mtrl_switch_thumb_pre_morphing_duration = 2131492969;
+    public static final int mtrl_switch_thumb_pressed_duration = 2131492970;
+    public static final int mtrl_switch_thumb_viewport_center_coordinate = 2131492971;
+    public static final int mtrl_switch_thumb_viewport_size = 2131492972;
+    public static final int mtrl_switch_track_viewport_height = 2131492973;
+    public static final int mtrl_switch_track_viewport_width = 2131492974;
+    public static final int mtrl_tab_indicator_anim_duration_ms = 2131492975;
+    public static final int mtrl_view_gone = 2131492976;
+    public static final int mtrl_view_invisible = 2131492977;
+    public static final int mtrl_view_visible = 2131492978;
+    public static final int show_password_duration = 2131492979;
+    public static final int status_bar_notification_info_maxnum = 2131492984;
+
+    private R$integer() {
+    }
+}

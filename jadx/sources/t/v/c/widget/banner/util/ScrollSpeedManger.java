@@ -1,0 +1,80 @@
+package t.v.c.widget.banner.util;
+
+import android.content.Context;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+import java.lang.reflect.Field;
+import q6.b;
+import q6.c;
+import t.v.c.widget.banner.Banner;
+
+/* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+/* JADX INFO: loaded from: /private/tmp/claude-501/-Users-matheus/942202b5-d135-4d00-b01f-0435e3517f7d/scratchpad/dex/classes4.dex */
+public class ScrollSpeedManger extends LinearLayoutManager {
+
+    /* JADX INFO: renamed from: b, reason: collision with root package name */
+    private static final b f18809b = c.d(ScrollSpeedManger.class);
+
+    /* JADX INFO: renamed from: a, reason: collision with root package name */
+    private final Banner f18810a;
+
+    /* JADX INFO: compiled from: r8-map-id-c402c7f74d39c8a1e2808651f4d07179532f6ebc80deecfc6fba495f787d903c */
+    class a extends LinearSmoothScroller {
+        a(Context context) {
+            super(context);
+        }
+
+        @Override // androidx.recyclerview.widget.LinearSmoothScroller
+        protected int calculateTimeForDeceleration(int i10) {
+            return ScrollSpeedManger.this.f18810a.getMScrollTime();
+        }
+    }
+
+    public static void n(Banner banner) {
+        if (banner.getMScrollTime() < 100) {
+            return;
+        }
+        try {
+            ViewPager2 viewPager2 = banner.getMViewPager2();
+            RecyclerView recyclerView = (RecyclerView) viewPager2.getChildAt(0);
+            recyclerView.setOverScrollMode(2);
+            ScrollSpeedManger scrollSpeedManger = new ScrollSpeedManger(banner, (LinearLayoutManager) recyclerView.getLayoutManager());
+            recyclerView.setLayoutManager(scrollSpeedManger);
+            Field declaredField = ViewPager2.class.getDeclaredField("mLayoutManager");
+            declaredField.setAccessible(true);
+            declaredField.set(viewPager2, scrollSpeedManger);
+            Field declaredField2 = ViewPager2.class.getDeclaredField("mPageTransformerAdapter");
+            declaredField2.setAccessible(true);
+            Object obj = declaredField2.get(viewPager2);
+            if (obj != null) {
+                Field declaredField3 = obj.getClass().getDeclaredField("mLayoutManager");
+                declaredField3.setAccessible(true);
+                declaredField3.set(obj, scrollSpeedManger);
+            }
+            Field declaredField4 = ViewPager2.class.getDeclaredField("mScrollEventAdapter");
+            declaredField4.setAccessible(true);
+            Object obj2 = declaredField4.get(viewPager2);
+            if (obj2 != null) {
+                Field declaredField5 = obj2.getClass().getDeclaredField("mLayoutManager");
+                declaredField5.setAccessible(true);
+                declaredField5.set(obj2, scrollSpeedManger);
+            }
+        } catch (Exception e10) {
+            f18809b.error("reflect layout failure", e10);
+        }
+    }
+
+    @Override // androidx.recyclerview.widget.LinearLayoutManager, androidx.recyclerview.widget.RecyclerView.LayoutManager
+    public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int i10) {
+        a aVar = new a(recyclerView.getContext());
+        aVar.setTargetPosition(i10);
+        startSmoothScroll(aVar);
+    }
+
+    public ScrollSpeedManger(Banner banner, LinearLayoutManager linearLayoutManager) {
+        super(banner.getContext(), linearLayoutManager.getOrientation(), false);
+        this.f18810a = banner;
+    }
+}
