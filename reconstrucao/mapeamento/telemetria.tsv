@@ -1,0 +1,54 @@
+original_path	nome_reconstruido_FQN	descricao_curta
+x1/f1/lb/heartbeat/f.java	com.foxivid.baselib.heartbeat.HeartbeatManager	HeartbeatUpgradeManager: timer 5s, propriedades remotas, checagem/download de upgrade
+x1/f1/lb/heartbeat/f.java$a..$m1 (handlers)	com.foxivid.baselib.heartbeat.AppPropertyHandlers	handlers das propriedades remotas (tabela completa no KDoc)
+x1/f1/lb/heartbeat/f.java$o1	com.foxivid.baselib.heartbeat.HeartbeatManager.init	TimerTask do heartbeat
+x1/f1/lb/heartbeat/f.java$s1	com.foxivid.baselib.heartbeat.HeartbeatManager.checkUpgrade	flow de checagem de upgrade (UI)
+x1/f1/lb/heartbeat/f.java$t1	com.foxivid.baselib.heartbeat.HeartbeatManager.doHeartbeatRequest	auto login/refresh de token
+x1/f1/lb/heartbeat/f.java$u1	com.foxivid.baselib.heartbeat.HeartbeatManager.tick	recarga de canais no heartbeat
+x1/f1/lb/heartbeat/f.java$v1	com.foxivid.baselib.heartbeat.HeartbeatManager.installApk	instalação em background
+x1/f1/lb/heartbeat/f.java$w1	com.foxivid.baselib.heartbeat.HeartbeatManager.onUpgrade(task)	tarefa de download com verificação md5/sha + meta
+x1/f1/lb/heartbeat/f.java$x1	com.foxivid.baselib.heartbeat.HeartbeatManager.onUpgrade(listener)	listener de progresso do download
+x1/f1/lb/heartbeat/f.java$y1	com.foxivid.baselib.heartbeat.HeartbeatManager.subscribeExecRunnable	assinatura de canais sem reentrância
+x1/f1/lb/heartbeat/f.java$z1	com.foxivid.baselib.heartbeat.HeartbeatManager.upgradeCheck	checagem automática de upgrade
+x1/f1/lb/util/m.java	com.foxivid.baselib.heartbeat.ValueCallback	interface callback genérica
+v6/d.java	com.foxivid.baselib.heartbeat.TsPushMode	enum UDP/GOP/TS
+nf/z.java	com.foxivid.baselib.heartbeat.UpgradeReadyEvent	evento EventBus APK pronto
+nf/a0.java	com.foxivid.baselib.heartbeat.UpgradeFailureEvent	evento EventBus falha de upgrade
+x1/f1/lb/util/m0.java	com.foxivid.baselib.upgrade.ApkInstaller	verificação de meta do APK e instalação (intent / pm install / sessão)
+x1/f1/lb/util/PackageInstallManager.java	com.foxivid.baselib.upgrade.PackageInstallManager	instalação silenciosa via PackageInstaller
+x1/f1/lb/util/p.java	com.foxivid.baselib.upgrade.ShellUtils	executa comandos em su/sh
+x1/f1/lb/feedback/c.java	com.foxivid.baselib.feedback.LogCatHelper	captura logcat, gzip com ANR traces, upload /api/feedback/upload/v1
+x1/f1/lb/log/a.java	com.foxivid.baselib.log.RemoteLogger	formata e enfileira logs para UDP; g() stub vazio
+d7/c.java	com.foxivid.baselib.log.UdpLogSender	thread log-thread, prefixo [channel][uid][did], 1300 chars
+d7/a.java	com.foxivid.baselib.log.UdpChannel	DatagramChannel não bloqueante
+r6/a.java;r6/b.java;r6/c.java;w6/c.java	com.foxivid.baselib.log.LogPacketCodec	pacote magic 0xF51E07CD, tipo 10003, XOR "log"
+x1/f1/lb/bot/a.java	com.foxivid.baselib.bot.TelegramBot	montagem de mensagens do bot (sem envio real)
+uf/b.java	com.foxivid.baselib.metric.MetricAgent	batch POST /api/metric/batch/v1 (data=base64(deflate(json)))
+uf/c.java	com.foxivid.baselib.metric.MetricReporter	monta eventos liveChannel*/liveHeartbeat/liveUpgrade/...
+p6/c.java	com.foxivid.baselib.metric.model.MetricEvent	evento {name, values}
+p6/b.java	com.foxivid.baselib.metric.MetricAgent.deflate	deflate nível 9
+p6/a.java	android.util.Base64	codec base64 embutido
+tf/SystemInfo.java	com.foxivid.baselib.metric.model.SystemInfo	info do aparelho (JSON com chaves a..o)
+tf/AccountInfo.java	com.foxivid.baselib.metric.model.AccountInfo	info da conta (JSON com chaves a..l)
+tf/b.java	com.foxivid.baselib.metric.model.BlockStabilityStat	estatística por bloco TS
+tf/c.java	com.foxivid.baselib.metric.model.PlayerMonitorStat	estado do monitor do player
+tf/d.java	com.foxivid.baselib.metric.model.PlayerZappingStat	cronometragem de zapping
+tf/e.java	com.foxivid.baselib.metric.model.StartupStat	cronometragem de startup
+tf/g.java	com.foxivid.baselib.metric.model.UpgradeStat	cronometragem de upgrade
+vf/a.java	com.foxivid.baselib.metric.model.PlayEndMetric	métrica de fim de reprodução
+vf/b.java	com.foxivid.baselib.metric.model.BlockStabilityMetric	métrica de bloco
+vf/c.java	com.foxivid.baselib.metric.model.StartupMetric	métrica de startup
+vf/d.java	com.foxivid.baselib.metric.model.StreamEndStabilityMetric	métrica de estabilidade de stream
+vf/e.java	com.foxivid.baselib.metric.model.UpgradeMetric	métrica de upgrade
+vf/f.java	com.foxivid.baselib.metric.model.ZappingTimeMetric	métrica de zapping
+x1/f1/lb/metric/monitor/a.java	com.foxivid.baselib.metric.monitor.AppUsageMonitor	log app_use_info, novo cliente/troca de conta
+x1/f1/lb/metric/monitor/b.java	com.foxivid.baselib.metric.monitor.BlockTimingQuery	interface de tempos por sessão
+x1/f1/lb/metric/monitor/c.java	com.foxivid.baselib.metric.monitor.PlayerMonitorListener	interface marcador
+x1/f1/lb/metric/monitor/d.java	com.foxivid.baselib.metric.monitor.StreamNetStatsQuery	interface de stats de rede
+x1/f1/lb/metric/monitor/e.java	com.foxivid.baselib.metric.monitor.NetworkMonitor	RSSI Wi-Fi e networkDesc
+x1/f1/lb/metric/monitor/f.java	com.foxivid.baselib.metric.monitor.PlayerMonitor	estabilidade da reprodução (playlist, blocos, buffering)
+x1/f1/lb/metric/monitor/g.java	com.foxivid.baselib.metric.monitor.StreamingMonitor	ponte TS proxy → monitores
+x1/f1/lb/metric/monitor/g.java$a	com.foxivid.baselib.metric.monitor.StreamingMonitor.PlaylistHandlerImpl	handler de playlist por sessão
+x1/f1/lb/metric/monitor/g.java$b	com.foxivid.baselib.metric.monitor.StreamingMonitor.BlockHandlerImpl	handler de bloco por sessão
+x1/f1/lb/metric/monitor/h.java	com.foxivid.baselib.metric.monitor.ZappingMonitor	startup e zapping time
+x1/f1/lb/metric/monitor/i.java	com.foxivid.baselib.metric.monitor.UpgradeMonitor	estatística de upgrade

@@ -1,0 +1,759 @@
+original_path	nome_reconstruido	descricao	modulo
+t/v/c/i/a.java	com.foxivid.baselib.config.InteractionUtils	fachada da UI; só b0() (initSdk) reconstruído	rede
+x1/f1/lb/config/a.java	com.foxivid.baselib.config.BaseLibConfig	classe sintética vazia	rede
+x1/f1/lb/config/b.java	com.foxivid.baselib.config.BaseLibConfig	Config: flags globais e boot do SDK (init)	rede
+x1/f1/lb/config/b.java$e	com.foxivid.baselib.config.DefaultHeaderParamsProvider	valores X-Foxivid-* (UserManager/AppAttrUtils/DeviceInfo)	rede
+x1/f1/lb/config/b.java$g	com.foxivid.baselib.config.SdkLogBackend	backend de log q6.a (logcat em debug + RemoteLogger)	rede
+x1/f1/lb/config/b.java$b	com.foxivid.baselib.config.BaseLibConfig (lambda)	relógio elapsedRealtime para util/d1	rede
+x1/f1/lb/config/b.java$c	com.foxivid.baselib.config.BaseLibConfig (lambda)	codec Base64 flag 11 para util/o0	rede
+x1/f1/lb/config/c.java	com.foxivid.baselib.config.LoadingIndicator	interface de indicador de carregamento	rede
+lf/b.java	com.foxivid.baselib.crypto.ApiCrypto	AES-128-CBC + RSA/PKCS1 + assinatura sha256 (X-Sign)	rede
+lf/b.java$a	com.foxivid.baselib.crypto.ApiCrypto.EncryptedPayload	envelope cifrado da requisição	rede
+lf/a.java	com.foxivid.baselib.crypto.ApiCrypto.sha256Hex	lambda hex %02x	rede
+pf/a.java	com.foxivid.baselib.crypto.CryptoRequestInterceptor	cifra corpo POST / params GET (X-Data) + cabeçalhos	rede
+pf/b.java	com.foxivid.baselib.crypto.CryptoResponseInterceptor	verifica X-Sign da resposta e decifra	rede
+pf/c.java	com.foxivid.baselib.crypto.CryptoRegistry	mapa Request->EncryptedPayload (nunca limpo)	rede
+(novo)	com.foxivid.baselib.crypto.ApiCryptoDemo	demo JVM do protocolo (não existe no APK)	rede
+of/a.java	com.foxivid.baselib.network.HeaderInterceptor	singleton de parâmetros + preenchimento X-Foxivid-*	rede
+of/b.java	com.foxivid.baselib.network.HeaderParamsProvider	interface dos parâmetros de cabeçalho	rede
+of/e.java	com.foxivid.baselib.network.HttpClientFactory	OkHttpClient cifrado e simples (trust-all)	rede
+of/e.java$a	com.foxivid.baselib.network.TrustAllCerts	X509TrustManager que aceita tudo	rede
+of/c.java	com.foxivid.baselib.network.HttpClientFactory (lambda)	logger do HttpLoggingInterceptor	rede
+of/d.java	com.foxivid.baselib.network.HttpClientFactory (lambda)	HostnameVerifier -> true	rede
+of/f.java	com.foxivid.baselib.network.RetrofitFactory	cache de Retrofit por endpoint	rede
+x1/f1/lb/streaming/client/d.java	com.foxivid.baselib.network.SSLHttpClient	TLS mútuo do AsyncHttpClient (BKS res/raw/server, senha 123456)	rede
+x1/f1/lb/streaming/client/c.java	com.foxivid.baselib.network.SSLHttpClient (lambda)	HostnameVerifier -> true	rede
+x1/f1/lb/host/b.java	com.foxivid.baselib.host.ServerProviderUtils	pools de servidores, cache de hosts, fábricas de provider	rede
+x1/f1/lb/host/b.java$c	com.foxivid.baselib.host.ServerProviderUtils.updateServers	persistência assíncrona (não descompilado; reconstruído)	rede
+(literais)	com.foxivid.baselib.host.ServerPool	enum das chaves *_SERVERS	rede
+x1/f1/lb/host/a.java	com.foxivid.baselib.host.ServerProvider	interface Retrofit do servidor atual com failover	rede
+x1/f1/lb/api/d.java	com.foxivid.baselib.api.AccountApi	Retrofit conta (protocolo extra)	rede
+x1/f1/lb/api/h.java	com.foxivid.baselib.api.PtvAccountApi	Retrofit conta PTV	rede
+x1/f1/lb/api/m.java	com.foxivid.baselib.api.RechargeApi	Retrofit recarga por código	rede
+x1/f1/lb/api/e.java	com.foxivid.baselib.api.FeedbackApi	Retrofit upload de feedback (multipart)	rede
+x1/f1/lb/api/l.java	com.foxivid.baselib.api.StreamMetaApi	Retrofit metadados de canais/VOD/catch-up	rede
+x1/f1/lb/api/j.java	com.foxivid.baselib.api.SportsApi	Retrofit agenda esportiva	rede
+x1/f1/lb/api/f.java	com.foxivid.baselib.api.AccountAuxApi	interface vazia (pool ACCOUNT; nome inventado)	rede
+x1/f1/lb/api/g.java	com.foxivid.baselib.api.MessageApi	interface vazia (pool MESSAGE_CENTER)	rede
+x1/f1/lb/api/n.java	com.foxivid.baselib.api.UpgradeApi	interface vazia (pool UPGRADE)	rede
+x1/f1/lb/api/a.java	com.foxivid.baselib.api.Api3AClient	cliente conta extra com runAndRetry	rede
+x1/f1/lb/api/b.java	com.foxivid.baselib.api.ApiStreamMetaClient	cliente StreamMetaApi	rede
+x1/f1/lb/api/c.java	com.foxivid.baselib.api.ApiSubscriptionClient	cliente RechargeApi	rede
+x1/f1/lb/api/i.java	com.foxivid.baselib.api.PTVApi3AClient	cliente conta PTV + upload feedback + state	rede
+x1/f1/lb/api/k.java	com.foxivid.baselib.api.SportsApiClient	cliente SportsApi	rede
+x1/f1/lb/api/a.java$a (e b$a,c$a,i$u,k$i)	com.foxivid.baselib.api.DefaultRetryPolicy	retry 3x / 3000 ms	rede
+x1/f1/lb/api/cache/b.java	com.foxivid.baselib.api.cache.FileDiskCacheUtil	cache de arquivos por URL (MD5)	rede
+x1/f1/lb/api/cache/a.java	com.foxivid.baselib.api.cache.FileDiskCacheUtil (lambda)	Runnable de download	rede
+n6/a.java	com.foxivid.baselib.model.common.BaseModel	base Serializable com toString reflexivo	rede
+n6/b.java	com.foxivid.baselib.model.common.ApiResult	resposta genérica checkSum/code/data/msg/timeMs	rede
+z1/b1/lb/m/IApiResponse.java	com.foxivid.baselib.model.extra.IApiResponse	contrato errCode/errMsg/isSuccess	rede
+eg/a.java	com.foxivid.baselib.model.extra.LogoutRequest	corpo vazio de logout (nome inventado)	rede
+eg/b.java	com.foxivid.baselib.model.extra.QueryPropertyRequest	corpo vazio de app property (nome inventado)	rede
+z1/b1/lb/m/extra/ApiRequestBasic.java	com.foxivid.baselib.model.extra.ApiRequestBasic	modelo	rede
+z1/b1/lb/m/extra/ApiResponse.java	com.foxivid.baselib.model.extra.ApiResponse	modelo	rede
+z1/b1/lb/m/extra/ApiResponseBasic.java	com.foxivid.baselib.model.extra.ApiResponseBasic	modelo	rede
+z1/b1/lb/m/extra/heartbeat/HeartbeatInfo.java	com.foxivid.baselib.model.extra.HeartbeatInfo	modelo (campo ofuscado "a")	rede
+z1/b1/lb/m/extra/marquee/MarqueeInfo.java	com.foxivid.baselib.model.extra.MarqueeInfo	modelo	rede
+z1/b1/lb/m/extra/marquee/MarqueeList.java	com.foxivid.baselib.model.extra.MarqueeList	modelo	rede
+z1/b1/lb/m/extra/subscription/PurchaseHistoryInfo.java	com.foxivid.baselib.model.extra.subscription.PurchaseHistoryInfo	modelo	rede
+z1/b1/lb/m/extra/subscription/QueryProductListInfo.java	com.foxivid.baselib.model.extra.subscription.QueryProductListInfo	modelo	rede
+z1/b1/lb/m/extra/subscription/QuerySubscriptionListInfo.java	com.foxivid.baselib.model.extra.subscription.QuerySubscriptionListInfo	modelo	rede
+z1/b1/lb/m/extra/subscription/RechargeInfo.java	com.foxivid.baselib.model.extra.subscription.RechargeInfo	modelo	rede
+z1/b1/lb/m/extra/subscription/RechargeRequest.java	com.foxivid.baselib.model.extra.subscription.RechargeRequest	modelo	rede
+z1/b1/lb/m/extra/upgrade/UpgradeInfo.java	com.foxivid.baselib.model.extra.upgrade.UpgradeInfo	modelo	rede
+z1/b1/lb/m/extra/user/AccountSubscription.java	com.foxivid.baselib.model.extra.user.AccountSubscription	modelo	rede
+z1/b1/lb/m/extra/user/ChangePasswordRequest.java	com.foxivid.baselib.model.extra.user.ChangePasswordRequest	modelo	rede
+z1/b1/lb/m/extra/user/ContactCheckInfo.java	com.foxivid.baselib.model.extra.user.ContactCheckInfo	modelo	rede
+z1/b1/lb/m/extra/user/GuestLoginInfo.java	com.foxivid.baselib.model.extra.user.GuestLoginInfo	modelo	rede
+z1/b1/lb/m/extra/user/GuestLoginRequest.java	com.foxivid.baselib.model.extra.user.GuestLoginRequest	modelo	rede
+z1/b1/lb/m/extra/user/LinkRequest.java	com.foxivid.baselib.model.extra.user.LinkRequest	modelo	rede
+z1/b1/lb/m/extra/user/LoginInfo.java	com.foxivid.baselib.model.extra.user.LoginInfo	modelo	rede
+z1/b1/lb/m/extra/user/LoginRequest.java	com.foxivid.baselib.model.extra.user.LoginRequest	modelo	rede
+z1/b1/lb/m/extra/user/QueryMetaInfo.java	com.foxivid.baselib.model.extra.user.QueryMetaInfo	modelo	rede
+z1/b1/lb/m/extra/user/QueryPropertiesInfo.java	com.foxivid.baselib.model.extra.user.QueryPropertiesInfo	modelo	rede
+z1/b1/lb/m/extra/user/RefreshInfo.java	com.foxivid.baselib.model.extra.user.RefreshInfo	modelo	rede
+z1/b1/lb/m/extra/user/RefreshTokenRequest.java	com.foxivid.baselib.model.extra.user.RefreshTokenRequest	modelo	rede
+z1/b1/lb/m/extra/user/RegisterInfo.java	com.foxivid.baselib.model.extra.user.RegisterInfo	modelo	rede
+z1/b1/lb/m/extra/user/RegisterRequest.java	com.foxivid.baselib.model.extra.user.RegisterRequest	modelo	rede
+z1/b1/lb/m/extra/user/ResetPasswordRequest.java	com.foxivid.baselib.model.extra.user.ResetPasswordRequest	modelo	rede
+z1/b1/lb/m/extra/user/SupportedCountry.java	com.foxivid.baselib.model.extra.user.SupportedCountry	modelo	rede
+z1/b1/lb/m/extra/user/UnlinkRequest.java	com.foxivid.baselib.model.extra.user.UnlinkRequest	modelo	rede
+z1/b1/lb/m/extra/user/VerificationCodeRequest.java	com.foxivid.baselib.model.extra.user.VerificationCodeRequest	modelo	rede
+z1/b1/lb/m/feedback/FeedbackData.java	com.foxivid.baselib.model.feedback.FeedbackData	modelo	rede
+z1/b1/lb/m/feedback/FeedbackUpdateRequest.java	com.foxivid.baselib.model.feedback.FeedbackUpdateRequest	modelo	rede
+z1/b1/lb/m/feedback/FeedbackUploadResponse.java	com.foxivid.baselib.model.feedback.FeedbackUploadResponse	modelo	rede
+z1/b1/lb/m/local/LocalSessionInfo.java	com.foxivid.baselib.model.local.LocalSessionInfo	sessão persistida	rede
+z1/b1/lb/m/meta/ApiPageableResponse.java	com.foxivid.baselib.model.meta.ApiPageableResponse	modelo	rede
+z1/b1/lb/m/meta/BasePageableResponse.java	com.foxivid.baselib.model.meta.BasePageableResponse	modelo	rede
+z1/b1/lb/m/meta/CatchupPlayRequest.java	com.foxivid.baselib.model.meta.CatchupPlayRequest	modelo	rede
+z1/b1/lb/m/meta/CatchupPlayResponse.java	com.foxivid.baselib.model.meta.CatchupPlayResponse	modelo	rede
+z1/b1/lb/m/meta/ChannelEPGIndexResponse.java	com.foxivid.baselib.model.meta.ChannelEPGIndexResponse	modelo	rede
+z1/b1/lb/m/meta/ChannelListResponse.java	com.foxivid.baselib.model.meta.ChannelListResponse	modelo	rede
+z1/b1/lb/m/meta/ChannelStreamResponse.java	com.foxivid.baselib.model.meta.ChannelStreamResponse	modelo	rede
+z1/b1/lb/m/meta/EPGProgramme.java	com.foxivid.baselib.model.meta.EPGProgramme	modelo	rede
+z1/b1/lb/m/meta/EpgIndex.java	com.foxivid.baselib.model.meta.EpgIndex	modelo	rede
+z1/b1/lb/m/meta/MetaDetailResponse.java	com.foxivid.baselib.model.meta.MetaDetailResponse	modelo	rede
+z1/b1/lb/m/meta/MetaPlaySourceResponse.java	com.foxivid.baselib.model.meta.MetaPlaySourceResponse	modelo	rede
+z1/b1/lb/m/meta/PlaySourcesResponse.java	com.foxivid.baselib.model.meta.PlaySourcesResponse	modelo	rede
+z1/b1/lb/m/meta/PlaylistMetaResponse.java	com.foxivid.baselib.model.meta.PlaylistMetaResponse	modelo	rede
+z1/b1/lb/m/meta/PlaylistResponse.java	com.foxivid.baselib.model.meta.PlaylistResponse	modelo	rede
+z1/b1/lb/m/meta/ShowTypeCfg.java	com.foxivid.baselib.model.meta.ShowTypeCfg	modelo	rede
+z1/b1/lb/m/notice/NotificationData.java	com.foxivid.baselib.model.notice.NotificationData	modelo	rede
+z1/b1/lb/m/notice/NotificationListRequest.java	com.foxivid.baselib.model.notice.NotificationListRequest	modelo	rede
+z1/b1/lb/m/notice/NotificationResponse.java	com.foxivid.baselib.model.notice.NotificationResponse	modelo	rede
+z1/b1/lb/m/notice/NotificationStateRequest.java	com.foxivid.baselib.model.notice.NotificationStateRequest	modelo	rede
+z1/b1/lb/m/notice/NotificationStateResponse.java	com.foxivid.baselib.model.notice.NotificationStateResponse	modelo	rede
+z1/b1/lb/m/ptv/ApiResponse.java	com.foxivid.baselib.model.ptv.ApiResponse	modelo PTV	rede
+z1/b1/lb/m/ptv/ApiResponseBasic.java	com.foxivid.baselib.model.ptv.ApiResponseBasic	modelo PTV	rede
+nf/u.java	com.foxivid.baselib.model.ptv.SessionErrorEventRef	evento EventBus (-9) — stub, pertence a outro módulo	rede
+z1/b1/lb/m/ptv/referral/ReferralSummary.java	com.foxivid.baselib.model.ptv.referral.ReferralSummary	modelo (campos ofuscados a..h)	rede
+z1/b1/lb/m/ptv/subscription/ChargeCodeRechargeRequest.java	com.foxivid.baselib.model.ptv.subscription.ChargeCodeRechargeRequest	modelo	rede
+z1/b1/lb/m/ptv/user/ChangePasswordRequest.java	com.foxivid.baselib.model.ptv.user.ChangePasswordRequest	modelo	rede
+z1/b1/lb/m/ptv/user/PTVLoginInfo.java	com.foxivid.baselib.model.ptv.user.PTVLoginInfo	modelo	rede
+z1/b1/lb/m/ptv/user/RegisterRequest.java	com.foxivid.baselib.model.ptv.user.RegisterRequest	modelo	rede
+z1/b1/lb/m/sports/Channel.java	com.foxivid.baselib.model.sports.Channel	modelo	rede
+z1/b1/lb/m/sports/DataVersion.java	com.foxivid.baselib.model.sports.DataVersion	modelo	rede
+z1/b1/lb/m/sports/Match.java	com.foxivid.baselib.model.sports.Match	modelo	rede
+z1/b1/lb/m/sports/Matches.java	com.foxivid.baselib.model.sports.Matches	modelo	rede
+z1/b1/lb/m/sports/Program.java	com.foxivid.baselib.model.sports.Program	modelo	rede
+z1/b1/lb/m/sports/Sport.java	com.foxivid.baselib.model.sports.Sport	modelo	rede
+z1/b1/lb/m/sports/Sports.java	com.foxivid.baselib.model.sports.Sports	modelo	rede
+z1/b1/lb/m/sports/Team.java	com.foxivid.baselib.model.sports.Team	modelo	rede
+z1/b1/lb/m/sports/Tournament.java	com.foxivid.baselib.model.sports.Tournament	modelo	rede
+z1/b1/lb/m/sports/Tournaments.java	com.foxivid.baselib.model.sports.Tournaments	modelo	rede
+z1/b1/lb/m/user/BaseRequest.java	com.foxivid.baselib.model.user.BaseRequest	modelo legado	rede
+z1/b1/lb/m/user/HeartbeatRequest.java	com.foxivid.baselib.model.user.HeartbeatRequest	modelo legado	rede
+z1/b1/lb/m/user/HeartbeatResponse.java	com.foxivid.baselib.model.user.HeartbeatResponse	modelo legado	rede
+z1/b1/lb/m/user/LoginRequest.java	com.foxivid.baselib.model.user.LoginRequest	modelo legado	rede
+z1/b1/lb/m/user/LoginResponse.java	com.foxivid.baselib.model.user.LoginResponse	modelo legado	rede
+z1/b1/lb/m/user/ServerResponse.java	com.foxivid.baselib.model.user.ServerResponse	modelo legado	rede
+x1/f1/lb/user/f.java	com.foxivid.baselib.user.UserManager	gerenciador de sessão: login/guest/token/código, refresh, logout, kick/expiração, engine, mark, QR	usuario
+x1/f1/lb/user/f.java$a	com.foxivid.baselib.user.UserManager.execLoginFlow	coletor execLoginFlow$2 (fallbacks de falha de login)	usuario
+x1/f1/lb/user/f.java$q	com.foxivid.baselib.user.UserManager.login	corrotina login$4 + handleMetaInfoResult (login$4$1)	usuario
+x1/f1/lb/user/f.java$r	com.foxivid.baselib.user.UserManager.loginByToken	corrotina loginByToken$1 (refresh + updateSession)	usuario
+x1/f1/lb/user/f.java$t	com.foxivid.baselib.user.UserManager.logout	corrotina logout$1	usuario
+x1/f1/lb/user/f.java$k	com.foxivid.baselib.user.UserManager.launch	corrotina launch$1 (did, mark, prefs, sessão local)	usuario
+x1/f1/lb/user/f.java$z	com.foxivid.baselib.user.UserManager.startEngine	startEngine (+a0, b0)	usuario
+x1/f1/lb/user/d.java	com.foxivid.baselib.user.PTV3AAdapter	adapter AAA do backend PTV (usado)	usuario
+x1/f1/lb/user/d.java$p	com.foxivid.baselib.user.PTV3AAdapter.updateSessionCallback	callback -> SessionConverter.fromPtvLogin	usuario
+x1/f1/lb/user/c.java	com.foxivid.baselib.user.Extra3AAdapter	adapter AAA do backend Extra (instanciado, não selecionado)	usuario
+x1/f1/lb/user/b.java	com.foxivid.baselib.user.AAAAdapterFactory	seleção do adapter, gancho Telegram, applyProperties	usuario
+x1/f1/lb/user/b.java$a	com.foxivid.baselib.user.AAAAdapterFactory.Convertor	interface de conversão payload->resultado	usuario
+x1/f1/lb/user/b.java$b	com.foxivid.baselib.user.AAAAdapterFactory.createSessionConvertor	conversor padrão updateLocalSession	usuario
+x1/f1/lb/user/a.java	com.foxivid.baselib.user.AccountAdapter	interface do backend de autenticação	usuario
+x1/f1/lb/user/e.java	com.foxivid.baselib.user.SessionWrapper	embrulho da resposta de login para o callback	usuario
+x1/f1/lb/user/g.java	com.foxivid.baselib.user.SessionConverter	resposta do servidor -> LocalSessionInfo	usuario
+w6/a.java	com.foxivid.baselib.user.MarkCipher	AES-128/ECB/ZeroBytePadding (BC) + chave via SHA1PRNG semeado	usuario
+w6/b.java	com.foxivid.baselib.user.HexUtils	hex <-> bytes	usuario
+w6/c.java	(não reconstruído)	XOR repetido com chave "log" (fora deste módulo)	usuario
+x1/f1/lb/util/z.java	com.foxivid.baselib.device.DeviceInfoCollector	fingerprint: Build, MACs, android_id, eMMC CID, CPU serial, USID Amlogic, gateway, assinatura	usuario
+x1/f1/lb/id/a.java	com.foxivid.baselib.device.Installation	did = UUID.nameUUIDFromBytes(cpuSerialOuMac+mac), arquivo INSTALLATION	usuario
+x1/f1/lb/cache/a.java	com.foxivid.baselib.cache.BaseCache	cache LruCache + DiskLruCache com JSON	usuario
+x1/f1/lb/cache/b.java	com.jakewharton.disklrucache.DiskLruCache	cópia embutida da biblioteca (usar a real)	usuario
+x1/f1/lb/cache/d.java	com.jakewharton.disklrucache.StrictLineReader	cópia embutida da biblioteca	usuario
+x1/f1/lb/cache/e.java	com.jakewharton.disklrucache.Util	cópia embutida da biblioteca	usuario
+x1/f1/lb/cache/c.java	(sintética vazia)	classe sintética sem conteúdo	usuario
+x1/f1/lb/api/i.java	com.foxivid.baselib.api.PTVApi3AClient	(outro módulo) assinaturas documentadas no KDoc de PTV3AAdapter	usuario
+t/v/c/i/a.java#y0	com.foxivid.baselib.user.UserManager.login(username,password)	InteractionUtils.y0 -> f.g1(user,pwd)	usuario
+t/v/c/i/a.java#x0	com.foxivid.baselib.user.UserManager.login()	InteractionUtils.x0 -> f.g1() (auto-login)	usuario
+t/v/c/i/a.java#z0	com.foxivid.baselib.user.UserManager.login(loginAsGuest=true)	InteractionUtils.z0 -> f.f1(null,null,true)	usuario
+t/v/c/i/a.java#v0	com.foxivid.baselib.user.UserManager.loginByPassword	InteractionUtils.v0(a,b,c) -> f.d1(a,c,b) = adapter.login(a, md5(b), c)	usuario
+t/v/c/i/a.java#w0	com.foxivid.baselib.user.UserManager.loginByCode	InteractionUtils.w0 -> f.e1(code)	usuario
+t/v/c/i/a.java#B0	com.foxivid.baselib.user.UserManager.recharge	InteractionUtils.B0 -> f.s1(code)	usuario
+t/v/c/i/a.java#M0	com.foxivid.baselib.user.UserManager.updateSession	InteractionUtils.M0 -> f.M1()	usuario
+x1/f1/lb/heartbeat/f.java	com.foxivid.baselib.heartbeat.HeartbeatManager	HeartbeatUpgradeManager: timer 5s, propriedades remotas, checagem/download de upgrade	telemetria
+x1/f1/lb/heartbeat/f.java$a..$m1 (handlers)	com.foxivid.baselib.heartbeat.AppPropertyHandlers	handlers das propriedades remotas (tabela completa no KDoc)	telemetria
+x1/f1/lb/heartbeat/f.java$o1	com.foxivid.baselib.heartbeat.HeartbeatManager.init	TimerTask do heartbeat	telemetria
+x1/f1/lb/heartbeat/f.java$s1	com.foxivid.baselib.heartbeat.HeartbeatManager.checkUpgrade	flow de checagem de upgrade (UI)	telemetria
+x1/f1/lb/heartbeat/f.java$t1	com.foxivid.baselib.heartbeat.HeartbeatManager.doHeartbeatRequest	auto login/refresh de token	telemetria
+x1/f1/lb/heartbeat/f.java$u1	com.foxivid.baselib.heartbeat.HeartbeatManager.tick	recarga de canais no heartbeat	telemetria
+x1/f1/lb/heartbeat/f.java$v1	com.foxivid.baselib.heartbeat.HeartbeatManager.installApk	instalação em background	telemetria
+x1/f1/lb/heartbeat/f.java$w1	com.foxivid.baselib.heartbeat.HeartbeatManager.onUpgrade(task)	tarefa de download com verificação md5/sha + meta	telemetria
+x1/f1/lb/heartbeat/f.java$x1	com.foxivid.baselib.heartbeat.HeartbeatManager.onUpgrade(listener)	listener de progresso do download	telemetria
+x1/f1/lb/heartbeat/f.java$y1	com.foxivid.baselib.heartbeat.HeartbeatManager.subscribeExecRunnable	assinatura de canais sem reentrância	telemetria
+x1/f1/lb/heartbeat/f.java$z1	com.foxivid.baselib.heartbeat.HeartbeatManager.upgradeCheck	checagem automática de upgrade	telemetria
+x1/f1/lb/util/m.java	com.foxivid.baselib.heartbeat.ValueCallback	interface callback genérica	telemetria
+v6/d.java	com.foxivid.baselib.heartbeat.TsPushMode	enum UDP/GOP/TS	telemetria
+nf/z.java	com.foxivid.baselib.heartbeat.UpgradeReadyEvent	evento EventBus APK pronto	telemetria
+nf/a0.java	com.foxivid.baselib.heartbeat.UpgradeFailureEvent	evento EventBus falha de upgrade	telemetria
+x1/f1/lb/util/m0.java	com.foxivid.baselib.upgrade.ApkInstaller	verificação de meta do APK e instalação (intent / pm install / sessão)	telemetria
+x1/f1/lb/util/PackageInstallManager.java	com.foxivid.baselib.upgrade.PackageInstallManager	instalação silenciosa via PackageInstaller	telemetria
+x1/f1/lb/util/p.java	com.foxivid.baselib.upgrade.ShellUtils	executa comandos em su/sh	telemetria
+x1/f1/lb/feedback/c.java	com.foxivid.baselib.feedback.LogCatHelper	captura logcat, gzip com ANR traces, upload /api/feedback/upload/v1	telemetria
+x1/f1/lb/log/a.java	com.foxivid.baselib.log.RemoteLogger	formata e enfileira logs para UDP; g() stub vazio	telemetria
+d7/c.java	com.foxivid.baselib.log.UdpLogSender	thread log-thread, prefixo [channel][uid][did], 1300 chars	telemetria
+d7/a.java	com.foxivid.baselib.log.UdpChannel	DatagramChannel não bloqueante	telemetria
+r6/a.java;r6/b.java;r6/c.java;w6/c.java	com.foxivid.baselib.log.LogPacketCodec	pacote magic 0xF51E07CD, tipo 10003, XOR "log"	telemetria
+x1/f1/lb/bot/a.java	com.foxivid.baselib.bot.TelegramBot	montagem de mensagens do bot (sem envio real)	telemetria
+uf/b.java	com.foxivid.baselib.metric.MetricAgent	batch POST /api/metric/batch/v1 (data=base64(deflate(json)))	telemetria
+uf/c.java	com.foxivid.baselib.metric.MetricReporter	monta eventos liveChannel*/liveHeartbeat/liveUpgrade/...	telemetria
+p6/c.java	com.foxivid.baselib.metric.model.MetricEvent	evento {name, values}	telemetria
+p6/b.java	com.foxivid.baselib.metric.MetricAgent.deflate	deflate nível 9	telemetria
+p6/a.java	android.util.Base64	codec base64 embutido	telemetria
+tf/SystemInfo.java	com.foxivid.baselib.metric.model.SystemInfo	info do aparelho (JSON com chaves a..o)	telemetria
+tf/AccountInfo.java	com.foxivid.baselib.metric.model.AccountInfo	info da conta (JSON com chaves a..l)	telemetria
+tf/b.java	com.foxivid.baselib.metric.model.BlockStabilityStat	estatística por bloco TS	telemetria
+tf/c.java	com.foxivid.baselib.metric.model.PlayerMonitorStat	estado do monitor do player	telemetria
+tf/d.java	com.foxivid.baselib.metric.model.PlayerZappingStat	cronometragem de zapping	telemetria
+tf/e.java	com.foxivid.baselib.metric.model.StartupStat	cronometragem de startup	telemetria
+tf/g.java	com.foxivid.baselib.metric.model.UpgradeStat	cronometragem de upgrade	telemetria
+vf/a.java	com.foxivid.baselib.metric.model.PlayEndMetric	métrica de fim de reprodução	telemetria
+vf/b.java	com.foxivid.baselib.metric.model.BlockStabilityMetric	métrica de bloco	telemetria
+vf/c.java	com.foxivid.baselib.metric.model.StartupMetric	métrica de startup	telemetria
+vf/d.java	com.foxivid.baselib.metric.model.StreamEndStabilityMetric	métrica de estabilidade de stream	telemetria
+vf/e.java	com.foxivid.baselib.metric.model.UpgradeMetric	métrica de upgrade	telemetria
+vf/f.java	com.foxivid.baselib.metric.model.ZappingTimeMetric	métrica de zapping	telemetria
+x1/f1/lb/metric/monitor/a.java	com.foxivid.baselib.metric.monitor.AppUsageMonitor	log app_use_info, novo cliente/troca de conta	telemetria
+x1/f1/lb/metric/monitor/b.java	com.foxivid.baselib.metric.monitor.BlockTimingQuery	interface de tempos por sessão	telemetria
+x1/f1/lb/metric/monitor/c.java	com.foxivid.baselib.metric.monitor.PlayerMonitorListener	interface marcador	telemetria
+x1/f1/lb/metric/monitor/d.java	com.foxivid.baselib.metric.monitor.StreamNetStatsQuery	interface de stats de rede	telemetria
+x1/f1/lb/metric/monitor/e.java	com.foxivid.baselib.metric.monitor.NetworkMonitor	RSSI Wi-Fi e networkDesc	telemetria
+x1/f1/lb/metric/monitor/f.java	com.foxivid.baselib.metric.monitor.PlayerMonitor	estabilidade da reprodução (playlist, blocos, buffering)	telemetria
+x1/f1/lb/metric/monitor/g.java	com.foxivid.baselib.metric.monitor.StreamingMonitor	ponte TS proxy → monitores	telemetria
+x1/f1/lb/metric/monitor/g.java$a	com.foxivid.baselib.metric.monitor.StreamingMonitor.PlaylistHandlerImpl	handler de playlist por sessão	telemetria
+x1/f1/lb/metric/monitor/g.java$b	com.foxivid.baselib.metric.monitor.StreamingMonitor.BlockHandlerImpl	handler de bloco por sessão	telemetria
+x1/f1/lb/metric/monitor/h.java	com.foxivid.baselib.metric.monitor.ZappingMonitor	startup e zapping time	telemetria
+x1/f1/lb/metric/monitor/i.java	com.foxivid.baselib.metric.monitor.UpgradeMonitor	estatística de upgrade	telemetria
+x1/f1/lb/media/a.java	com.foxivid.baselib.media.ChannelManager	Lista de canais ao vivo, colunas, favoritos, histórico, lembretes (GET /api/live/channel/list/v1)	midia
+x1/f1/lb/media/c.java	com.foxivid.baselib.media.EpgManager	EPG: índice epg-index.json + arquivos por canal/data com checksum, cache LRU	midia
+x1/f1/lb/media/c.java$a	com.foxivid.baselib.media.EpgFileParser	Parser externo de arquivo EPG injetado pela app	midia
+x1/f1/lb/media/d.java	com.foxivid.baselib.media.MediaConfigUtils	Preferências de player (áudio/legenda/aspecto), PIN adulto e senha de coluna	midia
+x1/f1/lb/media/e.java	com.foxivid.baselib.media.MediaPlayManager	Tempo de trial por canal e decisão trialOf	midia
+x1/f1/lb/media/f.java	com.foxivid.baselib.media.PlaylistCache	Inicialização dos caches de playlist VOD/checksum	midia
+x1/f1/lb/media/j.java	com.foxivid.baselib.media.SportsManager	Agenda esportiva (esportes/torneios/partidas) com cache e versão	midia
+x1/f1/lb/media/k.java	com.foxivid.baselib.media.SubscribeCache	Cache em disco de lembretes (SubscribeItem)	midia
+x1/f1/lb/media/l.java	com.foxivid.baselib.media.VoDManager	VOD: detalhe de vídeo com cache, favoritos, histórico, episódios	midia
+x1/f1/lb/media/model/SubscribeItem.java	com.foxivid.baselib.media.model.SubscribeItem	Data class de lembrete esportivo	midia
+x1/f1/lb/streaming/a.java	com.foxivid.baselib.streaming.StreamHelper	Orquestra sessão de play (live/VOD/catch-up) sobre o motor	midia
+x1/f1/lb/streaming/client/a.java	com.foxivid.baselib.streaming.client.EngineHelper	Cliente HTTP do proxy local (start/stop engine, startPlay, URL final)	midia
+x1/f1/lb/streaming/client/b.java	com.foxivid.baselib.streaming.client.SimpleHttpGet	GET síncrono HttpURLConnection	midia
+x1/f1/lb/streaming/client/d.java	com.foxivid.baselib.network.SSLHttpClient	AsyncHttpClient com TLS (trust-all/keystore)	midia
+x1/f1/lb/streaming/server/b.java	com.foxivid.baselib.streaming.server.EngineService	Ponte com o motor proprietário, eventos de tracker, métricas	midia
+x1/f1/lb/streaming/server/d.java	com.foxivid.baselib.streaming.server.HttpServiceWrapper	Roteador das rotas de controle e HLS local	midia
+x1/f1/lb/streaming/server/e.java	com.foxivid.baselib.streaming.server.VodLocalDiskCacheManager.Listener	Interface vazia (listener de cache)	midia
+x1/f1/lb/streaming/server/f.java	com.foxivid.baselib.streaming.server.LocalHttpServer	Contrato do servidor local (port, onPlayerRestart)	midia
+x1/f1/lb/streaming/server/g.java	com.foxivid.baselib.streaming.server.InputStreamWrapper	InputStream com fechamento seguro	midia
+x1/f1/lb/streaming/server/i.java	com.foxivid.baselib.streaming.server.NioHttpServer	Servidor AndroidAsync em 127.0.0.1 porta aleatória	midia
+x1/f1/lb/streaming/server/k.java	com.foxivid.baselib.streaming.server.LiveTsHandler	Handler Netty do TS ao vivo (chunked video/mp2ts)	midia
+x1/f1/lb/streaming/server/m.java	com.foxivid.baselib.streaming.server.NettyHttpServer	Servidor Netty em 0.0.0.0 porta aleatória 1024-51023	midia
+x1/f1/lb/streaming/server/n.java	com.foxivid.baselib.streaming.server.BlockMetricListener	Métricas por bloco TS	midia
+x1/f1/lb/streaming/server/o.java	com.foxivid.baselib.streaming.server.IndexMetricListener	Métricas por playlist/índice	midia
+x1/f1/lb/streaming/server/p.java	com.foxivid.baselib.streaming.server.PlayerMetricQuery	Consulta de métricas por player	midia
+x1/f1/lb/streaming/server/q.java	com.foxivid.baselib.streaming.server.SignatureCache	Cache de assinaturas	midia
+x1/f1/lb/streaming/server/r.java	com.foxivid.baselib.streaming.server.StreamingKeys	Nomes/rotas aleatórios do proxy e cifra de params	midia
+x1/f1/lb/streaming/server/s.java	com.foxivid.baselib.streaming.server.VodLocalDiskCacheManager	Cache em disco de blocos VOD	midia
+x1/f1/lb/widget/videoview/a.java	com.foxivid.baselib.player.PlayerViewContract	Contrato do PlayerView (legenda, tamanho)	midia
+x1/f1/lb/widget/videoview/b.java	com.foxivid.baselib.player.RenderCallback	Callback de superfície	midia
+x1/f1/lb/widget/videoview/c.java	com.foxivid.baselib.player.RenderView	Contrato da view de render	midia
+x1/f1/lb/widget/videoview/d.java	com.foxivid.baselib.player.SurfaceHolderWrapper	Holder que liga IMediaPlayer à superfície	midia
+x1/f1/lb/widget/videoview/e.java	com.foxivid.baselib.player.VideoViewContract	Contrato do VideoView (loading/erros)	midia
+x1/f1/lb/widget/videoview/f.java	com.foxivid.baselib.player.PlayContext	Contexto de uma reprodução pedida pela UI	midia
+x1/f1/lb/widget/videoview/g.java	com.foxivid.baselib.player.PlayPositionCache	Cache de posição de reprodução	midia
+x1/f1/lb/widget/videoview/g0.java	com.foxivid.baselib.player.VideoInfo	Dimensões e SAR do vídeo	midia
+x1/f1/lb/widget/videoview/h.java	com.foxivid.baselib.player.PlaySession	Sessão de play (evento + legenda)	midia
+x1/f1/lb/widget/videoview/i.java	com.foxivid.baselib.player.PlaySessionCache	Cache da sessão de play	midia
+x1/f1/lb/widget/videoview/j.java	com.foxivid.baselib.player.PlayerInfo	Estado de um IMediaPlayer	midia
+x1/f1/lb/widget/videoview/k.java	com.foxivid.baselib.player.PlayerManager	Fábrica/gestor do IjkMediaPlayer	midia
+x1/f1/lb/widget/videoview/c0.java	com.foxivid.baselib.player.PlayerViewHandler	Lógica de play live/catch-up, trial, restart (abstrata)	midia
+x1/f1/lb/widget/videoview/z0.java	com.foxivid.baselib.player.VideoViewHandler	URL -> IMediaPlayer -> superfície, watchdog	midia
+t/v/c/widget/videoview/PlayerView.java	com.foxivid.baselib.player.PlayerView	Fachada pública do player (TV/mobile)	midia
+t/v/c/widget/videoview/VideoView.java	com.foxivid.baselib.player.VideoView	FrameLayout com render view e loading/mensagens	midia
+t/v/c/widget/videoview/SurfaceRenderView.java	com.foxivid.baselib.player.SurfaceRenderView	SurfaceView com medição de aspecto	midia
+com/live/evo/widget/ijkmedia/a.java	com.foxivid.baselib.player.ijkmedia.MediaControllerContract	Contrato do media controller	midia
+com/live/evo/widget/ijkmedia/b.java	com.foxivid.baselib.player.ijkmedia.PureMediaController	Controller de play/pause/seek	midia
+x1/f1/lb/ad/AdItem.java	com.foxivid.baselib.ad.AdItem	item de anúncio de abertura (id sequencial, isVideo, arquivo em cache)	ui_libs
+x1/f1/lb/ad/b.java	com.foxivid.baselib.ad.AdManager	lista de anúncios startup (startup_ad_list) e conteúdo estendido (ad_list_ext); desativado no canal "code"	ui_libs
+x1/f1/lb/ad/b.java$c$b	com.foxivid.baselib.ad.AdManager (TypeToken anônimo)	TypeToken<List<Any>> do Gson	ui_libs
+x1/f1/lb/marquee/a.java	com.foxivid.baselib.marquee.MarqueeManager	agenda e distribui mensagens do letreiro global às views	ui_libs
+x1/f1/lb/marquee/a.java$a	com.foxivid.baselib.marquee.MarqueeManager.MarqueeListener	interface start/isRunning/stop das views de letreiro	ui_libs
+nf/a.java	com.foxivid.baselib.event.AdExtContentUpdatedEvent	evento EventBus: conteúdo estendido de anúncios atualizado	ui_libs
+x1/f1/lb/util/a.java	com.foxivid.baselib.util.TextCipher	cifra de texto AES com chave aleatória (por processo) ou fixa "PrI8TBSHDuybYmKSdaBBYg"	ui_libs
+x1/f1/lb/util/a0.java	com.foxivid.baselib.util.DensityAdapter	força density=1.6875 na Application/Activity (se isSetCustomDensity)	ui_libs
+x1/f1/lb/util/a0.java$a	com.foxivid.baselib.util.DensityAdapter (ComponentCallbacks anônimo)	atualiza scaledDensity quando fontScale muda	ui_libs
+x1/f1/lb/util/a1.java	com.foxivid.baselib.util.StartStatUtil	cronometragem de etapas (AppStartTimeStat / PlayZappingTimeStat), só debug	ui_libs
+x1/f1/lb/util/b0.java	com.foxivid.baselib.util.DownloadUtils	downloads OkHttp com checksum, retry, gunzip e decifragem AES	ui_libs
+x1/f1/lb/util/b0.java$a	com.foxivid.baselib.util.DownloadUtils.BaseDownloadContext	contexto de download com campos	ui_libs
+x1/f1/lb/util/b0.java$b	com.foxivid.baselib.util.DownloadUtils.ChecksumCalculator	calculadora de checksum	ui_libs
+x1/f1/lb/util/b0.java$c	com.foxivid.baselib.util.DownloadUtils.PlainDownloadContext	contexto sem chave AES	ui_libs
+x1/f1/lb/util/b0.java$d	com.foxivid.baselib.util.DownloadUtils.DownloadContext	interface do contexto de download	ui_libs
+x1/f1/lb/util/b0.java$e	com.foxivid.baselib.util.DownloadUtils.BeforeOverwrite	callback antes de sobrescrever	ui_libs
+x1/f1/lb/util/b0.java$f	com.foxivid.baselib.util.DownloadUtils.Listener	listener erro/salvo/progresso	ui_libs
+x1/f1/lb/util/b1.java	com.foxivid.baselib.util.AppPaths	diretórios de cache/dados sufixados pelo env e estatística de storage	ui_libs
+x1/f1/lb/util/c.java	com.foxivid.baselib.util.AppMonitor	activity atual, restart do app, monitor de travamento do main thread e queda de frames	ui_libs
+x1/f1/lb/util/c.java$a	com.foxivid.baselib.util.AppMonitor.LifecycleCallbacks	lifecycle; recriação com savedInstanceState reinicia o app	ui_libs
+x1/f1/lb/util/c.java$b	com.foxivid.baselib.util.AppMonitor.BlockPrinter	Printer do Looper medindo tarefas > 300 ms	ui_libs
+x1/f1/lb/util/c.java$c	com.foxivid.baselib.util.AppMonitor.FrameDropCallback	Choreographer: loga >10 frames perdidos	ui_libs
+x1/f1/lb/util/c0.java	com.foxivid.baselib.util.DvrUtils	janela do catch-up (catchupDvrDays) e títulos de dias da semana	ui_libs
+x1/f1/lb/util/d.java	com.foxivid.baselib.util.AnimUtils	animação de rotação contínua	ui_libs
+x1/f1/lb/util/d0.java	com.foxivid.baselib.util.EcoModeHelper	eco mode por inatividade do controle + contadores tecla/toque	ui_libs
+x1/f1/lb/util/d0.java$a	com.foxivid.baselib.util.EcoModeHelper.IdleCheckTask	TimerTask de 30 s que entra no eco mode	ui_libs
+x1/f1/lb/util/d1.java	com.foxivid.baselib.util.ServerTime	diferença para o horário do servidor, relógio monotônico, formatação de duração	ui_libs
+x1/f1/lb/util/d1.java$a	com.foxivid.baselib.util.ServerTime (relógio padrão)	ElapsedClock baseado em currentTimeMillis	ui_libs
+x1/f1/lb/util/e.java	com.foxivid.baselib.util.ApiErrorUtils	códigos de erro da API → mensagem; 9000010/9000042 disparam evento e ações de sessão	ui_libs
+x1/f1/lb/util/e0.java	com.foxivid.baselib.util.EventBusUtils	register/unregister seguro no EventBus	ui_libs
+x1/f1/lb/util/f0.java	com.foxivid.baselib.util.UncaughtLogger	loga exceções não tratadas com contexto de corrotina	ui_libs
+x1/f1/lb/util/g0.java	com.foxivid.baselib.util.ResultCallback	callback com onFailure	ui_libs
+x1/f1/lb/util/g1.java	com.foxivid.baselib.util.ToastUtils	Toaster no UI thread se activity resumed	ui_libs
+x1/f1/lb/util/h1.java	com.foxivid.baselib.util.TrustAllHostnameVerifier	HostnameVerifier que aceita tudo	ui_libs
+x1/f1/lb/util/j0.java	com.foxivid.baselib.util.FirebaseEvents	eventos user_add_plan e user_version	ui_libs
+x1/f1/lb/util/j0.java$a	com.foxivid.baselib.util.FirebaseEvents.FirebaseAnalyticsProvider	provider do FirebaseAnalytics (implementado pela activity)	ui_libs
+x1/f1/lb/util/k.java	com.foxivid.baselib.util.AppAttrUtils	meta-data DISTRIBUTION_CHANNEL/APP_TYPE/TENANT_ID/BRAND_ID/APP_ID e versão (nome original)	ui_libs
+x1/f1/lb/util/k0.java	com.foxivid.baselib.util.ElapsedClock	interface de relógio monotônico	ui_libs
+x1/f1/lb/util/l.java	com.foxivid.baselib.util.MaskUtils	mascara miolo de código (com bug: retorna Array.toString)	ui_libs
+x1/f1/lb/util/l0.java	com.foxivid.baselib.util.ImageUrlBuilder	monta URL de imagem com IMG_SERVERS	ui_libs
+x1/f1/lb/util/m.java	com.foxivid.baselib.util.Callback	callback genérico	ui_libs
+x1/f1/lb/util/n.java	com.foxivid.baselib.util.LegacyTvUtils	utilitário legado SuperTV (formatos de data, sqlite, libsupertv.so, http)	ui_libs
+x1/f1/lb/util/n0.java	com.foxivid.baselib.util.LocaleManager	idioma do app (language_sp/language_key)	ui_libs
+x1/f1/lb/util/o.java	com.foxivid.baselib.util.HexUtils	hex e chave MD5 composta	ui_libs
+x1/f1/lb/util/o0.java	com.foxivid.baselib.util.AesEcbCipher	AES/ECB/ZeroBytePadding (BouncyCastle) + Base64 URL-safe	ui_libs
+x1/f1/lb/util/o0.java$a	com.foxivid.baselib.util.AesEcbCipher.Base64Codec	codec Base64 plugável	ui_libs
+x1/f1/lb/util/q.java	com.foxivid.baselib.util.StackTraceUtils	stack trace → string, chamador	ui_libs
+x1/f1/lb/util/q0.java	com.foxivid.baselib.util.CrashHandler	UncaughtExceptionHandler que grava crash_*.log	ui_libs
+x1/f1/lb/util/r0.java	com.foxivid.baselib.util.TrustAllX509TrustManager	TrustManager que aceita tudo	ui_libs
+x1/f1/lb/util/t0.java	com.foxivid.baselib.util.QrCodeUtils	gera QR Code com ZXing (nome original)	ui_libs
+x1/f1/lb/util/u0.java	com.foxivid.baselib.util.ResStrings	getString seguro com default	ui_libs
+x1/f1/lb/util/v0.java	com.foxivid.baselib.util.SandwichErrors	formata falhas do Sandwich ApiResponse	ui_libs
+x1/f1/lb/util/w0.java	com.foxivid.baselib.util.Preferences	chave/valor (nome original SPUtils): chaves MD5, strings cifradas, backend DataStore injetado	ui_libs
+x1/f1/lb/util/x0.java	com.foxivid.baselib.util.ScreenUtils	escala de layout com referência 1280x720	ui_libs
+x1/f1/lb/util/y0.java	com.foxivid.baselib.util.SignatureUtils	MD5 da assinatura de APK	ui_libs
+x1/f1/lb/util/z0.java	com.foxivid.baselib.util.BitrateFormatter	bps → Kb/s / Mb/s	ui_libs
+x1/f1/lb/util/{f,g,h,i,j,r,s,t,u,v,w,x,y}.java	(nenhum)	synthetic vazio (R8)	ui_libs
+nf/f.java	com.foxivid.baselib.event.EcoModeEvent	evento entrar/sair do eco mode	ui_libs
+nf/u.java	com.foxivid.baselib.event.ApiAuthErrorEvent	evento de erro de sessão da API (code, "api")	ui_libs
+nf/y.java	com.foxivid.baselib.event.CrashLogEvent	evento com caminho do crash log	ui_libs
+r8/	third-party: Kotlin stdlib (Unit/Pair/Triple/Result)	d2 "kotlin-stdlib"	ui_libs
+c9/	third-party: Kotlin kotlin.jvm.functions (Function0..3)	interfaces invoke	ui_libs
+v8/	third-party: Kotlin kotlin.coroutines (Continuation/CoroutineContext)	mensagens CoroutineContext	ui_libs
+ua/	third-party: Kotlin kotlin.text (StringsKt/Charsets/Regex)	assinaturas de strings	ui_libs
+a/	third-party: kotlinx-coroutines-core (debug)	"_COROUTINE"	ui_libs
+wa/	third-party: kotlinx-coroutines-core scheduling	"kotlinx.coroutines.scheduler.core.pool.size"	ui_libs
+tb/,ub/	third-party: Okio	"okio", hex digits	ui_libs
+hb/,kb/,lb/,mb/,nb/,ob/,pb/	third-party: OkHttp internals (Util, concurrent, http, http1, http2, platform)	mensagens OkHttp	ui_libs
+b3/,e3/,f3/	third-party: Gson internals (f3.a = TypeToken)	"Register a TypeAdapter"	ui_libs
+s/,p/,l/,w/,b0/,a0/	third-party: Glide 4 core	"com.bumptech.glide.load..."	ui_libs
+h3/,h4/,y5/,v5/,w5/,b4/	third-party: ZXing core (QRCodeWriter, BarcodeFormat, EncodeHintType, BitMatrix, decoder)	"Can only encode QR_CODE"	ui_libs
+xe/	third-party: greenrobot EventBus (xe.c = EventBus)	"EventBus annotation processor"	ui_libs
+wb/	third-party: commons-codec Base64	"lineSeparator must not contain base64 characters"	ui_libs
+yb/	third-party: commons-io FileUtils/IOUtils	"Destination must not be null"	ui_libs
+ac/	third-party: commons-lang3 StringUtils/SystemUtils	"SystemUtils property value"	ui_libs
+dd/	third-party: BouncyCastle provider	org.bouncycastle.jce.provider.*	ui_libs
+m6/,k6/,l6/	third-party: skydoves Sandwich extensions	d2 "sandwich"	ui_libs
+we/	third-party: Eclipse Paho MQTT	"org.eclipse.paho.client.mqttv3"	ui_libs
+q4/,r4/,s4/,t4/,o4/,p4/,u4/	third-party: AndroidAsync	multipart / com.koushikdutta.async	ui_libs
+l4/	third-party: Toaster (com.hjq.toast)	"android.R.id.message"	ui_libs
+l7/,k7/,o7/	third-party: UTDID / Aliyun audid	mpush-api.aliyun.com	ui_libs
+m2/	third-party: Firebase Components	"Components are not allowed to depend..."	ui_libs
+b2/	third-party: GMS measurement (Firebase Analytics)	gms.measurement.internal	ui_libs
+tv/danmaku/ijk	third-party: ijkplayer	IjkMediaPlayer	ui_libs
+q6/	app: fachada de log interna estilo SLF4J	ver docs/bibliotecas_terceiros.md	ui_libs
+t/v/c/R$*.java	com.foxivid.ui.R	Recursos da biblioteca de UI (`t.v.c.R$*`, módulo `tvcbaselib`)	ui_libs
+ziyi/kit/keyboard/a.java	com.foxivid.ui.keyboard.KeyBean	Modelo de uma tecla do teclado virtual: código, rótulo exibido, texto inserido, ícone, peso de	ui_libs
+ziyi/kit/keyboard/KeyUtils.java	com.foxivid.ui.keyboard.KeyUtils	Registro estático do teclado virtual de TV: tabela de teclas, layouts por tipo de teclado,	ui_libs
+ziyi/kit/keyboard/KeyView.java	com.foxivid.ui.keyboard.KeyView	Uma tecla na tela: FrameLayout (layout `key_key_view`) com um TextView (`tv_key`) e um	ui_libs
+ziyi/kit/keyboard/b.java	com.foxivid.ui.keyboard.KeyboardContainer	Teclado virtual para TV (controle remoto/D-pad) que flutua sobre a janela	ui_libs
+ziyi/kit/keyboard/c.java	com.foxivid.ui.keyboard.KeyboardLayoutListener	Base dos listeners de layout global da janela: guarda o id (view id do teclado) e se o teclado	ui_libs
+ziyi/kit/keyboard/KeyboardView.java	com.foxivid.ui.keyboard.KeyboardView	Versão mais antiga/simples do teclado virtual de TV: um LinearLayout vertical (em vez de	ui_libs
+ziyi/kit/keyboard/MyLifecycleObserver.java	com.foxivid.ui.keyboard.MyLifecycleObserver	DefaultLifecycleObserver que carrega o id do teclado a que pertence (sobrescrito em [KeyUtils]	ui_libs
+ziyi/kit/keyboard/R$*.java	com.foxivid.ui.keyboard.R	IDs de recursos do módulo do teclado (ziyi.kit.keyboard.R*)	ui_libs
+t/v/c/R$*.java	com.foxivid.ui.mobile.R	Recursos da biblioteca mobile (com.tvc.lib.mobile usa os recursos do módulo `tvcbaselib`, ou seja,	ui_libs
+nf/j.java	com.foxivid.ui.mobile.activity.AppEnterForegroundEvent	Evento de EventBus postado em onResume quando o app volta ao primeiro plano depois de ter saído	ui_libs
+nf/k.java	com.foxivid.ui.mobile.activity.AppEnterBackgroundEvent	Evento de EventBus postado em onStop quando a activity parou com a janela em foco	ui_libs
+com/tvc/lib/mobile/activity/BaseActivity.java	com.foxivid.ui.mobile.activity.BaseActivity	Activity base: registra no log o ciclo onStop/onResume e emite eventos de "app saiu para segundo	ui_libs
+t7/a.java	com.foxivid.ui.mobile.activity.ContentView	Contrato de uma activity com layout (t7/a.java): `f()` = initView, `g()` = layout id; os hooks	ui_libs
+com/tvc/lib/mobile/activity/BasicActivity.java	com.foxivid.ui.mobile.activity.BasicActivity	Activity base com template: setContentView(layoutId) -> (EventBus opcional) -> initView ->	ui_libs
+com/tvc/lib/mobile/ui/base/a.java	com.foxivid.ui.mobile.base.BaseChannelListFragment	Base de fragments de lista de canais: guarda a coluna atual (companion) e converte uma lista de	ui_libs
+com/tvc/lib/mobile/ui/base/BaseDataBindActivity.java	com.foxivid.ui.mobile.base.BaseDataBindActivity	Activity base com DataBinding para o app mobile: define o layout, trava em retrato (se	ui_libs
+com/tvc/lib/mobile/ui/base/g.java	com.foxivid.ui.mobile.base.BaseDataBindDialogFragment	DialogFragment com DataBinding: infla `layoutId()`, configura cancelável, chama	ui_libs
+com/tvc/lib/mobile/ui/base/d.java	com.foxivid.ui.mobile.base.BaseDataBindFragment	Fragment com DataBinding: infla [layoutId], guarda a activity e o binding e cria um diálogo de	ui_libs
+y7/a.java	com.foxivid.ui.mobile.base.LoadingViewDialog	Cor de fundo do loading	ui_libs
+com/tvc/lib/mobile/ui/base/h.java	com.foxivid.ui.mobile.base.BaseDialogContract	Contrato dos diálogos/fragments base: initView (f), layout (g), initData (l), initObservers (y);	ui_libs
+com/tvc/lib/mobile/ui/base/i.java	com.foxivid.ui.mobile.base.LastItemSpaceDecoration	Espaçamento à direita (esquerda em RTL) entre itens de uma lista horizontal, exceto no último	ui_libs
+com/tvc/lib/mobile/ui/base/e.java	com.foxivid.ui.mobile.base.BaseEpgListFragment	Base de fragments de EPG: converte [EPGProgramme] em `EpgData` (u7/EpgData: title, stop, category,	ui_libs
+com/tvc/lib/mobile/ui/base/f.java	com.foxivid.ui.mobile.base.BaseFragmentPagerAdapter	FragmentPagerAdapter base: o construtor chama [createFragments] (abstract `a`) para preencher a	ui_libs
+u7/MessageEventData.java	com.foxivid.ui.mobile.ext.MessageEventData	Mensagem genérica de EventBus (código, mensagem, payload)	ui_libs
+com/tvc/lib/mobile/media/AppLifecycleObserver.java	com.foxivid.ui.mobile.media.AppLifecycleObserver	Observer do ciclo de vida do processo: em onStop, se o modo família estiver ativo	ui_libs
+com/tvc/lib/mobile/broadcastReceiver/WifiBroadcastReceiver.java	com.foxivid.ui.mobile.receiver.WifiBroadcastReceiver	Receiver de RSSI/estado do Wi-Fi	ui_libs
+com/tvc/lib/mobile/ui/widget/AutoCompleteEditText.java	com.foxivid.ui.mobile.widget.AutoCompleteEditText	AutoCompleteTextView para e-mail: sugere domínios (gmail.com, hotmail.com, outlook.com,	ui_libs
+com/tvc/lib/mobile/ui/widget/ClearEditText.java	com.foxivid.ui.mobile.widget.ClearEditText	EditText com ícone "limpar" (mipmap `delete_input`, bounds deslocados 20px para a esquerda)	ui_libs
+com/tvc/lib/mobile/ui/widget/CustomTextView.java	com.foxivid.ui.mobile.widget.CustomTextView	TextView que trunca o texto para no máximo [maxCharacters] (padrão 13) substituindo o final por "..."	ui_libs
+com/tvc/lib/mobile/ui/widget/FullscreenMenuView.java	com.foxivid.ui.mobile.widget.FullscreenMenuView	Item de menu do player em tela cheia (ícone + nome), inflado de `layout_fullscreen_menu`	ui_libs
+com/tvc/lib/mobile/ui/widget/MyVideoView.java	com.foxivid.ui.mobile.widget.MyVideoView	Player embutido do app mobile: envolve um [PlayerView] (ijkplayer) com controles (barra de	ui_libs
+com/tvc/lib/mobile/ui/widget/q.java	com.foxivid.ui.mobile.widget.RectItemDecoration	ItemDecoration com margens fixas (esquerda/topo/direita/baixo)	ui_libs
+com/tvc/lib/mobile/ui/widget/r.java	com.foxivid.ui.mobile.widget.EmailSuggestionAdapter	Adapter de sugestões de e-mail do [AutoCompleteEditText]: dado um prefixo (texto antes do "@") e	ui_libs
+com/tvc/lib/mobile/ui/widget/SwipeListLayout.java	com.foxivid.ui.mobile.widget.SwipeListLayout	Item de lista deslizável (swipe para a esquerda revela o 1º filho "hidden" por trás do 2º filho	ui_libs
+com/tvc/lib/mobile/ui/widget/TabBarBean.java	com.foxivid.ui.mobile.widget.TabBarBean	Configuração da barra de abas ([TabBarView]): cores, estilo de borda e itens	ui_libs
+com/tvc/lib/mobile/ui/widget/TabBarView.java	com.foxivid.ui.mobile.widget.TabBarView	Barra de abas inferior (2 a 5 itens) com ícones locais ou CDN (baixados com Glide) e texto, cores	ui_libs
+com/tvc/lib/mobile/ui/widget/sloading/a.java	com.foxivid.ui.mobile.widget.sloading.SLoadingBuilder	Base dos "loading builders" do SLoading (biblioteca de spinners): controla um ValueAnimator	ui_libs
+com/tvc/lib/mobile/ui/widget/sloading/b.java	com.foxivid.ui.mobile.widget.sloading.SLoadingDrawable	Drawable animado que encapsula um [SLoadingBuilder] (repassa invalidação/agendamento ao Drawable)	ui_libs
+com/tvc/lib/mobile/ui/widget/sloading/anim/SLoadingTextView.java	com.foxivid.ui.mobile.widget.sloading.SLoadingTextView	SLoadingView fixo no tipo TEXT (atributo `z_text`); [setText] repassa o texto ao builder de texto (`q`)	ui_libs
+com/tvc/lib/mobile/ui/widget/sloading/c.java	com.foxivid.ui.mobile.widget.sloading.SLoadingType	Tipos de animação de loading; cada valor instancia (por reflexão) um [SLoadingBuilder]	ui_libs
+com/tvc/lib/mobile/ui/widget/sloading/SLoadingView.java	com.foxivid.ui.mobile.widget.sloading.SLoadingView	ImageView que exibe uma animação de loading ([SLoadingType], atributos `s_type`, `s_color`,	ui_libs
+t/v/c/s/widget/SimpleSubtitleView.java	com.foxivid.ui.subtitle.SimpleSubtitleView	TextView que serve de destino de legendas	ui_libs
+yf/a.java	com.foxivid.ui.subtitle.SubtitleViewHandler	Stub de referência da classe `yf.a` (handler de legendas fora do escopo deste módulo)	ui_libs
+t/v/c/widget/TextView.java	com.foxivid.ui.widget.TextView	fun applyInitial(v: android.widget.TextView) {	ui_libs
+t/v/c/widget/MyButton.java	com.foxivid.ui.widget.MyButton	Qualquer unidade é tratada como px (o valor já vem escalado)	ui_libs
+t/v/c/widget/MyRadiobutton.java	com.foxivid.ui.widget.MyRadiobutton	Qualquer unidade é tratada como px (o valor já vem escalado)	ui_libs
+t/v/c/widget/MyEditText.java	com.foxivid.ui.widget.MyEditText	Qualquer unidade é tratada como px (o valor já vem escalado)	ui_libs
+t/v/c/widget/FrameLayout.java	com.foxivid.ui.widget.FrameLayout	FrameLayout com "auto-layout": na primeira chamada a [setLayoutParams] e [setPadding] os valores	ui_libs
+t/v/c/widget/GlobalMarqueeTextView.java	com.foxivid.ui.widget.GlobalMarqueeTextView	Letreiro global: igual ao [MarqueeTextView], mas se registra no [MarqueeManager] como	ui_libs
+t/v/c/widget/ImageView.java	com.foxivid.ui.widget.ImageView	ImageView (AppCompat) com auto-layout	ui_libs
+t/v/c/widget/LinearLayout.java	com.foxivid.ui.widget.LinearLayout	LinearLayout com "auto-layout": na primeira chamada a [setLayoutParams] e [setPadding] os valores	ui_libs
+t/v/c/widget/MarqueeTextView.java	com.foxivid.ui.widget.MarqueeTextView	TextView de letreiro desenhado manualmente (canvas.drawText) que rola da direita para a esquerda	ui_libs
+t/v/c/widget/MyListView.java	com.foxivid.ui.widget.MyListView	ListView para TV que mantém o item selecionado centralizado (ou no topo/base) e escala	ui_libs
+t/v/c/widget/MyPopupWindow.java	com.foxivid.ui.widget.MyPopupWindow	PopupWindow que engole exceções ao exibir (ex.: BadTokenException quando a activity morreu),	ui_libs
+t/v/c/widget/MyProgressBar.java	com.foxivid.ui.widget.MyProgressBar	ProgressBar com auto-layout	ui_libs
+t/v/c/widget/MyRadiogroup.java	com.foxivid.ui.widget.MyRadiogroup	RadioGroup com auto-layout (escala para a resolução da tela)	ui_libs
+t/v/c/widget/MyRecyclerView.java	com.foxivid.ui.widget.MyRecyclerView	RecyclerView para TV: lembra o último filho focado e, ao receber foco de fora, devolve o foco a	ui_libs
+t/v/c/widget/MyRelativelayout.java	com.foxivid.ui.widget.MyRelativelayout	RelativeLayout com auto-layout (escala para a resolução da tela)	ui_libs
+t/v/c/widget/MyRoundImageView.java	com.foxivid.ui.widget.MyRoundImageView	ImageView com cantos arredondados independentes via clipPath (curvas quadráticas)	ui_libs
+t/v/c/widget/MySeekBar.java	com.foxivid.ui.widget.MySeekBar	SeekBar (AppCompat) com auto-layout	ui_libs
+t/v/c/widget/RoundImageView.java	com.foxivid.ui.widget.RoundImageView	ImageView com três modos (atributo `type`): 0 = círculo, 1 = retângulo com cantos arredondados	ui_libs
+t/v/c/widget/a.java	com.foxivid.ui.widget.SpaceItemDecoration	Espaçamento entre itens de RecyclerView linear: horizontal → left/top/bottom (+ right no último);	ui_libs
+t/v/c/widget/TVRecyclerView.java	com.foxivid.ui.widget.TVRecyclerView	RecyclerView de TV sobre [MyRecyclerView]: sem overscroll/clip, foco habilitado, debounce de	ui_libs
+t/v/c/widget/TvLinearLayoutManager.java	com.foxivid.ui.widget.TvLinearLayoutManager	LinearLayoutManager para navegação por D-pad: ao procurar foco além do último item visível,	ui_libs
+t/v/c/widget/banner/Banner.java	com.foxivid.ui.widget.banner.Banner	Cópia reduzida do `com.youth.banner.Banner` (biblioteca youth banner) sobre [FrameLayout] com	ui_libs
+t/v/c/widget/banner/Banner$addBannerLifecycleObserver$1.java	com.foxivid.ui.widget.banner.BannerLifecycleObserver	Observer de ciclo de vida do banner (youth `addBannerLifecycleObserver`): inicia o auto-loop em	ui_libs
+t/v/c/widget/banner/indicator/BaseIndicator.java	com.foxivid.ui.widget.banner.indicator.BaseIndicator	View base dos indicadores (cópia do `BaseIndicator` do youth banner)	ui_libs
+t/v/c/widget/banner/indicator/CircleIndicator.java	com.foxivid.ui.widget.banner.indicator.CircleIndicator	Indicador de bolinhas (raio = largura/2, selecionado maior)	ui_libs
+t/v/c/widget/banner/indicator/DrawableIndicator.java	com.foxivid.ui.widget.banner.indicator.DrawableIndicator	Indicador baseado em bitmaps (atributos `normal_drawable` / `selected_drawable`)	ui_libs
+t/v/c/widget/banner/indicator/a.java	com.foxivid.ui.widget.banner.indicator.Indicator	Contrato dos indicadores do banner (youth banner `Indicator`)	ui_libs
+t/v/c/widget/banner/indicator/RectangleIndicator.java	com.foxivid.ui.widget.banner.indicator.RectangleIndicator	Indicador de retângulos arredondados (um por página)	ui_libs
+t/v/c/widget/banner/indicator/RoundLinesIndicator.java	com.foxivid.ui.widget.banner.indicator.RoundLinesIndicator	Indicador de linha contínua com um trecho (selectedWidth) destacado	ui_libs
+t/v/c/widget/banner/util/ScrollSpeedManger.java	com.foxivid.ui.widget.banner.util.ScrollSpeedManger	LayoutManager do ViewPager2 que usa a duração de scroll configurada no [Banner]	ui_libs
+t/v/c/widget/ratingbar/MyRatingBar.java	com.foxivid.ui.widget.ratingbar.MyRatingBar	RatingBar com estrelas customizáveis (cores, drawable, espaçamento, escala e modo direita-para-esquerda)	ui_libs
+t/v/c/widget/a.java	com.foxivid.ui.widget.MyButton (arquivo AutoLayoutTextViews.kt)	helper de auto-layout compartilhado pelos widgets My*	ui_libs
+t/v/c/widget/banner/Banner$a.java	com.foxivid.ui.widget.banner.Banner.LoopTask	Runnable de auto-loop do banner	ui_libs
+t/v/c/widget/banner/Banner$c.java	com.foxivid.ui.widget.banner.Banner.PageChangeCallback	callback de página (loop infinito, indicador)	ui_libs
+t/v/c/widget/banner/Banner$d.java	com.foxivid.ui.widget.banner.Banner.AdapterObserver	AdapterDataObserver do banner	ui_libs
+t/v/c/widget/MarqueeTextView$a.java	com.foxivid.ui.widget.MarqueeTextView.Speed	enum de velocidade do letreiro	ui_libs
+t/v/c/widget/GlobalMarqueeTextView$a.java	com.foxivid.ui.widget.GlobalMarqueeTextView.Speed	enum de velocidade do letreiro global	ui_libs
+ziyi/kit/keyboard/DataBinderMapperImpl.java	com.foxivid.ui.keyboard.R	mapper vazio do DataBinding (sem layouts com binding)	ui_libs
+ziyi/kit/keyboard/KeyUtils$a.java	com.foxivid.ui.keyboard.KeyUtils (HeightListener)	listener de layout global que detecta teclado visível	ui_libs
+ziyi/kit/keyboard/KeyUtils$b.java	com.foxivid.ui.keyboard.KeyUtils (DefaultVisibilityListener)	desloca o conteúdo quando o teclado aparece	ui_libs
+ziyi/kit/keyboard/KeyUtils$c.java	com.foxivid.ui.keyboard.KeyUtils.KeyboardVisibilityListener	interface de visibilidade do teclado	ui_libs
+com/tvc/lib/mobile/ext/*.java	com.foxivid.ui.mobile.ext (Extensions.kt)	extensões Kotlin: countDown, clique com debounce, Glide, toast, tabs, ViewPager2	ui_libs
+com/tvc/lib/mobile/ui/base/a.java$b	com.foxivid.ui.mobile.base.BaseChannelListFragment (coverStoryList)	corrotina coverStoryList (não decompilada)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/FlexboxLayout.java	com.google.android.flexbox.FlexboxLayout	cópia reempacotada do Google FlexboxLayout (alias)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/FlexboxLayoutManager.java	com.google.android.flexbox.FlexboxLayoutManager	cópia reempacotada do Google FlexboxLayoutManager (alias)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/FlexboxLayoutManagerWrap.java	com.foxivid.ui.mobile.widget.flexbox (TODO variante)	variante local do FlexboxLayoutManager (não analisada)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/FlexItem.java	com.google.android.flexbox.FlexItem	interface FlexItem (alias)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/a.java	com.google.android.flexbox.FlexContainer	interface do container flex (alias)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/b.java	com.google.android.flexbox.FlexboxHelper (parte)	helper estático do flexbox (terceiro)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/c.java	com.google.android.flexbox.FlexboxHelper	cálculo de linhas flex (terceiro)	ui_libs
+com/tvc/lib/mobile/ui/widget/flexbox/{d,e,f}.java	(nenhum)	classes sintéticas vazias (R8)	ui_libs
+com/tvc/lib/mobile/ui/widget/b.java	com.foxivid.ui.mobile.widget.MyVideoView.LoadingController	interface de loading (a=hide, b=show) estende x1/f1/lb/config/c	ui_libs
+tv/danmaku/ijk/**	tv.danmaku.ijk (ijkplayer, API real)	ijkplayer (Bilibili), terceiro; ver docs/bibliotecas_terceiros.md	ui_libs
+com/tvc/lib/DataBinderMapperImpl.java	com.foxivid.ui.mobile (gerado)	mapper do DataBinding gerado (p7.*), sem lógica própria	ui_libs
+b5/*.java	com.live.evo.event.*	eventos EventBus (nomes inferidos; ver event/Events.kt)	app
+b5/b.java	com.live.evo.event.ChangeChannelEvent	Troca de canal/menu. Campos: tag de menu e ids (4 strings; construtor de 1 String = só canal). Original: b5/b.java	app
+b5/c.java	com.live.evo.event.ChannelUpdateEvent	Canais atualizados (carrega novo tipo `a()`). Original: b5/c.java	app
+b5/h.java	com.live.evo.event.SavePlayHistoryEvent	Posição de reprodução salva. Campos: categoria, canal, posição global. Original: b5/h.java	app
+b5/k.java	com.live.evo.event.SubscribeRemindEvent	Lembrete de assinatura de programa. Original: b5/k.java	app
+com/live/evo/MAppGlideModule.java	com.live.evo.MAppGlideModule	Módulo Glide do app: registra `OkHttpUrlLoader` usando o OkHttpClient do SDK (`of.e.f16588a.e()` =	app
+com/live/evo/MyApplication.java	com.live.evo.MyApplication	Application real do app (no APK, o manifest declara `com.stub.StubApp` do packer 360 Jiagu,	app
+com/live/evo/SophixStubApplication.java	com.live.evo.SophixStubApplication	Stub do hotfix Alibaba Sophix: inicializa o SophixManager antes da Application real ([MyApplication]).	app
+com/live/evo/a.java	com.live.evo.AppConstants	Constantes globais do app.	app
+com/live/evo/activity/BaseActivity.java	com.live.evo.activity.AutoSizeBaseActivity	Base das Activities de reprodução (CatchUpPlayer via FontBaseActivity): modo imersivo (flags 3846 reaplicadas	app
+com/live/evo/activity/BaseLivePlayActivity.java	com.live.evo.activity.BaseLivePlayActivity	BaseLivePlayActivity	app
+com/live/evo/activity/CatchUpPlayerActivity.java	com.live.evo.activity.CatchUpPlayerActivity	Player de catch-up (programas passados). Recebe os parâmetros por um "holder" estático ([Source]) porque	app
+com/live/evo/activity/FontBaseActivity.java	com.live.evo.activity.FontBaseActivity	FontBaseActivity	app
+com/live/evo/activity/LiveLoadActivity.java	com.live.evo.activity.LiveLoadActivity	Tela de carregamento/login da versão STB (TV). Aberta por [com.live.load.InitActivity] quando appType == "stb"	app
+com/live/evo/activity/LiveNewActivity.java	com.live.evo.activity.LiveNewActivity	Tela principal de TV ao vivo (STB): player em tela cheia + OSD + menus/EPG sobrepostos.	app
+com/live/evo/activity/SpeedTestActivity.java	com.live.evo.activity.SpeedTestActivity	Tela de "teste de velocidade". Aberta a partir do ChannelFragment (fragment/x) via [start].	app
+com/live/evo/activity/base/BaseActivity.java	com.live.evo.activity.base.BaseActivity	Base comum de todas as Activities do app (TV).	app
+com/live/evo/activity/base/BasicActivity.java	com.live.evo.activity.base.BasicActivity	Base "template method": setContentView(layoutId) → registro opcional no EventBus → initView/initData...	app
+com/live/evo/activity/base/LoginBaseActivity.java	com.live.evo.activity.base.LoginBaseActivity	Base (vazia) das telas de login/carregamento TV (LiveLoadActivity, BasicActivity).	app
+com/live/evo/activity/base/MonitorableActivity.java	com.live.evo.activity.base.MonitorableActivity	Base que apenas loga (tag "monitor_activity") cada callback de ciclo de vida com orientação e largura.	app
+com/live/evo/activity/i0.java	(sintético)	classe sintética vazia	app
+com/live/evo/activity/n2.java	com.live.evo.activity.ChannelSwitchHelper	Auxiliar de troca de canal da live: encapsula um [Listener] (a Activity) e, em [switchTo], apenas chama	app
+com/live/evo/b.java	com.live.evo.b (interface vazia `featuresListener`)	interface marcador sem métodos usada por l3	app
+com/live/evo/boot/a.java	com.live.evo.boot.AsyncExecutor	Pool de threads de uso geral ("AsyncExecutor #N"): core = max(2, min(CPUs-1, 4)), max = 2*CPUs+1,	app
+com/live/evo/boot/b.java	com.live.evo.boot.BootManager	Sincronização de etapas do boot: 7 checkpoints (0..6) começam "pendentes"; ações registradas ([WaitingMan])	app
+com/live/evo/c.java	(Glide gerado) GlideOptions	código gerado pelo Glide (a0.i); não reconstruído	app
+com/live/evo/catchup/EPG.java	com.live.evo.catchup.EPG	Grade de EPG desenhada manualmente em Canvas (estilo "TV Guide": coluna de canais à esquerda, linha do	app
+com/live/evo/catchup/EPG_Dstyle.java	com.live.evo.catchup.EPG_Dstyle	Variante "D-style" da grade EPG (mesma ideia, layout diferente; usa `sync` em `o0()` e listas O/P de programas).	app
+com/live/evo/catchup/LargeEpg/EpgView.java	com.live.evo.catchup.EpgView	Grande EPG (categorias × canais × tempo); calcula primeira/última categoria/canal visíveis e posição X de início.	app
+com/live/evo/catchup/LargeEpg/a.java	com.live.evo.catchup.LargeEpgBase	Base da "grande EPG". Original: com/live/evo/catchup/LargeEpg/a.java	app
+com/live/evo/catchup/player/a.java	com.live.evo.catchup.player.CatchUpMediaController	Controlador de mídia do catch-up (layout próprio): mostra canal/número/ícone, título e horários (início/fim)	app
+com/live/evo/catchup/player/b.java	com.live.evo.catchup.player.CatchUpBannerAdapter	Adapter de banner (youth.banner) com URLs de imagem (anúncios do catch-up). Original: com/live/evo/catchup/player/b.java	app
+com/live/evo/d.java	(Glide gerado) GlideRequest<TranscodeType>	código gerado pelo Glide (com.bumptech.glide.k); não reconstruído	app
+com/live/evo/dialog/a.java	com.live.evo.dialog.AdultKeyNewDialogFragment	Diálogo de tela cheia para digitar/definir a senha adulta (PIN de 4 dígitos).	app
+com/live/evo/dialog/b.java	com.live.evo.dialog.ConfirmDialog	Diálogo de confirmação (layout `dialog_confirm`: mensagem `confirmdlg_tv_msg`, botões esquerdo/central/OK).	app
+com/live/evo/dialog/c.java	com.live.evo.dialog.EcoCountdownDialog	Diálogo "modo ECO / ainda está assistindo?" (layout `countdown_layout_d`): contagem regressiva `mm:ss`	app
+com/live/evo/dialog/f.java	com.live.evo.dialog.EpgDialog	"Grande EPG" em diálogo (layout `epg_dialog`) aberto pelo D-pad direito na live. Mostra, para o canal atual,	app
+com/live/evo/dialog/m.java	com.live.evo.dialog.ExitDialog	Diálogo "Sair?" (layout `exit_dialog`: `exitdlg_tv_exit`, `exitdlg_btn_sure`, `exitdlg_btn_cancel`).	app
+com/live/evo/dialog/n.java	com.live.evo.dialog.OnDialogActionListener	interface de ação do ExitDialog (onConfirm)	app
+com/live/evo/dialog/q.java	com.live.evo.dialog.NoticeAlertDialog	Aviso/notificação (layout `notice_alert_dialog`: título, botão OK, botão "direct" (ir para), ícone).	app
+com/live/evo/dialog/r.java	com.live.evo.dialog.RemindAlertDialog	Aviso de "lembrete de recarga" (layout `remind_alert_dialog`: imagem, título, texto, botão e botão secundário);	app
+com/live/evo/dialog/u.java	com.live.evo.dialog.SubscribePopup	Popup "programa agendado vai começar" (layout `popup_subscribe`): ícone, "HH:mm--HH:mm", nome do programa,	app
+com/live/evo/dialog/v.java	(sintético)	classe sintética vazia de dialog	app
+com/live/evo/dialog/w.java	com.live.evo.dialog.SubscribeSwitchDialog	Pergunta "trocar de lembrete?" (layout `subscribeswitch_dialog`): texto com	app
+com/live/evo/dialog/x.java	com.live.evo.dialog.SubscribeSwitchDialog.Listener	listener do SubscribeSwitchDialog	app
+com/live/evo/dialog/y.java	com.live.evo.dialog.UpgradePromptDialog	Diálogo de atualização do app (layout `layout_upgrade_prompt_a`): texto, botões OK/Cancelar, barra de download	app
+com/live/evo/dialog/z.java	com.live.evo.dialog.UserListDialog	Lista de contas do usuário (layout `user_list_dialog`, estilo `EPGDialog`): RecyclerView vertical com divisor.	app
+com/live/evo/e.java	(Glide gerado) GlideRequests	código gerado pelo Glide (com.bumptech.glide.l); não reconstruído	app
+com/live/evo/fragment/a.java	(helper)	"bff_request_time": controle de intervalo do BFF; não reconstruído	app
+com/live/evo/fragment/a0.java	com.live.evo.fragment.FavoriteFragment	Favoritos (layout `newfavorite_fragment`, ids `favf_*`): lista de canais favoritos; broadcast	app
+com/live/evo/fragment/a2.java	com.live.evo.fragment.OnMenuCallback	callback de menu	app
+com/live/evo/fragment/b.java	com.live.evo.fragment.BaseDialogFragment	DialogFragment base (onStart/onDismiss, registra z1). Original: com/live/evo/fragment/b.java	app
+com/live/evo/fragment/b0.java	com.live.evo.fragment.FeedbackDialogFragment	Diálogo de feedback (layout `feedback_layout`, ViewPager com 3 abas: "feedback_userfeedback_title_1" (envio),	app
+com/live/evo/fragment/b2.java	com.live.evo.fragment.PipSettingFragment	Configuração do PIP (layout `newpipsetting_fragment`): ligar/desligar PIP, posição e tamanho	app
+com/live/evo/fragment/c.java	com.live.evo.fragment.BaseFragment	Base de fragments com AutoSize (`CustomAdapt`: baseOnWidth, sizeInDp 0), ciclo de visibilidade (`O`, `V/W`) e	app
+com/live/evo/fragment/c0.java	com.live.evo.fragment.MenuPagerAdapter	Adapter de página (FragmentPagerAdapter) das abas. Original: com/live/evo/fragment/c0.java	app
+com/live/evo/fragment/c2.java	com.live.evo.fragment.PhoneLoginFragment	Login por telefone na TV (layout `newphone_login_fragment`, `phoneloginf_*`): opções remotas `phone_login_option_one/two`,	app
+com/live/evo/fragment/d.java	com.live.evo.fragment.BaseMenuFragment	BaseMenuFragment	app
+com/live/evo/fragment/d0.java	com.live.evo.fragment.FeedbackItemAdapter	Item do adapter de feedback (`feedback_item`, ids `feedbackitem_*`). Original: com/live/evo/fragment/d0.java	app
+com/live/evo/fragment/d2.java	com.live.evo.fragment.PipSettingsAdapter	PipSettingsAdapter	app
+com/live/evo/fragment/e0.java	(sintético)	classe sintética vazia	app
+com/live/evo/fragment/e2.java	(sintético)	classe sintética vazia	app
+com/live/evo/fragment/f0.java	com.live.evo.fragment.LazyMenuFragment	Fragment base dos menus: `R()` layout, `S(Bundle)` dados, `T()` pós-dados, `V(View)` views, `W(hasFocus)`,	app
+com/live/evo/fragment/f2.java	com.live.evo.fragment.QuestionFragment	FAQ (`question_fragment`; título `feedback_faq_title`; adapter [com.live.evo.osd.QuestionAdapter]). Original: com/live/evo/fragment/f2.java	app
+com/live/evo/fragment/g2.java	com.live.evo.fragment.SearchFragment	Busca de canais (layout `newsearch_channel_fragment`, ids `searchchannelf_*`): teclado virtual próprio ("ABCDEF..." A-Z),	app
+com/live/evo/fragment/k0.java	com.live.evo.fragment.FunctionMenuFragment	Menu lateral de funções (`menu_fragment_function`): ListView (`FunctionMenuAdapter`) à esquerda e fragment	app
+com/live/evo/fragment/k2.java	com.live.evo.fragment.SubscribeFragment	Lembretes de programação (layout `newfragment_subscribe`, ids `subscribef_*`): lista de [com.live.evo.model.SubscribeBean]	app
+com/live/evo/fragment/l1.java	com.live.evo.fragment.ProgramMenuDialogFragment	Diálogo do menu principal. `menu_first` define a aba inicial: "Channel List" (padrão) → CHANNEL, "recommend" → RECOMMEND,	app
+com/live/evo/fragment/l3.java	com.live.evo.fragment.TabFunctionRechargeFragment	Aba "Recarga" do menu de funções (layout `tabfunction_recharge_fragment`, ids `renew_*`/`rechargeremindf_*`).	app
+com/live/evo/fragment/login/b.java	com.live.evo.fragment.login.AccountUserLoginFragment	Tela de login principal (layout `accountuser_login_fragment`, ids `loginf_*`) com TabLayout:	app
+com/live/evo/fragment/login/d.java	com.live.evo.fragment.login.AdultWarningFragment	Aviso de conteúdo adulto: textos remotos `attention_remind_one` (os dois campos usam a mesma chave no original —	app
+com/live/evo/fragment/login/e.java	com.live.evo.fragment.login.BffInfoFragment	Tela de informação BFF (`bffinfo_fragment`; `bff_request_time`). Tag "BffInfoFragment". Original: com/live/evo/fragment/login/e.java	app
+com/live/evo/fragment/login/f.java	com.live.evo.fragment.login.BindAccountTipFragment	Dica para vincular conta (`fragment_bindaccount_tip`): botões que chamam `listener.a(fragment, escolha)`;	app
+com/live/evo/fragment/login/g.java	com.live.evo.fragment.login.CheckAccountFragment	Verificação de conta (layout `checkaccount_fragment`): digitar e-mail/telefone (abas 8/9) e prosseguir ao fluxo de	app
+com/live/evo/fragment/login/h.java	com.live.evo.fragment.login.LoginFinishFragment	Tela de conclusão de login/cadastro/recarga. Argumento `arg_remind_type`:	app
+com/live/evo/fragment/login/j.java	com.live.evo.fragment.login.RechargeDialogFragment	Diálogo de tela cheia que HOSPEDA todo o fluxo de recarga/login dentro da live (childFragmentManager,	app
+com/live/evo/fragment/login/l.java	com.live.evo.fragment.login.RechargeMiniFragment	Recarga "mini" (layout `recharge_mini_fragment`): digitar renew code (`RechargeEditText`) e confirmar.	app
+com/live/evo/fragment/login/m.java	com.live.evo.fragment.login.RechargeRemindFragment	Lembrete de recarga/expiração (layout `rechargeremind_fragment`; tag "RechargeRemindFragment"). Texto depende do tipo	app
+com/live/evo/fragment/login/n.java	com.live.evo.fragment.login.LoginFinishMiniFragment	Conclusão "mini" da recarga (layout `login_finish_fragment_mini`): "remind_recharge_successfully" + validade	app
+com/live/evo/fragment/login/p.java	com.live.evo.fragment.login.RegisterEmailFragment	Cadastro por e-mail (layout `register_email`, ids `registeremail_*`): campos e-mail/telefone (abas 4 e 5),	app
+com/live/evo/fragment/login/presenter/e.java	com.live.evo.fragment.login.presenter.AuthResult	Triple(sucesso, código, mensagem) devolvido pelos fluxos de auth do SDK (u<Boolean,Integer,String>)	app
+com/live/evo/fragment/login/presenter/e.java	com.live.evo.fragment.login.presenter.LoginPresenter	Presenter de login. Fluxo de [login]: view.showLoading(); coleta `MediaRepository.y0(userId, password)` (Flow<AuthResult>):	app
+com/live/evo/fragment/login/r.java	com.live.evo.fragment.login.RenewCodeLoginSupportFragment	Login por renew code (suporte): `type` 40/41/42 (42 = "bind remind"). Layouts: `code_login_support_fragment` com	app
+com/live/evo/fragment/login/s.java	com.live.evo.fragment.login.ResetAccountPasswordFragment	Redefinição de senha (layout `reset_account_password`, `resetpwd_*`): mesmas abas (6 e-mail, 7 telefone) e	app
+com/live/evo/fragment/login/u.java	com.live.evo.fragment.login.ScanedRechargeFragment	Recarga por QR "escaneado" (layout `recharge_fragment`, ids `rechargef_*`; Kotlin com Companion): mostra QR para pagar	app
+com/live/evo/fragment/login/v.java	com.live.evo.fragment.login.ShareCodeInfoFragment	Tela "compartilhe seu código" (layout `sharecode_info_fragment`): gera QR com URL	app
+com/live/evo/fragment/login/w.java	com.live.evo.fragment.login.WelcomeFragment	Tela de boas-vindas (primeira abertura): logo, texto `welcome_remind` (com N dias de teste do SDK) e	app
+com/live/evo/fragment/m1.java	com.live.evo.fragment.MessageFragment	Mensagens do servidor (layout `newmessage_fragment`; log "Message"). Original: com/live/evo/fragment/m1.java	app
+com/live/evo/fragment/m3.java	com.live.evo.fragment.FeedbackFragment	Envio do feedback do usuário (`feedback_fragment`, ids `feedbackf_*`; `rc_update_time`). Original: com/live/evo/fragment/m3.java	app
+com/live/evo/fragment/n0.java	com.live.evo.fragment.HistoryDeleteFragment	Histórico (layout `history_delete_fragment`): lista de canais assistidos com opção de apagar; `z0(index)`/`A0(position)`.	app
+com/live/evo/fragment/p2.java	com.live.evo.fragment.TabFunctionMessageFragment	Aba de mensagens (layout `tab_message_fragment`; log "TabFunctionMessageFragment"): lista + detalhe. Original: com/live/evo/fragment/p2.java	app
+com/live/evo/fragment/q2.java	(sintético)	classe sintética vazia	app
+com/live/evo/fragment/r0.java	com.live.evo.fragment.InfoFragment	Info/Contato (layout `newfragment_contact`): versão do app (`R.string.version` + `k.t()`), MAC/ID do dispositivo,	app
+com/live/evo/fragment/r2.java	com.live.evo.fragment.TabFunctionMyAccountFragment	Aba "Minha conta" (layout `tabfunction_fragment_myaccount`, ids `myaccountf_*`): mostra tipo de conta	app
+com/live/evo/fragment/s2.java	com.live.evo.fragment.TabFunctionPhoneScanFragment	Aba "PHONESCAN": mostra QR/dica para escanear com o celular (`qrcodeView`, `tipsView`). Original: com/live/evo/fragment/s2.java	app
+com/live/evo/fragment/subjuect/b.java	com.live.evo.fragment.subject.SubjectDataHelper	Cache dos dados de "Subject" (esportes/futebol: partidas por liga e por dia).	app
+com/live/evo/fragment/subjuect/c.java	com.live.evo.fragment.subject.MatchAdapter	Adapter de partidas (`subject_match_item`; `playback`/`cancel`, ícone "no_icon"). Original: com/live/evo/fragment/subjuect/c.java	app
+com/live/evo/fragment/subjuect/c0.java	com.live.evo.fragment.subject.SubjectTabMenuFragment	Container da aba de um tipo de Subject (layout `menu_fragment_subject`): hospeda [SubjectMatchFragment] e, em	app
+com/live/evo/fragment/subjuect/d.java	com.live.evo.fragment.subject.MatchClassificationAdapter	Adapter de classificação/ligas (`subject_matchclassification_item`). Original: com/live/evo/fragment/subjuect/d.java	app
+com/live/evo/fragment/subjuect/e.java	com.live.evo.fragment.subject.MatchDateAdapter	Adapter de datas (`subject_matchdate_item`). Original: com/live/evo/fragment/subjuect/e.java	app
+com/live/evo/fragment/subjuect/w.java	com.live.evo.fragment.subject.SubjectMatchFragment	Lista de partidas de um tipo (layout `subject_match_fragment`): cabeçalhos de liga/dia, botão "back to top"	app
+com/live/evo/fragment/subjuect/y.java	com.live.evo.fragment.subject.SubjectFragment	Variante da aba de subject (usa o argumento `position`). Original: com/live/evo/fragment/subjuect/y.java	app
+com/live/evo/fragment/t1.java	com.live.evo.fragment.NetworkStatusDialogFragment	Diálogo "Teste de rede" (layout `network_status_dialog`): três etapas — caixa→roteador (`imgBoxToHub*`, usa	app
+com/live/evo/fragment/u0.java	com.live.evo.fragment.LockFragment	Bloqueio infantil/grupo privado (layout `fragment_lock`, ids `adultkeyl_*`/`duo_*`): pede a senha	app
+com/live/evo/fragment/v0.java	(modelo pequeno)	classe auxiliar de 40 linhas não reconstruída	app
+com/live/evo/fragment/w0.java	com.live.evo.fragment.FunctionMenuAdapter	Adapter da lista de funções (ícone + nome; seleção destacada). Original: com/live/evo/fragment/w0.java	app
+com/live/evo/fragment/x.java	com.live.evo.fragment.ChannelFragment	Painel de canais do menu da live ("Channel List"): 3 colunas — categorias (`mCategoryListView`, [com.live.evo.osd.ProgramClassifyAdapter]),	app
+com/live/evo/fragment/y1.java	com.live.evo.fragment.OnTabEventListener	listener de eventos de aba (a/b/c)	app
+com/live/evo/fragment/z.java	com.live.evo.fragment.ContactFragment	Contato (`contact_fragment`; whatsapp/website/facebook/twitter/phone via ContactTemplate). Original: com/live/evo/fragment/z.java	app
+com/live/evo/fragment/z1.java	com.live.evo.fragment.VisibilityListener	listener de visibilidade	app
+com/live/evo/g.java	com.live.evo.LivePopupController	Controla os popups sobrepostos ao player em [com.live.evo.activity.LiveNewActivity]:	app
+com/live/evo/h.java	com.live.evo.ProductFeatureManager	Feature flags do produto. O mapa remoto (`f6970a`) nunca é atribuído nesta versão, portanto valem os padrões:	app
+com/live/evo/i.java	(sintético)	classe sintética vazia	app
+com/live/evo/j.java	(utilitário de lista imutável)	Collections.unmodifiableList(Objects.requireNonNull...) — helper do compilador	app
+com/live/evo/k.java	com.live.evo.UiFunctionConfig	Toggles de UI (valores fixos; `q()` de recarga é vazio).	app
+com/live/evo/l.java	com.live.evo.AppUserManager	Estado do usuário no nível do app (TAG/HandlerThread "UserManager"; não confundir com	app
+com/live/evo/osd/PlanListPresenter$PlanItem.java	com.live.evo.osd.PlanItemView	Item de plano de assinatura (layout `item_plan_info`: nome, preço de venda, preço original, descrição).	app
+com/live/evo/osd/a.java	com.live.evo.osd.OsdControlListenerEx	Extensão de [OsdControlListener] com um callback extra. Original: com/live/evo/osd/a.java	app
+com/live/evo/osd/b.java	com.live.evo.osd.EpgListAdapter	Adapter ListView da EPG simples do OSD: linha "HH:mm - HH:mm", nome e rótulo de reprodução	app
+com/live/evo/osd/d.java	com.live.evo.osd.EpgChildAdapter	Adapter RecyclerView de um dia da EPG (itens filhos `epg_item_child`): nome, horário,	app
+com/live/evo/osd/e.java	com.live.evo.osd.EpgItemListener	Listener de itens de EPG (OSD de programação).	app
+com/live/evo/osd/f.java	com.live.evo.osd.EpgDayAdapter	Adapter externo da "grande EPG" em forma de diálogo: um item por dia (14 dias, centrado em hoje,	app
+com/live/evo/osd/g.java	com.live.evo.osd.OsdLayer	Camada (layer) do OSD de [com.live.evo.activity.LiveNewActivity]: um elemento sobreposto ao vídeo	app
+com/live/evo/osd/h.java	com.live.evo.osd.OsdLayerManager	Gerente de camadas do OSD. Registro estático (`HashMap` companion) por nome de camada.	app
+com/live/evo/osd/i.java	com.live.evo.osd.NetworkPromptLayer	Camada "aviso de rede" (`livenewa_ll_osd_network_prompt`), prioridade 3.	app
+com/live/evo/osd/j.java	com.live.evo.osd.ProgramNameLayer	Camada com número e nome do canal (`livenewa_ll_program_name_container`). Auto-esconde	app
+com/live/evo/osd/k.java	com.live.evo.osd.OptimizingLayer	Camada de texto "otimizando programa" (`livenewa_tv_program_optimizing`), prioridade 3.	app
+com/live/evo/osd/l.java	com.live.evo.osd.LoadingLayer	Camada de "carregando" (`livenewa_ll_loading`): texto + [SLoadingView] (estilo TRANSLATE_CIRCLE)	app
+com/live/evo/osd/m.java	com.live.evo.osd.ProgramClassifyAdapter	Adapter das categorias de programas (`program_classify_item`): ícone (url `normal`/`focus`)	app
+com/live/evo/osd/n.java	com.live.evo.osd.QuestionAdapter	Adapter de perguntas frequentes (FAQ): número, pergunta e resposta (`question_item`).	app
+com/live/evo/osd/o.java	(sintético)	classe sintética vazia	app
+com/live/evo/osd/p.java	com.live.evo.osd.OsdControlListener	Callbacks genéricos de controle de OSD (usados por diálogos de recarga etc.).	app
+com/live/evo/osd/persenter/a.java	com.live.evo.osd.presenter.OSDListProgramPresenterContract	Contrato MVP do menu OSD (lista de categorias/canais/EPG), `k5.a<b>` / `k5.b<a>` no original.	app
+com/live/evo/osd/persenter/b.java	com.live.evo.osd.presenter.OSDListProgramView	OSDListProgramView	app
+com/live/evo/osd/persenter/c.java	com.live.evo.osd.presenter.OSDListProgramPresenter	Presenter do menu OSD lateral/inferior. Quase todos os métodos apenas encaminham para a	app
+com/live/evo/osd/q.java	com.live.evo.osd.OnStringListener	OnStringListener	app
+com/live/evo/osd/recyclerviewadapter/FocusFixedLinearLayoutManager.java	com.live.evo.osd.FocusFixedLinearLayoutManager	LinearLayoutManager que evita perder o foco ao navegar com D-pad no fim da lista:	app
+com/live/evo/osd/u.java	com.live.evo.osd.SubscribeManager	gerente de lembretes (SubscribeManager.kt)	app
+com/live/evo/osd/v.java	com.live.evo.osd.OnUpdateListener	Notifica atualização de assinatura (usado por [SubscribeManager.subscribe]). Original: com/live/evo/osd/v.java	app
+com/live/evo/pip/PreviewVideoView.java	com.live.evo.pip.PreviewVideoView	Janela PIP/preview do canal (1/4 da largura da tela, proporção 16:9): VideoView, texto de loading,	app
+com/live/evo/util/a0.java	com.live.evo.util.KeyboardUtils	Teclado virtual: abrir/fechar, ajustar a view quando o IME aparece, limpar foco em EditTexts.	app
+com/live/evo/util/b.java	com.live.evo.util.BrowserUtils	Abre links/ações vindas do servidor e checa a Activity do topo.	app
+com/live/evo/util/b0.java	com.live.evo.util.DebugPropsParser	Parser de pares "k=v,k2" (a fonte `a()` retorna null nesta build). Original: com/live/evo/util/b0.java (DebugPropsParser)	app
+com/live/evo/util/b1.java	com.live.evo.util.AppPropertiesStore	Armazém de propriedades remotas "app_properties_bean_key" (mapa grupo -> chave -> valor) carregado do	app
+com/live/evo/util/b2.java	com.live.evo.util.PlaybackPrefs	Posição de reprodução e flags simples em SharedPreferences.	app
+com/live/evo/util/c.java	com.live.evo.util.SecretKeySequence	Sequência secreta de teclas numéricas ("5188") para ativar modo oculto. Cada dígito 0-9 mapeia para	app
+com/live/evo/util/c1.java	com.live.evo.util.DurationFormatter	mm:ss ou hh:mm:ss a partir de milissegundos. Original: com/live/evo/util/c1.java	app
+com/live/evo/util/d.java	com.live.evo.util.AppLauncher	Abre outro app pelo pacote (launcher ou leanback launcher), flags 270532608. Original: com/live/evo/util/d.java	app
+com/live/evo/util/e.java	com.live.evo.util.LoginConfig	Configuração de login/UI (singleton com flags padrão). Contém a regex de e-mail	app
+com/live/evo/util/i1.java	com.live.evo.util.RxTrigger	Timer de "gatilho" com debounce: um Flowable de inteiros com timeout (ms) disparado por [trigger].	app
+com/live/evo/util/j.java	com.live.evo.util.LocaleContextWrapper	Força contexto em espanhol quando idioma resolvido = "es" mas o idioma base pt (condição na prática	app
+com/live/evo/util/j1.java	com.live.evo.util.RxBus	Barramento de eventos global (EventBus sobre RxJava3). `post` empurra qualquer objeto;	app
+com/live/evo/util/k1.java	com.live.evo.util.RxUtils	Helpers de execução em thread IO/UI via corrotinas (originalmente "RxUtils.kt").	app
+com/live/evo/util/l.java	com.live.evo.util.TimeZoneHelper	Ajuste de fuso horário (menu "set_sys"): lê configuração remota ("has_stz_p", "t_sys_id", "set_sys_prompt")	app
+com/live/evo/util/m.java	com.live.evo.util.LoadingTimer	Cronômetro de etapas de carregamento ("Debug Loading"): [mark] registra pares (etapa, tempo) e [finish]	app
+com/live/evo/util/m1.java	com.live.evo.util.SecondTicker	Ticker de 1 segundo compartilhado (`interval(1,1,SECONDS)` publicado e "refcount").	app
+com/live/evo/util/n.java	com.live.evo.util.ScreenUtils	Tamanho de tela via WindowManager. Original: com/live/evo/util/n.java	app
+com/live/evo/util/n1.java	com.live.evo.util.AppDirs	Diretórios do app (armazenamento externo e interno).	app
+com/live/evo/util/o.java	com.live.evo.util.FileDownloader	Download de arquivo (OkHttp, buffer 2048, progresso 0..100). Original: com/live/evo/util/o.java	app
+com/live/evo/util/o0.java	com.live.evo.util.SkinConfig	"Skin": recursos de abertura/UI configuráveis remotamente — chaves de propriedade remota	app
+com/live/evo/util/o1.java	com.live.evo.util.DateFormatFactory	Cria SimpleDateFormat (padrão "dd/MM"-like) do pattern. Original: com/live/evo/util/o1.java	app
+com/live/evo/util/p.java	com.live.evo.util.EpgBeanDaoUtils	Consulta dois programas de EPG (atual e próximo) a partir do relógio do servidor:	app
+com/live/evo/util/p1.java	com.live.evo.util.ContactTemplate	Substitui placeholders em textos remotos: ${Email}, ${Website}, ${Whatsapp}, ${Phone}, ${Facebook}, ${Twitter},	app
+com/live/evo/util/q1.java	com.live.evo.util.DateUtils	Funções de data usadas na EPG e OSD.	app
+com/live/evo/util/r.java	com.live.evo.util.FileUtils	Remoção recursiva de arquivos/diretórios. Original: com/live/evo/util/r.java (a=delete, b=deleteDir, c=deleteFile)	app
+com/live/evo/util/r0.java	com.live.evo.util.NoticeActionHandler	Trata o "tipo de ação" de avisos/banners (`i5.v` bean): `channelId` (troca canal), `programId`,	app
+com/live/evo/util/r1.java	com.live.evo.util.ToastUtils	Toasts do app, via `com.foxivid.baselib.util.ToastHelper` (original `x1.f1.lb.util.g1`):	app
+com/live/evo/util/s.java	com.live.evo.util.FontUtils	Typefaces do app (campos estáticos preenchidos na inicialização). Original: com/live/evo/util/s.java	app
+com/live/evo/util/s0.java	com.live.evo.util.ModelHelper	Camada de tradução entre os modelos do SDK (`ChannelStreamResponse`, `EPGProgramme`) e os modelos	app
+com/live/evo/util/s1.java	com.live.evo.util.ToastUtils	toast simples	app
+com/live/evo/util/t.java	com.live.evo.util.TextStyleUtils	Aplica fonte ao TextView (null-safe). Original: com/live/evo/util/t.java (a→typeface0, b→typeface2, c→typeface3, d→typeface1)	app
+com/live/evo/util/t0.java	com.live.evo.util.NetworkUtils	Conectividade simples. Original: com/live/evo/util/t0.java	app
+com/live/evo/util/t1.java	com.live.evo.util.WorkHandler	Executor em thread única ("tortoise work thread #0") para trabalho agendado.	app
+com/live/evo/util/u0.java	com.live.evo.util.ServerTimeClient	Cliente OkHttp usado só para o relógio/servidor: interceptor adiciona headers "GetServerTime", "ClientTimeMS",	app
+com/live/evo/util/u1.java	com.live.evo.util.ServerClock	Relógio do servidor: `now()` = `d1.d()` do SDK (tempo corrigido pelo servidor).	app
+com/live/evo/util/v.java	com.live.evo.util.GlideImageLoader	Carregamento de imagens com Glide (sem cache de disco, `DiskCacheStrategy.NONE` = `l.j.f15048a`),	app
+com/live/evo/util/v1.java	com.live.evo.util.ApkInstallIntent	Instala APK via FileProvider (`<pkg>.fileProvider`). Original: com/live/evo/util/v1.java (ApkInstaller)	app
+com/live/evo/util/w.java	com.live.evo.util.GsonFactory	Gson: formato de data "yyyy-MM-dd HH:mm:ss"; variante com desserializador de HashMap<String,Object>. Original: com/live/evo/util/w.java	app
+com/live/evo/util/w1.java	com.live.evo.util.QrBitmapHelper	Gera QR code (ZXing/e1.a "TEXT", 1) a partir de texto. Original: com/live/evo/util/w1.java (QrBitmapHelper)	app
+com/live/evo/util/x0.java	com.live.evo.util.PermissionUtils	Permissões de runtime (WRITE_EXTERNAL_STORAGE). Original: com/live/evo/util/x0.java	app
+com/live/evo/util/x1.java	com.live.evo.util.CommonUtils	Utilitários gerais: bytes de rede, mascaramento de contas/e-mails, resources, debounce.	app
+com/live/evo/util/y.java	com.live.evo.util.ImageCache	Cache de bitmaps em memória (LruCache) e retentor de fragment para sobreviver a mudanças de configuração;	app
+com/live/evo/util/y0.java	com.live.evo.util.LogInit	SharedPreferences "tvcinema" (usado por LogInit). Original: com/live/evo/util/y0.java	app
+com/live/evo/util/z.java	com.live.evo.util.KeyboardUtils	InputMethodManager	app
+com/live/evo/util/z0.java	com.live.evo.util.AnimUtils	Animações de view (translationY etc.). Original: com/live/evo/util/z0.java	app
+com/live/evo/util/{a,f,f1,g,h,i,q0,u,x}.java	(vazios/sintéticos)	classes vazias, interfaces marcador ou helpers de compilador	app
+com/live/evo/util/{k,p0,y1,d1,e1,z1,a2,v0,w0,g1}.java	com.live.evo.util.QrResultParsers	parsers de QR/contatos (ZXing) — não reconstruídos	app
+com/live/evo/widget/AdBannerView.java	com.live.evo.widget.AdBannerView	Banner de anúncios (youth.banner.Banner) com click listener `w4.a`. Original: com/live/evo/widget/AdBannerView.java	app
+com/live/evo/widget/BaseButton.java	com.live.evo.widget.BaseButton	Button base do app (só herda). Original: com/live/evo/widget/BaseButton.java	app
+com/live/evo/widget/CircleProgressBar.java	com.live.evo.widget.CircleProgressBar	Barra de progresso circular. Original: com/live/evo/widget/CircleProgressBar.java (+ `RoundProgressView`, `GaugeView`: medidores desenhados 	app
+com/live/evo/widget/EmailAutoCompleteTextView.java	com.live.evo.widget.EmailAutoCompleteTextView	AutoComplete de e-mail com sugestões de domínios (layout de item `v_item_email`). Original: com/live/evo/widget/EmailAutoCompleteTextView.ja	app
+com/live/evo/widget/EmptyRecyclerView.java	com.live.evo.widget.EmptyRecyclerView	RecyclerView com "empty view" e scroll vertical opcional. Original: com/live/evo/widget/EmptyRecyclerView.java	app
+com/live/evo/widget/GaugeView.java	com.live.evo.widget.GaugeView	Medidor semicircular (value, angles, cores). Original: com/live/evo/widget/GaugeView.java	app
+com/live/evo/widget/GifView.java	com.live.evo.widget.GifView	GIF desenhado via android.graphics.Movie. Original: com/live/evo/widget/GifView.java	app
+com/live/evo/widget/LabelRemoveKeyCodeEnterEditText.java	com.live.evo.widget.LabelRemoveKeyCodeEnterEditText	Rótulo + RemoveKeyCodeEnterEditText (layout `label_removekeycode_edittext`). Original: com/live/evo/widget/LabelRemoveKeyCodeEnterEditText.j	app
+com/live/evo/widget/LightTextView.java	com.live.evo.widget.LightTextView	TextView "light" (fonte leve). Original: com/live/evo/widget/LightTextView.java	app
+com/live/evo/widget/LiveCatchUpVideoView.java	com.live.evo.widget.LiveCatchUpVideoView	Vídeo da live em modo catch-up: teclas ESQ/DIR (21/22) → `a(true)`; OK/ENTER (23/66) → `a(!isPlaying)`;	app
+com/live/evo/widget/LoadView.java	com.live.evo.widget.LoadView	Layout de "carregando VOD" (`p_vod_cache`) com texto. Original: com/live/evo/widget/LoadView.java	app
+com/live/evo/widget/MarqueeTextView.java	com.live.evo.widget.MarqueeTextView	TextView que sempre se considera focada (marquee). Original: com/live/evo/widget/MarqueeTextView.java	app
+com/live/evo/widget/MenuTabLayout.java	com.live.evo.widget.MenuTabLayout	Barra de abas horizontal dos menus (backgrounds `menu*_fragment_tab_bg_*`). Original: com/live/evo/widget/MenuTabLayout.java	app
+com/live/evo/widget/NetView.java	com.live.evo.widget.NetView	View de teste de rede / medidor (sem lógica relevante). Original: com/live/evo/widget/NetView.java; FreeTrialView.java (selo de teste)	app
+com/live/evo/widget/NoAnimationViewPager.java	com.live.evo.widget.NoAnimationViewPager	ViewPager sem animação de troca e que repassa `executeKeyEvent`. Original: com/live/evo/widget/NoAnimationViewPager.java	app
+com/live/evo/widget/ProgramListView.java	com.live.evo.widget.ProgramListView	ListView sem over-scroll. Original: com/live/evo/widget/ProgramListView.java	app
+com/live/evo/widget/ProgramRecycleView.java	com.live.evo.widget.ProgramRecycleView	Lista vertical (leanback) de programas/canais com listeners de seleção/click. Original: com/live/evo/widget/ProgramRecycleView.java	app
+com/live/evo/widget/RechargeEditText.java	com.live.evo.widget.RechargeEditText	EditText de código de recarga (formatação, `g()`). Original: com/live/evo/widget/RechargeEditText.java	app
+com/live/evo/widget/RemoveKeyCodeEnterEditText.java	com.live.evo.widget.RemoveKeyCodeEnterEditText	EditText que consome ENTER para não disparar ação padrão (onKeyDown/onKeyUp ignoram DPAD_CENTER/ENTER e	app
+com/live/evo/widget/RoundProgressView.java	com.live.evo.widget.RoundProgressView	Progresso redondo. Original: com/live/evo/widget/RoundProgressView.java	app
+com/live/evo/widget/SpeedTextView.java	com.live.evo.widget.SpeedTextView	Texto rolante (marquee de anúncios): desloca o texto a `speed` px/frame (padrão 4) via Timer + invalidate	app
+com/live/evo/widget/VodLoadAnimation.java	com.live.evo.widget.VodLoadAnimation	Animação de loading do VOD (layout `vod_load_anim`). Original: com/live/evo/widget/VodLoadAnimation.java	app
+com/live/evo/widget/ijkmedia/a.java	com.live.evo.widget.IMediaController	Controlador de mídia (barra de progresso + tempos + play/pause) ancorado em um PopupWindow.	app
+com/live/evo/widget/ijkmedia/b.java	com.live.evo.widget.IjkMediaController	Implementação visual do [IMediaController]: SeekBar, textos de posição/duração, botão play/pause e	app
+com/live/evo/widget/k.java	com.live.evo.widget.CatchUpVideoView	Base do vídeo de catch-up (FrameLayout com PlayerView + loading + debug + MediaController).	app
+com/live/evo/widget/nicespinner/*.java	com.live.evo.widget.nicespinner.NiceSpinner	lib NiceSpinner	app
+com/live/evo/widget/nicespinner/NiceSpinner.java	com.live.evo.widget.nicespinner.NiceSpinner	Cópia da lib "NiceSpinner" (arbogast): dropdown com lista (`ListView` em PopupWindow), adapters `a`/`b`	app
+com/live/evo/widget/o.java	com.live.evo.widget.BaseDialog	Base dos diálogos do app (estilo `RechargeAlertialog`): Dialog sem comportamento extra. Original: com/live/evo/widget/o.java	app
+com/live/evo/widget/p.java	com.live.evo.widget.PopupMenuAdapter	Adapter dos itens de menu (`popup_menu_item2` ou `popup_menu_item_pip` se [pip]): ícone (oculto se -1) + nome.	app
+com/live/evo/widget/q.java	com.live.evo.widget.PopupCurrentEpgWindow	Banner inferior "canal atual" (layout `current_epg_layout`): número do canal (3 dígitos, ex. "007"),	app
+com/live/evo/widget/s.java	com.live.evo.widget.PopupMenuC	Menu lateral direito (tecla MENU) com `VerticalGridView`: item "E P G" (broadcast `com.bb.action.EPG`) e item	app
+com/live/evo/widget/sloading/*.java	com.live.evo.widget.sloading.SLoadingView/LoadingStyle	lib SLoading	app
+com/live/evo/widget/sloading/SLoadingView.java	com.live.evo.widget.sloading.SLoadingView	View de loading animada: usa um Drawable animado (`sloading/b.java`, com `sloading/a.java` como controlador de	app
+com/live/evo/widget/sloading/c.java	com.live.evo.widget.sloading.LoadingStyle	Estilos de animação do [SLoadingView] (cada um mapeia para uma classe de renderização em `s5.*`/`widget.*`).	app
+com/live/evo/widget/u.java	com.live.evo.widget.TrialPopup	Popup "trial" (layout `popup_trial`, 150x150 dp, fundo transparente `icon_transport`, animação fade),	app
+com/live/evo/widget/v.java	com.live.evo.widget.SpaceItemDecoration	ItemDecoration com espaçamento fixo. Original: com/live/evo/widget/v.java	app
+com/live/evo/widget/{l,m,n,t}.java	(interfaces/classes marcador)	configurações do ijk (n = interface de settings)	app
+com/live/evo_mobile/adapter/a.java	com.live.evo_mobile.adapter.ChannelTitleAdapter	Títulos de categorias de canal (ChannelTitleData). Original: com/live/evo_mobile/adapter/a.java	app
+com/live/evo_mobile/adapter/b.java	com.live.evo_mobile.adapter.EpgDateAdapter	Datas da EPG (EpgDateData). Original: com/live/evo_mobile/adapter/b.java	app
+com/live/evo_mobile/adapter/d.java	com.live.evo_mobile.adapter.EpgListAdapter	Itens de EPG (EpgData): botões `tv_guide_subscribe`/`tv_guide_unsubscribe`/`tv_guide_catchup` conforme o estado do	app
+com/live/evo_mobile/adapter/f.java	com.live.evo_mobile.adapter.HistoryLiveListAdapter	Histórico de canais com modo de seleção (`isSelected`). Original: com/live/evo_mobile/adapter/f.java (HistoryLiveListData)	app
+com/live/evo_mobile/adapter/g.java	com.live.evo_mobile.adapter.LiveSearchAdapter	Resultado da busca de canais (LiveSearchListData). Original: com/live/evo_mobile/adapter/g.java	app
+com/live/evo_mobile/adapter/i.java	com.live.evo_mobile.adapter.StringListAdapter	Lista de strings (histórico de busca / dados simples) com listener de clique. Original: com/live/evo_mobile/adapter/i.java	app
+com/live/evo_mobile/adapter/k.java	com.live.evo_mobile.adapter.MainSettingAdapter	Itens de configuração (MainSettingData). Original: com/live/evo_mobile/adapter/k.java	app
+com/live/evo_mobile/adapter/l.java	com.live.evo_mobile.adapter.DatePickAdapter	Seletor de data (ArrayAdapter<String> com `selectedId` destacado). Original: com/live/evo_mobile/adapter/l.java (DatePickAdapter)	app
+com/live/evo_mobile/adapter/n.java	com.live.evo_mobile.adapter.StoryListAdapter	Histórias/categorias (StoryListData). Original: com/live/evo_mobile/adapter/n.java	app
+com/live/evo_mobile/adapter/p.java	com.live.evo_mobile.adapter.SubscribeItemAdapter	Itens de lembrete (u7.j) com ação "tv_guide_unsubscribe". Original: com/live/evo_mobile/adapter/p.java	app
+com/live/evo_mobile/media/activity/SplashActivity.java	com.live.evo_mobile.media.activity.SplashActivity	Splash da versão MOBILE (aberta por [com.live.load.InitActivity] quando o tipo de app é "mobile").	app
+com/live/evo_mobile/ui/AboutUsActivity.java	com.live.evo_mobile.ui.AboutUsActivity	Sobre/Contato: HTML (`htmlText`) com `customer_service`/`contact_us` (`cs_tag`). Original: com/live/evo_mobile/ui/AboutUsActivity.java	app
+com/live/evo_mobile/ui/AccountLinkActivity.java	com.live.evo_mobile.ui.AccountLinkActivity	Vincular conta (e-mail/telefone): verificação por código (`setting_verification_tip_txt1/2`), `digitCode`,	app
+com/live/evo_mobile/ui/AccountManageActivity.java	com.live.evo_mobile.ui.AccountManageActivity	Gerenciar conta (`account_management`): mostra dados da conta, logout (`logout_success`/`logout_failure`, loading	app
+com/live/evo_mobile/ui/HistoryListActivity.java	com.live.evo_mobile.ui.HistoryListActivity	Histórico: ViewPager com abas "Live" (`main_live`, [HistoryLiveFragment]) e VOD (`home_menu_vod`), modo edição	app
+com/live/evo_mobile/ui/MainViewActivity.java	com.live.evo_mobile.ui.MainViewActivity	Tela principal da versão MOBILE: container `frame_content` + barra de abas (`TabBarBean.ItemBean`):	app
+com/live/evo_mobile/ui/RenewActivity.java	com.live.evo_mobile.ui.RenewActivity	Renovar/recarregar: digitar código de recarga (`input_invalid_recharge_code`), mostra "in_recharging" enquanto	app
+com/live/evo_mobile/ui/SearchLiveActivity.java	com.live.evo_mobile.ui.SearchLiveActivity	Busca de canais ao vivo: palavra-chave, resultados (`LiveSearchListData`, categoria `channel_column_all`) e histórico	app
+com/live/evo_mobile/ui/SettingsActivity.java	com.live.evo_mobile.ui.SettingsActivity	Configurações: lista (`MainSettingData`) com idioma (popup `profile_menu_switch_language_title/content`), versão/upgrade	app
+com/live/evo_mobile/ui/SettingsDetailActivity.java	com.live.evo_mobile.ui.SettingsDetailActivity	Detalhe de configuração (casca vazia sobre z4.i). Original: com/live/evo_mobile/ui/SettingsDetailActivity.java	app
+com/live/evo_mobile/ui/ShareActivity.java	com.live.evo_mobile.ui.ShareActivity	Compartilhar app: monta `share_msg`/`share_app` e dispara `Intent.ACTION_SEND` (EXTRA_TEXT), com atalho para	app
+com/live/evo_mobile/ui/d0.java	com.live.evo_mobile.ui.HistoryLiveFragment	Histórico de canais (modo seleção para apagar; `select_history_toast`). Original: com/live/evo_mobile/ui/d0.java (HistoryLiveFragment.kt)	app
+com/live/evo_mobile/ui/d1.java	com.live.evo_mobile.ui.MainTVFragment	"TV" do mobile: player (PlayerView) + lista de canais/histórico/favoritos sobrepostos; gestos	app
+com/live/evo_mobile/ui/favorite/FavoriteListActivity.java	com.live.evo_mobile.ui.favorite.FavoriteListActivity	Favoritos: mesmas abas de [com.live.evo_mobile.ui.HistoryListActivity] ("Live"/"VOD" + `vod_favorite`),	app
+com/live/evo_mobile/ui/favorite/g.java	com.live.evo_mobile.ui.favorite.FavoriteLiveFragment	Lista de canais favoritos (categoria `channel_column_all`, `select_favorite_toast`, `mHistoryLiveListAdapter` reutilizado).	app
+com/live/evo_mobile/ui/k0.java	com.live.evo_mobile.ui.ProfileFragment	Perfil/"Minha conta": entradas de menu — settings (`profile_menu_settings`), adulto (`menu_adult` switch),	app
+com/live/evo_mobile/ui/login/LoginTypeActivity.java	com.live.evo_mobile.ui.login.LoginTypeActivity	Activity de login/cadastro da versão mobile: [NoScrollViewPager] com 4 páginas	app
+com/live/evo_mobile/ui/login/NoScrollViewPager.java	com.live.evo_mobile.ui.login.NoScrollViewPager	ViewPager que ignora gestos de swipe. Original: com/live/evo_mobile/ui/login/NoScrollViewPager.java	app
+com/live/evo_mobile/ui/login/a.java	com.live.evo_mobile.ui.login.LoginAccountInput	Modelo de conta digitada (accountStr, emailStr, phoneStr, phonePreCode). Original: com/live/evo_mobile/ui/login/a.java	app
+com/live/evo_mobile/ui/login/b.java	com.live.evo_mobile.ui.login.CountryCodeAdapter	Adapter da lista de países (spinner). Original: com/live/evo_mobile/ui/login/b.java	app
+com/live/evo_mobile/ui/login/c.java	com.live.evo_mobile.ui.login.CountryCode	Código de país (phonePreCode, countryCode, countryShowName). Original: com/live/evo_mobile/ui/login/c.java	app
+com/live/evo_mobile/ui/login/g1.java	com.live.evo_mobile.ui.login.ResetPasswordFragment	Redefinir senha (e-mail/telefone, `preCode`): `send_code`, `account_empty`, `user_no_correct`. Após sucesso volta ao login.	app
+com/live/evo_mobile/ui/login/k0.java	com.live.evo_mobile.ui.login.LoginAccountFragment	Login por conta com abas TAB_EMAIL/TAB_PHONE (`currentTab`), mostrar/ocultar senha por aba (`pwdShowForEmail`),	app
+com/live/evo_mobile/ui/login/s0.java	com.live.evo_mobile.ui.login.LoginEntryFragment	Página 0: escolha do tipo de login (botões: e-mail/telefone, código de renovação, escanear, criar conta...).	app
+com/live/evo_mobile/ui/login/t0.java	com.live.evo_mobile.ui.login.LoginViewPagerAdapter	Adapter de páginas do [LoginTypeActivity] (`com.tvc.lib.mobile.ui.base.f`). Original: com/live/evo_mobile/ui/login/t0.java	app
+com/live/evo_mobile/ui/login/u.java	com.live.evo_mobile.ui.login.CreateAccountFragment	Criar conta (e-mail ou telefone, abas TAB_EMAIL/TAB_PHONE): botão `send_code`, textos `email_normal_register_remind`/	app
+com/live/evo_mobile/ui/n.java	com.live.evo_mobile.ui.ChannelListFragment	Lista de canais por categoria (`ChannelTitleData` à esquerda + `StoryListData`/canais à direita), carregada via	app
+com/live/evo_mobile/ui/n2.java	com.live.evo_mobile.ui.SubscribeListFragment	Lista de lembretes (agendamentos): remove/ativa; guarda `lastRemindItemList`. Original: com/live/evo_mobile/ui/n2.java (SubscribeListFragmen	app
+com/live/evo_mobile/ui/t.java	com.live.evo_mobile.ui.EpgListFragment	Guia de programação ("tv_guide_today"/"tv_guide_none"): seletor de data ([com.live.evo_mobile.adapter.DatePickAdapter]) +	app
+com/live/load/InitActivity.java	com.live.load.InitActivity	Activity de entrada (LAUNCHER + LEANBACK_LAUNCHER) do app.	app
+d6/a.java	com.live.evo.speedtest.SpeedTestManager	Gerenciador de teste de velocidade — stub (sem implementação no APK).	app
+d6/b.java	com.live.evo.speedtest.SpeedTestResult	SpeedTestResult	app
+dialog/n.java	com.live.evo.dialog.OnDialogActionListener	Callbacks de [ExitDialog]. Original: dialog/n.java (interface vazia; callback `a()` é chamado no confirmar)	app
+e5/a.java	com.live.evo.fragment.login.LoginNavigator	Fachada de navegação do fluxo de login/recarga. No original é o pacote `e5` (e5/b, d, e, g, i = funções estáticas	app
+e5/a.java	com.live.evo.fragment.login.LoginNavigator (BackHandler)	dispatch de Back para fragments	app
+e5/b.java	com.live.evo.fragment.login.LoginNavigator.showAccountLogin	fachada → AccountUserLoginFragment.show	app
+e5/c.java	com.live.evo.fragment.login.LoginNavigator.AccountLoginCallback	callbacks do login	app
+e5/d.java	com.live.evo.fragment.login.LoginNavigator.showScanedRecharge	fachada → ScanedRechargeFragment.show	app
+e5/e.java	com.live.evo.fragment.login.LoginNavigator.showRechargeRemind	fachada → RechargeRemindFragment.show	app
+e5/f.java	com.live.evo.fragment.login.LoginNavigator.RechargeRemindCallback	callbacks do lembrete	app
+e5/g.java	com.live.evo.fragment.login.LoginNavigator.showRegister	fachada → RegisterEmailFragment.show	app
+e5/h.java	com.live.evo.fragment.login.LoginNavigator.FragmentNavigator	back/next	app
+e5/i.java	com.live.evo.fragment.login.LoginNavigator.showResetPassword	fachada → ResetAccountPasswordFragment.show	app
+e5/j.java	com.live.evo.fragment.login.LoginNavigator.FragmentNavigator	back/next (reset)	app
+fragment/a2.java	com.live.evo.fragment.OnMenuCallback	OnMenuCallback	app
+fragment/login/presenter/g.java	com.live.evo.fragment.login.presenter.RechargePresenter	Presenter de recarga completa: [loginWithCode] chama `ModelHelper.loginWithRenewCode(code, isCreateAccount)`;	app
+fragment/login/presenter/i.java	com.live.evo.fragment.login.presenter.RechargeMiniPresenter	Presenter da recarga "mini": mesmo [loginWithAccount] mas com mensagem de falha	app
+fragment/login/presenter/l.java	com.live.evo.fragment.login.presenter.RegisterEmailPresenter	Presenter de cadastro por e-mail (RegisterEmailPresenter.kt). [requestVerifyCode]: se accountLoginType == 1 →	app
+fragment/login/presenter/r.java	com.live.evo.fragment.login.presenter.ResetPasswordPresenter	Presenter de reset de senha (ResetPasswordPresenter.kt): mesma estrutura do cadastro, com tipo "FORGET"	app
+fragment/y1.java	com.live.evo.fragment.OnTabEventListener	OnTabEventListener	app
+fragment/z1.java	com.live.evo.fragment.VisibilityListener	Notificação de visibilidade do fragment para o pai. Original: fragment/z1.java	app
+i5/a0.java	com.live.evo.model.AppProperty	Item de propriedade remota (id, grupo, chave, valor). Original: i5/a0.java	app
+i5/c0.java	com.live.evo.model.SubscribeBean	Lembrete/assinatura de programa. Original: i5/c0.java	app
+i5/h.java	com.live.evo.model.ChannelData	Canal exibido na UI. Original: i5/h.java (ChannelData; também referenciado como ChannelBean).	app
+i5/i.java	com.live.evo.model.CategoryBean	Categoria/coluna de canais. Original: i5/i.java	app
+i5/p.java	com.live.evo.model.ProgramBean	Programa de EPG. Original: i5/p.java (ProgramBean; start/end em millis).	app
+i5/r.java	com.live.evo.model.QuestionBean	Pergunta/resposta (FAQ). Original: i5/r.java	app
+i5/y.java	com.live.evo.widget.MenuItem	Item de menu (ícone, texto, ação). Original: i5/y.java	app
+k5/a.java	com.live.evo.fragment.login.presenter.BasePresenter	Presenter base. Original: k5/a.java	app
+k5/b.java	com.live.evo.fragment.login.presenter.BaseView	View base. Original: k5/b.java	app
+l5/b.java	com.live.evo.fragment.LazyFragment	Fragment "preguiçoso" para telas da TV: `b0()` = layout, `c0(Bundle)` = init de dados, `d0()` = depois de init,	app
+presenter/a.java	com.live.evo.fragment.login.presenter.CheckAccountView	CheckAccountView	app
+presenter/c.java	com.live.evo.fragment.login.presenter.LoginPresenterContract	LoginPresenterContract	app
+presenter/d.java	com.live.evo.fragment.login.presenter.LoginView	LoginView	app
+presenter/f.java	com.live.evo.fragment.login.presenter.RechargeView	View de recarga completa (Tab/MyAccount). Original: presenter/f.java	app
+presenter/h.java	com.live.evo.fragment.login.presenter.RechargeMiniView	View de recarga "mini". Original: presenter/h.java	app
+presenter/j.java	com.live.evo.fragment.login.presenter.RegisterEmailPresenterContract	RegisterEmailPresenterContract	app
+presenter/k.java	com.live.evo.fragment.login.presenter.RegisterEmailView	RegisterEmailView	app
+presenter/m.java	com.live.evo.fragment.login.presenter.CodeLoginPresenterContract	CodeLoginPresenterContract	app
+presenter/n.java	com.live.evo.fragment.login.presenter.CodeLoginView	CodeLoginView	app
+presenter/o.java	com.live.evo.fragment.login.presenter.CodeLoginPresenter	Implementação trivial: apenas chama `view.b()`. Original: presenter/o.java	app
+presenter/p.java	com.live.evo.fragment.login.presenter.ResetPasswordPresenterContract	ResetPasswordPresenterContract	app
+presenter/q.java	com.live.evo.fragment.login.presenter.ResetPasswordView	ResetPasswordView	app
+util/k.java	com.live.evo.util.QrResultParsers	Parsers de QR code/contatos (cópia do ZXing `client.result`): vCard, MECARD, texto/telefone, e-mail, URL.	app
+x4/a.java	com.live.evo.catchup.CatchUpClickListener	Contrato "clicou em um programa passado": inicia o catch-up e chama [callback] com sucesso/falha.	app
+x4/b.java	com.live.evo.catchup.EpgDataStore	Armazém de canais + listas de programas (EPG grande): [channels] e, para cada canal, um par	app
+x4/c.java	com.live.evo.catchup.CatchUpPlayInfo	Dados de reprodução de um catch-up (início/fim em ms, título, descrição, canal, ícone, número...).	app
+x4/d.java	com.live.evo.catchup.LiveCatchUpClickHandler	Implementação padrão: valida o programa (fim > início e fim <= agora), checa suporte	app
+x4/g.java	com.live.evo.catchup.CatchUpPlayInfoFactory	Fábrica de [CatchUpPlayInfo] e formatação "HH:mm". Original: x4/g.java	app

@@ -1,0 +1,129 @@
+original_path	nome_reconstruido_FQN	descricao_curta
+t/v/c/i/a.java	com.foxivid.baselib.config.InteractionUtils	fachada da UI; só b0() (initSdk) reconstruído
+x1/f1/lb/config/a.java	com.foxivid.baselib.config.BaseLibConfig	classe sintética vazia
+x1/f1/lb/config/b.java	com.foxivid.baselib.config.BaseLibConfig	Config: flags globais e boot do SDK (init)
+x1/f1/lb/config/b.java$e	com.foxivid.baselib.config.DefaultHeaderParamsProvider	valores X-Foxivid-* (UserManager/AppAttrUtils/DeviceInfo)
+x1/f1/lb/config/b.java$g	com.foxivid.baselib.config.SdkLogBackend	backend de log q6.a (logcat em debug + RemoteLogger)
+x1/f1/lb/config/b.java$b	com.foxivid.baselib.config.BaseLibConfig (lambda)	relógio elapsedRealtime para util/d1
+x1/f1/lb/config/b.java$c	com.foxivid.baselib.config.BaseLibConfig (lambda)	codec Base64 flag 11 para util/o0
+x1/f1/lb/config/c.java	com.foxivid.baselib.config.LoadingIndicator	interface de indicador de carregamento
+lf/b.java	com.foxivid.baselib.crypto.ApiCrypto	AES-128-CBC + RSA/PKCS1 + assinatura sha256 (X-Sign)
+lf/b.java$a	com.foxivid.baselib.crypto.ApiCrypto.EncryptedPayload	envelope cifrado da requisição
+lf/a.java	com.foxivid.baselib.crypto.ApiCrypto.sha256Hex	lambda hex %02x
+pf/a.java	com.foxivid.baselib.crypto.CryptoRequestInterceptor	cifra corpo POST / params GET (X-Data) + cabeçalhos
+pf/b.java	com.foxivid.baselib.crypto.CryptoResponseInterceptor	verifica X-Sign da resposta e decifra
+pf/c.java	com.foxivid.baselib.crypto.CryptoRegistry	mapa Request->EncryptedPayload (nunca limpo)
+(novo)	com.foxivid.baselib.crypto.ApiCryptoDemo	demo JVM do protocolo (não existe no APK)
+of/a.java	com.foxivid.baselib.network.HeaderInterceptor	singleton de parâmetros + preenchimento X-Foxivid-*
+of/b.java	com.foxivid.baselib.network.HeaderParamsProvider	interface dos parâmetros de cabeçalho
+of/e.java	com.foxivid.baselib.network.HttpClientFactory	OkHttpClient cifrado e simples (trust-all)
+of/e.java$a	com.foxivid.baselib.network.TrustAllCerts	X509TrustManager que aceita tudo
+of/c.java	com.foxivid.baselib.network.HttpClientFactory (lambda)	logger do HttpLoggingInterceptor
+of/d.java	com.foxivid.baselib.network.HttpClientFactory (lambda)	HostnameVerifier -> true
+of/f.java	com.foxivid.baselib.network.RetrofitFactory	cache de Retrofit por endpoint
+x1/f1/lb/streaming/client/d.java	com.foxivid.baselib.network.SSLHttpClient	TLS mútuo do AsyncHttpClient (BKS res/raw/server, senha 123456)
+x1/f1/lb/streaming/client/c.java	com.foxivid.baselib.network.SSLHttpClient (lambda)	HostnameVerifier -> true
+x1/f1/lb/host/b.java	com.foxivid.baselib.host.ServerProviderUtils	pools de servidores, cache de hosts, fábricas de provider
+x1/f1/lb/host/b.java$c	com.foxivid.baselib.host.ServerProviderUtils.updateServers	persistência assíncrona (não descompilado; reconstruído)
+(literais)	com.foxivid.baselib.host.ServerPool	enum das chaves *_SERVERS
+x1/f1/lb/host/a.java	com.foxivid.baselib.host.ServerProvider	interface Retrofit do servidor atual com failover
+x1/f1/lb/api/d.java	com.foxivid.baselib.api.AccountApi	Retrofit conta (protocolo extra)
+x1/f1/lb/api/h.java	com.foxivid.baselib.api.PtvAccountApi	Retrofit conta PTV
+x1/f1/lb/api/m.java	com.foxivid.baselib.api.RechargeApi	Retrofit recarga por código
+x1/f1/lb/api/e.java	com.foxivid.baselib.api.FeedbackApi	Retrofit upload de feedback (multipart)
+x1/f1/lb/api/l.java	com.foxivid.baselib.api.StreamMetaApi	Retrofit metadados de canais/VOD/catch-up
+x1/f1/lb/api/j.java	com.foxivid.baselib.api.SportsApi	Retrofit agenda esportiva
+x1/f1/lb/api/f.java	com.foxivid.baselib.api.AccountAuxApi	interface vazia (pool ACCOUNT; nome inventado)
+x1/f1/lb/api/g.java	com.foxivid.baselib.api.MessageApi	interface vazia (pool MESSAGE_CENTER)
+x1/f1/lb/api/n.java	com.foxivid.baselib.api.UpgradeApi	interface vazia (pool UPGRADE)
+x1/f1/lb/api/a.java	com.foxivid.baselib.api.Api3AClient	cliente conta extra com runAndRetry
+x1/f1/lb/api/b.java	com.foxivid.baselib.api.ApiStreamMetaClient	cliente StreamMetaApi
+x1/f1/lb/api/c.java	com.foxivid.baselib.api.ApiSubscriptionClient	cliente RechargeApi
+x1/f1/lb/api/i.java	com.foxivid.baselib.api.PTVApi3AClient	cliente conta PTV + upload feedback + state
+x1/f1/lb/api/k.java	com.foxivid.baselib.api.SportsApiClient	cliente SportsApi
+x1/f1/lb/api/a.java$a (e b$a,c$a,i$u,k$i)	com.foxivid.baselib.api.DefaultRetryPolicy	retry 3x / 3000 ms
+x1/f1/lb/api/cache/b.java	com.foxivid.baselib.api.cache.FileDiskCacheUtil	cache de arquivos por URL (MD5)
+x1/f1/lb/api/cache/a.java	com.foxivid.baselib.api.cache.FileDiskCacheUtil (lambda)	Runnable de download
+n6/a.java	com.foxivid.baselib.model.common.BaseModel	base Serializable com toString reflexivo
+n6/b.java	com.foxivid.baselib.model.common.ApiResult	resposta genérica checkSum/code/data/msg/timeMs
+z1/b1/lb/m/IApiResponse.java	com.foxivid.baselib.model.extra.IApiResponse	contrato errCode/errMsg/isSuccess
+eg/a.java	com.foxivid.baselib.model.extra.LogoutRequest	corpo vazio de logout (nome inventado)
+eg/b.java	com.foxivid.baselib.model.extra.QueryPropertyRequest	corpo vazio de app property (nome inventado)
+z1/b1/lb/m/extra/ApiRequestBasic.java	com.foxivid.baselib.model.extra.ApiRequestBasic	modelo
+z1/b1/lb/m/extra/ApiResponse.java	com.foxivid.baselib.model.extra.ApiResponse	modelo
+z1/b1/lb/m/extra/ApiResponseBasic.java	com.foxivid.baselib.model.extra.ApiResponseBasic	modelo
+z1/b1/lb/m/extra/heartbeat/HeartbeatInfo.java	com.foxivid.baselib.model.extra.HeartbeatInfo	modelo (campo ofuscado "a")
+z1/b1/lb/m/extra/marquee/MarqueeInfo.java	com.foxivid.baselib.model.extra.MarqueeInfo	modelo
+z1/b1/lb/m/extra/marquee/MarqueeList.java	com.foxivid.baselib.model.extra.MarqueeList	modelo
+z1/b1/lb/m/extra/subscription/PurchaseHistoryInfo.java	com.foxivid.baselib.model.extra.subscription.PurchaseHistoryInfo	modelo
+z1/b1/lb/m/extra/subscription/QueryProductListInfo.java	com.foxivid.baselib.model.extra.subscription.QueryProductListInfo	modelo
+z1/b1/lb/m/extra/subscription/QuerySubscriptionListInfo.java	com.foxivid.baselib.model.extra.subscription.QuerySubscriptionListInfo	modelo
+z1/b1/lb/m/extra/subscription/RechargeInfo.java	com.foxivid.baselib.model.extra.subscription.RechargeInfo	modelo
+z1/b1/lb/m/extra/subscription/RechargeRequest.java	com.foxivid.baselib.model.extra.subscription.RechargeRequest	modelo
+z1/b1/lb/m/extra/upgrade/UpgradeInfo.java	com.foxivid.baselib.model.extra.upgrade.UpgradeInfo	modelo
+z1/b1/lb/m/extra/user/AccountSubscription.java	com.foxivid.baselib.model.extra.user.AccountSubscription	modelo
+z1/b1/lb/m/extra/user/ChangePasswordRequest.java	com.foxivid.baselib.model.extra.user.ChangePasswordRequest	modelo
+z1/b1/lb/m/extra/user/ContactCheckInfo.java	com.foxivid.baselib.model.extra.user.ContactCheckInfo	modelo
+z1/b1/lb/m/extra/user/GuestLoginInfo.java	com.foxivid.baselib.model.extra.user.GuestLoginInfo	modelo
+z1/b1/lb/m/extra/user/GuestLoginRequest.java	com.foxivid.baselib.model.extra.user.GuestLoginRequest	modelo
+z1/b1/lb/m/extra/user/LinkRequest.java	com.foxivid.baselib.model.extra.user.LinkRequest	modelo
+z1/b1/lb/m/extra/user/LoginInfo.java	com.foxivid.baselib.model.extra.user.LoginInfo	modelo
+z1/b1/lb/m/extra/user/LoginRequest.java	com.foxivid.baselib.model.extra.user.LoginRequest	modelo
+z1/b1/lb/m/extra/user/QueryMetaInfo.java	com.foxivid.baselib.model.extra.user.QueryMetaInfo	modelo
+z1/b1/lb/m/extra/user/QueryPropertiesInfo.java	com.foxivid.baselib.model.extra.user.QueryPropertiesInfo	modelo
+z1/b1/lb/m/extra/user/RefreshInfo.java	com.foxivid.baselib.model.extra.user.RefreshInfo	modelo
+z1/b1/lb/m/extra/user/RefreshTokenRequest.java	com.foxivid.baselib.model.extra.user.RefreshTokenRequest	modelo
+z1/b1/lb/m/extra/user/RegisterInfo.java	com.foxivid.baselib.model.extra.user.RegisterInfo	modelo
+z1/b1/lb/m/extra/user/RegisterRequest.java	com.foxivid.baselib.model.extra.user.RegisterRequest	modelo
+z1/b1/lb/m/extra/user/ResetPasswordRequest.java	com.foxivid.baselib.model.extra.user.ResetPasswordRequest	modelo
+z1/b1/lb/m/extra/user/SupportedCountry.java	com.foxivid.baselib.model.extra.user.SupportedCountry	modelo
+z1/b1/lb/m/extra/user/UnlinkRequest.java	com.foxivid.baselib.model.extra.user.UnlinkRequest	modelo
+z1/b1/lb/m/extra/user/VerificationCodeRequest.java	com.foxivid.baselib.model.extra.user.VerificationCodeRequest	modelo
+z1/b1/lb/m/feedback/FeedbackData.java	com.foxivid.baselib.model.feedback.FeedbackData	modelo
+z1/b1/lb/m/feedback/FeedbackUpdateRequest.java	com.foxivid.baselib.model.feedback.FeedbackUpdateRequest	modelo
+z1/b1/lb/m/feedback/FeedbackUploadResponse.java	com.foxivid.baselib.model.feedback.FeedbackUploadResponse	modelo
+z1/b1/lb/m/local/LocalSessionInfo.java	com.foxivid.baselib.model.local.LocalSessionInfo	sessão persistida
+z1/b1/lb/m/meta/ApiPageableResponse.java	com.foxivid.baselib.model.meta.ApiPageableResponse	modelo
+z1/b1/lb/m/meta/BasePageableResponse.java	com.foxivid.baselib.model.meta.BasePageableResponse	modelo
+z1/b1/lb/m/meta/CatchupPlayRequest.java	com.foxivid.baselib.model.meta.CatchupPlayRequest	modelo
+z1/b1/lb/m/meta/CatchupPlayResponse.java	com.foxivid.baselib.model.meta.CatchupPlayResponse	modelo
+z1/b1/lb/m/meta/ChannelEPGIndexResponse.java	com.foxivid.baselib.model.meta.ChannelEPGIndexResponse	modelo
+z1/b1/lb/m/meta/ChannelListResponse.java	com.foxivid.baselib.model.meta.ChannelListResponse	modelo
+z1/b1/lb/m/meta/ChannelStreamResponse.java	com.foxivid.baselib.model.meta.ChannelStreamResponse	modelo
+z1/b1/lb/m/meta/EPGProgramme.java	com.foxivid.baselib.model.meta.EPGProgramme	modelo
+z1/b1/lb/m/meta/EpgIndex.java	com.foxivid.baselib.model.meta.EpgIndex	modelo
+z1/b1/lb/m/meta/MetaDetailResponse.java	com.foxivid.baselib.model.meta.MetaDetailResponse	modelo
+z1/b1/lb/m/meta/MetaPlaySourceResponse.java	com.foxivid.baselib.model.meta.MetaPlaySourceResponse	modelo
+z1/b1/lb/m/meta/PlaySourcesResponse.java	com.foxivid.baselib.model.meta.PlaySourcesResponse	modelo
+z1/b1/lb/m/meta/PlaylistMetaResponse.java	com.foxivid.baselib.model.meta.PlaylistMetaResponse	modelo
+z1/b1/lb/m/meta/PlaylistResponse.java	com.foxivid.baselib.model.meta.PlaylistResponse	modelo
+z1/b1/lb/m/meta/ShowTypeCfg.java	com.foxivid.baselib.model.meta.ShowTypeCfg	modelo
+z1/b1/lb/m/notice/NotificationData.java	com.foxivid.baselib.model.notice.NotificationData	modelo
+z1/b1/lb/m/notice/NotificationListRequest.java	com.foxivid.baselib.model.notice.NotificationListRequest	modelo
+z1/b1/lb/m/notice/NotificationResponse.java	com.foxivid.baselib.model.notice.NotificationResponse	modelo
+z1/b1/lb/m/notice/NotificationStateRequest.java	com.foxivid.baselib.model.notice.NotificationStateRequest	modelo
+z1/b1/lb/m/notice/NotificationStateResponse.java	com.foxivid.baselib.model.notice.NotificationStateResponse	modelo
+z1/b1/lb/m/ptv/ApiResponse.java	com.foxivid.baselib.model.ptv.ApiResponse	modelo PTV
+z1/b1/lb/m/ptv/ApiResponseBasic.java	com.foxivid.baselib.model.ptv.ApiResponseBasic	modelo PTV
+nf/u.java	com.foxivid.baselib.model.ptv.SessionErrorEventRef	evento EventBus (-9) — stub, pertence a outro módulo
+z1/b1/lb/m/ptv/referral/ReferralSummary.java	com.foxivid.baselib.model.ptv.referral.ReferralSummary	modelo (campos ofuscados a..h)
+z1/b1/lb/m/ptv/subscription/ChargeCodeRechargeRequest.java	com.foxivid.baselib.model.ptv.subscription.ChargeCodeRechargeRequest	modelo
+z1/b1/lb/m/ptv/user/ChangePasswordRequest.java	com.foxivid.baselib.model.ptv.user.ChangePasswordRequest	modelo
+z1/b1/lb/m/ptv/user/PTVLoginInfo.java	com.foxivid.baselib.model.ptv.user.PTVLoginInfo	modelo
+z1/b1/lb/m/ptv/user/RegisterRequest.java	com.foxivid.baselib.model.ptv.user.RegisterRequest	modelo
+z1/b1/lb/m/sports/Channel.java	com.foxivid.baselib.model.sports.Channel	modelo
+z1/b1/lb/m/sports/DataVersion.java	com.foxivid.baselib.model.sports.DataVersion	modelo
+z1/b1/lb/m/sports/Match.java	com.foxivid.baselib.model.sports.Match	modelo
+z1/b1/lb/m/sports/Matches.java	com.foxivid.baselib.model.sports.Matches	modelo
+z1/b1/lb/m/sports/Program.java	com.foxivid.baselib.model.sports.Program	modelo
+z1/b1/lb/m/sports/Sport.java	com.foxivid.baselib.model.sports.Sport	modelo
+z1/b1/lb/m/sports/Sports.java	com.foxivid.baselib.model.sports.Sports	modelo
+z1/b1/lb/m/sports/Team.java	com.foxivid.baselib.model.sports.Team	modelo
+z1/b1/lb/m/sports/Tournament.java	com.foxivid.baselib.model.sports.Tournament	modelo
+z1/b1/lb/m/sports/Tournaments.java	com.foxivid.baselib.model.sports.Tournaments	modelo
+z1/b1/lb/m/user/BaseRequest.java	com.foxivid.baselib.model.user.BaseRequest	modelo legado
+z1/b1/lb/m/user/HeartbeatRequest.java	com.foxivid.baselib.model.user.HeartbeatRequest	modelo legado
+z1/b1/lb/m/user/HeartbeatResponse.java	com.foxivid.baselib.model.user.HeartbeatResponse	modelo legado
+z1/b1/lb/m/user/LoginRequest.java	com.foxivid.baselib.model.user.LoginRequest	modelo legado
+z1/b1/lb/m/user/LoginResponse.java	com.foxivid.baselib.model.user.LoginResponse	modelo legado
+z1/b1/lb/m/user/ServerResponse.java	com.foxivid.baselib.model.user.ServerResponse	modelo legado

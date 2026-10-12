@@ -1,0 +1,35 @@
+original_path	nome_reconstruido_FQN	descricao_curta
+x1/f1/lb/user/f.java	com.foxivid.baselib.user.UserManager	gerenciador de sessão: login/guest/token/código, refresh, logout, kick/expiração, engine, mark, QR
+x1/f1/lb/user/f.java$a	com.foxivid.baselib.user.UserManager.execLoginFlow	coletor execLoginFlow$2 (fallbacks de falha de login)
+x1/f1/lb/user/f.java$q	com.foxivid.baselib.user.UserManager.login	corrotina login$4 + handleMetaInfoResult (login$4$1)
+x1/f1/lb/user/f.java$r	com.foxivid.baselib.user.UserManager.loginByToken	corrotina loginByToken$1 (refresh + updateSession)
+x1/f1/lb/user/f.java$t	com.foxivid.baselib.user.UserManager.logout	corrotina logout$1
+x1/f1/lb/user/f.java$k	com.foxivid.baselib.user.UserManager.launch	corrotina launch$1 (did, mark, prefs, sessão local)
+x1/f1/lb/user/f.java$z	com.foxivid.baselib.user.UserManager.startEngine	startEngine (+a0, b0)
+x1/f1/lb/user/d.java	com.foxivid.baselib.user.PTV3AAdapter	adapter AAA do backend PTV (usado)
+x1/f1/lb/user/d.java$p	com.foxivid.baselib.user.PTV3AAdapter.updateSessionCallback	callback -> SessionConverter.fromPtvLogin
+x1/f1/lb/user/c.java	com.foxivid.baselib.user.Extra3AAdapter	adapter AAA do backend Extra (instanciado, não selecionado)
+x1/f1/lb/user/b.java	com.foxivid.baselib.user.AAAAdapterFactory	seleção do adapter, gancho Telegram, applyProperties
+x1/f1/lb/user/b.java$a	com.foxivid.baselib.user.AAAAdapterFactory.Convertor	interface de conversão payload->resultado
+x1/f1/lb/user/b.java$b	com.foxivid.baselib.user.AAAAdapterFactory.createSessionConvertor	conversor padrão updateLocalSession
+x1/f1/lb/user/a.java	com.foxivid.baselib.user.AccountAdapter	interface do backend de autenticação
+x1/f1/lb/user/e.java	com.foxivid.baselib.user.SessionWrapper	embrulho da resposta de login para o callback
+x1/f1/lb/user/g.java	com.foxivid.baselib.user.SessionConverter	resposta do servidor -> LocalSessionInfo
+w6/a.java	com.foxivid.baselib.user.MarkCipher	AES-128/ECB/ZeroBytePadding (BC) + chave via SHA1PRNG semeado
+w6/b.java	com.foxivid.baselib.user.HexUtils	hex <-> bytes
+w6/c.java	(não reconstruído)	XOR repetido com chave "log" (fora deste módulo)
+x1/f1/lb/util/z.java	com.foxivid.baselib.device.DeviceInfoCollector	fingerprint: Build, MACs, android_id, eMMC CID, CPU serial, USID Amlogic, gateway, assinatura
+x1/f1/lb/id/a.java	com.foxivid.baselib.device.Installation	did = UUID.nameUUIDFromBytes(cpuSerialOuMac+mac), arquivo INSTALLATION
+x1/f1/lb/cache/a.java	com.foxivid.baselib.cache.BaseCache	cache LruCache + DiskLruCache com JSON
+x1/f1/lb/cache/b.java	com.jakewharton.disklrucache.DiskLruCache	cópia embutida da biblioteca (usar a real)
+x1/f1/lb/cache/d.java	com.jakewharton.disklrucache.StrictLineReader	cópia embutida da biblioteca
+x1/f1/lb/cache/e.java	com.jakewharton.disklrucache.Util	cópia embutida da biblioteca
+x1/f1/lb/cache/c.java	(sintética vazia)	classe sintética sem conteúdo
+x1/f1/lb/api/i.java	com.foxivid.baselib.api.PTVApi3AClient	(outro módulo) assinaturas documentadas no KDoc de PTV3AAdapter
+t/v/c/i/a.java#y0	com.foxivid.baselib.user.UserManager.login(username,password)	InteractionUtils.y0 -> f.g1(user,pwd)
+t/v/c/i/a.java#x0	com.foxivid.baselib.user.UserManager.login()	InteractionUtils.x0 -> f.g1() (auto-login)
+t/v/c/i/a.java#z0	com.foxivid.baselib.user.UserManager.login(loginAsGuest=true)	InteractionUtils.z0 -> f.f1(null,null,true)
+t/v/c/i/a.java#v0	com.foxivid.baselib.user.UserManager.loginByPassword	InteractionUtils.v0(a,b,c) -> f.d1(a,c,b) = adapter.login(a, md5(b), c)
+t/v/c/i/a.java#w0	com.foxivid.baselib.user.UserManager.loginByCode	InteractionUtils.w0 -> f.e1(code)
+t/v/c/i/a.java#B0	com.foxivid.baselib.user.UserManager.recharge	InteractionUtils.B0 -> f.s1(code)
+t/v/c/i/a.java#M0	com.foxivid.baselib.user.UserManager.updateSession	InteractionUtils.M0 -> f.M1()

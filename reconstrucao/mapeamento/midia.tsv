@@ -1,0 +1,47 @@
+x1/f1/lb/media/a.java	com.foxivid.baselib.media.ChannelManager	Lista de canais ao vivo, colunas, favoritos, histórico, lembretes (GET /api/live/channel/list/v1)
+x1/f1/lb/media/c.java	com.foxivid.baselib.media.EpgManager	EPG: índice epg-index.json + arquivos por canal/data com checksum, cache LRU
+x1/f1/lb/media/c.java$a	com.foxivid.baselib.media.EpgFileParser	Parser externo de arquivo EPG injetado pela app
+x1/f1/lb/media/d.java	com.foxivid.baselib.media.MediaConfigUtils	Preferências de player (áudio/legenda/aspecto), PIN adulto e senha de coluna
+x1/f1/lb/media/e.java	com.foxivid.baselib.media.MediaPlayManager	Tempo de trial por canal e decisão trialOf
+x1/f1/lb/media/f.java	com.foxivid.baselib.media.PlaylistCache	Inicialização dos caches de playlist VOD/checksum
+x1/f1/lb/media/j.java	com.foxivid.baselib.media.SportsManager	Agenda esportiva (esportes/torneios/partidas) com cache e versão
+x1/f1/lb/media/k.java	com.foxivid.baselib.media.SubscribeCache	Cache em disco de lembretes (SubscribeItem)
+x1/f1/lb/media/l.java	com.foxivid.baselib.media.VoDManager	VOD: detalhe de vídeo com cache, favoritos, histórico, episódios
+x1/f1/lb/media/model/SubscribeItem.java	com.foxivid.baselib.media.model.SubscribeItem	Data class de lembrete esportivo
+x1/f1/lb/streaming/a.java	com.foxivid.baselib.streaming.StreamHelper	Orquestra sessão de play (live/VOD/catch-up) sobre o motor
+x1/f1/lb/streaming/client/a.java	com.foxivid.baselib.streaming.client.EngineHelper	Cliente HTTP do proxy local (start/stop engine, startPlay, URL final)
+x1/f1/lb/streaming/client/b.java	com.foxivid.baselib.streaming.client.SimpleHttpGet	GET síncrono HttpURLConnection
+x1/f1/lb/streaming/client/d.java	com.foxivid.baselib.network.SSLHttpClient	AsyncHttpClient com TLS (trust-all/keystore)
+x1/f1/lb/streaming/server/b.java	com.foxivid.baselib.streaming.server.EngineService	Ponte com o motor proprietário, eventos de tracker, métricas
+x1/f1/lb/streaming/server/d.java	com.foxivid.baselib.streaming.server.HttpServiceWrapper	Roteador das rotas de controle e HLS local
+x1/f1/lb/streaming/server/e.java	com.foxivid.baselib.streaming.server.VodLocalDiskCacheManager.Listener	Interface vazia (listener de cache)
+x1/f1/lb/streaming/server/f.java	com.foxivid.baselib.streaming.server.LocalHttpServer	Contrato do servidor local (port, onPlayerRestart)
+x1/f1/lb/streaming/server/g.java	com.foxivid.baselib.streaming.server.InputStreamWrapper	InputStream com fechamento seguro
+x1/f1/lb/streaming/server/i.java	com.foxivid.baselib.streaming.server.NioHttpServer	Servidor AndroidAsync em 127.0.0.1 porta aleatória
+x1/f1/lb/streaming/server/k.java	com.foxivid.baselib.streaming.server.LiveTsHandler	Handler Netty do TS ao vivo (chunked video/mp2ts)
+x1/f1/lb/streaming/server/m.java	com.foxivid.baselib.streaming.server.NettyHttpServer	Servidor Netty em 0.0.0.0 porta aleatória 1024-51023
+x1/f1/lb/streaming/server/n.java	com.foxivid.baselib.streaming.server.BlockMetricListener	Métricas por bloco TS
+x1/f1/lb/streaming/server/o.java	com.foxivid.baselib.streaming.server.IndexMetricListener	Métricas por playlist/índice
+x1/f1/lb/streaming/server/p.java	com.foxivid.baselib.streaming.server.PlayerMetricQuery	Consulta de métricas por player
+x1/f1/lb/streaming/server/q.java	com.foxivid.baselib.streaming.server.SignatureCache	Cache de assinaturas
+x1/f1/lb/streaming/server/r.java	com.foxivid.baselib.streaming.server.StreamingKeys	Nomes/rotas aleatórios do proxy e cifra de params
+x1/f1/lb/streaming/server/s.java	com.foxivid.baselib.streaming.server.VodLocalDiskCacheManager	Cache em disco de blocos VOD
+x1/f1/lb/widget/videoview/a.java	com.foxivid.baselib.player.PlayerViewContract	Contrato do PlayerView (legenda, tamanho)
+x1/f1/lb/widget/videoview/b.java	com.foxivid.baselib.player.RenderCallback	Callback de superfície
+x1/f1/lb/widget/videoview/c.java	com.foxivid.baselib.player.RenderView	Contrato da view de render
+x1/f1/lb/widget/videoview/d.java	com.foxivid.baselib.player.SurfaceHolderWrapper	Holder que liga IMediaPlayer à superfície
+x1/f1/lb/widget/videoview/e.java	com.foxivid.baselib.player.VideoViewContract	Contrato do VideoView (loading/erros)
+x1/f1/lb/widget/videoview/f.java	com.foxivid.baselib.player.PlayContext	Contexto de uma reprodução pedida pela UI
+x1/f1/lb/widget/videoview/g.java	com.foxivid.baselib.player.PlayPositionCache	Cache de posição de reprodução
+x1/f1/lb/widget/videoview/g0.java	com.foxivid.baselib.player.VideoInfo	Dimensões e SAR do vídeo
+x1/f1/lb/widget/videoview/h.java	com.foxivid.baselib.player.PlaySession	Sessão de play (evento + legenda)
+x1/f1/lb/widget/videoview/i.java	com.foxivid.baselib.player.PlaySessionCache	Cache da sessão de play
+x1/f1/lb/widget/videoview/j.java	com.foxivid.baselib.player.PlayerInfo	Estado de um IMediaPlayer
+x1/f1/lb/widget/videoview/k.java	com.foxivid.baselib.player.PlayerManager	Fábrica/gestor do IjkMediaPlayer
+x1/f1/lb/widget/videoview/c0.java	com.foxivid.baselib.player.PlayerViewHandler	Lógica de play live/catch-up, trial, restart (abstrata)
+x1/f1/lb/widget/videoview/z0.java	com.foxivid.baselib.player.VideoViewHandler	URL -> IMediaPlayer -> superfície, watchdog
+t/v/c/widget/videoview/PlayerView.java	com.foxivid.baselib.player.PlayerView	Fachada pública do player (TV/mobile)
+t/v/c/widget/videoview/VideoView.java	com.foxivid.baselib.player.VideoView	FrameLayout com render view e loading/mensagens
+t/v/c/widget/videoview/SurfaceRenderView.java	com.foxivid.baselib.player.SurfaceRenderView	SurfaceView com medição de aspecto
+com/live/evo/widget/ijkmedia/a.java	com.foxivid.baselib.player.ijkmedia.MediaControllerContract	Contrato do media controller
+com/live/evo/widget/ijkmedia/b.java	com.foxivid.baselib.player.ijkmedia.PureMediaController	Controller de play/pause/seek

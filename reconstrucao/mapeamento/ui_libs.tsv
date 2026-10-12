@@ -1,0 +1,183 @@
+x1/f1/lb/ad/AdItem.java	com.foxivid.baselib.ad.AdItem	item de anúncio de abertura (id sequencial, isVideo, arquivo em cache)
+x1/f1/lb/ad/b.java	com.foxivid.baselib.ad.AdManager	lista de anúncios startup (startup_ad_list) e conteúdo estendido (ad_list_ext); desativado no canal "code"
+x1/f1/lb/ad/b.java$c$b	com.foxivid.baselib.ad.AdManager (TypeToken anônimo)	TypeToken<List<Any>> do Gson
+x1/f1/lb/marquee/a.java	com.foxivid.baselib.marquee.MarqueeManager	agenda e distribui mensagens do letreiro global às views
+x1/f1/lb/marquee/a.java$a	com.foxivid.baselib.marquee.MarqueeManager.MarqueeListener	interface start/isRunning/stop das views de letreiro
+nf/a.java	com.foxivid.baselib.event.AdExtContentUpdatedEvent	evento EventBus: conteúdo estendido de anúncios atualizado
+x1/f1/lb/util/a.java	com.foxivid.baselib.util.TextCipher	cifra de texto AES com chave aleatória (por processo) ou fixa "PrI8TBSHDuybYmKSdaBBYg"
+x1/f1/lb/util/a0.java	com.foxivid.baselib.util.DensityAdapter	força density=1.6875 na Application/Activity (se isSetCustomDensity)
+x1/f1/lb/util/a0.java$a	com.foxivid.baselib.util.DensityAdapter (ComponentCallbacks anônimo)	atualiza scaledDensity quando fontScale muda
+x1/f1/lb/util/a1.java	com.foxivid.baselib.util.StartStatUtil	cronometragem de etapas (AppStartTimeStat / PlayZappingTimeStat), só debug
+x1/f1/lb/util/b0.java	com.foxivid.baselib.util.DownloadUtils	downloads OkHttp com checksum, retry, gunzip e decifragem AES
+x1/f1/lb/util/b0.java$a	com.foxivid.baselib.util.DownloadUtils.BaseDownloadContext	contexto de download com campos
+x1/f1/lb/util/b0.java$b	com.foxivid.baselib.util.DownloadUtils.ChecksumCalculator	calculadora de checksum
+x1/f1/lb/util/b0.java$c	com.foxivid.baselib.util.DownloadUtils.PlainDownloadContext	contexto sem chave AES
+x1/f1/lb/util/b0.java$d	com.foxivid.baselib.util.DownloadUtils.DownloadContext	interface do contexto de download
+x1/f1/lb/util/b0.java$e	com.foxivid.baselib.util.DownloadUtils.BeforeOverwrite	callback antes de sobrescrever
+x1/f1/lb/util/b0.java$f	com.foxivid.baselib.util.DownloadUtils.Listener	listener erro/salvo/progresso
+x1/f1/lb/util/b1.java	com.foxivid.baselib.util.AppPaths	diretórios de cache/dados sufixados pelo env e estatística de storage
+x1/f1/lb/util/c.java	com.foxivid.baselib.util.AppMonitor	activity atual, restart do app, monitor de travamento do main thread e queda de frames
+x1/f1/lb/util/c.java$a	com.foxivid.baselib.util.AppMonitor.LifecycleCallbacks	lifecycle; recriação com savedInstanceState reinicia o app
+x1/f1/lb/util/c.java$b	com.foxivid.baselib.util.AppMonitor.BlockPrinter	Printer do Looper medindo tarefas > 300 ms
+x1/f1/lb/util/c.java$c	com.foxivid.baselib.util.AppMonitor.FrameDropCallback	Choreographer: loga >10 frames perdidos
+x1/f1/lb/util/c0.java	com.foxivid.baselib.util.DvrUtils	janela do catch-up (catchupDvrDays) e títulos de dias da semana
+x1/f1/lb/util/d.java	com.foxivid.baselib.util.AnimUtils	animação de rotação contínua
+x1/f1/lb/util/d0.java	com.foxivid.baselib.util.EcoModeHelper	eco mode por inatividade do controle + contadores tecla/toque
+x1/f1/lb/util/d0.java$a	com.foxivid.baselib.util.EcoModeHelper.IdleCheckTask	TimerTask de 30 s que entra no eco mode
+x1/f1/lb/util/d1.java	com.foxivid.baselib.util.ServerTime	diferença para o horário do servidor, relógio monotônico, formatação de duração
+x1/f1/lb/util/d1.java$a	com.foxivid.baselib.util.ServerTime (relógio padrão)	ElapsedClock baseado em currentTimeMillis
+x1/f1/lb/util/e.java	com.foxivid.baselib.util.ApiErrorUtils	códigos de erro da API → mensagem; 9000010/9000042 disparam evento e ações de sessão
+x1/f1/lb/util/e0.java	com.foxivid.baselib.util.EventBusUtils	register/unregister seguro no EventBus
+x1/f1/lb/util/f0.java	com.foxivid.baselib.util.UncaughtLogger	loga exceções não tratadas com contexto de corrotina
+x1/f1/lb/util/g0.java	com.foxivid.baselib.util.ResultCallback	callback com onFailure
+x1/f1/lb/util/g1.java	com.foxivid.baselib.util.ToastUtils	Toaster no UI thread se activity resumed
+x1/f1/lb/util/h1.java	com.foxivid.baselib.util.TrustAllHostnameVerifier	HostnameVerifier que aceita tudo
+x1/f1/lb/util/j0.java	com.foxivid.baselib.util.FirebaseEvents	eventos user_add_plan e user_version
+x1/f1/lb/util/j0.java$a	com.foxivid.baselib.util.FirebaseEvents.FirebaseAnalyticsProvider	provider do FirebaseAnalytics (implementado pela activity)
+x1/f1/lb/util/k.java	com.foxivid.baselib.util.AppAttrUtils	meta-data DISTRIBUTION_CHANNEL/APP_TYPE/TENANT_ID/BRAND_ID/APP_ID e versão (nome original)
+x1/f1/lb/util/k0.java	com.foxivid.baselib.util.ElapsedClock	interface de relógio monotônico
+x1/f1/lb/util/l.java	com.foxivid.baselib.util.MaskUtils	mascara miolo de código (com bug: retorna Array.toString)
+x1/f1/lb/util/l0.java	com.foxivid.baselib.util.ImageUrlBuilder	monta URL de imagem com IMG_SERVERS
+x1/f1/lb/util/m.java	com.foxivid.baselib.util.Callback	callback genérico
+x1/f1/lb/util/n.java	com.foxivid.baselib.util.LegacyTvUtils	utilitário legado SuperTV (formatos de data, sqlite, libsupertv.so, http)
+x1/f1/lb/util/n0.java	com.foxivid.baselib.util.LocaleManager	idioma do app (language_sp/language_key)
+x1/f1/lb/util/o.java	com.foxivid.baselib.util.HexUtils	hex e chave MD5 composta
+x1/f1/lb/util/o0.java	com.foxivid.baselib.util.AesEcbCipher	AES/ECB/ZeroBytePadding (BouncyCastle) + Base64 URL-safe
+x1/f1/lb/util/o0.java$a	com.foxivid.baselib.util.AesEcbCipher.Base64Codec	codec Base64 plugável
+x1/f1/lb/util/q.java	com.foxivid.baselib.util.StackTraceUtils	stack trace → string, chamador
+x1/f1/lb/util/q0.java	com.foxivid.baselib.util.CrashHandler	UncaughtExceptionHandler que grava crash_*.log
+x1/f1/lb/util/r0.java	com.foxivid.baselib.util.TrustAllX509TrustManager	TrustManager que aceita tudo
+x1/f1/lb/util/t0.java	com.foxivid.baselib.util.QrCodeUtils	gera QR Code com ZXing (nome original)
+x1/f1/lb/util/u0.java	com.foxivid.baselib.util.ResStrings	getString seguro com default
+x1/f1/lb/util/v0.java	com.foxivid.baselib.util.SandwichErrors	formata falhas do Sandwich ApiResponse
+x1/f1/lb/util/w0.java	com.foxivid.baselib.util.Preferences	chave/valor (nome original SPUtils): chaves MD5, strings cifradas, backend DataStore injetado
+x1/f1/lb/util/x0.java	com.foxivid.baselib.util.ScreenUtils	escala de layout com referência 1280x720
+x1/f1/lb/util/y0.java	com.foxivid.baselib.util.SignatureUtils	MD5 da assinatura de APK
+x1/f1/lb/util/z0.java	com.foxivid.baselib.util.BitrateFormatter	bps → Kb/s / Mb/s
+x1/f1/lb/util/{f,g,h,i,j,r,s,t,u,v,w,x,y}.java	(nenhum)	synthetic vazio (R8)
+nf/f.java	com.foxivid.baselib.event.EcoModeEvent	evento entrar/sair do eco mode
+nf/u.java	com.foxivid.baselib.event.ApiAuthErrorEvent	evento de erro de sessão da API (code, "api")
+nf/y.java	com.foxivid.baselib.event.CrashLogEvent	evento com caminho do crash log
+r8/	third-party: Kotlin stdlib (Unit/Pair/Triple/Result)	d2 "kotlin-stdlib"
+c9/	third-party: Kotlin kotlin.jvm.functions (Function0..3)	interfaces invoke
+v8/	third-party: Kotlin kotlin.coroutines (Continuation/CoroutineContext)	mensagens CoroutineContext
+ua/	third-party: Kotlin kotlin.text (StringsKt/Charsets/Regex)	assinaturas de strings
+a/	third-party: kotlinx-coroutines-core (debug)	"_COROUTINE"
+wa/	third-party: kotlinx-coroutines-core scheduling	"kotlinx.coroutines.scheduler.core.pool.size"
+tb/,ub/	third-party: Okio	"okio", hex digits
+hb/,kb/,lb/,mb/,nb/,ob/,pb/	third-party: OkHttp internals (Util, concurrent, http, http1, http2, platform)	mensagens OkHttp
+b3/,e3/,f3/	third-party: Gson internals (f3.a = TypeToken)	"Register a TypeAdapter"
+s/,p/,l/,w/,b0/,a0/	third-party: Glide 4 core	"com.bumptech.glide.load..."
+h3/,h4/,y5/,v5/,w5/,b4/	third-party: ZXing core (QRCodeWriter, BarcodeFormat, EncodeHintType, BitMatrix, decoder)	"Can only encode QR_CODE"
+xe/	third-party: greenrobot EventBus (xe.c = EventBus)	"EventBus annotation processor"
+wb/	third-party: commons-codec Base64	"lineSeparator must not contain base64 characters"
+yb/	third-party: commons-io FileUtils/IOUtils	"Destination must not be null"
+ac/	third-party: commons-lang3 StringUtils/SystemUtils	"SystemUtils property value"
+dd/	third-party: BouncyCastle provider	org.bouncycastle.jce.provider.*
+m6/,k6/,l6/	third-party: skydoves Sandwich extensions	d2 "sandwich"
+we/	third-party: Eclipse Paho MQTT	"org.eclipse.paho.client.mqttv3"
+q4/,r4/,s4/,t4/,o4/,p4/,u4/	third-party: AndroidAsync	multipart / com.koushikdutta.async
+l4/	third-party: Toaster (com.hjq.toast)	"android.R.id.message"
+l7/,k7/,o7/	third-party: UTDID / Aliyun audid	mpush-api.aliyun.com
+m2/	third-party: Firebase Components	"Components are not allowed to depend..."
+b2/	third-party: GMS measurement (Firebase Analytics)	gms.measurement.internal
+tv/danmaku/ijk	third-party: ijkplayer	IjkMediaPlayer
+q6/	app: fachada de log interna estilo SLF4J	ver docs/bibliotecas_terceiros.md
+t/v/c/R$*.java	com.foxivid.ui.R	Recursos da biblioteca de UI (`t.v.c.R$*`, módulo `tvcbaselib`)
+ziyi/kit/keyboard/a.java	com.foxivid.ui.keyboard.KeyBean	Modelo de uma tecla do teclado virtual: código, rótulo exibido, texto inserido, ícone, peso de
+ziyi/kit/keyboard/KeyUtils.java	com.foxivid.ui.keyboard.KeyUtils	Registro estático do teclado virtual de TV: tabela de teclas, layouts por tipo de teclado,
+ziyi/kit/keyboard/KeyView.java	com.foxivid.ui.keyboard.KeyView	Uma tecla na tela: FrameLayout (layout `key_key_view`) com um TextView (`tv_key`) e um
+ziyi/kit/keyboard/b.java	com.foxivid.ui.keyboard.KeyboardContainer	Teclado virtual para TV (controle remoto/D-pad) que flutua sobre a janela
+ziyi/kit/keyboard/c.java	com.foxivid.ui.keyboard.KeyboardLayoutListener	Base dos listeners de layout global da janela: guarda o id (view id do teclado) e se o teclado
+ziyi/kit/keyboard/KeyboardView.java	com.foxivid.ui.keyboard.KeyboardView	Versão mais antiga/simples do teclado virtual de TV: um LinearLayout vertical (em vez de
+ziyi/kit/keyboard/MyLifecycleObserver.java	com.foxivid.ui.keyboard.MyLifecycleObserver	DefaultLifecycleObserver que carrega o id do teclado a que pertence (sobrescrito em [KeyUtils]
+ziyi/kit/keyboard/R$*.java	com.foxivid.ui.keyboard.R	IDs de recursos do módulo do teclado (ziyi.kit.keyboard.R*)
+t/v/c/R$*.java	com.foxivid.ui.mobile.R	Recursos da biblioteca mobile (com.tvc.lib.mobile usa os recursos do módulo `tvcbaselib`, ou seja,
+nf/j.java	com.foxivid.ui.mobile.activity.AppEnterForegroundEvent	Evento de EventBus postado em onResume quando o app volta ao primeiro plano depois de ter saído
+nf/k.java	com.foxivid.ui.mobile.activity.AppEnterBackgroundEvent	Evento de EventBus postado em onStop quando a activity parou com a janela em foco
+com/tvc/lib/mobile/activity/BaseActivity.java	com.foxivid.ui.mobile.activity.BaseActivity	Activity base: registra no log o ciclo onStop/onResume e emite eventos de "app saiu para segundo
+t7/a.java	com.foxivid.ui.mobile.activity.ContentView	Contrato de uma activity com layout (t7/a.java): `f()` = initView, `g()` = layout id; os hooks
+com/tvc/lib/mobile/activity/BasicActivity.java	com.foxivid.ui.mobile.activity.BasicActivity	Activity base com template: setContentView(layoutId) -> (EventBus opcional) -> initView ->
+com/tvc/lib/mobile/ui/base/a.java	com.foxivid.ui.mobile.base.BaseChannelListFragment	Base de fragments de lista de canais: guarda a coluna atual (companion) e converte uma lista de
+com/tvc/lib/mobile/ui/base/BaseDataBindActivity.java	com.foxivid.ui.mobile.base.BaseDataBindActivity	Activity base com DataBinding para o app mobile: define o layout, trava em retrato (se
+com/tvc/lib/mobile/ui/base/g.java	com.foxivid.ui.mobile.base.BaseDataBindDialogFragment	DialogFragment com DataBinding: infla `layoutId()`, configura cancelável, chama
+com/tvc/lib/mobile/ui/base/d.java	com.foxivid.ui.mobile.base.BaseDataBindFragment	Fragment com DataBinding: infla [layoutId], guarda a activity e o binding e cria um diálogo de
+y7/a.java	com.foxivid.ui.mobile.base.LoadingViewDialog	Cor de fundo do loading
+com/tvc/lib/mobile/ui/base/h.java	com.foxivid.ui.mobile.base.BaseDialogContract	Contrato dos diálogos/fragments base: initView (f), layout (g), initData (l), initObservers (y);
+com/tvc/lib/mobile/ui/base/i.java	com.foxivid.ui.mobile.base.LastItemSpaceDecoration	Espaçamento à direita (esquerda em RTL) entre itens de uma lista horizontal, exceto no último
+com/tvc/lib/mobile/ui/base/e.java	com.foxivid.ui.mobile.base.BaseEpgListFragment	Base de fragments de EPG: converte [EPGProgramme] em `EpgData` (u7/EpgData: title, stop, category,
+com/tvc/lib/mobile/ui/base/f.java	com.foxivid.ui.mobile.base.BaseFragmentPagerAdapter	FragmentPagerAdapter base: o construtor chama [createFragments] (abstract `a`) para preencher a
+u7/MessageEventData.java	com.foxivid.ui.mobile.ext.MessageEventData	Mensagem genérica de EventBus (código, mensagem, payload)
+com/tvc/lib/mobile/media/AppLifecycleObserver.java	com.foxivid.ui.mobile.media.AppLifecycleObserver	Observer do ciclo de vida do processo: em onStop, se o modo família estiver ativo
+com/tvc/lib/mobile/broadcastReceiver/WifiBroadcastReceiver.java	com.foxivid.ui.mobile.receiver.WifiBroadcastReceiver	Receiver de RSSI/estado do Wi-Fi
+com/tvc/lib/mobile/ui/widget/AutoCompleteEditText.java	com.foxivid.ui.mobile.widget.AutoCompleteEditText	AutoCompleteTextView para e-mail: sugere domínios (gmail.com, hotmail.com, outlook.com,
+com/tvc/lib/mobile/ui/widget/ClearEditText.java	com.foxivid.ui.mobile.widget.ClearEditText	EditText com ícone "limpar" (mipmap `delete_input`, bounds deslocados 20px para a esquerda)
+com/tvc/lib/mobile/ui/widget/CustomTextView.java	com.foxivid.ui.mobile.widget.CustomTextView	TextView que trunca o texto para no máximo [maxCharacters] (padrão 13) substituindo o final por "..."
+com/tvc/lib/mobile/ui/widget/FullscreenMenuView.java	com.foxivid.ui.mobile.widget.FullscreenMenuView	Item de menu do player em tela cheia (ícone + nome), inflado de `layout_fullscreen_menu`
+com/tvc/lib/mobile/ui/widget/MyVideoView.java	com.foxivid.ui.mobile.widget.MyVideoView	Player embutido do app mobile: envolve um [PlayerView] (ijkplayer) com controles (barra de
+com/tvc/lib/mobile/ui/widget/q.java	com.foxivid.ui.mobile.widget.RectItemDecoration	ItemDecoration com margens fixas (esquerda/topo/direita/baixo)
+com/tvc/lib/mobile/ui/widget/r.java	com.foxivid.ui.mobile.widget.EmailSuggestionAdapter	Adapter de sugestões de e-mail do [AutoCompleteEditText]: dado um prefixo (texto antes do "@") e
+com/tvc/lib/mobile/ui/widget/SwipeListLayout.java	com.foxivid.ui.mobile.widget.SwipeListLayout	Item de lista deslizável (swipe para a esquerda revela o 1º filho "hidden" por trás do 2º filho
+com/tvc/lib/mobile/ui/widget/TabBarBean.java	com.foxivid.ui.mobile.widget.TabBarBean	Configuração da barra de abas ([TabBarView]): cores, estilo de borda e itens
+com/tvc/lib/mobile/ui/widget/TabBarView.java	com.foxivid.ui.mobile.widget.TabBarView	Barra de abas inferior (2 a 5 itens) com ícones locais ou CDN (baixados com Glide) e texto, cores
+com/tvc/lib/mobile/ui/widget/sloading/a.java	com.foxivid.ui.mobile.widget.sloading.SLoadingBuilder	Base dos "loading builders" do SLoading (biblioteca de spinners): controla um ValueAnimator
+com/tvc/lib/mobile/ui/widget/sloading/b.java	com.foxivid.ui.mobile.widget.sloading.SLoadingDrawable	Drawable animado que encapsula um [SLoadingBuilder] (repassa invalidação/agendamento ao Drawable)
+com/tvc/lib/mobile/ui/widget/sloading/anim/SLoadingTextView.java	com.foxivid.ui.mobile.widget.sloading.SLoadingTextView	SLoadingView fixo no tipo TEXT (atributo `z_text`); [setText] repassa o texto ao builder de texto (`q`)
+com/tvc/lib/mobile/ui/widget/sloading/c.java	com.foxivid.ui.mobile.widget.sloading.SLoadingType	Tipos de animação de loading; cada valor instancia (por reflexão) um [SLoadingBuilder]
+com/tvc/lib/mobile/ui/widget/sloading/SLoadingView.java	com.foxivid.ui.mobile.widget.sloading.SLoadingView	ImageView que exibe uma animação de loading ([SLoadingType], atributos `s_type`, `s_color`,
+t/v/c/s/widget/SimpleSubtitleView.java	com.foxivid.ui.subtitle.SimpleSubtitleView	TextView que serve de destino de legendas
+yf/a.java	com.foxivid.ui.subtitle.SubtitleViewHandler	Stub de referência da classe `yf.a` (handler de legendas fora do escopo deste módulo)
+t/v/c/widget/TextView.java	com.foxivid.ui.widget.TextView	fun applyInitial(v: android.widget.TextView) {
+t/v/c/widget/MyButton.java	com.foxivid.ui.widget.MyButton	Qualquer unidade é tratada como px (o valor já vem escalado)
+t/v/c/widget/MyRadiobutton.java	com.foxivid.ui.widget.MyRadiobutton	Qualquer unidade é tratada como px (o valor já vem escalado)
+t/v/c/widget/MyEditText.java	com.foxivid.ui.widget.MyEditText	Qualquer unidade é tratada como px (o valor já vem escalado)
+t/v/c/widget/FrameLayout.java	com.foxivid.ui.widget.FrameLayout	FrameLayout com "auto-layout": na primeira chamada a [setLayoutParams] e [setPadding] os valores
+t/v/c/widget/GlobalMarqueeTextView.java	com.foxivid.ui.widget.GlobalMarqueeTextView	Letreiro global: igual ao [MarqueeTextView], mas se registra no [MarqueeManager] como
+t/v/c/widget/ImageView.java	com.foxivid.ui.widget.ImageView	ImageView (AppCompat) com auto-layout
+t/v/c/widget/LinearLayout.java	com.foxivid.ui.widget.LinearLayout	LinearLayout com "auto-layout": na primeira chamada a [setLayoutParams] e [setPadding] os valores
+t/v/c/widget/MarqueeTextView.java	com.foxivid.ui.widget.MarqueeTextView	TextView de letreiro desenhado manualmente (canvas.drawText) que rola da direita para a esquerda
+t/v/c/widget/MyListView.java	com.foxivid.ui.widget.MyListView	ListView para TV que mantém o item selecionado centralizado (ou no topo/base) e escala
+t/v/c/widget/MyPopupWindow.java	com.foxivid.ui.widget.MyPopupWindow	PopupWindow que engole exceções ao exibir (ex.: BadTokenException quando a activity morreu),
+t/v/c/widget/MyProgressBar.java	com.foxivid.ui.widget.MyProgressBar	ProgressBar com auto-layout
+t/v/c/widget/MyRadiogroup.java	com.foxivid.ui.widget.MyRadiogroup	RadioGroup com auto-layout (escala para a resolução da tela)
+t/v/c/widget/MyRecyclerView.java	com.foxivid.ui.widget.MyRecyclerView	RecyclerView para TV: lembra o último filho focado e, ao receber foco de fora, devolve o foco a
+t/v/c/widget/MyRelativelayout.java	com.foxivid.ui.widget.MyRelativelayout	RelativeLayout com auto-layout (escala para a resolução da tela)
+t/v/c/widget/MyRoundImageView.java	com.foxivid.ui.widget.MyRoundImageView	ImageView com cantos arredondados independentes via clipPath (curvas quadráticas)
+t/v/c/widget/MySeekBar.java	com.foxivid.ui.widget.MySeekBar	SeekBar (AppCompat) com auto-layout
+t/v/c/widget/RoundImageView.java	com.foxivid.ui.widget.RoundImageView	ImageView com três modos (atributo `type`): 0 = círculo, 1 = retângulo com cantos arredondados
+t/v/c/widget/a.java	com.foxivid.ui.widget.SpaceItemDecoration	Espaçamento entre itens de RecyclerView linear: horizontal → left/top/bottom (+ right no último);
+t/v/c/widget/TVRecyclerView.java	com.foxivid.ui.widget.TVRecyclerView	RecyclerView de TV sobre [MyRecyclerView]: sem overscroll/clip, foco habilitado, debounce de
+t/v/c/widget/TvLinearLayoutManager.java	com.foxivid.ui.widget.TvLinearLayoutManager	LinearLayoutManager para navegação por D-pad: ao procurar foco além do último item visível,
+t/v/c/widget/banner/Banner.java	com.foxivid.ui.widget.banner.Banner	Cópia reduzida do `com.youth.banner.Banner` (biblioteca youth banner) sobre [FrameLayout] com
+t/v/c/widget/banner/Banner$addBannerLifecycleObserver$1.java	com.foxivid.ui.widget.banner.BannerLifecycleObserver	Observer de ciclo de vida do banner (youth `addBannerLifecycleObserver`): inicia o auto-loop em
+t/v/c/widget/banner/indicator/BaseIndicator.java	com.foxivid.ui.widget.banner.indicator.BaseIndicator	View base dos indicadores (cópia do `BaseIndicator` do youth banner)
+t/v/c/widget/banner/indicator/CircleIndicator.java	com.foxivid.ui.widget.banner.indicator.CircleIndicator	Indicador de bolinhas (raio = largura/2, selecionado maior)
+t/v/c/widget/banner/indicator/DrawableIndicator.java	com.foxivid.ui.widget.banner.indicator.DrawableIndicator	Indicador baseado em bitmaps (atributos `normal_drawable` / `selected_drawable`)
+t/v/c/widget/banner/indicator/a.java	com.foxivid.ui.widget.banner.indicator.Indicator	Contrato dos indicadores do banner (youth banner `Indicator`)
+t/v/c/widget/banner/indicator/RectangleIndicator.java	com.foxivid.ui.widget.banner.indicator.RectangleIndicator	Indicador de retângulos arredondados (um por página)
+t/v/c/widget/banner/indicator/RoundLinesIndicator.java	com.foxivid.ui.widget.banner.indicator.RoundLinesIndicator	Indicador de linha contínua com um trecho (selectedWidth) destacado
+t/v/c/widget/banner/util/ScrollSpeedManger.java	com.foxivid.ui.widget.banner.util.ScrollSpeedManger	LayoutManager do ViewPager2 que usa a duração de scroll configurada no [Banner]
+t/v/c/widget/ratingbar/MyRatingBar.java	com.foxivid.ui.widget.ratingbar.MyRatingBar	RatingBar com estrelas customizáveis (cores, drawable, espaçamento, escala e modo direita-para-esquerda)
+t/v/c/widget/a.java	com.foxivid.ui.widget.MyButton (arquivo AutoLayoutTextViews.kt)	helper de auto-layout compartilhado pelos widgets My*
+t/v/c/widget/banner/Banner$a.java	com.foxivid.ui.widget.banner.Banner.LoopTask	Runnable de auto-loop do banner
+t/v/c/widget/banner/Banner$c.java	com.foxivid.ui.widget.banner.Banner.PageChangeCallback	callback de página (loop infinito, indicador)
+t/v/c/widget/banner/Banner$d.java	com.foxivid.ui.widget.banner.Banner.AdapterObserver	AdapterDataObserver do banner
+t/v/c/widget/MarqueeTextView$a.java	com.foxivid.ui.widget.MarqueeTextView.Speed	enum de velocidade do letreiro
+t/v/c/widget/GlobalMarqueeTextView$a.java	com.foxivid.ui.widget.GlobalMarqueeTextView.Speed	enum de velocidade do letreiro global
+ziyi/kit/keyboard/DataBinderMapperImpl.java	com.foxivid.ui.keyboard.R	mapper vazio do DataBinding (sem layouts com binding)
+ziyi/kit/keyboard/KeyUtils$a.java	com.foxivid.ui.keyboard.KeyUtils (HeightListener)	listener de layout global que detecta teclado visível
+ziyi/kit/keyboard/KeyUtils$b.java	com.foxivid.ui.keyboard.KeyUtils (DefaultVisibilityListener)	desloca o conteúdo quando o teclado aparece
+ziyi/kit/keyboard/KeyUtils$c.java	com.foxivid.ui.keyboard.KeyUtils.KeyboardVisibilityListener	interface de visibilidade do teclado
+com/tvc/lib/mobile/ext/*.java	com.foxivid.ui.mobile.ext (Extensions.kt)	extensões Kotlin: countDown, clique com debounce, Glide, toast, tabs, ViewPager2
+com/tvc/lib/mobile/ui/base/a.java$b	com.foxivid.ui.mobile.base.BaseChannelListFragment (coverStoryList)	corrotina coverStoryList (não decompilada)
+com/tvc/lib/mobile/ui/widget/flexbox/FlexboxLayout.java	com.google.android.flexbox.FlexboxLayout	cópia reempacotada do Google FlexboxLayout (alias)
+com/tvc/lib/mobile/ui/widget/flexbox/FlexboxLayoutManager.java	com.google.android.flexbox.FlexboxLayoutManager	cópia reempacotada do Google FlexboxLayoutManager (alias)
+com/tvc/lib/mobile/ui/widget/flexbox/FlexboxLayoutManagerWrap.java	com.foxivid.ui.mobile.widget.flexbox (TODO variante)	variante local do FlexboxLayoutManager (não analisada)
+com/tvc/lib/mobile/ui/widget/flexbox/FlexItem.java	com.google.android.flexbox.FlexItem	interface FlexItem (alias)
+com/tvc/lib/mobile/ui/widget/flexbox/a.java	com.google.android.flexbox.FlexContainer	interface do container flex (alias)
+com/tvc/lib/mobile/ui/widget/flexbox/b.java	com.google.android.flexbox.FlexboxHelper (parte)	helper estático do flexbox (terceiro)
+com/tvc/lib/mobile/ui/widget/flexbox/c.java	com.google.android.flexbox.FlexboxHelper	cálculo de linhas flex (terceiro)
+com/tvc/lib/mobile/ui/widget/flexbox/{d,e,f}.java	(nenhum)	classes sintéticas vazias (R8)
+com/tvc/lib/mobile/ui/widget/b.java	com.foxivid.ui.mobile.widget.MyVideoView.LoadingController	interface de loading (a=hide, b=show) estende x1/f1/lb/config/c
+tv/danmaku/ijk/**	tv.danmaku.ijk (ijkplayer, API real)	ijkplayer (Bilibili), terceiro; ver docs/bibliotecas_terceiros.md
+com/tvc/lib/DataBinderMapperImpl.java	com.foxivid.ui.mobile (gerado)	mapper do DataBinding gerado (p7.*), sem lógica própria
