@@ -1,0 +1,313 @@
+b5/*.java	com.live.evo.event.*	eventos EventBus (nomes inferidos; ver event/Events.kt)
+b5/b.java	com.live.evo.event.ChangeChannelEvent	Troca de canal/menu. Campos: tag de menu e ids (4 strings; construtor de 1 String = só canal). Original: b5/b.java
+b5/c.java	com.live.evo.event.ChannelUpdateEvent	Canais atualizados (carrega novo tipo `a()`). Original: b5/c.java
+b5/h.java	com.live.evo.event.SavePlayHistoryEvent	Posição de reprodução salva. Campos: categoria, canal, posição global. Original: b5/h.java
+b5/k.java	com.live.evo.event.SubscribeRemindEvent	Lembrete de assinatura de programa. Original: b5/k.java
+com/live/evo/MAppGlideModule.java	com.live.evo.MAppGlideModule	Módulo Glide do app: registra `OkHttpUrlLoader` usando o OkHttpClient do SDK (`of.e.f16588a.e()` =
+com/live/evo/MyApplication.java	com.live.evo.MyApplication	Application real do app (no APK, o manifest declara `com.stub.StubApp` do packer 360 Jiagu,
+com/live/evo/SophixStubApplication.java	com.live.evo.SophixStubApplication	Stub do hotfix Alibaba Sophix: inicializa o SophixManager antes da Application real ([MyApplication]).
+com/live/evo/a.java	com.live.evo.AppConstants	Constantes globais do app.
+com/live/evo/activity/BaseActivity.java	com.live.evo.activity.AutoSizeBaseActivity	Base das Activities de reprodução (CatchUpPlayer via FontBaseActivity): modo imersivo (flags 3846 reaplicadas
+com/live/evo/activity/BaseLivePlayActivity.java	com.live.evo.activity.BaseLivePlayActivity	BaseLivePlayActivity
+com/live/evo/activity/CatchUpPlayerActivity.java	com.live.evo.activity.CatchUpPlayerActivity	Player de catch-up (programas passados). Recebe os parâmetros por um "holder" estático ([Source]) porque
+com/live/evo/activity/FontBaseActivity.java	com.live.evo.activity.FontBaseActivity	FontBaseActivity
+com/live/evo/activity/LiveLoadActivity.java	com.live.evo.activity.LiveLoadActivity	Tela de carregamento/login da versão STB (TV). Aberta por [com.live.load.InitActivity] quando appType == "stb"
+com/live/evo/activity/LiveNewActivity.java	com.live.evo.activity.LiveNewActivity	Tela principal de TV ao vivo (STB): player em tela cheia + OSD + menus/EPG sobrepostos.
+com/live/evo/activity/SpeedTestActivity.java	com.live.evo.activity.SpeedTestActivity	Tela de "teste de velocidade". Aberta a partir do ChannelFragment (fragment/x) via [start].
+com/live/evo/activity/base/BaseActivity.java	com.live.evo.activity.base.BaseActivity	Base comum de todas as Activities do app (TV).
+com/live/evo/activity/base/BasicActivity.java	com.live.evo.activity.base.BasicActivity	Base "template method": setContentView(layoutId) → registro opcional no EventBus → initView/initData...
+com/live/evo/activity/base/LoginBaseActivity.java	com.live.evo.activity.base.LoginBaseActivity	Base (vazia) das telas de login/carregamento TV (LiveLoadActivity, BasicActivity).
+com/live/evo/activity/base/MonitorableActivity.java	com.live.evo.activity.base.MonitorableActivity	Base que apenas loga (tag "monitor_activity") cada callback de ciclo de vida com orientação e largura.
+com/live/evo/activity/i0.java	(sintético)	classe sintética vazia
+com/live/evo/activity/n2.java	com.live.evo.activity.ChannelSwitchHelper	Auxiliar de troca de canal da live: encapsula um [Listener] (a Activity) e, em [switchTo], apenas chama
+com/live/evo/b.java	com.live.evo.b (interface vazia `featuresListener`)	interface marcador sem métodos usada por l3
+com/live/evo/boot/a.java	com.live.evo.boot.AsyncExecutor	Pool de threads de uso geral ("AsyncExecutor #N"): core = max(2, min(CPUs-1, 4)), max = 2*CPUs+1,
+com/live/evo/boot/b.java	com.live.evo.boot.BootManager	Sincronização de etapas do boot: 7 checkpoints (0..6) começam "pendentes"; ações registradas ([WaitingMan])
+com/live/evo/c.java	(Glide gerado) GlideOptions	código gerado pelo Glide (a0.i); não reconstruído
+com/live/evo/catchup/EPG.java	com.live.evo.catchup.EPG	Grade de EPG desenhada manualmente em Canvas (estilo "TV Guide": coluna de canais à esquerda, linha do
+com/live/evo/catchup/EPG_Dstyle.java	com.live.evo.catchup.EPG_Dstyle	Variante "D-style" da grade EPG (mesma ideia, layout diferente; usa `sync` em `o0()` e listas O/P de programas).
+com/live/evo/catchup/LargeEpg/EpgView.java	com.live.evo.catchup.EpgView	Grande EPG (categorias × canais × tempo); calcula primeira/última categoria/canal visíveis e posição X de início.
+com/live/evo/catchup/LargeEpg/a.java	com.live.evo.catchup.LargeEpgBase	Base da "grande EPG". Original: com/live/evo/catchup/LargeEpg/a.java
+com/live/evo/catchup/player/a.java	com.live.evo.catchup.player.CatchUpMediaController	Controlador de mídia do catch-up (layout próprio): mostra canal/número/ícone, título e horários (início/fim)
+com/live/evo/catchup/player/b.java	com.live.evo.catchup.player.CatchUpBannerAdapter	Adapter de banner (youth.banner) com URLs de imagem (anúncios do catch-up). Original: com/live/evo/catchup/player/b.java
+com/live/evo/d.java	(Glide gerado) GlideRequest<TranscodeType>	código gerado pelo Glide (com.bumptech.glide.k); não reconstruído
+com/live/evo/dialog/a.java	com.live.evo.dialog.AdultKeyNewDialogFragment	Diálogo de tela cheia para digitar/definir a senha adulta (PIN de 4 dígitos).
+com/live/evo/dialog/b.java	com.live.evo.dialog.ConfirmDialog	Diálogo de confirmação (layout `dialog_confirm`: mensagem `confirmdlg_tv_msg`, botões esquerdo/central/OK).
+com/live/evo/dialog/c.java	com.live.evo.dialog.EcoCountdownDialog	Diálogo "modo ECO / ainda está assistindo?" (layout `countdown_layout_d`): contagem regressiva `mm:ss`
+com/live/evo/dialog/f.java	com.live.evo.dialog.EpgDialog	"Grande EPG" em diálogo (layout `epg_dialog`) aberto pelo D-pad direito na live. Mostra, para o canal atual,
+com/live/evo/dialog/m.java	com.live.evo.dialog.ExitDialog	Diálogo "Sair?" (layout `exit_dialog`: `exitdlg_tv_exit`, `exitdlg_btn_sure`, `exitdlg_btn_cancel`).
+com/live/evo/dialog/n.java	com.live.evo.dialog.OnDialogActionListener	interface de ação do ExitDialog (onConfirm)
+com/live/evo/dialog/q.java	com.live.evo.dialog.NoticeAlertDialog	Aviso/notificação (layout `notice_alert_dialog`: título, botão OK, botão "direct" (ir para), ícone).
+com/live/evo/dialog/r.java	com.live.evo.dialog.RemindAlertDialog	Aviso de "lembrete de recarga" (layout `remind_alert_dialog`: imagem, título, texto, botão e botão secundário);
+com/live/evo/dialog/u.java	com.live.evo.dialog.SubscribePopup	Popup "programa agendado vai começar" (layout `popup_subscribe`): ícone, "HH:mm--HH:mm", nome do programa,
+com/live/evo/dialog/v.java	(sintético)	classe sintética vazia de dialog
+com/live/evo/dialog/w.java	com.live.evo.dialog.SubscribeSwitchDialog	Pergunta "trocar de lembrete?" (layout `subscribeswitch_dialog`): texto com
+com/live/evo/dialog/x.java	com.live.evo.dialog.SubscribeSwitchDialog.Listener	listener do SubscribeSwitchDialog
+com/live/evo/dialog/y.java	com.live.evo.dialog.UpgradePromptDialog	Diálogo de atualização do app (layout `layout_upgrade_prompt_a`): texto, botões OK/Cancelar, barra de download
+com/live/evo/dialog/z.java	com.live.evo.dialog.UserListDialog	Lista de contas do usuário (layout `user_list_dialog`, estilo `EPGDialog`): RecyclerView vertical com divisor.
+com/live/evo/e.java	(Glide gerado) GlideRequests	código gerado pelo Glide (com.bumptech.glide.l); não reconstruído
+com/live/evo/fragment/a.java	(helper)	"bff_request_time": controle de intervalo do BFF; não reconstruído
+com/live/evo/fragment/a0.java	com.live.evo.fragment.FavoriteFragment	Favoritos (layout `newfavorite_fragment`, ids `favf_*`): lista de canais favoritos; broadcast
+com/live/evo/fragment/a2.java	com.live.evo.fragment.OnMenuCallback	callback de menu
+com/live/evo/fragment/b.java	com.live.evo.fragment.BaseDialogFragment	DialogFragment base (onStart/onDismiss, registra z1). Original: com/live/evo/fragment/b.java
+com/live/evo/fragment/b0.java	com.live.evo.fragment.FeedbackDialogFragment	Diálogo de feedback (layout `feedback_layout`, ViewPager com 3 abas: "feedback_userfeedback_title_1" (envio),
+com/live/evo/fragment/b2.java	com.live.evo.fragment.PipSettingFragment	Configuração do PIP (layout `newpipsetting_fragment`): ligar/desligar PIP, posição e tamanho
+com/live/evo/fragment/c.java	com.live.evo.fragment.BaseFragment	Base de fragments com AutoSize (`CustomAdapt`: baseOnWidth, sizeInDp 0), ciclo de visibilidade (`O`, `V/W`) e
+com/live/evo/fragment/c0.java	com.live.evo.fragment.MenuPagerAdapter	Adapter de página (FragmentPagerAdapter) das abas. Original: com/live/evo/fragment/c0.java
+com/live/evo/fragment/c2.java	com.live.evo.fragment.PhoneLoginFragment	Login por telefone na TV (layout `newphone_login_fragment`, `phoneloginf_*`): opções remotas `phone_login_option_one/two`,
+com/live/evo/fragment/d.java	com.live.evo.fragment.BaseMenuFragment	BaseMenuFragment
+com/live/evo/fragment/d0.java	com.live.evo.fragment.FeedbackItemAdapter	Item do adapter de feedback (`feedback_item`, ids `feedbackitem_*`). Original: com/live/evo/fragment/d0.java
+com/live/evo/fragment/d2.java	com.live.evo.fragment.PipSettingsAdapter	PipSettingsAdapter
+com/live/evo/fragment/e0.java	(sintético)	classe sintética vazia
+com/live/evo/fragment/e2.java	(sintético)	classe sintética vazia
+com/live/evo/fragment/f0.java	com.live.evo.fragment.LazyMenuFragment	Fragment base dos menus: `R()` layout, `S(Bundle)` dados, `T()` pós-dados, `V(View)` views, `W(hasFocus)`,
+com/live/evo/fragment/f2.java	com.live.evo.fragment.QuestionFragment	FAQ (`question_fragment`; título `feedback_faq_title`; adapter [com.live.evo.osd.QuestionAdapter]). Original: com/live/evo/fragment/f2.java
+com/live/evo/fragment/g2.java	com.live.evo.fragment.SearchFragment	Busca de canais (layout `newsearch_channel_fragment`, ids `searchchannelf_*`): teclado virtual próprio ("ABCDEF..." A-Z),
+com/live/evo/fragment/k0.java	com.live.evo.fragment.FunctionMenuFragment	Menu lateral de funções (`menu_fragment_function`): ListView (`FunctionMenuAdapter`) à esquerda e fragment
+com/live/evo/fragment/k2.java	com.live.evo.fragment.SubscribeFragment	Lembretes de programação (layout `newfragment_subscribe`, ids `subscribef_*`): lista de [com.live.evo.model.SubscribeBean]
+com/live/evo/fragment/l1.java	com.live.evo.fragment.ProgramMenuDialogFragment	Diálogo do menu principal. `menu_first` define a aba inicial: "Channel List" (padrão) → CHANNEL, "recommend" → RECOMMEND,
+com/live/evo/fragment/l3.java	com.live.evo.fragment.TabFunctionRechargeFragment	Aba "Recarga" do menu de funções (layout `tabfunction_recharge_fragment`, ids `renew_*`/`rechargeremindf_*`).
+com/live/evo/fragment/login/b.java	com.live.evo.fragment.login.AccountUserLoginFragment	Tela de login principal (layout `accountuser_login_fragment`, ids `loginf_*`) com TabLayout:
+com/live/evo/fragment/login/d.java	com.live.evo.fragment.login.AdultWarningFragment	Aviso de conteúdo adulto: textos remotos `attention_remind_one` (os dois campos usam a mesma chave no original —
+com/live/evo/fragment/login/e.java	com.live.evo.fragment.login.BffInfoFragment	Tela de informação BFF (`bffinfo_fragment`; `bff_request_time`). Tag "BffInfoFragment". Original: com/live/evo/fragment/login/e.java
+com/live/evo/fragment/login/f.java	com.live.evo.fragment.login.BindAccountTipFragment	Dica para vincular conta (`fragment_bindaccount_tip`): botões que chamam `listener.a(fragment, escolha)`;
+com/live/evo/fragment/login/g.java	com.live.evo.fragment.login.CheckAccountFragment	Verificação de conta (layout `checkaccount_fragment`): digitar e-mail/telefone (abas 8/9) e prosseguir ao fluxo de
+com/live/evo/fragment/login/h.java	com.live.evo.fragment.login.LoginFinishFragment	Tela de conclusão de login/cadastro/recarga. Argumento `arg_remind_type`:
+com/live/evo/fragment/login/j.java	com.live.evo.fragment.login.RechargeDialogFragment	Diálogo de tela cheia que HOSPEDA todo o fluxo de recarga/login dentro da live (childFragmentManager,
+com/live/evo/fragment/login/l.java	com.live.evo.fragment.login.RechargeMiniFragment	Recarga "mini" (layout `recharge_mini_fragment`): digitar renew code (`RechargeEditText`) e confirmar.
+com/live/evo/fragment/login/m.java	com.live.evo.fragment.login.RechargeRemindFragment	Lembrete de recarga/expiração (layout `rechargeremind_fragment`; tag "RechargeRemindFragment"). Texto depende do tipo
+com/live/evo/fragment/login/n.java	com.live.evo.fragment.login.LoginFinishMiniFragment	Conclusão "mini" da recarga (layout `login_finish_fragment_mini`): "remind_recharge_successfully" + validade
+com/live/evo/fragment/login/p.java	com.live.evo.fragment.login.RegisterEmailFragment	Cadastro por e-mail (layout `register_email`, ids `registeremail_*`): campos e-mail/telefone (abas 4 e 5),
+com/live/evo/fragment/login/presenter/e.java	com.live.evo.fragment.login.presenter.AuthResult	Triple(sucesso, código, mensagem) devolvido pelos fluxos de auth do SDK (u<Boolean,Integer,String>)
+com/live/evo/fragment/login/presenter/e.java	com.live.evo.fragment.login.presenter.LoginPresenter	Presenter de login. Fluxo de [login]: view.showLoading(); coleta `MediaRepository.y0(userId, password)` (Flow<AuthResult>):
+com/live/evo/fragment/login/r.java	com.live.evo.fragment.login.RenewCodeLoginSupportFragment	Login por renew code (suporte): `type` 40/41/42 (42 = "bind remind"). Layouts: `code_login_support_fragment` com
+com/live/evo/fragment/login/s.java	com.live.evo.fragment.login.ResetAccountPasswordFragment	Redefinição de senha (layout `reset_account_password`, `resetpwd_*`): mesmas abas (6 e-mail, 7 telefone) e
+com/live/evo/fragment/login/u.java	com.live.evo.fragment.login.ScanedRechargeFragment	Recarga por QR "escaneado" (layout `recharge_fragment`, ids `rechargef_*`; Kotlin com Companion): mostra QR para pagar
+com/live/evo/fragment/login/v.java	com.live.evo.fragment.login.ShareCodeInfoFragment	Tela "compartilhe seu código" (layout `sharecode_info_fragment`): gera QR com URL
+com/live/evo/fragment/login/w.java	com.live.evo.fragment.login.WelcomeFragment	Tela de boas-vindas (primeira abertura): logo, texto `welcome_remind` (com N dias de teste do SDK) e
+com/live/evo/fragment/m1.java	com.live.evo.fragment.MessageFragment	Mensagens do servidor (layout `newmessage_fragment`; log "Message"). Original: com/live/evo/fragment/m1.java
+com/live/evo/fragment/m3.java	com.live.evo.fragment.FeedbackFragment	Envio do feedback do usuário (`feedback_fragment`, ids `feedbackf_*`; `rc_update_time`). Original: com/live/evo/fragment/m3.java
+com/live/evo/fragment/n0.java	com.live.evo.fragment.HistoryDeleteFragment	Histórico (layout `history_delete_fragment`): lista de canais assistidos com opção de apagar; `z0(index)`/`A0(position)`.
+com/live/evo/fragment/p2.java	com.live.evo.fragment.TabFunctionMessageFragment	Aba de mensagens (layout `tab_message_fragment`; log "TabFunctionMessageFragment"): lista + detalhe. Original: com/live/evo/fragment/p2.java
+com/live/evo/fragment/q2.java	(sintético)	classe sintética vazia
+com/live/evo/fragment/r0.java	com.live.evo.fragment.InfoFragment	Info/Contato (layout `newfragment_contact`): versão do app (`R.string.version` + `k.t()`), MAC/ID do dispositivo,
+com/live/evo/fragment/r2.java	com.live.evo.fragment.TabFunctionMyAccountFragment	Aba "Minha conta" (layout `tabfunction_fragment_myaccount`, ids `myaccountf_*`): mostra tipo de conta
+com/live/evo/fragment/s2.java	com.live.evo.fragment.TabFunctionPhoneScanFragment	Aba "PHONESCAN": mostra QR/dica para escanear com o celular (`qrcodeView`, `tipsView`). Original: com/live/evo/fragment/s2.java
+com/live/evo/fragment/subjuect/b.java	com.live.evo.fragment.subject.SubjectDataHelper	Cache dos dados de "Subject" (esportes/futebol: partidas por liga e por dia).
+com/live/evo/fragment/subjuect/c.java	com.live.evo.fragment.subject.MatchAdapter	Adapter de partidas (`subject_match_item`; `playback`/`cancel`, ícone "no_icon"). Original: com/live/evo/fragment/subjuect/c.java
+com/live/evo/fragment/subjuect/c0.java	com.live.evo.fragment.subject.SubjectTabMenuFragment	Container da aba de um tipo de Subject (layout `menu_fragment_subject`): hospeda [SubjectMatchFragment] e, em
+com/live/evo/fragment/subjuect/d.java	com.live.evo.fragment.subject.MatchClassificationAdapter	Adapter de classificação/ligas (`subject_matchclassification_item`). Original: com/live/evo/fragment/subjuect/d.java
+com/live/evo/fragment/subjuect/e.java	com.live.evo.fragment.subject.MatchDateAdapter	Adapter de datas (`subject_matchdate_item`). Original: com/live/evo/fragment/subjuect/e.java
+com/live/evo/fragment/subjuect/w.java	com.live.evo.fragment.subject.SubjectMatchFragment	Lista de partidas de um tipo (layout `subject_match_fragment`): cabeçalhos de liga/dia, botão "back to top"
+com/live/evo/fragment/subjuect/y.java	com.live.evo.fragment.subject.SubjectFragment	Variante da aba de subject (usa o argumento `position`). Original: com/live/evo/fragment/subjuect/y.java
+com/live/evo/fragment/t1.java	com.live.evo.fragment.NetworkStatusDialogFragment	Diálogo "Teste de rede" (layout `network_status_dialog`): três etapas — caixa→roteador (`imgBoxToHub*`, usa
+com/live/evo/fragment/u0.java	com.live.evo.fragment.LockFragment	Bloqueio infantil/grupo privado (layout `fragment_lock`, ids `adultkeyl_*`/`duo_*`): pede a senha
+com/live/evo/fragment/v0.java	(modelo pequeno)	classe auxiliar de 40 linhas não reconstruída
+com/live/evo/fragment/w0.java	com.live.evo.fragment.FunctionMenuAdapter	Adapter da lista de funções (ícone + nome; seleção destacada). Original: com/live/evo/fragment/w0.java
+com/live/evo/fragment/x.java	com.live.evo.fragment.ChannelFragment	Painel de canais do menu da live ("Channel List"): 3 colunas — categorias (`mCategoryListView`, [com.live.evo.osd.ProgramClassifyAdapter]),
+com/live/evo/fragment/y1.java	com.live.evo.fragment.OnTabEventListener	listener de eventos de aba (a/b/c)
+com/live/evo/fragment/z.java	com.live.evo.fragment.ContactFragment	Contato (`contact_fragment`; whatsapp/website/facebook/twitter/phone via ContactTemplate). Original: com/live/evo/fragment/z.java
+com/live/evo/fragment/z1.java	com.live.evo.fragment.VisibilityListener	listener de visibilidade
+com/live/evo/g.java	com.live.evo.LivePopupController	Controla os popups sobrepostos ao player em [com.live.evo.activity.LiveNewActivity]:
+com/live/evo/h.java	com.live.evo.ProductFeatureManager	Feature flags do produto. O mapa remoto (`f6970a`) nunca é atribuído nesta versão, portanto valem os padrões:
+com/live/evo/i.java	(sintético)	classe sintética vazia
+com/live/evo/j.java	(utilitário de lista imutável)	Collections.unmodifiableList(Objects.requireNonNull...) — helper do compilador
+com/live/evo/k.java	com.live.evo.UiFunctionConfig	Toggles de UI (valores fixos; `q()` de recarga é vazio).
+com/live/evo/l.java	com.live.evo.AppUserManager	Estado do usuário no nível do app (TAG/HandlerThread "UserManager"; não confundir com
+com/live/evo/osd/PlanListPresenter$PlanItem.java	com.live.evo.osd.PlanItemView	Item de plano de assinatura (layout `item_plan_info`: nome, preço de venda, preço original, descrição).
+com/live/evo/osd/a.java	com.live.evo.osd.OsdControlListenerEx	Extensão de [OsdControlListener] com um callback extra. Original: com/live/evo/osd/a.java
+com/live/evo/osd/b.java	com.live.evo.osd.EpgListAdapter	Adapter ListView da EPG simples do OSD: linha "HH:mm - HH:mm", nome e rótulo de reprodução
+com/live/evo/osd/d.java	com.live.evo.osd.EpgChildAdapter	Adapter RecyclerView de um dia da EPG (itens filhos `epg_item_child`): nome, horário,
+com/live/evo/osd/e.java	com.live.evo.osd.EpgItemListener	Listener de itens de EPG (OSD de programação).
+com/live/evo/osd/f.java	com.live.evo.osd.EpgDayAdapter	Adapter externo da "grande EPG" em forma de diálogo: um item por dia (14 dias, centrado em hoje,
+com/live/evo/osd/g.java	com.live.evo.osd.OsdLayer	Camada (layer) do OSD de [com.live.evo.activity.LiveNewActivity]: um elemento sobreposto ao vídeo
+com/live/evo/osd/h.java	com.live.evo.osd.OsdLayerManager	Gerente de camadas do OSD. Registro estático (`HashMap` companion) por nome de camada.
+com/live/evo/osd/i.java	com.live.evo.osd.NetworkPromptLayer	Camada "aviso de rede" (`livenewa_ll_osd_network_prompt`), prioridade 3.
+com/live/evo/osd/j.java	com.live.evo.osd.ProgramNameLayer	Camada com número e nome do canal (`livenewa_ll_program_name_container`). Auto-esconde
+com/live/evo/osd/k.java	com.live.evo.osd.OptimizingLayer	Camada de texto "otimizando programa" (`livenewa_tv_program_optimizing`), prioridade 3.
+com/live/evo/osd/l.java	com.live.evo.osd.LoadingLayer	Camada de "carregando" (`livenewa_ll_loading`): texto + [SLoadingView] (estilo TRANSLATE_CIRCLE)
+com/live/evo/osd/m.java	com.live.evo.osd.ProgramClassifyAdapter	Adapter das categorias de programas (`program_classify_item`): ícone (url `normal`/`focus`)
+com/live/evo/osd/n.java	com.live.evo.osd.QuestionAdapter	Adapter de perguntas frequentes (FAQ): número, pergunta e resposta (`question_item`).
+com/live/evo/osd/o.java	(sintético)	classe sintética vazia
+com/live/evo/osd/p.java	com.live.evo.osd.OsdControlListener	Callbacks genéricos de controle de OSD (usados por diálogos de recarga etc.).
+com/live/evo/osd/persenter/a.java	com.live.evo.osd.presenter.OSDListProgramPresenterContract	Contrato MVP do menu OSD (lista de categorias/canais/EPG), `k5.a<b>` / `k5.b<a>` no original.
+com/live/evo/osd/persenter/b.java	com.live.evo.osd.presenter.OSDListProgramView	OSDListProgramView
+com/live/evo/osd/persenter/c.java	com.live.evo.osd.presenter.OSDListProgramPresenter	Presenter do menu OSD lateral/inferior. Quase todos os métodos apenas encaminham para a
+com/live/evo/osd/q.java	com.live.evo.osd.OnStringListener	OnStringListener
+com/live/evo/osd/recyclerviewadapter/FocusFixedLinearLayoutManager.java	com.live.evo.osd.FocusFixedLinearLayoutManager	LinearLayoutManager que evita perder o foco ao navegar com D-pad no fim da lista:
+com/live/evo/osd/u.java	com.live.evo.osd.SubscribeManager	gerente de lembretes (SubscribeManager.kt)
+com/live/evo/osd/v.java	com.live.evo.osd.OnUpdateListener	Notifica atualização de assinatura (usado por [SubscribeManager.subscribe]). Original: com/live/evo/osd/v.java
+com/live/evo/pip/PreviewVideoView.java	com.live.evo.pip.PreviewVideoView	Janela PIP/preview do canal (1/4 da largura da tela, proporção 16:9): VideoView, texto de loading,
+com/live/evo/util/a0.java	com.live.evo.util.KeyboardUtils	Teclado virtual: abrir/fechar, ajustar a view quando o IME aparece, limpar foco em EditTexts.
+com/live/evo/util/b.java	com.live.evo.util.BrowserUtils	Abre links/ações vindas do servidor e checa a Activity do topo.
+com/live/evo/util/b0.java	com.live.evo.util.DebugPropsParser	Parser de pares "k=v,k2" (a fonte `a()` retorna null nesta build). Original: com/live/evo/util/b0.java (DebugPropsParser)
+com/live/evo/util/b1.java	com.live.evo.util.AppPropertiesStore	Armazém de propriedades remotas "app_properties_bean_key" (mapa grupo -> chave -> valor) carregado do
+com/live/evo/util/b2.java	com.live.evo.util.PlaybackPrefs	Posição de reprodução e flags simples em SharedPreferences.
+com/live/evo/util/c.java	com.live.evo.util.SecretKeySequence	Sequência secreta de teclas numéricas ("5188") para ativar modo oculto. Cada dígito 0-9 mapeia para
+com/live/evo/util/c1.java	com.live.evo.util.DurationFormatter	mm:ss ou hh:mm:ss a partir de milissegundos. Original: com/live/evo/util/c1.java
+com/live/evo/util/d.java	com.live.evo.util.AppLauncher	Abre outro app pelo pacote (launcher ou leanback launcher), flags 270532608. Original: com/live/evo/util/d.java
+com/live/evo/util/e.java	com.live.evo.util.LoginConfig	Configuração de login/UI (singleton com flags padrão). Contém a regex de e-mail
+com/live/evo/util/i1.java	com.live.evo.util.RxTrigger	Timer de "gatilho" com debounce: um Flowable de inteiros com timeout (ms) disparado por [trigger].
+com/live/evo/util/j.java	com.live.evo.util.LocaleContextWrapper	Força contexto em espanhol quando idioma resolvido = "es" mas o idioma base pt (condição na prática
+com/live/evo/util/j1.java	com.live.evo.util.RxBus	Barramento de eventos global (EventBus sobre RxJava3). `post` empurra qualquer objeto;
+com/live/evo/util/k1.java	com.live.evo.util.RxUtils	Helpers de execução em thread IO/UI via corrotinas (originalmente "RxUtils.kt").
+com/live/evo/util/l.java	com.live.evo.util.TimeZoneHelper	Ajuste de fuso horário (menu "set_sys"): lê configuração remota ("has_stz_p", "t_sys_id", "set_sys_prompt")
+com/live/evo/util/m.java	com.live.evo.util.LoadingTimer	Cronômetro de etapas de carregamento ("Debug Loading"): [mark] registra pares (etapa, tempo) e [finish]
+com/live/evo/util/m1.java	com.live.evo.util.SecondTicker	Ticker de 1 segundo compartilhado (`interval(1,1,SECONDS)` publicado e "refcount").
+com/live/evo/util/n.java	com.live.evo.util.ScreenUtils	Tamanho de tela via WindowManager. Original: com/live/evo/util/n.java
+com/live/evo/util/n1.java	com.live.evo.util.AppDirs	Diretórios do app (armazenamento externo e interno).
+com/live/evo/util/o.java	com.live.evo.util.FileDownloader	Download de arquivo (OkHttp, buffer 2048, progresso 0..100). Original: com/live/evo/util/o.java
+com/live/evo/util/o0.java	com.live.evo.util.SkinConfig	"Skin": recursos de abertura/UI configuráveis remotamente — chaves de propriedade remota
+com/live/evo/util/o1.java	com.live.evo.util.DateFormatFactory	Cria SimpleDateFormat (padrão "dd/MM"-like) do pattern. Original: com/live/evo/util/o1.java
+com/live/evo/util/p.java	com.live.evo.util.EpgBeanDaoUtils	Consulta dois programas de EPG (atual e próximo) a partir do relógio do servidor:
+com/live/evo/util/p1.java	com.live.evo.util.ContactTemplate	Substitui placeholders em textos remotos: ${Email}, ${Website}, ${Whatsapp}, ${Phone}, ${Facebook}, ${Twitter},
+com/live/evo/util/q1.java	com.live.evo.util.DateUtils	Funções de data usadas na EPG e OSD.
+com/live/evo/util/r.java	com.live.evo.util.FileUtils	Remoção recursiva de arquivos/diretórios. Original: com/live/evo/util/r.java (a=delete, b=deleteDir, c=deleteFile)
+com/live/evo/util/r0.java	com.live.evo.util.NoticeActionHandler	Trata o "tipo de ação" de avisos/banners (`i5.v` bean): `channelId` (troca canal), `programId`,
+com/live/evo/util/r1.java	com.live.evo.util.ToastUtils	Toasts do app, via `com.foxivid.baselib.util.ToastHelper` (original `x1.f1.lb.util.g1`):
+com/live/evo/util/s.java	com.live.evo.util.FontUtils	Typefaces do app (campos estáticos preenchidos na inicialização). Original: com/live/evo/util/s.java
+com/live/evo/util/s0.java	com.live.evo.util.ModelHelper	Camada de tradução entre os modelos do SDK (`ChannelStreamResponse`, `EPGProgramme`) e os modelos
+com/live/evo/util/s1.java	com.live.evo.util.ToastUtils	toast simples
+com/live/evo/util/t.java	com.live.evo.util.TextStyleUtils	Aplica fonte ao TextView (null-safe). Original: com/live/evo/util/t.java (a→typeface0, b→typeface2, c→typeface3, d→typeface1)
+com/live/evo/util/t0.java	com.live.evo.util.NetworkUtils	Conectividade simples. Original: com/live/evo/util/t0.java
+com/live/evo/util/t1.java	com.live.evo.util.WorkHandler	Executor em thread única ("tortoise work thread #0") para trabalho agendado.
+com/live/evo/util/u0.java	com.live.evo.util.ServerTimeClient	Cliente OkHttp usado só para o relógio/servidor: interceptor adiciona headers "GetServerTime", "ClientTimeMS",
+com/live/evo/util/u1.java	com.live.evo.util.ServerClock	Relógio do servidor: `now()` = `d1.d()` do SDK (tempo corrigido pelo servidor).
+com/live/evo/util/v.java	com.live.evo.util.GlideImageLoader	Carregamento de imagens com Glide (sem cache de disco, `DiskCacheStrategy.NONE` = `l.j.f15048a`),
+com/live/evo/util/v1.java	com.live.evo.util.ApkInstallIntent	Instala APK via FileProvider (`<pkg>.fileProvider`). Original: com/live/evo/util/v1.java (ApkInstaller)
+com/live/evo/util/w.java	com.live.evo.util.GsonFactory	Gson: formato de data "yyyy-MM-dd HH:mm:ss"; variante com desserializador de HashMap<String,Object>. Original: com/live/evo/util/w.java
+com/live/evo/util/w1.java	com.live.evo.util.QrBitmapHelper	Gera QR code (ZXing/e1.a "TEXT", 1) a partir de texto. Original: com/live/evo/util/w1.java (QrBitmapHelper)
+com/live/evo/util/x0.java	com.live.evo.util.PermissionUtils	Permissões de runtime (WRITE_EXTERNAL_STORAGE). Original: com/live/evo/util/x0.java
+com/live/evo/util/x1.java	com.live.evo.util.CommonUtils	Utilitários gerais: bytes de rede, mascaramento de contas/e-mails, resources, debounce.
+com/live/evo/util/y.java	com.live.evo.util.ImageCache	Cache de bitmaps em memória (LruCache) e retentor de fragment para sobreviver a mudanças de configuração;
+com/live/evo/util/y0.java	com.live.evo.util.LogInit	SharedPreferences "tvcinema" (usado por LogInit). Original: com/live/evo/util/y0.java
+com/live/evo/util/z.java	com.live.evo.util.KeyboardUtils	InputMethodManager
+com/live/evo/util/z0.java	com.live.evo.util.AnimUtils	Animações de view (translationY etc.). Original: com/live/evo/util/z0.java
+com/live/evo/util/{a,f,f1,g,h,i,q0,u,x}.java	(vazios/sintéticos)	classes vazias, interfaces marcador ou helpers de compilador
+com/live/evo/util/{k,p0,y1,d1,e1,z1,a2,v0,w0,g1}.java	com.live.evo.util.QrResultParsers	parsers de QR/contatos (ZXing) — não reconstruídos
+com/live/evo/widget/AdBannerView.java	com.live.evo.widget.AdBannerView	Banner de anúncios (youth.banner.Banner) com click listener `w4.a`. Original: com/live/evo/widget/AdBannerView.java
+com/live/evo/widget/BaseButton.java	com.live.evo.widget.BaseButton	Button base do app (só herda). Original: com/live/evo/widget/BaseButton.java
+com/live/evo/widget/CircleProgressBar.java	com.live.evo.widget.CircleProgressBar	Barra de progresso circular. Original: com/live/evo/widget/CircleProgressBar.java (+ `RoundProgressView`, `GaugeView`: medidores desenhados 
+com/live/evo/widget/EmailAutoCompleteTextView.java	com.live.evo.widget.EmailAutoCompleteTextView	AutoComplete de e-mail com sugestões de domínios (layout de item `v_item_email`). Original: com/live/evo/widget/EmailAutoCompleteTextView.ja
+com/live/evo/widget/EmptyRecyclerView.java	com.live.evo.widget.EmptyRecyclerView	RecyclerView com "empty view" e scroll vertical opcional. Original: com/live/evo/widget/EmptyRecyclerView.java
+com/live/evo/widget/GaugeView.java	com.live.evo.widget.GaugeView	Medidor semicircular (value, angles, cores). Original: com/live/evo/widget/GaugeView.java
+com/live/evo/widget/GifView.java	com.live.evo.widget.GifView	GIF desenhado via android.graphics.Movie. Original: com/live/evo/widget/GifView.java
+com/live/evo/widget/LabelRemoveKeyCodeEnterEditText.java	com.live.evo.widget.LabelRemoveKeyCodeEnterEditText	Rótulo + RemoveKeyCodeEnterEditText (layout `label_removekeycode_edittext`). Original: com/live/evo/widget/LabelRemoveKeyCodeEnterEditText.j
+com/live/evo/widget/LightTextView.java	com.live.evo.widget.LightTextView	TextView "light" (fonte leve). Original: com/live/evo/widget/LightTextView.java
+com/live/evo/widget/LiveCatchUpVideoView.java	com.live.evo.widget.LiveCatchUpVideoView	Vídeo da live em modo catch-up: teclas ESQ/DIR (21/22) → `a(true)`; OK/ENTER (23/66) → `a(!isPlaying)`;
+com/live/evo/widget/LoadView.java	com.live.evo.widget.LoadView	Layout de "carregando VOD" (`p_vod_cache`) com texto. Original: com/live/evo/widget/LoadView.java
+com/live/evo/widget/MarqueeTextView.java	com.live.evo.widget.MarqueeTextView	TextView que sempre se considera focada (marquee). Original: com/live/evo/widget/MarqueeTextView.java
+com/live/evo/widget/MenuTabLayout.java	com.live.evo.widget.MenuTabLayout	Barra de abas horizontal dos menus (backgrounds `menu*_fragment_tab_bg_*`). Original: com/live/evo/widget/MenuTabLayout.java
+com/live/evo/widget/NetView.java	com.live.evo.widget.NetView	View de teste de rede / medidor (sem lógica relevante). Original: com/live/evo/widget/NetView.java; FreeTrialView.java (selo de teste)
+com/live/evo/widget/NoAnimationViewPager.java	com.live.evo.widget.NoAnimationViewPager	ViewPager sem animação de troca e que repassa `executeKeyEvent`. Original: com/live/evo/widget/NoAnimationViewPager.java
+com/live/evo/widget/ProgramListView.java	com.live.evo.widget.ProgramListView	ListView sem over-scroll. Original: com/live/evo/widget/ProgramListView.java
+com/live/evo/widget/ProgramRecycleView.java	com.live.evo.widget.ProgramRecycleView	Lista vertical (leanback) de programas/canais com listeners de seleção/click. Original: com/live/evo/widget/ProgramRecycleView.java
+com/live/evo/widget/RechargeEditText.java	com.live.evo.widget.RechargeEditText	EditText de código de recarga (formatação, `g()`). Original: com/live/evo/widget/RechargeEditText.java
+com/live/evo/widget/RemoveKeyCodeEnterEditText.java	com.live.evo.widget.RemoveKeyCodeEnterEditText	EditText que consome ENTER para não disparar ação padrão (onKeyDown/onKeyUp ignoram DPAD_CENTER/ENTER e
+com/live/evo/widget/RoundProgressView.java	com.live.evo.widget.RoundProgressView	Progresso redondo. Original: com/live/evo/widget/RoundProgressView.java
+com/live/evo/widget/SpeedTextView.java	com.live.evo.widget.SpeedTextView	Texto rolante (marquee de anúncios): desloca o texto a `speed` px/frame (padrão 4) via Timer + invalidate
+com/live/evo/widget/VodLoadAnimation.java	com.live.evo.widget.VodLoadAnimation	Animação de loading do VOD (layout `vod_load_anim`). Original: com/live/evo/widget/VodLoadAnimation.java
+com/live/evo/widget/ijkmedia/a.java	com.live.evo.widget.IMediaController	Controlador de mídia (barra de progresso + tempos + play/pause) ancorado em um PopupWindow.
+com/live/evo/widget/ijkmedia/b.java	com.live.evo.widget.IjkMediaController	Implementação visual do [IMediaController]: SeekBar, textos de posição/duração, botão play/pause e
+com/live/evo/widget/k.java	com.live.evo.widget.CatchUpVideoView	Base do vídeo de catch-up (FrameLayout com PlayerView + loading + debug + MediaController).
+com/live/evo/widget/nicespinner/*.java	com.live.evo.widget.nicespinner.NiceSpinner	lib NiceSpinner
+com/live/evo/widget/nicespinner/NiceSpinner.java	com.live.evo.widget.nicespinner.NiceSpinner	Cópia da lib "NiceSpinner" (arbogast): dropdown com lista (`ListView` em PopupWindow), adapters `a`/`b`
+com/live/evo/widget/o.java	com.live.evo.widget.BaseDialog	Base dos diálogos do app (estilo `RechargeAlertialog`): Dialog sem comportamento extra. Original: com/live/evo/widget/o.java
+com/live/evo/widget/p.java	com.live.evo.widget.PopupMenuAdapter	Adapter dos itens de menu (`popup_menu_item2` ou `popup_menu_item_pip` se [pip]): ícone (oculto se -1) + nome.
+com/live/evo/widget/q.java	com.live.evo.widget.PopupCurrentEpgWindow	Banner inferior "canal atual" (layout `current_epg_layout`): número do canal (3 dígitos, ex. "007"),
+com/live/evo/widget/s.java	com.live.evo.widget.PopupMenuC	Menu lateral direito (tecla MENU) com `VerticalGridView`: item "E P G" (broadcast `com.bb.action.EPG`) e item
+com/live/evo/widget/sloading/*.java	com.live.evo.widget.sloading.SLoadingView/LoadingStyle	lib SLoading
+com/live/evo/widget/sloading/SLoadingView.java	com.live.evo.widget.sloading.SLoadingView	View de loading animada: usa um Drawable animado (`sloading/b.java`, com `sloading/a.java` como controlador de
+com/live/evo/widget/sloading/c.java	com.live.evo.widget.sloading.LoadingStyle	Estilos de animação do [SLoadingView] (cada um mapeia para uma classe de renderização em `s5.*`/`widget.*`).
+com/live/evo/widget/u.java	com.live.evo.widget.TrialPopup	Popup "trial" (layout `popup_trial`, 150x150 dp, fundo transparente `icon_transport`, animação fade),
+com/live/evo/widget/v.java	com.live.evo.widget.SpaceItemDecoration	ItemDecoration com espaçamento fixo. Original: com/live/evo/widget/v.java
+com/live/evo/widget/{l,m,n,t}.java	(interfaces/classes marcador)	configurações do ijk (n = interface de settings)
+com/live/evo_mobile/adapter/a.java	com.live.evo_mobile.adapter.ChannelTitleAdapter	Títulos de categorias de canal (ChannelTitleData). Original: com/live/evo_mobile/adapter/a.java
+com/live/evo_mobile/adapter/b.java	com.live.evo_mobile.adapter.EpgDateAdapter	Datas da EPG (EpgDateData). Original: com/live/evo_mobile/adapter/b.java
+com/live/evo_mobile/adapter/d.java	com.live.evo_mobile.adapter.EpgListAdapter	Itens de EPG (EpgData): botões `tv_guide_subscribe`/`tv_guide_unsubscribe`/`tv_guide_catchup` conforme o estado do
+com/live/evo_mobile/adapter/f.java	com.live.evo_mobile.adapter.HistoryLiveListAdapter	Histórico de canais com modo de seleção (`isSelected`). Original: com/live/evo_mobile/adapter/f.java (HistoryLiveListData)
+com/live/evo_mobile/adapter/g.java	com.live.evo_mobile.adapter.LiveSearchAdapter	Resultado da busca de canais (LiveSearchListData). Original: com/live/evo_mobile/adapter/g.java
+com/live/evo_mobile/adapter/i.java	com.live.evo_mobile.adapter.StringListAdapter	Lista de strings (histórico de busca / dados simples) com listener de clique. Original: com/live/evo_mobile/adapter/i.java
+com/live/evo_mobile/adapter/k.java	com.live.evo_mobile.adapter.MainSettingAdapter	Itens de configuração (MainSettingData). Original: com/live/evo_mobile/adapter/k.java
+com/live/evo_mobile/adapter/l.java	com.live.evo_mobile.adapter.DatePickAdapter	Seletor de data (ArrayAdapter<String> com `selectedId` destacado). Original: com/live/evo_mobile/adapter/l.java (DatePickAdapter)
+com/live/evo_mobile/adapter/n.java	com.live.evo_mobile.adapter.StoryListAdapter	Histórias/categorias (StoryListData). Original: com/live/evo_mobile/adapter/n.java
+com/live/evo_mobile/adapter/p.java	com.live.evo_mobile.adapter.SubscribeItemAdapter	Itens de lembrete (u7.j) com ação "tv_guide_unsubscribe". Original: com/live/evo_mobile/adapter/p.java
+com/live/evo_mobile/media/activity/SplashActivity.java	com.live.evo_mobile.media.activity.SplashActivity	Splash da versão MOBILE (aberta por [com.live.load.InitActivity] quando o tipo de app é "mobile").
+com/live/evo_mobile/ui/AboutUsActivity.java	com.live.evo_mobile.ui.AboutUsActivity	Sobre/Contato: HTML (`htmlText`) com `customer_service`/`contact_us` (`cs_tag`). Original: com/live/evo_mobile/ui/AboutUsActivity.java
+com/live/evo_mobile/ui/AccountLinkActivity.java	com.live.evo_mobile.ui.AccountLinkActivity	Vincular conta (e-mail/telefone): verificação por código (`setting_verification_tip_txt1/2`), `digitCode`,
+com/live/evo_mobile/ui/AccountManageActivity.java	com.live.evo_mobile.ui.AccountManageActivity	Gerenciar conta (`account_management`): mostra dados da conta, logout (`logout_success`/`logout_failure`, loading
+com/live/evo_mobile/ui/HistoryListActivity.java	com.live.evo_mobile.ui.HistoryListActivity	Histórico: ViewPager com abas "Live" (`main_live`, [HistoryLiveFragment]) e VOD (`home_menu_vod`), modo edição
+com/live/evo_mobile/ui/MainViewActivity.java	com.live.evo_mobile.ui.MainViewActivity	Tela principal da versão MOBILE: container `frame_content` + barra de abas (`TabBarBean.ItemBean`):
+com/live/evo_mobile/ui/RenewActivity.java	com.live.evo_mobile.ui.RenewActivity	Renovar/recarregar: digitar código de recarga (`input_invalid_recharge_code`), mostra "in_recharging" enquanto
+com/live/evo_mobile/ui/SearchLiveActivity.java	com.live.evo_mobile.ui.SearchLiveActivity	Busca de canais ao vivo: palavra-chave, resultados (`LiveSearchListData`, categoria `channel_column_all`) e histórico
+com/live/evo_mobile/ui/SettingsActivity.java	com.live.evo_mobile.ui.SettingsActivity	Configurações: lista (`MainSettingData`) com idioma (popup `profile_menu_switch_language_title/content`), versão/upgrade
+com/live/evo_mobile/ui/SettingsDetailActivity.java	com.live.evo_mobile.ui.SettingsDetailActivity	Detalhe de configuração (casca vazia sobre z4.i). Original: com/live/evo_mobile/ui/SettingsDetailActivity.java
+com/live/evo_mobile/ui/ShareActivity.java	com.live.evo_mobile.ui.ShareActivity	Compartilhar app: monta `share_msg`/`share_app` e dispara `Intent.ACTION_SEND` (EXTRA_TEXT), com atalho para
+com/live/evo_mobile/ui/d0.java	com.live.evo_mobile.ui.HistoryLiveFragment	Histórico de canais (modo seleção para apagar; `select_history_toast`). Original: com/live/evo_mobile/ui/d0.java (HistoryLiveFragment.kt)
+com/live/evo_mobile/ui/d1.java	com.live.evo_mobile.ui.MainTVFragment	"TV" do mobile: player (PlayerView) + lista de canais/histórico/favoritos sobrepostos; gestos
+com/live/evo_mobile/ui/favorite/FavoriteListActivity.java	com.live.evo_mobile.ui.favorite.FavoriteListActivity	Favoritos: mesmas abas de [com.live.evo_mobile.ui.HistoryListActivity] ("Live"/"VOD" + `vod_favorite`),
+com/live/evo_mobile/ui/favorite/g.java	com.live.evo_mobile.ui.favorite.FavoriteLiveFragment	Lista de canais favoritos (categoria `channel_column_all`, `select_favorite_toast`, `mHistoryLiveListAdapter` reutilizado).
+com/live/evo_mobile/ui/k0.java	com.live.evo_mobile.ui.ProfileFragment	Perfil/"Minha conta": entradas de menu — settings (`profile_menu_settings`), adulto (`menu_adult` switch),
+com/live/evo_mobile/ui/login/LoginTypeActivity.java	com.live.evo_mobile.ui.login.LoginTypeActivity	Activity de login/cadastro da versão mobile: [NoScrollViewPager] com 4 páginas
+com/live/evo_mobile/ui/login/NoScrollViewPager.java	com.live.evo_mobile.ui.login.NoScrollViewPager	ViewPager que ignora gestos de swipe. Original: com/live/evo_mobile/ui/login/NoScrollViewPager.java
+com/live/evo_mobile/ui/login/a.java	com.live.evo_mobile.ui.login.LoginAccountInput	Modelo de conta digitada (accountStr, emailStr, phoneStr, phonePreCode). Original: com/live/evo_mobile/ui/login/a.java
+com/live/evo_mobile/ui/login/b.java	com.live.evo_mobile.ui.login.CountryCodeAdapter	Adapter da lista de países (spinner). Original: com/live/evo_mobile/ui/login/b.java
+com/live/evo_mobile/ui/login/c.java	com.live.evo_mobile.ui.login.CountryCode	Código de país (phonePreCode, countryCode, countryShowName). Original: com/live/evo_mobile/ui/login/c.java
+com/live/evo_mobile/ui/login/g1.java	com.live.evo_mobile.ui.login.ResetPasswordFragment	Redefinir senha (e-mail/telefone, `preCode`): `send_code`, `account_empty`, `user_no_correct`. Após sucesso volta ao login.
+com/live/evo_mobile/ui/login/k0.java	com.live.evo_mobile.ui.login.LoginAccountFragment	Login por conta com abas TAB_EMAIL/TAB_PHONE (`currentTab`), mostrar/ocultar senha por aba (`pwdShowForEmail`),
+com/live/evo_mobile/ui/login/s0.java	com.live.evo_mobile.ui.login.LoginEntryFragment	Página 0: escolha do tipo de login (botões: e-mail/telefone, código de renovação, escanear, criar conta...).
+com/live/evo_mobile/ui/login/t0.java	com.live.evo_mobile.ui.login.LoginViewPagerAdapter	Adapter de páginas do [LoginTypeActivity] (`com.tvc.lib.mobile.ui.base.f`). Original: com/live/evo_mobile/ui/login/t0.java
+com/live/evo_mobile/ui/login/u.java	com.live.evo_mobile.ui.login.CreateAccountFragment	Criar conta (e-mail ou telefone, abas TAB_EMAIL/TAB_PHONE): botão `send_code`, textos `email_normal_register_remind`/
+com/live/evo_mobile/ui/n.java	com.live.evo_mobile.ui.ChannelListFragment	Lista de canais por categoria (`ChannelTitleData` à esquerda + `StoryListData`/canais à direita), carregada via
+com/live/evo_mobile/ui/n2.java	com.live.evo_mobile.ui.SubscribeListFragment	Lista de lembretes (agendamentos): remove/ativa; guarda `lastRemindItemList`. Original: com/live/evo_mobile/ui/n2.java (SubscribeListFragmen
+com/live/evo_mobile/ui/t.java	com.live.evo_mobile.ui.EpgListFragment	Guia de programação ("tv_guide_today"/"tv_guide_none"): seletor de data ([com.live.evo_mobile.adapter.DatePickAdapter]) +
+com/live/load/InitActivity.java	com.live.load.InitActivity	Activity de entrada (LAUNCHER + LEANBACK_LAUNCHER) do app.
+d6/a.java	com.live.evo.speedtest.SpeedTestManager	Gerenciador de teste de velocidade — stub (sem implementação no APK).
+d6/b.java	com.live.evo.speedtest.SpeedTestResult	SpeedTestResult
+dialog/n.java	com.live.evo.dialog.OnDialogActionListener	Callbacks de [ExitDialog]. Original: dialog/n.java (interface vazia; callback `a()` é chamado no confirmar)
+e5/a.java	com.live.evo.fragment.login.LoginNavigator	Fachada de navegação do fluxo de login/recarga. No original é o pacote `e5` (e5/b, d, e, g, i = funções estáticas
+e5/a.java	com.live.evo.fragment.login.LoginNavigator (BackHandler)	dispatch de Back para fragments
+e5/b.java	com.live.evo.fragment.login.LoginNavigator.showAccountLogin	fachada → AccountUserLoginFragment.show
+e5/c.java	com.live.evo.fragment.login.LoginNavigator.AccountLoginCallback	callbacks do login
+e5/d.java	com.live.evo.fragment.login.LoginNavigator.showScanedRecharge	fachada → ScanedRechargeFragment.show
+e5/e.java	com.live.evo.fragment.login.LoginNavigator.showRechargeRemind	fachada → RechargeRemindFragment.show
+e5/f.java	com.live.evo.fragment.login.LoginNavigator.RechargeRemindCallback	callbacks do lembrete
+e5/g.java	com.live.evo.fragment.login.LoginNavigator.showRegister	fachada → RegisterEmailFragment.show
+e5/h.java	com.live.evo.fragment.login.LoginNavigator.FragmentNavigator	back/next
+e5/i.java	com.live.evo.fragment.login.LoginNavigator.showResetPassword	fachada → ResetAccountPasswordFragment.show
+e5/j.java	com.live.evo.fragment.login.LoginNavigator.FragmentNavigator	back/next (reset)
+fragment/a2.java	com.live.evo.fragment.OnMenuCallback	OnMenuCallback
+fragment/login/presenter/g.java	com.live.evo.fragment.login.presenter.RechargePresenter	Presenter de recarga completa: [loginWithCode] chama `ModelHelper.loginWithRenewCode(code, isCreateAccount)`;
+fragment/login/presenter/i.java	com.live.evo.fragment.login.presenter.RechargeMiniPresenter	Presenter da recarga "mini": mesmo [loginWithAccount] mas com mensagem de falha
+fragment/login/presenter/l.java	com.live.evo.fragment.login.presenter.RegisterEmailPresenter	Presenter de cadastro por e-mail (RegisterEmailPresenter.kt). [requestVerifyCode]: se accountLoginType == 1 →
+fragment/login/presenter/r.java	com.live.evo.fragment.login.presenter.ResetPasswordPresenter	Presenter de reset de senha (ResetPasswordPresenter.kt): mesma estrutura do cadastro, com tipo "FORGET"
+fragment/y1.java	com.live.evo.fragment.OnTabEventListener	OnTabEventListener
+fragment/z1.java	com.live.evo.fragment.VisibilityListener	Notificação de visibilidade do fragment para o pai. Original: fragment/z1.java
+i5/a0.java	com.live.evo.model.AppProperty	Item de propriedade remota (id, grupo, chave, valor). Original: i5/a0.java
+i5/c0.java	com.live.evo.model.SubscribeBean	Lembrete/assinatura de programa. Original: i5/c0.java
+i5/h.java	com.live.evo.model.ChannelData	Canal exibido na UI. Original: i5/h.java (ChannelData; também referenciado como ChannelBean).
+i5/i.java	com.live.evo.model.CategoryBean	Categoria/coluna de canais. Original: i5/i.java
+i5/p.java	com.live.evo.model.ProgramBean	Programa de EPG. Original: i5/p.java (ProgramBean; start/end em millis).
+i5/r.java	com.live.evo.model.QuestionBean	Pergunta/resposta (FAQ). Original: i5/r.java
+i5/y.java	com.live.evo.widget.MenuItem	Item de menu (ícone, texto, ação). Original: i5/y.java
+k5/a.java	com.live.evo.fragment.login.presenter.BasePresenter	Presenter base. Original: k5/a.java
+k5/b.java	com.live.evo.fragment.login.presenter.BaseView	View base. Original: k5/b.java
+l5/b.java	com.live.evo.fragment.LazyFragment	Fragment "preguiçoso" para telas da TV: `b0()` = layout, `c0(Bundle)` = init de dados, `d0()` = depois de init,
+presenter/a.java	com.live.evo.fragment.login.presenter.CheckAccountView	CheckAccountView
+presenter/c.java	com.live.evo.fragment.login.presenter.LoginPresenterContract	LoginPresenterContract
+presenter/d.java	com.live.evo.fragment.login.presenter.LoginView	LoginView
+presenter/f.java	com.live.evo.fragment.login.presenter.RechargeView	View de recarga completa (Tab/MyAccount). Original: presenter/f.java
+presenter/h.java	com.live.evo.fragment.login.presenter.RechargeMiniView	View de recarga "mini". Original: presenter/h.java
+presenter/j.java	com.live.evo.fragment.login.presenter.RegisterEmailPresenterContract	RegisterEmailPresenterContract
+presenter/k.java	com.live.evo.fragment.login.presenter.RegisterEmailView	RegisterEmailView
+presenter/m.java	com.live.evo.fragment.login.presenter.CodeLoginPresenterContract	CodeLoginPresenterContract
+presenter/n.java	com.live.evo.fragment.login.presenter.CodeLoginView	CodeLoginView
+presenter/o.java	com.live.evo.fragment.login.presenter.CodeLoginPresenter	Implementação trivial: apenas chama `view.b()`. Original: presenter/o.java
+presenter/p.java	com.live.evo.fragment.login.presenter.ResetPasswordPresenterContract	ResetPasswordPresenterContract
+presenter/q.java	com.live.evo.fragment.login.presenter.ResetPasswordView	ResetPasswordView
+util/k.java	com.live.evo.util.QrResultParsers	Parsers de QR code/contatos (cópia do ZXing `client.result`): vCard, MECARD, texto/telefone, e-mail, URL.
+x4/a.java	com.live.evo.catchup.CatchUpClickListener	Contrato "clicou em um programa passado": inicia o catch-up e chama [callback] com sucesso/falha.
+x4/b.java	com.live.evo.catchup.EpgDataStore	Armazém de canais + listas de programas (EPG grande): [channels] e, para cada canal, um par
+x4/c.java	com.live.evo.catchup.CatchUpPlayInfo	Dados de reprodução de um catch-up (início/fim em ms, título, descrição, canal, ícone, número...).
+x4/d.java	com.live.evo.catchup.LiveCatchUpClickHandler	Implementação padrão: valida o programa (fim > início e fim <= agora), checa suporte
+x4/g.java	com.live.evo.catchup.CatchUpPlayInfoFactory	Fábrica de [CatchUpPlayInfo] e formatação "HH:mm". Original: x4/g.java
