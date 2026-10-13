@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:background="@color/transparent" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:id="@id/paccountbindemailf_parent" android:background="@drawable/popup_dialog_bg" android:paddingLeft="40.0dp" android:paddingRight="40.0dp" android:layout_width="@dimen/width_600dp" android:layout_height="wrap_content" android:minHeight="300.0dp">
+        <TextView android:textSize="@dimen/login_tv_textsize" android:textColor="@color/white" android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/paccountbindemailf_tv_account_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="30.0dp" android:maxWidth="700.0dp" android:text="@string/add_email" android:lineSpacingExtra="3.0dp" />
+        <TextView android:textSize="30.0sp" android:textColor="@color/color_f1f1f1" android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/paccountbindemailf_tv_account_userid" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="15.0dp" />
+        <EditText android:textSize="20.0sp" android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/paccountbindemailf_et_email" android:background="@drawable/load_et_selector" android:layout_width="@dimen/width_500dp" android:layout_marginTop="10.0dp" style="@style/LoginEditText" />
+        <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="@dimen/width_500dp" android:layout_height="@dimen/normal_btn_height" android:layout_marginTop="15.0dp">
+            <com.live.evo.widget.BaseButton android:textSize="@dimen/login_size" android:textColor="@color/confirm_btn_text" android:id="@id/paccountbindemailf_ok" android:background="@drawable/btn_bg_selector2" android:layout_width="240.0dp" android:layout_height="match_parent" android:text="@string/ok" android:textAllCaps="false" />
+            <com.live.evo.widget.BaseButton android:textSize="@dimen/login_size" android:textColor="@color/confirm_btn_text" android:id="@id/paccountbindemailf_close" android:background="@drawable/btn_bg_selector2" android:nextFocusRight="@id/btn_checkaccount_cancel" android:layout_width="240.0dp" android:layout_height="match_parent" android:layout_marginLeft="20.0dp" android:text="@string/close" android:textAllCaps="false" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:layout_gravity="center" android:id="@id/tv_addemail_error" android:visibility="visible" android:layout_marginTop="10.0dp" style="@style/ErrorStyle" />
+</LinearLayout>

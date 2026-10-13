@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:background="@drawable/subject_recomment_bg" android:paddingTop="12.0dp" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.leanback.widget.VerticalGridView android:id="@id/subject_recomment_listview" android:scrollbars="none" android:nextFocusRight="@id/subject_date_listview" android:layout_width="match_parent" android:layout_height="match_parent" android:listSelector="@drawable/icon_transport" android:divider="@null" app:focusOutFront="true" />
+    <include android:id="@id/subject_match_listview_empty" layout="@layout/subject_nodata" />
+</RelativeLayout>

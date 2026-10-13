@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:background="@drawable/menu_child_bg"
+        android:layout_width="350.0dip"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:textSize="18.0sp"
+                android:textColor="@color/kidsmode_title"
+                android:gravity="center"
+                android:id="@+id/kidsback_tv"
+                android:background="@drawable/kidsmode_back_selector"
+                android:padding="12.0dip"
+                android:nextFocusUp="@id/kidsback_tv"
+                android:nextFocusDown="@id/kidscategory_listview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15.0dip"
+                android:layout_marginTop="15.0dip"
+                android:text="@string/back" />
+
+            <com.live.tvcinema.widget.ProgramListView
+                android:id="@+id/kidscategory_listview"
+                android:focusable="true"
+                android:scrollbars="none"
+                android:nextFocusRight="@id/kidsprogram_listview"
+                android:nextFocusUp="@id/kidsback_tv"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5.0dip"
+                android:layout_marginBottom="45.0dip"
+                android:listSelector="@drawable/program_selector"
+                android:divider="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kidscategory_arrow_layout"
+            android:layout_width="@dimen/arrow_width"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:id="@+id/kidscategory_arrow_iv"
+                android:paddingLeft="2.0dip"
+                android:focusable="false"
+                android:layout_width="@dimen/arrow_width"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_right_icon" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@drawable/menu_child_bg"
+        android:layout_width="350.0dip"
+        android:layout_height="fill_parent">
+
+        <com.live.tvcinema.widget.ProgramListView
+            android:id="@+id/kidsprogram_listview"
+            android:focusable="true"
+            android:scrollbars="none"
+            android:nextFocusLeft="@id/kidscategory_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="5.0dip"
+            android:layout_marginBottom="45.0dip"
+            android:listSelector="@drawable/program_selector"
+            android:divider="@null" />
+    </RelativeLayout>
+</LinearLayout>

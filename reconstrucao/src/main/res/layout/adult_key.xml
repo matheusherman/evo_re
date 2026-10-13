@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/adultkey_ll_parent" android:background="@drawable/expired_dialog_bg" android:padding="16.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="24.0sp" android:textColor="@color/adultkey_tv_title_tc" android:id="@id/adultkey_tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
+    <View android:id="@id/adultkey_view_line" android:background="@color/adultkey_view_line_bgc" android:layout_width="540.0dp" android:layout_height="1.0dp" android:layout_marginTop="5.0dp" />
+    <com.live.evo.widget.RemoveKeyCodeEnterEditText android:textSize="20.0sp" android:textColor="@color/adultkey_et_pwd_tc" android:layout_gravity="center_horizontal" android:id="@id/et_pwd" android:layout_width="430.0dp" android:layout_marginTop="20.0dp" android:hint="@string/password" android:maxLength="4" android:inputType="textPassword" style="@style/LoginEditText" />
+    <TextView android:textColor="@color/adultkey_tv_go_tc" android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/adultkey_tv_go" android:background="@drawable/load_btn_selector" android:focusable="true" android:clickable="true" android:layout_width="240.0dp" android:layout_height="40.0dp" android:layout_marginTop="20.0dp" android:text="@string/confirm" style="@style/ButtonStyle" />
+    <TextView android:textSize="20.0sp" android:textColor="@color/adultkey_tv_hint_tc" android:id="@id/adultkey_tv_hint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="100.0dp" android:maxWidth="540.0dp" android:text="@string/adult_key_first_hint" />
+</LinearLayout>

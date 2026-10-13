@@ -15,9 +15,12 @@ import me.jessyan.autosize.internal.CustomAdapt
 /** Notificação de visibilidade do fragment para o pai. Original: fragment/z1.java */
 interface VisibilityListener { /* onVisibilityChanged(...) */ }
 /** Original: fragment/y1.java (listener de eventos entre menu e abas: `a`/`b`/`c`… ver MenuParent) */
-interface OnTabEventListener
+interface OnTabEventListener { fun b() {}; fun c() {}; fun a(pos: Int) {} }
 /** Original: fragment/a2.java */
-interface OnMenuCallback
+interface OnMenuCallback {
+    /** Devolve o foco ao menu lateral (chamado quando o usuário pressiona ESQUERDA no fragment filho). Original: D(Fragment) */
+    fun D(fragment: Fragment)
+}
 
 /**
  * Base de fragments com AutoSize (`CustomAdapt`: baseOnWidth, sizeInDp 0), ciclo de visibilidade (`O`, `V/W`) e
@@ -64,6 +67,7 @@ abstract class LazyFragment : BaseFragment() {
  */
 abstract class LazyMenuFragment : Fragment() {
     protected var menuCallback: OnMenuCallback? = null
+    /** Original: Y(a2) */ fun setMenuCallback(cb: OnMenuCallback?) { menuCallback = cb }
     protected abstract fun layoutId(): Int               // R
     protected abstract fun initData(savedInstanceState: Bundle?) // S
     protected abstract fun bindViews(root: View)         // V

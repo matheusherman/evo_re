@@ -245,16 +245,34 @@ object EpgManager {
     }
 
     /**
-     * Original: c.K(oldIndex, newIndex) ("saveAndUpdate"/sincronização) — NÃO decompilado (JadxOverflowException).
-     * Pelo uso: reconstrói [posMap] (data -> pos) a partir do novo índice e, para cada [EpgIndex], chama
-     * [checkAndUpdateEpg] com a pos antiga (do índice anterior) para renomear/baixar o arquivo.
+     * Original: c.K(old, new) + c$m ("updateAll") — numera as datas (chaves) de cada índice pela ordem das chaves
+     * (`positions = keys.toList().withIndex()`). Para cada data do índice NOVO e cada [EpgIndex] dela chama
+     * [checkAndUpdateEpg] com a pos nova e a pos que a mesma data tinha no índice ANTIGO (`null` se não existia);
+     * erros por item são logados ("check epg failure") e ignorados. Ao terminar cada data, `posMap[data] = posNova`.
+     * (Reconstruído do fallback do jadx; [posMap] não é limpo — datas que sumiram permanecem.)
      */
-    private suspend fun updateAll(oldIndex: Map<String, List<EpgIndex>>, newIndex: Map<String, List<EpgIndex>>): Unit =
-        TODO("nativo/não decompilado: x1.f1.lb.media.c.K(Map, Map) — popula posMap e chama checkAndUpdateEpg por canal")
+    private suspend fun updateAll(oldIndex: Map<String, List<EpgIndex>>, newIndex: Map<String, List<EpgIndex>>) {
+        if (BaseLibConfig.isDebug) logger.debug("epg: parseEpgIndex old[{}], new[{}]", oldIndex, newIndex)
+        val oldPositions = HashMap<String, Int>()
+        oldIndex.keys.toList().forEachIndexed { i, date -> oldPositions[date] = i }
+        val newPositions = HashMap<String, Int>()
+        newIndex.keys.toList().forEachIndexed { i, date -> newPositions[date] = i }
+        for ((date, indexes) in newIndex) {
+            val newPos = newPositions[date]!!
+            val oldPos = oldPositions[date]
+            for (epgIndex in indexes) {
+                try {
+                    checkAndUpdateEpg(epgIndex, newPos, oldPos)
+                } catch (t: Throwable) {
+                    logger.error("check epg failure", t)
+                }
+            }
+            posMap[date] = newPos
+        }
+    }
 
     /**
-     * Original: c.p(epgIndex, newPos, oldPos) ("checkAndUpdateEpg") — decompilação incompleta; reconstruído do que
-     * há: se não há `oldPos` ⇒ [downloadEpg]. Senão, se o arquivo antigo (`<canal>.<oldPos>`) já bate com o checksum:
+     * Original: c.p(epgIndex, newPos, oldPos) ("checkAndUpdateEpg") — confirmado contra o fallback do jadx: se não há `oldPos` ⇒ [downloadEpg]. Senão, se o arquivo antigo (`<canal>.<oldPos>`) já bate com o checksum:
      * mesma pos ⇒ nada; pos diferente ⇒ apaga o destino, renomeia/copia o arquivo e atualiza o cache
      * (reparse com `forceRefresh`); se não bate ⇒ [downloadEpg].
      */
@@ -433,22 +451,70 @@ object EpgManager {
         return list
     }
 
-    /** Original: c.y(epgId, yyyyMMdd) ("getEPGProgrammeFlow$1" — corpo NÃO decompilado). */
+    /**
+     * Original: c.y(epgId, yyyyMMdd) + c$g ("getEPGProgrammeFlow$1") — programação "do dia": junta os arquivos das
+     * datas (dia anterior, dia pedido, dia seguinte) que existem em [posMap] e no disco, e emite uma única lista com
+     * os itens que tocam o dia `[d0, d0+24h)`: `d0 <= start < d1` ou `d0+1 <= stop <= d1`.
+     */
     fun programmesFlow(epgId: String, yyyyMMdd: String): Flow<List<EPGProgramme>> = flow {
-        TODO("nativo/não decompilado: x1.f1.lb.media.c\$g.invokeSuspend — provavelmente emite loadEpg(epgId, yyyyMMdd) em 2 passos (cache e arquivo)")
-    }
-
-    /** Original: c.z(epgId) ("getEPGProgrammes$1" — corpo NÃO decompilado): programação do canal (todos os dias). */
-    fun programmesFlow(epgId: String): Flow<List<EPGProgramme>> = flow {
-        TODO("nativo/não decompilado: x1.f1.lb.media.c\$h.invokeSuspend")
+        try {
+            if (BaseLibConfig.isDebug) logger.debug("epg: loadEpg posMap[{}]", posMap)
+            val fmt = { ms: Long -> SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date(ms)) }
+            val dayStart = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(yyyyMMdd)!!.time // util/n.d(str, fmt)
+            val dayMs = java.util.concurrent.TimeUnit.DAYS.toMillis(1)
+            val dayEnd = dayStart + dayMs
+            val result = ArrayList<EPGProgramme>()
+            for (date in listOf(fmt(dayStart - dayMs), yyyyMMdd, fmt(dayEnd))) {
+                val pos = posMap[date] ?: continue
+                val file = File(AppPaths.epgCachePath(), fileName(pos, epgId))
+                if (file.exists()) {
+                    if (BaseLibConfig.isDebug) logger.debug("epg: loadEpg [{}] [{}] [{}] [{}], file exits", epgId, date, pos, file.absolutePath)
+                    for (p in loadProgrammes(epgId, pos, file)) {
+                        if ((p.start in dayStart until dayEnd) || (p.end in (dayStart + 1)..dayEnd)) result.add(p)
+                    }
+                } else if (BaseLibConfig.isDebug) {
+                    logger.debug("epg: loadEpg [{}] [{}] [{}] [{}], file not exits", epgId, date, pos, file.absolutePath)
+                }
+            }
+            emit(result)
+        } catch (t: Throwable) {
+            logger.error("epg: loadEpg failure", t)
+            throw t
+        }
     }
 
     /**
-     * Original: c.L(timestampStr) — converte "yyyyMMddHHmmss [+zzzz]" em ms: soma de duas partes convertidas por
-     * `dc.a.c` (parser de data/offset de outro módulo).
+     * Original: c.z(epgId) + c$h ("getEPGProgrammes$1") — programação completa do canal: percorre as `pos` de [posMap]
+     * em ordem crescente (SortedSet dos valores) e concatena as listas dos arquivos que existem; emite uma vez.
      */
-    fun parseTimestamp(timestampStr: String): Long =
-        TODO("depende de dc.a.c(String) (parser de timestamp XMLTV) — outro módulo")
+    fun programmesFlow(epgId: String): Flow<List<EPGProgramme>> = flow {
+        try {
+            if (BaseLibConfig.isDebug) logger.debug("epg: loadEpg posMap[{}]", posMap)
+            val result = ArrayList<EPGProgramme>()
+            for (pos in posMap.values.toSortedSet()) {
+                val file = File(AppPaths.epgCachePath(), fileName(pos, epgId))
+                if (file.exists()) result.addAll(loadProgrammes(epgId, pos, file))
+            }
+            emit(result)
+        } catch (t: Throwable) {
+            logger.error("epg: loadEpg failure", t)
+            throw t
+        }
+    }
+
+    /**
+     * Original: c.L(timestampStr) — divide por espaço; com 2+ partes soma `toLong(p0) + toLong(p1)`, com 1 parte
+     * `toLong(p0)`, senão 0. `dc.a.c(str)` = `Long.parseLong` com padrão 0 em caso de erro.
+     */
+    fun parseTimestamp(timestampStr: String): Long {
+        fun toLongOrZero(s: String) = s.toLongOrNull() ?: 0L // Original: dc/a.c(String)
+        val parts = timestampStr.split(" ")
+        return when {
+            parts.size > 1 -> toLongOrZero(parts[0]) + toLongOrZero(parts[1])
+            parts.size == 1 -> toLongOrZero(parts[0])
+            else -> 0L
+        }
+    }
 
     private fun formatDate(type: Int, millis: Long): String = when (type) {
         2 -> SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date(millis))

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/inputserverdlg_ll_parent" android:padding="10.0dp" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textAppearance="?android:textAppearanceLarge" android:id="@id/inputserverdlg_tv_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Server : " />
+    <EditText android:id="@id/inputserverdlg_et_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="http://192.168.199.101/brtservers">
+        <requestFocus />
+    </EditText>
+</LinearLayout>

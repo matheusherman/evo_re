@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:layout_gravity="center_vertical" android:orientation="vertical" android:background="@drawable/dialog_bg_2" android:padding="10.0dp" android:paddingTop="60.0dp" android:paddingBottom="60.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="9.0sp" android:textColor="@color/white" android:gravity="center" android:layout_gravity="center" android:id="@id/txt_tip" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/forget_lock_pin" />
+    <t.v.c.widget.MyEditText android:textSize="9.0sp" android:textColor="@color/main_font_focus_label_white_color" android:gravity="center" android:layout_gravity="center" android:id="@id/password" android:background="@drawable/edit_border_selector" android:layout_width="match_parent" android:layout_height="16.0dp" android:layout_marginTop="10.0dp" android:maxLength="8" android:inputType="textPassword" android:layout_marginStart="30.0dp" android:layout_marginEnd="30.0dp" />
+    <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp">
+        <t.v.c.widget.MyButton android:textSize="9.0sp" android:textColor="@color/half_white" android:gravity="center" android:id="@id/btn_password_ok" android:background="@drawable/btn_key_large_selector" android:layout_width="66.0dp" android:layout_height="16.0dp" android:text="@string/no_stream_notice_btn_ok" />
+        <t.v.c.widget.MyButton android:textSize="9.0sp" android:textColor="@color/half_white" android:gravity="center" android:id="@id/btn_password_cancel" android:background="@drawable/btn_key_large_selector" android:layout_width="66.0dp" android:layout_height="16.0dp" android:text="@string/cancel_btn" android:layout_marginStart="10.0dp" />
+    </LinearLayout>
+</t.v.c.widget.LinearLayout>

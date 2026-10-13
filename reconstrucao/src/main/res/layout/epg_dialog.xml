@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/epgdlg_rl_parent" android:background="@color/epgdlg_rl_parent_bgc" android:paddingTop="30.0dp" android:paddingBottom="30.0dp" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:id="@id/epgdlg_ll_epg_main_view" android:background="@drawable/epg_dialog_bg" android:layout_width="@dimen/epg_width_1230" android:layout_height="622.0dp" android:layout_centerHorizontal="true">
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="@dimen/epg_rv_height">
+            <TextView android:textColor="@color/epgdlg_tv_epg_init_tc" android:id="@id/epgdlg_tv_epg_init" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/catchup_init_remind" android:layout_centerInParent="true" />
+            <LinearLayout android:orientation="horizontal" android:id="@id/epgdlg_ll_epg_data_parent" android:layout_width="match_parent" android:layout_height="@dimen/epg_rv_height" android:layout_centerHorizontal="true">
+                <ImageView android:layout_gravity="center" android:id="@id/epgdlg_iv_epg_arrow_left" android:background="@drawable/arrow_left_icon" android:visibility="invisible" android:layout_width="30.0dp" android:layout_height="30.0dp" />
+                <androidx.leanback.widget.HorizontalGridView android:id="@id/epgdlg_hgv_parent" android:layout_width="@dimen/epg_width2" android:layout_height="match_parent" android:layout_centerHorizontal="true" />
+                <ImageView android:layout_gravity="center" android:id="@id/epgdlg_iv_epg_arrow_right" android:background="@drawable/arrow_right_icon" android:layout_width="30.0dp" android:layout_height="30.0dp" />
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout android:orientation="horizontal" android:id="@id/epgdlg_ll_desc" android:background="@color/epgdlg_ll_desc_bgc" android:paddingLeft="20.0dp" android:layout_width="match_parent" android:layout_height="130.0dp" android:layout_marginTop="@dimen/sm_6">
+            <LinearLayout android:layout_width="200.0dp" android:layout_height="130.0dp">
+                <ImageView android:layout_gravity="center" android:id="@id/epgdlg_iv_icon" android:layout_width="120.0dp" android:layout_height="109.0dp" android:layout_marginLeft="30.0dp" android:scaleType="fitXY" android:layout_centerVertical="true" />
+            </LinearLayout>
+            <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="130.0dp" android:layout_marginLeft="@dimen/epg_paddingleft">
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="35.0dp">
+                    <TextView android:textSize="25.0sp" android:textColor="@color/epgdlg_tv_program_tc" android:gravity="center_vertical" android:id="@id/epgdlg_tv_program" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_toRightOf="@id/epgdlg_iv_icon" android:layout_centerVertical="true" />
+                    <TextView android:textSize="@dimen/epg_child_20sp" android:textColor="@color/epgdlg_tv_curtime_tc" android:id="@id/epgdlg_tv_curtime" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/sm_20" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="35.0dp">
+                    <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="match_parent">
+                        <TextView android:textSize="25.0sp" android:textStyle="bold" android:id="@id/epgdlg_tv_time" android:text="@string/epg_duration" style="@style/epg_desc_dialog" />
+                        <TextView android:textSize="25.0sp" android:id="@id/epgdlg_tv_epg_time" style="@style/epg_desc_dialog" />
+                    </LinearLayout>
+                    <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="30.0dp">
+                        <TextView android:textSize="25.0sp" android:textStyle="bold" android:id="@id/epgdlg_tv_name" android:text="@string/epg_program" style="@style/epg_desc_dialog" />
+                        <TextView android:textSize="25.0sp" android:id="@id/epgdlg_tv_epg_channel_name" style="@style/epg_desc_dialog" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="60.0dp">
+                    <TextView android:textStyle="bold" android:id="@id/epgdlg_tv_epg_desc2" android:visibility="gone" android:text="@string/epg_description" style="@style/epg_desc_dialog_dsc" />
+                    <TextView android:ellipsize="end" android:id="@id/epgdlg_tv_epg_desc" android:layout_marginRight="5.0dp" android:maxLines="2" style="@style/epg_desc_dialog_dsc" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout android:gravity="center" android:id="@id/epgdlg_rl_loading" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="20.0dp" android:layout_marginBottom="20.0dp" android:layout_alignParentBottom="true" android:layout_alignParentEnd="true">
+        <View android:id="@id/epgdlg_view_loading" android:background="@drawable/circle_view_epg" android:layout_width="31.0dp" android:layout_height="31.0dp" android:layout_centerHorizontal="true" />
+        <TextView android:textColor="@color/epgdlg_tv_loading_text_tc" android:id="@id/epgdlg_tv_loading_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/loading" android:layout_below="@id/epgdlg_view_loading" />
+    </RelativeLayout>
+</RelativeLayout>

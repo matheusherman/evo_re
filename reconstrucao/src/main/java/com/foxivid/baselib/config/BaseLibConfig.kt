@@ -8,6 +8,19 @@ import android.util.Base64
 import android.util.Log
 import androidx.annotation.IntegerRes
 import com.foxivid.baselib.crypto.ApiCrypto
+import com.foxivid.baselib.device.DeviceInfoCollector
+import com.foxivid.baselib.heartbeat.HeartbeatManager
+import com.foxivid.baselib.log.RemoteLogger
+import com.foxivid.baselib.media.ChannelManager
+import com.foxivid.baselib.user.UserManager
+import com.foxivid.baselib.util.AesEcbCipher
+import com.foxivid.baselib.util.AppAttrUtils
+import com.foxivid.baselib.util.AppPaths
+import com.foxivid.baselib.util.ElapsedClock
+import com.foxivid.baselib.util.LocaleManager
+import com.foxivid.baselib.util.ServerTime
+import com.foxivid.baselib.util.StartStatUtil
+import com.foxivid.baselib.util.TextCipher
 import com.foxivid.baselib.host.ServerProviderUtils
 import com.foxivid.baselib.network.HeaderInterceptor
 import com.foxivid.baselib.network.HeaderParamsProvider
@@ -223,8 +236,9 @@ object BaseLibConfig {
         val all = allName.ifEmpty { appContext.getString(R_string_channel_column_all) }
         val history = historyName.ifEmpty { appContext.getString(R_string_channel_column_history) }
         val favorites = favoritesName.ifEmpty { appContext.getString(R_string_channel_column_favorites) }
-        // Original: media/a.F(all, history, favorites, "")
-        // TODO("outros módulos"): ChannelManager.F(all, history, favorites, "") e HeartbeatUpgradeManager.L0()    }
+        ChannelManager.setColumnNames(all, history, favorites, "") // Original: media/a.F(all, history, favorites, "")
+        HeartbeatManager.start()                                   // Original: heartbeat/f.L0()
+    }
 
     /**
      * Instala o backend de log q6.a (logger próprio do SDK).
@@ -394,38 +408,42 @@ interface LoadingIndicator {
  * ---------------------------------------------------------------------------------------------
  */
 
-/** Original: x1/f1/lb/util/d1 (relógio com offset do servidor). */
+/** Original: x1/f1/lb/util/d1 (relógio com offset do servidor) — delegado a [ServerTime]. */
 internal object TimeUtilsRef {
-    fun setMonotonicClock(clock: () -> Long): Unit = TODO("outro módulo: util/d1.e(k0)")
+    fun setMonotonicClock(clock: () -> Long) = ServerTime.init(ElapsedClock { clock() }) // d1.e(k0)
     /** Original: d1.c() — tempo monotônico (elapsedRealtime ajustado). */
-    fun elapsed(): Long = TODO("outro módulo: util/d1.c()")
+    fun elapsed(): Long = ServerTime.elapsedNow()
     /** Original: d1.d() — System.currentTimeMillis() + offset do servidor. */
-    fun now(): Long = TODO("outro módulo: util/d1.d()")
+    fun now(): Long = ServerTime.now()
 }
 
-/** Original: x1/f1/lb/util/o0 (codec Base64 plugável). */
+/** Original: x1/f1/lb/util/o0 (codec Base64 plugável) — delegado a [AesEcbCipher]. */
 internal object Base64CodecRef {
-    fun install(encode: (ByteArray) -> String, decode: (String) -> ByteArray): Unit = TODO("outro módulo: util/o0.f()")
+    fun install(encode: (ByteArray) -> String, decode: (String) -> ByteArray) =
+        AesEcbCipher.setBase64(object : AesEcbCipher.Base64Codec {
+            override fun encode(byteArray: ByteArray?): String = encode(byteArray ?: ByteArray(0))
+            override fun decode(string: String): ByteArray = decode(string)
+        }) // o0.f()
 }
 
 /** Original: x1/f1/lb/util/a1 (StartStatUtil). */
 internal object StartStat {
-    fun addStep(step: String): Unit = TODO("outro módulo: util/a1.f()")
+    fun addStep(step: String) = StartStatUtil.addStep(step) // a1.f()
 }
 
 /** Original: x1/f1/lb/util/b1 (diretórios). */
 internal object PathUtilsRef {
-    fun hostsCacheDir(): String = TODO("outro módulo: util/b1.k()")
+    fun hostsCacheDir(): String = AppPaths.hostsCachePath() // b1.k()
 }
 
 /** Original: x1/f1/lb/util/n0. */
 internal object LanguageUtilsRef {
-    fun getLanguage(context: Context): String = TODO("outro módulo: util/n0.d()")
+    fun getLanguage(context: Context): String = LocaleManager.getLanguage(context) // n0.d()
 }
 
 /** Original: x1/f1/lb/util/a (cifra de logs). */
 internal object LogCipherRef {
-    fun encrypt(text: String, randomKey: Boolean): String = TODO("outro módulo: util/a.c()")
+    fun encrypt(text: String, randomKey: Boolean): String = TextCipher.encrypt(text, randomKey) // a.c()
 }
 
 /** Original: q6.c.e(q6.a). */
@@ -435,35 +453,35 @@ internal object LoggerBackendRef {
 
 /** Original: x1/f1/lb/log/a (RemoteLogger). */
 internal object RemoteLoggerRef {
-    fun setServers(servers: Array<String>): Unit = TODO("outro módulo: RemoteLogger.m()")
-    fun log(level: String, tag: String, msg: String, stack: String?): Unit = TODO("outro módulo: RemoteLogger.h()")
+    fun setServers(servers: Array<String>) = RemoteLogger.setUdpLoggerServer(servers) // a.m()
+    fun log(level: String, tag: String, msg: String, stack: String?) = RemoteLogger.log(level, tag, msg, stack) // a.h()
 }
 
 /** Original: x1/f1/lb/util/k (AppAttrUtils). */
 internal object AppAttrUtilsRef {
-    fun appId(): Int = TODO("k.q()")
-    fun appType(): String = TODO("k.r()")
-    fun appVersion(): Long = TODO("k.s()")
-    fun brandId(): Int = TODO("k.u()")
-    fun distributionChannel(): String = TODO("k.v()")
-    fun tenantId(): Int = TODO("k.y()")
+    fun appId(): Int = AppAttrUtils.appId()
+    fun appType(): String = AppAttrUtils.appType()
+    fun appVersion(): Long = AppAttrUtils.appVersion()
+    fun brandId(): Int = AppAttrUtils.brandId()
+    fun distributionChannel(): String = AppAttrUtils.distributionChannel()
+    fun tenantId(): Int = AppAttrUtils.tenantId()
 }
 
 /** Original: x1/f1/lb/util/z (DeviceInfoCollector). */
 internal object DeviceInfoRef {
-    fun mac(): String = TODO("z.o()")
-    fun serialNumber(): String = TODO("z.s()")
-    fun deviceInfo(): Map<String, String> = TODO("z.i()")
+    fun mac(): String = DeviceInfoCollector.getMac()                        // z.o()
+    fun serialNumber(): String = DeviceInfoCollector.getCpuSerialOrMac()    // z.s() (inferido)
+    fun deviceInfo(): Map<String, String> = DeviceInfoCollector.getDeviceProperties() // z.i() (inferido)
 }
 
 /** Original: x1/f1/lb/user/f (UserManager). */
 internal object UserManagerRef {
-    fun accountId(): String = TODO("f.B0()")
-    fun streamToken(): String = TODO("f.A0()")
-    fun accessToken(): String = TODO("f.b0()")
-    fun refreshToken(): String = TODO("f.y0()")
-    fun did(): String = TODO("f.j0()")
-    fun authToken(url: String): String = TODO("f.g0(url)")
-    fun loginSession(): Long = TODO("f.q0()")
-    fun isInLogout(): Boolean = TODO("f.P0()")
+    fun accountId(): String = UserManager.getAccountIdString() // f.B0()
+    fun streamToken(): String = UserManager.getStreamToken()   // f.A0()
+    fun accessToken(): String = UserManager.getAccessToken()   // f.b0()
+    fun refreshToken(): String = UserManager.getRefreshToken() // f.y0()
+    fun did(): String = UserManager.getDid()                   // f.j0()
+    fun authToken(url: String): String = UserManager.getAuthToken(url) // f.g0(url)
+    fun loginSession(): Long = UserManager.getLoginSession()   // f.q0()
+    fun isInLogout(): Boolean = UserManager.isInLogout()       // f.P0()
 }

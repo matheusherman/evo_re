@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="vertical" android:id="@id/sloadingdlg_ll_parent" android:background="@drawable/loading_dialog_background" android:padding="10.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.live.evo.widget.sloading.SLoadingView android:id="@id/sloadingdlg_slv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:scaleType="fitCenter" android:contentDescription="@string/app_name" app:s_color="@color/black" app:s_color_extra="@color/gray" app:s_type="@integer/sloadingdlg_slv_style" />
+    <com.live.evo.widget.sloading.anim.SLoadingTextView android:id="@id/sloadingdlg_tv_text" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <TextView android:id="@id/sloadingdlg_tv_custom_text" android:paddingTop="5.0dp" android:paddingBottom="10.0dp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" />
+</LinearLayout>

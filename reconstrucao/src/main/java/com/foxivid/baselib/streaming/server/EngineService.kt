@@ -65,11 +65,11 @@ class EngineService(private val metricListener: MetricListener) {
 
     init {
         // Original: restaura "sp_streaming_event_bot_time_in_ces" (Map<Int,Long>) das preferências
-        Preferences.observeString("sp_streaming_event_bot_time_in_ces", "") { json ->
+        Preferences.getString("sp_streaming_event_bot_time_in_ces", Preferences.Callback { json ->
             if (json.isNotEmpty()) try {
                 botEventTimes = Gson().fromJson(json, object : TypeToken<HashMap<Int, Long>>() {}.type)
             } catch (_: Throwable) {}
-        }
+        }, "")
     }
 
     /** Original: b$b — callbacks do motor. */
@@ -128,7 +128,7 @@ class EngineService(private val metricListener: MetricListener) {
                 if (map.containsKey(4004) || map.containsKey(4003)) sb.append("[source]")
                 sb.append("\nrecovered\nmediaId:").append(mediaId).append(", and ").append(now - last).append(" back to normal\n")
                 for ((k, v) in map) sb.append(k).append(": ").append(now - v).append(" back to normal").append("\n")
-                TelegramBot.sendRecover(sb.toString()) // Original: bot.a.m(...)
+                TelegramBot.sendSysInfo(sb.toString()) // Original: bot.a.m(...)
             }
             // TODO: agregação estatística detalhada em vf.d (min/max/média/distribuições) e
             //  metricListener.n(...) — classe de métrica de outro módulo; omitida aqui.
@@ -159,7 +159,7 @@ class EngineService(private val metricListener: MetricListener) {
                 else -> ""
             }
             if (error.isEmpty() && warn.isEmpty()) return
-            if (error.isEmpty()) TelegramBot.sendWarn(warn) else TelegramBot.sendError(error) // bot.a.l / bot.a.n
+            if (error.isEmpty()) TelegramBot.sendSysError(warn) else TelegramBot.sendSysWarn(error) // bot.a.l / bot.a.n (nomes como no original)
             val now = System.currentTimeMillis()
             lastBotTime.set(now)
             botEventTimes[code] = now

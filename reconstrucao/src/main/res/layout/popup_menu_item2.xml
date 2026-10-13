@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/bg_program" android:paddingLeft="10.0dp" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="60.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/menu_icon" android:layout_width="30.0dp" android:layout_height="30.0dp" />
+    <TextView android:textSize="25.0dp" android:textColor="@color/color_program" android:id="@id/menu_name" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dp" android:maxLines="1" android:marqueeRepeatLimit="marquee_forever" />
+</LinearLayout>

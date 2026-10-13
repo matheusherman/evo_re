@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:background="@color/tables_bg_normal_color" android:paddingLeft="24.0dp" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="16.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:layout_width="210.0dp" android:layout_height="match_parent" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:layout_width="45.0dp" android:layout_height="match_parent" android:text="@string/match_tables_played" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:layout_width="45.0dp" android:layout_height="match_parent" android:text="@string/match_tables_won" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:layout_width="45.0dp" android:layout_height="match_parent" android:text="@string/match_tables_drawn" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:layout_width="45.0dp" android:layout_height="match_parent" android:text="@string/match_tables_lost" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:layout_width="90.0dp" android:layout_height="match_parent" android:text="@string/match_tables_goals" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="left|center" android:paddingLeft="5.0dp" android:layout_width="120.0dp" android:layout_height="match_parent" android:text="@string/match_tables_last5" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:layout_width="match_parent" android:layout_height="match_parent" android:text="@string/match_tables_pts" android:singleLine="true" />
+</LinearLayout>

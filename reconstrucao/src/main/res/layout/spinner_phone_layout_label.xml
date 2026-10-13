@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.live.tvcinema.widget.nicespinner.NiceSpinner
+        android:ellipsize="marquee"
+        android:layout_gravity="bottom"
+        android:id="@+id/spinner_phonecode"
+        android:nextFocusDown="@id/btn_checkaccount_ok"
+        android:layout_width="150.0dip"
+        android:layout_height="@dimen/et_height"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:inputType="none"
+        android:dropDownVerticalOffset="@dimen/et_height"
+        app:arrowTint="@color/text_color_et_selector"
+        app:backgroundSelector="@drawable/spinner_bg_selector"
+        app:dropDownBackgroundDrawable="@drawable/white_radius_3"
+        app:dropDownSelector="@drawable/drop_down_background_selector"
+        app:popItemColor="@color/pop_drop_down_text_color_selector"
+        app:textTint="@color/text_color_et_selector"
+        style="@style/LoginSpinner" />
+
+    <View
+        android:layout_width="10.0dip"
+        android:layout_height="fill_parent" />
+
+    <com.live.tvcinema.widget.LabelRemoveKeyCodeEnterEditText
+        android:id="@+id/et_phonenumber"
+        android:nextFocusDown="@id/btn_checkaccount_ok"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/et_height"
+        editHintText="@string/phone_number"
+        editInputType="number"
+        editLenght="20" />
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/phoneloginf_ll_parent" android:background="@color/phoneloginf_ll_parent_bgc" android:paddingLeft="15.0dp" android:paddingRight="15.0dp" android:layout_width="@dimen/info_bg_width" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="16.0dp" android:textColor="@color/phoneloginf_tv_attention_tc" android:id="@id/phoneloginf_tv_attention" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/phoneloginf_tv_remind_tc" android:id="@id/phoneloginf_tv_remind" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="15.0dp" />
+    <ImageView android:layout_gravity="center_horizontal" android:id="@id/phoneloginf_iv_qrcode" android:focusable="false" android:layout_width="200.0dp" android:layout_height="200.0dp" android:layout_marginTop="25.0dp" android:src="@drawable/qr_placehodler" />
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/phoneloginf_ll_refresh" android:background="@drawable/subscribe_btn_bg_selector" android:paddingLeft="10.0dp" android:paddingRight="10.0dp" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="50.0dp" android:layout_marginTop="15.0dp">
+        <ImageView android:id="@id/phoneloginf_iv_refresh_icon" android:duplicateParentState="true" android:layout_width="18.0dp" android:layout_height="18.0dp" android:src="@drawable/refresh_phonelogin_selector" android:scaleType="fitXY" />
+        <TextView android:textSize="18.0sp" android:textColor="@color/text_color_selector_2" android:gravity="center" android:id="@id/phoneloginf_tv_refresh" android:focusable="true" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="45.0dp" android:layout_marginLeft="5.0dp" android:text="@string/refresh_qr_code" />
+    </LinearLayout>
+    <TextView android:textSize="16.0sp" android:textColor="@color/phoneloginf_tv_web_remind_tc" android:layout_gravity="center_horizontal" android:id="@id/phoneloginf_tv_web_remind" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="15.0dp" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/phoneloginf_tv_download_url_tc" android:id="@id/phoneloginf_tv_download_url" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/phoneloginf_tv_download_url_tc" android:id="@id/phoneloginf_tv_code" android:layout_width="match_parent" android:layout_height="wrap_content" />
+</LinearLayout>

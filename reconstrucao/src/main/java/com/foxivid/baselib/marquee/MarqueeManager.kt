@@ -176,7 +176,7 @@ object MarqueeManager {
      * Regras:
      *  1. Mensagens que já atingiram `displayTimes` são contadas como encerradas.
      *  2. Se uma mensagem foi exibida há menos de `displayInterval` ms:
-     *     - se algum listener que a exibiu ainda está rolando, nada é feito (retorna `true`);
+     *     - se algum listener que a exibiu ainda está rolando, nada é feito para ela (segue para a próxima mensagem);
      *     - senão, é reexibida ("restart") sem incrementar o contador.
      *  3. Caso contrário, entra na fila de candidatas: com exibição alternada, agrupada por
      *     contagem de exibição (menor primeiro) e depois por `seq`; sem alternância, só por `seq`.
@@ -191,7 +191,7 @@ object MarqueeManager {
         var bySeq: TreeMap<Int, MutableList<MarqueeInfo>>? = null
         var byCountThenSeq: TreeMap<Int, TreeMap<Int, MutableList<MarqueeInfo>>>? = null
 
-        for ((id, pair) in toDisplayMarqueeMap) {
+        outer@ for ((id, pair) in toDisplayMarqueeMap) {
             val info = pair.first
             val count = pair.second.get()
             if (count >= info.displayTimes) {
@@ -212,9 +212,9 @@ object MarqueeManager {
                                     "global_marquee in running$displayedBy current$current \"${info.content}\" $count/${info.displayTimes}",
                                 )
                             }
-                            // TODO("não decompilado com clareza: o jadx gerou um `while(true)` sem
-                            //  saída após este log; o retorno abaixo é a leitura mais provável.")
-                            return true
+                            // Confirmado no fallback do jadx: após o log (debug) o fluxo volta ao topo do laço externo
+                            // (`goto L10`), ou seja, passa à PRÓXIMA mensagem — não retorna.
+                            continue@outer
                         }
                     }
                 }

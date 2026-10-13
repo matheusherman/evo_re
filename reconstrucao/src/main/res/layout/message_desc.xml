@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:background="@color/black_cc" android:paddingLeft="10.0dp" android:paddingTop="10.0dp" android:paddingRight="10.0dp" android:paddingBottom="10.0dp" android:layout_width="500.0dp" android:layout_height="wrap_content" android:layout_marginLeft="5.0dp" android:minHeight="240.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:id="@id/lly_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="180.0dp">
+        <ImageView android:layout_gravity="center_horizontal" android:id="@id/iv_message_logo" android:visibility="gone" android:layout_width="300.0dp" android:layout_height="300.0dp" android:layout_margin="10.0dp" />
+        <TextView android:textSize="20.0sp" android:textColor="@color/message_desc_title" android:ellipsize="marquee" android:gravity="left|center" android:id="@id/tv_message_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10.0dp" android:singleLine="true" />
+        <TextView android:textSize="18.0sp" android:textColor="@color/color_c0c0c0" android:ellipsize="end" android:gravity="left|center" android:id="@id/tv_message_content" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10.0dp" android:maxHeight="500.0dp" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@id/lly_bottom" android:layout_width="match_parent" android:layout_height="30.0dp" android:layout_below="@id/lly_title">
+        <TextView android:textSize="16.0sp" android:textStyle="bold" android:textColor="@color/color_c0c0c0" android:gravity="right|bottom" android:id="@id/tv_message_time" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginRight="10.0dp" />
+        <TextView android:textSize="16.0sp" android:textColor="@color/color_c0c0c0" android:ellipsize="end" android:gravity="right|center" android:id="@id/tv_message_from" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:layout_marginRight="10.0dp" android:singleLine="true" />
+    </LinearLayout>
+</RelativeLayout>

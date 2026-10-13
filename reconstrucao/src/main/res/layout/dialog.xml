@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/ll_dialog" android:background="@drawable/dialog_bg" android:padding="32.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="160.0dp">
+        <t.v.c.widget.TextView android:textSize="14.0sp" android:textColor="@android:color/white" android:gravity="center" android:id="@id/tv" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <t.v.c.widget.MyEditText android:textSize="14.0sp" android:textColor="@color/main_font_key_label_white_color" android:textColorHint="@color/chinese_silver" android:gravity="center_vertical" android:id="@id/edt1" android:focusableInTouchMode="true" android:layout_width="229.0dp" android:layout_height="37.0dp" android:layout_marginTop="10.0dp" android:singleLine="true" android:imeOptions="flagNoExtractUi" android:paddingStart="10.0dp" android:paddingEnd="10.0dp" />
+        <t.v.c.widget.MyEditText android:textSize="14.0sp" android:textColor="@color/main_font_key_label_white_color" android:textColorHint="@color/chinese_silver" android:gravity="center_vertical" android:id="@id/edt2" android:focusableInTouchMode="true" android:layout_width="229.0dp" android:layout_height="37.0dp" android:layout_marginTop="10.0dp" android:singleLine="true" android:imeOptions="flagNoExtractUi" android:paddingStart="10.0dp" android:paddingEnd="10.0dp" />
+        <t.v.c.widget.LinearLayout android:id="@id/btns" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp">
+            <t.v.c.widget.MyButton android:id="@id/btn1" android:text="Yes" style="@style/dialog_btn" />
+            <t.v.c.widget.MyButton android:id="@id/btn2" android:text="Cancel" style="@style/dialog_btn" />
+        </t.v.c.widget.LinearLayout>
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.ImageView android:gravity="center" android:layout_gravity="center" android:id="@id/loading_img" android:visibility="gone" android:layout_width="50.0dp" android:layout_height="50.0dp" android:src="@drawable/loading" />
+</t.v.c.widget.FrameLayout>

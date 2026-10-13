@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="horizontal" android:id="@id/seetings_item_parent" android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="@dimen/program_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="20.0dp" android:textColor="@color/pipsetting_list_tv" android:ellipsize="marquee" android:gravity="left|center" android:id="@id/pip_item_name" android:paddingLeft="5.0dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dp" android:text="@string/on" android:singleLine="true" android:layout_centerVertical="true" />
+    <ImageView android:id="@id/pip_item_image" android:background="@drawable/open" android:visibility="invisible" android:layout_width="20.0dp" android:layout_height="20.0dp" android:layout_marginRight="20.0dp" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+</RelativeLayout>

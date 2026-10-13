@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:textSize="18.0sp" android:textColor="@color/text_color_et_selector_focus" android:ellipsize="marquee" android:gravity="center_vertical" android:id="@id/text1" android:paddingLeft="5.0dp" android:paddingRight="5.0dp" android:layout_width="match_parent" android:layout_height="40.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

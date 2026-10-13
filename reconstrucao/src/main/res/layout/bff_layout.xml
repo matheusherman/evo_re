@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include android:id="@id/myaccountf_bff_user_layout" android:layout_width="match_parent" android:layout_height="200.0dp" android:layout_marginTop="120.0dp" layout="@layout/bff_offline_layout" />
+    <LinearLayout android:orientation="vertical" android:id="@id/myaccountf_bff_otheruser_layout" android:visibility="gone" android:layout_width="match_parent" android:layout_height="200.0dp" android:layout_marginTop="30.0dp">
+        <TextView android:textSize="16.0sp" android:textColor="#ffd9d7d6" android:id="@id/myaccountf_otherbff_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/bff_meet_others" />
+        <RelativeLayout android:id="@id/myaccountf_otherbff_layout" android:background="@drawable/bff_user_bg" android:focusable="true" android:clickable="true" android:layout_width="match_parent" android:layout_height="90.0dp" android:layout_marginTop="10.0dp">
+            <TextView android:textSize="18.0sp" android:textColor="@color/color_f1f1f1" android:gravity="left|bottom" android:id="@id/myaccountf_bff_other_remind1" android:layout_width="match_parent" android:layout_height="40.0dp" android:layout_marginLeft="10.0dp" android:text="@string/bff_others_remind" />
+            <TextView android:textSize="15.0sp" android:textColor="@color/color_f1f1f1" android:gravity="left|top" android:id="@id/myaccountf_bff_other_remind2" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dp" android:layout_marginTop="5.0dp" android:text="@string/bff_others_remind2" android:layout_below="@id/myaccountf_bff_other_remind1" />
+            <ImageView android:id="@id/myaccountf_otherbff_logo" android:layout_width="25.0dp" android:layout_height="25.0dp" android:layout_marginRight="20.0dp" android:src="@drawable/bff_logo" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

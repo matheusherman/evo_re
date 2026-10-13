@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:background="@color/bg_menu" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:id="@id/subject_match_fl" android:layout_width="match_parent" android:layout_height="match_parent" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/color_eeeeee" android:gravity="center" android:id="@id/kidsmode_show_tv" android:background="@color/bg_menu" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="10.0dp" android:layout_marginRight="10.0dp" android:text="@string/kidsmode_subject_tip" />
+</LinearLayout>

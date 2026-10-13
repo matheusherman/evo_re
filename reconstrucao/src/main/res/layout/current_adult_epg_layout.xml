@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/currentadultepgl_ll_parent" android:background="@color/currentadultepgl_ll_parent_bgc" android:padding="10.0dp" android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/currentadultepgl_iv_icon" android:layout_width="160.0dp" android:layout_height="100.0dp" android:layout_marginLeft="30.0dp" android:layout_marginTop="10.0dp" />
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="30.0dp">
+        <RelativeLayout android:gravity="bottom" android:layout_width="match_parent" android:layout_height="25.0dp" android:layout_marginRight="30.0dp">
+            <TextView android:textSize="18.0sp" android:textColor="@color/currentadultepgl_tv_curday_tc" android:ellipsize="marquee" android:gravity="bottom" android:id="@id/currentadultepgl_tv_curday" android:layout_width="@dimen/sm_200" android:layout_height="wrap_content" android:singleLine="true" android:layout_alignParentLeft="true" android:layout_alignParentBottom="true" />
+            <TextView android:textSize="26.0sp" android:textColor="@color/currentadultepgl_tv_channel_name_tc" android:ellipsize="marquee" android:gravity="bottom" android:id="@id/currentadultepgl_tv_channel_name" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="10.0dp" android:layout_marginBottom="-1.0dp" android:singleLine="true" android:layout_centerHorizontal="true" />
+            <TextView android:textSize="20.0sp" android:textColor="@color/currentadultepgl_tv_channel_pos_tc" android:ellipsize="marquee" android:gravity="right|bottom" android:id="@id/currentadultepgl_tv_channel_pos" android:layout_width="150.0dp" android:layout_height="match_parent" android:singleLine="true" android:layout_toLeftOf="@id/currentadultepgl_tv_channel_name" />
+            <TextView android:textSize="18.0sp" android:textColor="@color/currentadultepgl_tv_current_time_tc" android:ellipsize="marquee" android:gravity="right|bottom" android:id="@id/currentadultepgl_tv_current_time" android:layout_width="@dimen/sm_200" android:layout_height="wrap_content" android:singleLine="true" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginRight="20.0dp">
+            <TextView android:textSize="17.0dp" android:textColor="@color/currentadultepgl_tv_current_epg_start_tc" android:gravity="center" android:id="@id/currentadultepgl_tv_current_epg_start" android:visibility="gone" android:layout_width="70.0dp" android:layout_height="wrap_content" android:maxLines="1" />
+            <ProgressBar android:id="@id/currentadultepgl_pb_progress" android:layout_width="0.0dp" android:layout_height="8.0dp" android:layout_weight="1.0" style="@style/ProgressBar_Mini" />
+            <TextView android:textSize="17.0dp" android:textColor="@color/currentadultepgl_tv_current_epg_stop_tc" android:gravity="center" android:id="@id/currentadultepgl_tv_current_epg_stop" android:visibility="invisible" android:layout_width="10.0dp" android:layout_height="wrap_content" android:maxLines="1" />
+        </LinearLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="10.0dp" android:layout_marginRight="30.0dp">
+            <LinearLayout android:orientation="horizontal" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_marginRight="5.0dp" android:layout_weight="1.0">
+                <TextView android:textSize="20.0sp" android:textColor="@color/currentadultepgl_tv_current_epg_title_tc" android:id="@id/currentadultepgl_tv_current_epg_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/current" android:singleLine="true" />
+                <com.live.evo.widget.MarqueeTextView android:textSize="20.0sp" android:textColor="@color/currentadultepgl_tv_current_epg_name_tc" android:ellipsize="marquee" android:id="@id/currentadultepgl_mtv_current_epg_name" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="4.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+            </LinearLayout>
+            <LinearLayout android:gravity="end" android:orientation="horizontal" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_marginLeft="5.0dp" android:layout_weight="1.0">
+                <TextView android:textSize="20.0sp" android:textColor="@color/currentadultepgl_tv_next_epg_title_tc" android:id="@id/currentadultepgl_tv_next_epg_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/next" android:singleLine="true" />
+                <com.live.evo.widget.MarqueeTextView android:textSize="20.0sp" android:textColor="@color/currentadultepgl_tv_next_epg_name_tc" android:ellipsize="marquee" android:id="@id/currentadultepgl_mtv_next_epg_name" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+            </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout android:layout_width="wrap_content" android:layout_height="35.0dp" android:layout_marginTop="5.0dp">
+            <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/currentepgl_layout_keyimag" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginRight="100.0dp">
+                <ImageView android:id="@id/currentadultepgl_iv_left_icon" android:layout_width="18.0dp" android:layout_height="18.0dp" android:src="@drawable/right_icon" android:contentDescription="@string/key_hint_left" android:rotation="180.0" style="@style/keyRemindImage" />
+                <TextView android:id="@id/currentadultepgl_tv_epg_left" android:text="@string/key_hint_left" style="@style/keyRemindText" />
+                <ImageView android:id="@id/currentadultepgl_iv_ok_icon" android:src="@drawable/ok_icon" android:contentDescription="@string/key_hint_ok" style="@style/keyRemindImage_25" />
+                <TextView android:id="@id/currentadultepgl_tv_epg_ok" android:text="@string/key_hint_ok" style="@style/keyRemindText" />
+                <ImageView android:id="@id/currentadultepgl_iv_right_icon" android:layout_width="18.0dp" android:layout_height="18.0dp" android:src="@drawable/right_icon" android:contentDescription="@string/key_hint_right" style="@style/keyRemindImage" />
+                <TextView android:id="@id/currentadultepgl_tv_epg_right" android:text="@string/key_hint_right" style="@style/keyRemindText" />
+                <ImageView android:id="@id/currentadultepgl_iv_menu_icon" android:src="@drawable/menu_icon" android:contentDescription="@string/key_hint_menu" style="@style/keyRemindImage" />
+                <TextView android:id="@id/currentadultepgl_tv_epg_menu" android:text="@string/key_hint_menu" style="@style/keyRemindText" />
+                <ImageView android:id="@id/currentadultepgl_iv_del_icon" android:src="@drawable/del_icon1" android:contentDescription="@string/key_hint_del" style="@style/keyRemindImage_15" />
+                <TextView android:id="@id/currentadultepgl_tv_epg_del" android:text="@string/key_hint_del" style="@style/keyRemindText" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginRight="30.0dp">
+                <TextView android:textSize="15.0sp" android:textColor="@color/currentadultepgl_tv_sessionid_tc" android:gravity="right|center" android:id="@id/currentadultepgl_tv_sessionid" android:layout_width="match_parent" android:layout_height="match_parent" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/adultpwdl_rl_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="90.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/adultpwdl_ll_password_cont"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="430.0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5.0dip"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/adultpwdl_tv_key1"
+            style="@style/ComboPwdKey" />
+
+        <TextView
+            android:id="@+id/adultpwdl_tv_key2"
+            android:layout_marginLeft="5.0dip"
+            style="@style/ComboPwdKey" />
+
+        <TextView
+            android:id="@+id/adultpwdl_tv_key3"
+            android:layout_marginLeft="5.0dip"
+            style="@style/ComboPwdKey" />
+
+        <TextView
+            android:id="@+id/adultpwdl_tv_key4"
+            android:layout_marginLeft="5.0dip"
+            style="@style/ComboPwdKey" />
+    </LinearLayout>
+
+    <TextView
+        android:textSize="24.0sp"
+        android:textColor="@color/text_color_selector"
+        android:gravity="center"
+        android:id="@+id/adultpwdl_tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="60.0dip"
+        android:layout_marginRight="20.0dip"
+        android:text="@string/confirm_password"
+        android:layout_toLeftOf="@id/adultpwdl_ll_password_cont" />
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center" android:orientation="vertical" android:layout_width="@dimen/recommend_epg_width" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:gravity="center" android:id="@id/recommend_epg_layout" android:background="@drawable/recommend_epg_selector" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="@dimen/recommend_epg_height">
+        <ImageView android:id="@id/recommend_epg_iv" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" />
+        <LinearLayout android:background="@drawable/recommend_epg_channellogo_icon" android:layout_width="@dimen/recommend_channellogo_w" android:layout_height="@dimen/recommend_channellogo_h" android:layout_marginTop="-2.0dp" android:layout_marginRight="12.0dp" android:layout_alignParentTop="true" android:layout_alignParentRight="true">
+            <ImageView android:id="@id/recommend_channellogo_iv" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="15.0dp" android:layout_marginTop="6.0dp" android:layout_marginRight="15.0dp" android:layout_marginBottom="10.0dp" android:scaleType="fitCenter" />
+        </LinearLayout>
+        <ImageView android:id="@id/recommend_play_iv" android:visibility="invisible" android:layout_width="@dimen/recommend_image_size" android:layout_height="@dimen/recommend_image_size" android:src="@drawable/recommend_play" android:layout_centerInParent="true" />
+    </RelativeLayout>
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:background="@drawable/recommend_epg_bottom_bg" android:layout_width="match_parent" android:layout_height="57.0dp" android:layout_below="@id/recommend_epg_layout" android:elevation="3.0dp">
+        <TextView android:textSize="@dimen/recommend_text_epg" android:textColor="@color/recommend_text_selector" android:ellipsize="marquee" android:id="@id/recommend_epg_name_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/recommend_margin_left" android:layout_marginRight="8.0dp" android:layout_marginBottom="-2.5dp" android:singleLine="true" />
+        <TextView android:textSize="@dimen/recommend_text_epg" android:textColor="@color/recommend_item_text_color2" android:id="@id/recommend_epg_time_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/recommend_margin_left" android:layout_marginTop="-2.5dp" />
+    </LinearLayout>
+</RelativeLayout>

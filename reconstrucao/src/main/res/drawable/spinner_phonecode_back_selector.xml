@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <layer-list>
+            <item android:drawable="@drawable/focus_login" />
+            <item>
+                <bitmap android:gravity="end" android:src="@drawable/spinner_down_focus" />
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_focused="false">
+        <layer-list>
+            <item android:drawable="@drawable/unfocus_enable_bg" />
+            <item>
+                <bitmap android:gravity="end" android:src="@drawable/spinner_down" />
+            </item>
+        </layer-list>
+    </item>
+</selector>

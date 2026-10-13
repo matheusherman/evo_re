@@ -79,7 +79,50 @@ object KeyboardUtils {
 
 /** Animações de view (translationY etc.). Original: com/live/evo/util/z0.java */
 object AnimUtils {
-    // TODO("parcial: d/f/g/h/i animam translationY (ObjectAnimator) — ver util/z0.java")
+    private var fadeIn: android.view.animation.AlphaAnimation? = null    // a
+    private var fadeOut: android.view.animation.AlphaAnimation? = null   // b
+    private var pulsingView: View? = null                                 // c
+
+    /** Foco ganho: escala 1.1 em 200 ms. Original: d(View) */
+    fun d(view: View?) { view?.animate()?.scaleX(1.1f)?.scaleY(1.1f)?.setInterpolator(android.view.animation.AccelerateInterpolator())?.setDuration(200L) }
+    /** Foco perdido: volta a 1.0 em 200 ms. Original: g(View) */
+    fun g(view: View?) { view?.animate()?.scaleX(1.0f)?.scaleY(1.0f)?.setInterpolator(android.view.animation.AccelerateInterpolator())?.setDuration(200L) }
+
+    /** Pulsa o alpha (1.0 ↔ [minAlpha]) em loop alternando dois AlphaAnimation. Original: e(View, float, int) */
+    private fun pulse(view: View, minAlpha: Float, durationMs: Int) {
+        if (fadeIn == null) fadeIn = android.view.animation.AlphaAnimation(minAlpha, 1.0f)
+        fadeIn!!.duration = durationMs.toLong()
+        if (fadeOut == null) fadeOut = android.view.animation.AlphaAnimation(1.0f, minAlpha)
+        fadeOut!!.duration = durationMs.toLong()
+        fadeIn!!.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
+            override fun onAnimationEnd(a: android.view.animation.Animation?) { pulsingView?.startAnimation(fadeOut) }
+            override fun onAnimationRepeat(a: android.view.animation.Animation?) {}
+            override fun onAnimationStart(a: android.view.animation.Animation?) {}
+        })
+        fadeOut!!.setAnimationListener(object : android.view.animation.Animation.AnimationListener {
+            override fun onAnimationEnd(a: android.view.animation.Animation?) { pulsingView?.startAnimation(fadeIn) }
+            override fun onAnimationRepeat(a: android.view.animation.Animation?) {}
+            override fun onAnimationStart(a: android.view.animation.Animation?) {}
+        })
+        pulsingView!!.startAnimation(fadeOut)
+    }
+    /** Inicia pulsação (alpha 0.5, 1500 ms) na view; ignora se já é a atual. Original: f(View) */
+    fun f(view: View?) {
+        pulsingView?.let { if (it == view) return else it.clearAnimation() }
+        pulsingView = view
+        if (view == null) return
+        pulse(view, 0.5f, 1500)
+    }
+    /** Desce a view 0 → 500 px em 300 ms. Original: h(View) */
+    fun h(view: View?) {
+        if (view == null) return
+        android.animation.ObjectAnimator.ofFloat(view, "translationY", 0.0f, 500.0f).apply { duration = 300L; interpolator = android.view.animation.AccelerateInterpolator() }.start()
+    }
+    /** Sobe a view 500 → 0 px em 300 ms. Original: i(View) */
+    fun i(view: View?) {
+        if (view == null) return
+        android.animation.ObjectAnimator.ofFloat(view, "translationY", 500.0f, 0.0f).apply { duration = 300L; interpolator = android.view.animation.DecelerateInterpolator() }.start()
+    }
 }
 
 /**
@@ -93,10 +136,19 @@ class ImageCache {
     fun put(key: String, drawable: android.graphics.drawable.BitmapDrawable) {}
 }
 
-/** Gera QR code (ZXing/e1.a "TEXT", 1) a partir de texto. Original: com/live/evo/util/w1.java (QrBitmapHelper) */
+/**
+ * Gera QR code a partir de texto. No original usa o encoder `e1.a(context).w(1).x(TEXT).t(text).a().a()` (wrapper do ZXing
+ * android-embedded, `e1` não decompilou); aqui usa o ZXing `QRCodeWriter` (inferido: 512x512, margem 1, preto/branco).
+ * Original: com/live/evo/util/w1.java (QrBitmapHelper)
+ */
 class QrBitmapHelper {
     fun create(text: String?): Bitmap? = if (text.isNullOrEmpty()) null else try {
-        TODO("e1.a(context).w(1).x(TEXT).t(text).a().a() — encoder QR do ZXing android-embedded (e1)")
+        val size = 512
+        val hints = mapOf(com.google.zxing.EncodeHintType.MARGIN to 1, com.google.zxing.EncodeHintType.CHARACTER_SET to "UTF-8")
+        val matrix = com.google.zxing.qrcode.QRCodeWriter().encode(text, com.google.zxing.BarcodeFormat.QR_CODE, size, size, hints)
+        val bmp = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        for (x in 0 until size) for (y in 0 until size) bmp.setPixel(x, y, if (matrix[x, y]) android.graphics.Color.BLACK else android.graphics.Color.WHITE)
+        bmp
     } catch (t: Throwable) { t.printStackTrace(); null }
 }
 

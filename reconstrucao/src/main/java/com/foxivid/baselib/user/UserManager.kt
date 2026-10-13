@@ -20,7 +20,7 @@ import com.foxivid.baselib.model.local.LocalSessionInfo
 import com.foxivid.baselib.model.ptv.ApiResponse
 import com.foxivid.baselib.model.ptv.referral.ReferralSummary
 import com.foxivid.baselib.model.user.ServerResponse
-import com.foxivid.baselib.network.RequestParams
+import com.foxivid.baselib.network.HeaderInterceptor
 import com.foxivid.baselib.streaming.EngineHelper
 import com.foxivid.baselib.streaming.StreamHelper
 import com.foxivid.baselib.streaming.PlayType
@@ -188,7 +188,7 @@ object UserManager {
 
     /**
      * Espera a sessão local ficar pronta (latch, 15 s por tentativa) até `timeoutMS`.
-     * Original: f.Q0(Long) "isInitComplete" (não decompilado pelo jadx; reconstruído do dump smali).
+     * Original: f.Q0(Long) "isInitComplete" (+ f$i/f$j) — confirmado contra o fallback do jadx: cada espera é `latch.await(15, SECONDS)` em Dispatchers.IO.
      */
     suspend fun isInitComplete(timeoutMS: Long? = null): Boolean {
         val start = TimeUtils.elapsed()
@@ -207,7 +207,7 @@ object UserManager {
         isInLogin = false
         isAuthRetSuccess = true
         resetKickState()
-        ChannelManager.load(false, false)   // media/a.Q(false,false)
+        ChannelManager.reload(false, false)   // media/a.Q(false,false)
         VoDManager.reset()                  // media/l.n()
     }
 
@@ -253,12 +253,12 @@ object UserManager {
                             else logger.error("restart engine failure")
                         }
                 }
-            } else if (EngineHelper.isRunning()) {
+            } else if (EngineHelper.isEngineStarted()) {
                 EngineHelper.refreshToken(newLocalSessionInfo.streamToken)
             } else {
                 logger.info("try refresh stream token, but engine is not running")
             }
-            RemoteLogger.updateIdentity(RequestParams.f(), RequestParams.b(), RequestParams.k()) // log/a.l(...)
+            RemoteLogger.setIdentity(HeaderInterceptor.distributionChannel(), HeaderInterceptor.accountId(), HeaderInterceptor.deviceId()) // log/a.l(...)
             saveLocalSession()
         } catch (t: Throwable) {
             try {
@@ -396,7 +396,8 @@ object UserManager {
                         loginExtra()
                     } else {
                         logger.error("$desc failure, call api exception")
-                        // Original: há uma 2ª emissão (label 3) cujo argumento se perdeu na decompilação.
+                        // Original (fallback do jadx, label 3): emite NOVAMENTE o mesmo resultado `r` (2ª emissão).
+                        collector.emit(r)
                     }
                 }
                 !isLoginByToken -> {
@@ -551,7 +552,7 @@ object UserManager {
             referralSummary = null
             getReferralSummary(true).catch { logger.info("init referral summary failure", it) }.collect { }
         }
-        MediaConfigUtils.initUserData(TODO("argumento String de media/d.u() perdido na decompilação (provável uid)"))
+        MediaConfigUtils.initUserData(uid) // Original: media/d.u(B0()) — B0() = accountId da conta (confirmado no fallback)
         if (!BaseLibConfig.isDebug && !BaseLibConfig.isDevEnv) {
             FirebaseUserProps.updateUserType()      // util/j0.c()
             FirebaseUserProps.updateVersionName()   // util/j0.e()
@@ -832,7 +833,7 @@ object UserManager {
         }
         val uid = getAccountIdString()
         if (lastEPlayType != playType && lastStartEngineUId == uid &&
-            TimeUtils.elapsed() - lastEngineStartTime < 30000 && EngineHelper.isRunning()
+            TimeUtils.elapsed() - lastEngineStartTime < 30000 && EngineHelper.isEngineStarted()
         ) {
             if (BaseLibConfig.isDebug) logger.debug("Already start engine[$playType], too frequent to start engine")
             isEngineInStarting.set(false)
@@ -841,10 +842,10 @@ object UserManager {
         if (BaseLibConfig.isDebug) logger.debug("Start engine[$playType]...")
         val deviceType = if (DeviceInfoCollector.isMobile()) 1 else 0
         lastEPlayType = null
-        return EngineHelper.prepare().flatMapConcat {
+        return EngineHelper.destroy().flatMapConcat {
             MetricMonitors.current()?.setEngineInitStart(TimeUtils.elapsed())
-            EngineHelper.init(
-                Gson().toJson(list), getStreamToken(), uid, getDid(), RequestParams.tenantId.toString(), deviceType, playType,
+            EngineHelper.create(
+                Gson().toJson(list), getStreamToken(), uid, getDid(), HeaderInterceptor.tenantId().toString(), deviceType, playType,
             ).catch { t ->
                 try {
                     reportEngineFailureMetric(t)
@@ -914,7 +915,7 @@ object UserManager {
 
     /** Original: f.x0(isForce) "getReferralSummary" — cache 10 min (30 s se forçado). */
     fun getReferralSummary(isForce: Boolean): Flow<ReferralSummary?> {
-        if (!BaseLibConfig.isReferralEnabled || !BaseLibConfig.isLoginEnabled || getUsername().isEmpty()) {
+        if (!BaseLibConfig.hasReferralSummary || !BaseLibConfig.displayMemberSite || getUsername().isEmpty()) {
             return flowOf(null) // Original: config.b.i() && config.b.f()
         }
         val age = TimeUtils.now() - lastQueryReferralSummaryTime
@@ -969,7 +970,7 @@ object UserManager {
      */
     fun getMembershipQrUrl(): String {
         val url = localSessionInfo?.memberShipUrl ?: return ""
-        return url + "?t=" + RequestParams.tenantId + "&a=" + localSessionInfo?.accessToken + "&d=" + getDid() + "&l=" + RequestParams.language
+        return url + "?t=" + HeaderInterceptor.tenantId() + "&a=" + localSessionInfo?.accessToken + "&d=" + getDid() + "&l=" + HeaderInterceptor.language()
     }
 
     // ---------------------------------------------------------------- lembretes de plano

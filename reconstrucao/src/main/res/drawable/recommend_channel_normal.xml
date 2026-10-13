@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/recommend_item_radius" />
+    <gradient android:startColor="@color/recommend_channel_normal_start" android:endColor="@color/recommend_channel_normal_end" android:angle="270.0" />
+    <stroke android:width="2.0px" android:color="@color/recommend_channel_normal_stroke" />
+</shape>

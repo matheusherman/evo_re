@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:drawable="@drawable/green_stroke_et" />
+    <item android:state_focused="false" android:drawable="@drawable/normals_stroke_et" />
+</selector>

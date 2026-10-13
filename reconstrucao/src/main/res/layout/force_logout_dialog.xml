@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/forcelogoutdlg_ll_parent" android:background="@drawable/popup_dialog_bg" android:layout_width="@dimen/normal_dialog_width" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:layout_width="@dimen/normal_dialog_width" android:layout_height="wrap_content" android:layout_marginTop="30.0dp">
+        <TextView android:textSize="22.0sp" android:textColor="@color/item_normal_color" android:gravity="center" android:id="@id/forcelogoutdlg_tv_title" android:layout_width="@dimen/normal_text_width" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/normal_dialog_padding" android:layout_marginTop="10.0dp" android:layout_marginBottom="5.0dp" />
+    </LinearLayout>
+    <View android:layout_gravity="center" android:id="@id/forcelogoutdlg_view_line" android:background="@color/play_norma23_bg_color" android:layout_width="@dimen/normal_text_width" android:layout_height="1.0px" />
+    <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="490.0dp" android:layout_height="@dimen/normal_btn_bg_height" android:layout_marginTop="20.0dp" android:layout_marginBottom="10.0dp">
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/text_color_selector" android:gravity="center" android:id="@id/forcelogoutdlg_btn_login" android:background="@drawable/exit_btn_bg_selector" android:focusable="true" android:layout_width="@dimen/normal_btn_width" android:layout_height="@dimen/normal_btn_height" android:layout_marginLeft="30.0dp" android:text="@string/log_in" />
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/text_color_selector" android:gravity="center" android:id="@id/forcelogoutdlg_btn_exit" android:background="@drawable/exit_btn_bg_selector" android:focusable="true" android:layout_width="@dimen/normal_btn_width" android:layout_height="@dimen/normal_btn_height" android:layout_marginLeft="30.0dp" android:layout_marginRight="30.0dp" android:text="@string/exit" />
+    </LinearLayout>
+</LinearLayout>

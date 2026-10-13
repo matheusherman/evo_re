@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.FrameLayout android:layout_gravity="center" android:id="@id/video_view_bg" android:background="#ff000000" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.FrameLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <t.v.c.widget.videoview.PlayerView android:layout_gravity="center" android:id="@id/channel_video_view" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <t.v.c.widget.TextView android:textSize="16.0sp" android:textColor="@color/base_normal_color" android:layout_gravity="start|bottom" android:id="@id/live_channel_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="10.0dp" />
+        <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:layout_gravity="end|bottom" android:orientation="horizontal" android:id="@id/to_fullscreen_layout" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="5.0dp" android:layout_marginEnd="@dimen/dp_10">
+            <t.v.c.widget.TextView android:textSize="@dimen/minor_tips_text_size" android:textColor="@color/base_normal_color" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/press_ok_full_screen" android:layout_marginStart="5.0dp" />
+            <t.v.c.widget.ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/full_screen_iv" />
+        </t.v.c.widget.LinearLayout>
+    </t.v.c.widget.FrameLayout>
+    <t.v.c.widget.ImageView android:id="@id/img_bg" android:focusable="false" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/drawable_shape_dark_gray" />
+    <t.v.c.widget.TextView android:textSize="53.0sp" android:textColor="#ffffb90f" android:layout_gravity="end|top" android:id="@id/txt_channel_input_num" android:focusable="false" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="43.0dp" android:layout_marginEnd="96.0dp" />
+    <t.v.c.widget.LinearLayout android:id="@id/ll_debug" android:background="@drawable/drawable_shape_black_and_blue_border" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="11.0dp" android:layout_marginStart="43.0dp">
+        <t.v.c.widget.TextView android:textSize="8.0sp" android:typeface="monospace" android:textColor="#ffffb90f" android:layout_gravity="start|top" android:id="@id/txt_debug" android:focusable="false" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:layout_marginBottom="5.0dp" android:layout_marginStart="10.0dp" android:layout_marginEnd="10.0dp" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.ImageView android:id="@id/img_channel_log" android:focusable="false" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+    <t.v.c.widget.FrameLayout android:layout_gravity="center|bottom" android:id="@id/fl_channel" android:background="@color/tv_guide_hide_nav_bg_color" android:visibility="gone" android:layout_width="match_parent" android:layout_height="96.0dp">
+        <t.v.c.widget.ImageView android:id="@id/img_channel_logo" android:layout_width="66.0dp" android:layout_height="66.0dp" android:layout_marginTop="14.0dp" android:src="@drawable/tv_logo" android:layout_marginStart="32.0dp" />
+        <t.v.c.widget.LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14.0dp" android:layout_marginStart="142.0dp" android:layout_marginEnd="32.0dp">
+            <t.v.c.widget.LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="16.0dp">
+                <t.v.c.widget.TextView android:textSize="13.0sp" android:textStyle="bold" android:textColor="@color/main_font_key_label_white_color" android:id="@id/txt_channel_num" android:layout_width="wrap_content" android:layout_height="16.0dp" />
+                <t.v.c.widget.LinearLayout android:layout_width="13.0dp" android:layout_height="16.0dp" />
+                <t.v.c.widget.TextView android:textSize="13.0sp" android:textStyle="bold" android:textColor="@color/main_font_key_label_white_color" android:id="@id/txt_channel_name" android:layout_width="wrap_content" android:layout_height="16.0dp" />
+            </t.v.c.widget.LinearLayout>
+            <t.v.c.widget.MyProgressBar android:id="@id/progress_live" android:background="@drawable/drawable_shape_progress_bar_bg" android:focusable="false" android:layout_width="match_parent" android:layout_height="3.0dp" android:layout_marginTop="3.0dp" android:layout_marginBottom="3.0dp" android:max="100" android:progress="50" android:progressDrawable="@drawable/drawable_layer_list_progress" style="?android:progressBarStyleHorizontal" />
+            <t.v.c.widget.FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/main_font_key_label_white_color" android:ellipsize="marquee" android:layout_gravity="start" android:id="@id/txt_current_program" android:layout_width="238.0dp" android:layout_height="wrap_content" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" android:textAlignment="viewStart" />
+                <t.v.c.widget.ImageView android:layout_gravity="center" android:id="@id/img_play_status" android:background="@drawable/edit_border_focus_color" android:layout_width="11.0dp" android:layout_height="11.0dp" />
+                <t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/main_font_key_label_white_color" android:ellipsize="marquee" android:layout_gravity="end" android:id="@id/txt_next_program" android:layout_width="238.0dp" android:layout_height="wrap_content" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" android:textAlignment="viewEnd" />
+            </t.v.c.widget.FrameLayout>
+        </t.v.c.widget.LinearLayout>
+        <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="20.0dp" android:layout_marginTop="61.0dp" android:layout_marginStart="142.0dp">
+            <t.v.c.widget.ImageView android:id="@id/btn_hide_mini_epg" android:background="@drawable/btn_mini_epg_selector" android:padding="3.0dp" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/hide_min_epg" />
+            <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/ll_favorite" android:background="@drawable/btn_mini_epg_selector" android:focusable="true" android:layout_width="wrap_content" android:layout_height="19.0dp" android:paddingStart="12.0dp" android:paddingEnd="12.0dp" android:layout_marginStart="11.0dp">
+                <t.v.c.widget.ImageView android:id="@id/img_favorite" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/favorite_add" />
+                <t.v.c.widget.TextView android:textSize="11.0sp" android:textStyle="bold" android:textColor="@color/main_font_normal_label_gray_color" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/mini_epg_favorite" android:layout_marginStart="3.0dp" />
+            </t.v.c.widget.LinearLayout>
+            <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/ll_epg" android:background="@drawable/btn_mini_epg_selector" android:focusable="true" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="19.0dp" android:paddingStart="12.0dp" android:paddingEnd="12.0dp" android:layout_marginStart="11.0dp">
+                <t.v.c.widget.ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/keyboard" />
+                <t.v.c.widget.TextView android:textSize="11.0sp" android:textStyle="bold" android:textColor="@color/main_font_normal_label_gray_color" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/mini_epg_epg" android:layout_marginStart="3.0dp" />
+            </t.v.c.widget.LinearLayout>
+            <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/ll_feedback" android:background="@drawable/btn_mini_epg_selector" android:focusable="true" android:layout_width="wrap_content" android:layout_height="19.0dp" android:paddingStart="12.0dp" android:paddingEnd="12.0dp" android:layout_marginStart="11.0dp">
+                <t.v.c.widget.ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/message_question" />
+                <t.v.c.widget.TextView android:textSize="11.0sp" android:textStyle="bold" android:textColor="@color/main_font_normal_label_gray_color" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/mini_epg_feedback" android:layout_marginStart="3.0dp" />
+            </t.v.c.widget.LinearLayout>
+        </t.v.c.widget.LinearLayout>
+    </t.v.c.widget.FrameLayout>
+    <t.v.c.widget.ImageView android:layout_gravity="center" android:id="@id/img_start" android:focusable="false" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/ic_launcher" />
+    <AdapterViewFlipper android:layout_gravity="center_horizontal" android:id="@id/eco_mode_flipper" android:layout_width="match_parent" android:layout_height="match_parent" android:flipInterval="5000" />
+    <t.v.c.widget.LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/ll_no_signal" android:background="@color/no_signal_bg_color" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent">
+        <t.v.c.widget.ImageView android:layout_width="253.0dp" android:layout_height="253.0dp" android:src="@drawable/img_no_signal_3" />
+        <t.v.c.widget.TextView android:textSize="18.0sp" android:textColor="@color/white" android:gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dp" android:layout_marginTop="10.0dp" android:layout_marginRight="20.0dp" android:text="@string/no_stream_notice_message" />
+    </t.v.c.widget.LinearLayout>
+</t.v.c.widget.FrameLayout>

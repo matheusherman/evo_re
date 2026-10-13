@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="@dimen/recommend_channel_list_width" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:id="@id/recommend_channel_layout" android:background="@drawable/recommend_channel_selector" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ImageView android:id="@id/recommend_channel_iv" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="35.0dp" android:layout_marginTop="20.0dp" android:layout_marginRight="35.0dp" android:layout_marginBottom="20.0dp" android:scaleType="fitCenter" />
+    </LinearLayout>
+</LinearLayout>

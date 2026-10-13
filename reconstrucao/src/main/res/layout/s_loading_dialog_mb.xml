@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="vertical" android:id="@id/sloadingdlg_ll_parent" android:background="@drawable/loading_dialog_background" android:padding="10.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="100.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.tvc.lib.mobile.ui.widget.sloading.SLoadingView android:id="@id/sloadingdlg_slv" android:layout_width="@dimen/live_loading_width" android:layout_height="@dimen/live_loading_width" android:scaleType="fitCenter" android:contentDescription="@string/app_name" app:s_color="@color/black" app:s_color_extra="@color/gray" app:s_type="@integer/sloadingdlg_slv_style" />
+    <com.tvc.lib.mobile.ui.widget.sloading.anim.SLoadingTextView android:id="@id/sloadingdlg_tv_text" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    <TextView android:textSize="@dimen/sp_16" android:textColor="@color/main_font_key_label_white_color" android:id="@id/sloadingdlg_tv_custom_text" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="-12.0dp" android:text="@string/global_loading" android:lines="1" android:layout_marginStart="4.0dp" />
+</LinearLayout>

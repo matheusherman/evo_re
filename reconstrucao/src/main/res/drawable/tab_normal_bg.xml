@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/transparent" />
+        </shape>
+    </item>
+    <item android:gravity="center|bottom" android:height="1.0dp" android:width="@dimen/match_parent">
+        <shape>
+            <corners android:radius="0.0dp" />
+            <solid android:color="@color/color_tabline_normal" />
+        </shape>
+    </item>
+</layer-list>

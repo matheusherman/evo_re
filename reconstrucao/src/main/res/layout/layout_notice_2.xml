@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:layout_gravity="center" android:orientation="vertical" android:background="@drawable/shape_episodes_num_list_bg_unselected" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="12.0sp" android:textColor="@color/main_font_key_label_white_color" android:gravity="center" android:id="@id/txt_notice_title" android:layout_width="match_parent" android:layout_height="25.0dp" android:layout_marginTop="10.0dp" android:text="发现新版本" />
+    <t.v.c.widget.LinearLayout android:layout_gravity="center_vertical" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12.0dp" android:layout_marginTop="10.0dp" android:layout_marginRight="12.0dp" android:layout_marginBottom="4.0dp">
+        <t.v.c.widget.ImageView android:id="@id/img_notice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="4.0dp" />
+        <t.v.c.widget.TextView android:textSize="12.0sp" android:textColor="@color/main_font_key_label_white_color" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:id="@id/txt_notice_message" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lineSpacingExtra="4.0dp" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="10.0dp">
+        <t.v.c.widget.MyButton android:textSize="8.0sp" android:textColor="@color/btn_txt_color_selector" android:layout_gravity="center" android:id="@id/btn_notice_confirm" android:background="@drawable/btn_key_large_selector" android:layout_width="52.0dp" android:layout_height="18.0dp" android:layout_marginTop="8.0dp" android:layout_marginBottom="6.0dp" android:layout_marginStart="15.0dp" android:layout_marginEnd="10.0dp" />
+        <t.v.c.widget.MyButton android:textSize="8.0sp" android:textColor="@color/btn_txt_color_selector" android:layout_gravity="center" android:id="@id/btn_notice_cancel" android:background="@drawable/btn_key_large_selector" android:layout_width="52.0dp" android:layout_height="18.0dp" android:layout_marginTop="8.0dp" android:layout_marginBottom="6.0dp" android:layout_marginStart="15.0dp" android:layout_marginEnd="10.0dp" />
+    </t.v.c.widget.LinearLayout>
+</t.v.c.widget.LinearLayout>

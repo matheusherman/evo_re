@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:orientation="vertical" android:tag="layout/activity_settings_detail_0" android:background="#1a1a23" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include android:id="@id/settings_detail_header" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true" layout="@layout/layout_header" />
+    <include android:id="@id/settings_detail_item" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/dp_6" android:layout_below="@id/settings_detail_header" layout="@layout/layout_settings_item" />
+    <include android:id="@id/settings_detail_bottom" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" layout="@layout/settings_detail_bottom" />
+</t.v.c.widget.MyRelativelayout>

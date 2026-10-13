@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.live.evo.widget.CircleProgressBar android:id="@id/update_monitor_progress" android:visibility="invisible" android:layout_width="@dimen/update_monitor_size" android:layout_height="@dimen/update_monitor_size" app:cpb_max="100" app:cpb_min="0" app:cpb_progress="0" app:cpb_progressbarColor="@color/item_normal_color" app:cpb_showText="true" app:cpb_textColor="@color/item_normal_color" app:cpb_textSize="@dimen/update_monitor_text_size" />
+    <TextView android:textSize="@dimen/update_monitor_text_size" android:textColor="@color/item_normal_color" android:id="@id/update_monitor_hint" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:maxLines="1" />
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:bottomLeftRadius="@dimen/recommend_item_radius" android:bottomRightRadius="@dimen/recommend_item_radius" />
+    <solid android:color="@color/recommend_epg_bg" />
+    <stroke android:width="0.0dp" android:color="@color/recommend_epg_bg" />
+</shape>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center"
+    android:orientation="horizontal"
+    android:id="@+id/kidsmode_pwd_fragment"
+    android:background="@drawable/kidsmode_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:id="@+id/kidsmode_pwd_layout"
+        android:background="@drawable/kidsmode_dialog_bg"
+        android:paddingLeft="24.0dip"
+        android:paddingTop="32.0dip"
+        android:paddingRight="24.0dip"
+        android:paddingBottom="20.0dip"
+        android:layout_width="@dimen/kids_dialog_width"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/kids_dialog_height">
+
+        <TextView
+            android:textSize="20.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/kidsmode_title"
+            android:id="@+id/kidsmode_pwd_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:text="@string/kidsmode_leave" />
+
+        <TextView
+            android:textSize="12.0sp"
+            android:textColor="@color/kidsmode_step"
+            android:id="@+id/kidsmode_pwd_tip_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginTop="20.0dip"
+            android:minHeight="@dimen/et_height"
+            android:text="@string/kidsmode_pwd_tip" />
+
+        <com.live.tvcinema.widget.PasswordInputView
+            android:id="@+id/kidsmode_pwd_et"
+            android:background="@null"
+            android:nextFocusLeft="@id/kidsmode_pwd_et"
+            android:nextFocusRight="@id/kidsmode_pwd_et"
+            android:nextFocusDown="@id/kidsmode_enter_btn"
+            android:layout_width="@dimen/kids_btn_width"
+            android:layout_height="@dimen/kids_pwd_height"
+            android:layout_marginTop="20.0dip"
+            android:cursorVisible="false"
+            android:maxLength="4"
+            android:inputType="number"
+            app:borderRadius="5.0dip"
+            app:borderWidth="1.0dip"
+            app:foucusColor="@color/kidsmode_pwd_focus_color"
+            app:passwordColor="@color/kidsmode_pwd_text_color"
+            app:passwordLength="4"
+            app:passwordWidth="3.0dip"
+            app:unfoucusColor="@color/kidsmode_pwd_stroke_color" />
+
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/kidsmode_btn_text"
+            android:gravity="center"
+            android:id="@+id/kidsmode_enter_btn"
+            android:background="@drawable/kidsmode_btn_selector"
+            android:nextFocusUp="@id/kidsmode_pwd_et"
+            android:nextFocusDown="@id/kidsmode_no_btn"
+            android:layout_width="@dimen/kids_btn_width"
+            android:layout_height="@dimen/kids_btn_height"
+            android:layout_marginTop="15.0dip"
+            android:text="@string/kidsmode_leave" />
+
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/kidsmode_btn_text"
+            android:gravity="center"
+            android:id="@+id/kidsmode_no_btn"
+            android:background="@drawable/kidsmode_btn_selector"
+            android:visibility="visible"
+            android:nextFocusUp="@id/kidsmode_enter_btn"
+            android:nextFocusDown="@id/kidsmode_forgetpwd_btn"
+            android:layout_width="@dimen/kids_btn_width"
+            android:layout_height="@dimen/kids_btn_height"
+            android:layout_marginTop="25.0dip"
+            android:text="@string/no" />
+
+        <TextView
+            android:textSize="14.0sp"
+            android:textColor="@color/kidsmode_enter_selector"
+            android:id="@+id/kidsmode_forgetpwd_btn"
+            android:background="@drawable/load_register_selector"
+            android:nextFocusUp="@id/kidsmode_no_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20.0dip"
+            android:text="@string/kidsmode_forgetpwd" />
+    </LinearLayout>
+</LinearLayout>

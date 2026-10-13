@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="16.0sp" android:textColor="#ffcccccc" android:gravity="center_vertical" android:id="@id/txt_epg_now" android:layout_width="46.0dp" android:layout_height="26.0dp" android:layout_alignParentLeft="true" />
+    <t.v.c.widget.TextView android:textSize="16.0sp" android:textColor="#ffcccccc" android:ellipsize="marquee" android:gravity="center_vertical" android:id="@id/txt_epg_name" android:layout_width="match_parent" android:layout_height="26.0dp" android:layout_marginLeft="3.0dp" android:singleLine="true" android:layout_toLeftOf="@id/lv_playlist" android:layout_toRightOf="@id/lv_playlist" android:marqueeRepeatLimit="marquee_forever" />
+    <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="@color/pale_lime_green" android:gravity="center" android:id="@id/txt_epg_ts" android:layout_width="33.0dp" android:layout_height="26.0dp" android:layout_alignParentRight="true" />
+</t.v.c.widget.MyRelativelayout>

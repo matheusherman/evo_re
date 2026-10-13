@@ -2,7 +2,8 @@ package com.live.evo.fragment.login.presenter
 
 import android.content.Context
 import android.text.TextUtils
-import com.foxivid.baselib.media.MediaRepository
+import com.foxivid.baselib.user.AuthResult
+import com.foxivid.baselib.user.UserManager
 import com.live.evo.model.AccountBean
 import com.live.evo.util.CommonUtils
 import com.live.evo.util.ModelHelper
@@ -15,14 +16,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 
-/** Resultado padrão dos fluxos de autenticação do SDK: (sucesso, código, mensagem). Original: `u<Boolean,Integer,String>` (kotlin.Triple-like). */
-data class AuthResult(val success: Boolean, val code: Int?, val message: String?)
+// Resultado padrão dos fluxos de autenticação do SDK: Triple(sucesso, código, mensagem) = `AuthResult` de com.foxivid.baselib.user.
 
 /**
- * Presenter de login. Fluxo de [login]: view.showLoading(); coleta `MediaRepository.y0(userId, password)` (Flow<AuthResult>):
+ * Presenter de login. Fluxo de [login]: view.showLoading(); coleta `UserManager.login(userId, password)` (Flow<AuthResult>):
  * - erro → loga "Auth error" e na main mostra `auth_fail_title[<msg>]` via view.showError;
  * - resultado → hideLoading; sucesso → onLoginSuccess; código -3 → onNetworkError; senão showError("<msg>(<code>)").
- * [loginByRenewalCode]: coleta `MediaRepository.w0(code)` e, se sucesso + `MediaRepository.r0(code)` (ver TODO), trata como sucesso;
+ * [loginByRenewalCode]: coleta `UserManager.loginByCode(code)` e, se sucesso, `view.P()` quando `isRenewCodeFirstLogin(code)` senão `view.c()`;
  * mesmas regras de erro.
  *
  * Original: com/live/evo/fragment/login/presenter/e.java (nome real: LoginPresenter)
@@ -39,14 +39,14 @@ class LoginPresenter : LoginPresenterContract {
         val v = view ?: return
         v.showLoading()
         io.launch {
-            MediaRepository.loginWithPassword(userId, password)   // y0(userID, password)
+            UserManager.login(userId, password)   // InteractionUtils.y0 -> f.g1(userID, password)
                 .catch { e -> logger.error("Auth error", e); withContext(Dispatchers.Main) { view?.showError(CommonUtils.string(R.string.auth_fail_title) + "[" + e.message + "]") } }
                 .collect { r ->
                     withContext(Dispatchers.Main) {
                         view?.hideLoading()
-                        if (r.success) view?.onLoginSuccess()
-                        else if (r.code == -3) view?.onNetworkError()
-                        else view?.showError("${r.message}(${r.code})")
+                        if (r.first) view?.onLoginSuccess()
+                        else if (r.second == -3) view?.onNetworkError()
+                        else view?.showError("${r.third}(${r.second})")
                     }
                 }
         }
@@ -54,13 +54,25 @@ class LoginPresenter : LoginPresenterContract {
 
     override fun loadSavedAccount() { view?.onSavedAccount(ModelHelper.savedAccount()) } // s0.p()
 
+    /**
+     * Original: s(Context, String) — corrotina `LoginPresenter$loginByRenewalCode$1`.
+     * `InteractionUtils.w0(code)` = `UserManager.loginByCode`; sucesso → se `InteractionUtils.r0(code)` (= `UserManager.isRenewCodeFirstLogin`)
+     * chama `view.P()` (primeiro login com esse código) senão `view.c()`; -3 → `d()`; senão `J("<msg>(<code>)")`.
+     */
     override fun loginByRenewalCode(context: Context, code: String) {
         val v = view ?: return
         v.showLoading()
         io.launch {
-            // obj = MediaRepository.w0(code)  (suspend → Flow<AuthResult>)
-            // sucesso: if (MediaRepository.r0(code)) { ... }   (corpo exato com decompilação incorreta — TODO)
-            TODO("decompilação incorreta em LoginPresenter\$loginByRenewalCode\$1.invokeSuspend: ver presenter/e.java")
+            UserManager.loginByCode(code)
+                .catch { e -> v.hideLoading(); logger.error("Auth error", e); withContext(Dispatchers.Main) { view?.showError(CommonUtils.string(R.string.auth_fail_title) + "[" + e.message + "]") } }
+                .collect { r ->
+                    withContext(Dispatchers.Main) {
+                        v.hideLoading()
+                        if (r.first) { if (UserManager.isRenewCodeFirstLogin(code)) v.onP() else v.onLoginSuccess() }
+                        else if (r.second == -3) view?.onNetworkError()
+                        else view?.showError("${r.third}(${r.second})")
+                    }
+                }
         }
     }
 }
@@ -110,7 +122,7 @@ class RechargePresenter : BasePresenter<RechargeView> {
 
 /**
  * Presenter da recarga "mini": mesmo [loginWithAccount] mas com mensagem de falha
- * `recharge_fail + "\n" + msg` quando não há mensagem limpa; [loadRenewCode] devolve `MediaRepository.Z()`
+ * `recharge_fail + "\n" + msg` quando não há mensagem limpa; [loadRenewCode] devolve `UserManager.getUsername()` (f.D0()) ou `lastUsername` (L())
  * (ou `L()` se vazio) à view.
  * Original: fragment/login/presenter/i.java
  */
@@ -130,41 +142,97 @@ class RechargeMiniPresenter : BasePresenter<RechargeMiniView> {
         }
     }
     /** Original: z() */
-    fun loadRenewCode() { view?.onRenewCode(MediaRepository.renewCodeOrDefault()) }
+    fun loadRenewCode() { view?.onRenewCode(UserManager.getUsername().ifEmpty { UserManager.getLocalSessionInfo()?.lastUsername ?: "" }) }
 }
 
 /**
- * Presenter de cadastro por e-mail (RegisterEmailPresenter.kt). [requestVerifyCode]: se accountLoginType == 1 →
- * `MediaRepository.t(account.d(), email, "REGISTER")` (pelo telefone), senão `MediaRepository.s(email, "REGISTER")`;
- * resultado: hideLoading; sucesso → onCodeSent; -3 → onNetworkError; senão onCodeError(msg, code|""). Exceção → showError(msg, "").
- * [register]: segue o mesmo padrão com onRegistered no sucesso.
+ * Presenter de cadastro por e-mail. [requestVerifyCode] (corrotina `RegisterEmailPresenter$verify$1`, l.b):
+ * se accountLoginType == 1 → `sendCaptcha(contact = email, digitalCode = account.d(), "REGISTER")` (InteractionUtils.t(ddi, email, tipo)),
+ * senão `sendCaptcha(email, "", "REGISTER")` (InteractionUtils.s). Resultado: hideLoading; sucesso → onCodeSent (`h()`); -3 → onNetworkError;
+ * senão showError(msg, code). Exceção → hideLoading + showError(msg, "").
+ * [register] (`RegisterEmailPresenter$register$1`, l.a): `linkContact(email, password, verifyCode, "", "")` (InteractionUtils.t0 → s0 → f.b1);
+ * sucesso → onRegistered (`c()`); -3 → onNetworkError; senão onCodeError(msg, code) (`A()`).
+ * Nota: os nomes dos callbacks `c()`/`h()` no original são onRegistered/onCodeSent respectivamente.
  * Original: fragment/login/presenter/l.java
  */
 class RegisterEmailPresenter : RegisterEmailPresenterContract {
     private var view: RegisterEmailView? = null
+    private val io = CoroutineScope(Dispatchers.IO)
     override fun attach(view: RegisterEmailView) { this.view = view }
     override fun detach() { view = null }
+
     override fun requestVerifyCode(email: String, accountLoginType: Int, account: AccountBean?) {
-        TODO("corrotina RegisterEmailPresenter\$sendVerifyCode (presenter/l.java b): MediaRepository.t/s(...REGISTER...)")
+        io.launch {
+            val flow = if (accountLoginType == 1) UserManager.sendCaptcha(email, account?.d() ?: "", "REGISTER")
+                       else UserManager.sendCaptcha(email, "", "REGISTER")
+            flow.catch { e -> withContext(Dispatchers.Main) { view?.hideLoading(); view?.showError(e.message ?: "", "") } }
+                .collect { r ->
+                    withContext(Dispatchers.Main) {
+                        view?.hideLoading()
+                        if (r.first) view?.onCodeSent()
+                        else if (r.second == -3) view?.onNetworkError()
+                        else view?.showError(r.third ?: "", r.second?.toString() ?: "")
+                    }
+                }
+        }
     }
+
     override fun register(email: String, accountLoginType: Int, verifyCode: String, password: String, account: AccountBean?) {
-        TODO("corrotina RegisterEmailPresenter\$register (presenter/l.java a): MediaRepository.register(email, password, verifyCode)")
+        io.launch {
+            UserManager.linkContact(email, password, verifyCode, "", "")
+                .catch { e -> withContext(Dispatchers.Main) { view?.hideLoading(); view?.showError(e.message ?: "", "") } }
+                .collect { r ->
+                    withContext(Dispatchers.Main) {
+                        view?.hideLoading()
+                        if (r.first) view?.onRegistered()
+                        else if (r.second == -3) view?.onNetworkError()
+                        else view?.onCodeError(r.third ?: "", r.second?.toString() ?: "")
+                    }
+                }
+        }
     }
 }
 
 /**
- * Presenter de reset de senha (ResetPasswordPresenter.kt): mesma estrutura do cadastro, com tipo "FORGET"
- * no pedido de código e [ResetPasswordView.onResetSuccess] ao concluir.
+ * Presenter de reset de senha: mesma estrutura do cadastro, com tipo "FORGET" no pedido de código (`ResetPasswordPresenter$verify$1`)
+ * e `UserManager.resetPassword(email, "", password, verifyCode)` (InteractionUtils.F0) em `ResetPasswordPresenter$reset$1`;
+ * sucesso → onResetSuccess (`G()`); erros do servidor → showError(msg, code).
  * Original: fragment/login/presenter/r.java
  */
 class ResetPasswordPresenter : ResetPasswordPresenterContract {
     private var view: ResetPasswordView? = null
+    private val io = CoroutineScope(Dispatchers.IO)
     override fun attach(view: ResetPasswordView) { this.view = view }
     override fun detach() { view = null }
+
     override fun requestVerifyCode(email: String, accountLoginType: Int, account: AccountBean?) {
-        TODO("MediaRepository.t/s(..., \"FORGET\")")
+        io.launch {
+            val flow = if (accountLoginType == 1) UserManager.sendCaptcha(email, account?.d() ?: "", "FORGET")
+                       else UserManager.sendCaptcha(email, "", "FORGET")
+            flow.catch { e -> withContext(Dispatchers.Main) { view?.hideLoading(); view?.showError(e.message ?: "", "") } }
+                .collect { r ->
+                    withContext(Dispatchers.Main) {
+                        view?.hideLoading()
+                        if (r.first) view?.onCodeSent()
+                        else if (r.second == -3) view?.onNetworkError()
+                        else view?.showError(r.third ?: "", r.second?.toString() ?: "")
+                    }
+                }
+        }
     }
+
     override fun resetPassword(verifyCode: String, email: String, password: String, accountLoginType: Int, phonePreCode: String, countryCode: String) {
-        TODO("MediaRepository.resetPassword(verifyCode, email, password) — presenter/r.java a")
+        io.launch {
+            UserManager.resetPassword(email, "", password, verifyCode)
+                .catch { e -> withContext(Dispatchers.Main) { view?.hideLoading(); view?.showError(e.message ?: "", "") } }
+                .collect { r ->
+                    withContext(Dispatchers.Main) {
+                        view?.hideLoading()
+                        if (r.first) view?.onResetSuccess()
+                        else if (r.second == -3) view?.onNetworkError()
+                        else view?.showError(r.third ?: "", r.second?.toString() ?: "")
+                    }
+                }
+        }
     }
 }

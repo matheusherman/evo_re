@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:orientation="vertical" android:id="@id/item_match_event" android:layout_width="102.0dp" android:layout_height="241.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.FrameLayout android:id="@id/img_flt" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="2.0dp" android:layout_marginBottom="2.0dp" android:layout_marginStart="2.0dp" android:layout_marginEnd="2.0dp">
+        <View android:background="#73ffffff" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <t.v.c.widget.ImageView android:id="@id/img" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="fitXY" />
+    </t.v.c.widget.FrameLayout>
+    <t.v.c.widget.TextView android:textSize="12.0sp" android:textColor="@color/white" android:ellipsize="end" android:id="@id/name_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3.0dp" android:maxLines="1" android:layout_below="@id/img_flt" android:layout_marginStart="2.0dp" android:layout_marginEnd="2.0dp" />
+</t.v.c.widget.MyRelativelayout>

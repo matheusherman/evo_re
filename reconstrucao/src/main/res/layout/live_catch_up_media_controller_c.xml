@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/livecatchupmediacontroller_rl_parent" android:background="@android:color/transparent" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton android:id="@id/mediacontroller_play_pause" android:background="@color/transparent" android:layout_width="@dimen/sm_100" android:layout_height="@dimen/sm_100" android:src="@drawable/play_icon" android:scaleType="fitXY" android:layout_centerInParent="true" />
+    <LinearLayout android:orientation="horizontal" android:id="@id/livecatchupmediacontroller_ll_main_layout" android:background="#ff262626" android:layout_width="match_parent" android:layout_height="@dimen/sm_150" android:layout_alignParentBottom="true">
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/channel_logo" android:layout_width="@dimen/sm_106" android:layout_height="@dimen/sm_66" android:layout_marginStart="@dimen/sm_26" />
+        <LinearLayout android:orientation="vertical" android:paddingTop="@dimen/sm_10" android:layout_width="match_parent" android:layout_height="match_parent" android:paddingEnd="@dimen/sm_26" android:layout_marginStart="@dimen/sm_13">
+            <TextView android:textSize="@dimen/sm_24" android:textColor="@color/color_6c" android:id="@id/channel_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="@dimen/sm_83" />
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/sm_8">
+                <TextView android:textSize="@dimen/sm_16" android:textColor="@color/color_6c" android:id="@id/mediacontroller_time_current" android:layout_width="@dimen/sm_70" android:layout_height="wrap_content" android:textAlignment="textEnd" />
+                <SeekBar android:id="@id/mediacontroller_seekbar" android:focusable="true" android:layout_width="0.0dp" android:layout_height="wrap_content" android:max="1000" android:layout_weight="1.0" style="@style/CatchUp_MC_SeekBar" />
+                <TextView android:textSize="@dimen/sm_16" android:textColor="@color/color_6c" android:id="@id/mediacontroller_time_total" android:layout_width="@dimen/sm_70" android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/sm_83" android:layout_marginTop="@dimen/sm_8" android:layout_marginRight="@dimen/sm_83">
+                <LinearLayout android:orientation="horizontal" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_weight="1.0">
+                    <TextView android:textSize="@dimen/sm_16" android:textColor="@color/color_6c" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/current" android:singleLine="true" />
+                    <com.live.evo.widget.MarqueeTextView android:textSize="@dimen/sm_16" android:textColor="@color/color_6c" android:ellipsize="marquee" android:id="@id/current_program" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+                </LinearLayout>
+                <LinearLayout android:gravity="end" android:orientation="horizontal" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/sm_5" android:layout_weight="1.0">
+                    <TextView android:textSize="@dimen/sm_16" android:textColor="@color/color_6c" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/next" android:singleLine="true" />
+                    <com.live.evo.widget.MarqueeTextView android:textSize="@dimen/sm_16" android:textColor="@color/color_6c" android:ellipsize="marquee" android:id="@id/next_program" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/sm_5" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/sm_16">
+                <ImageView android:src="@drawable/ok_icon2" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:text="@string/hint_play_pause" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/fast_rewind_icon" android:layout_marginStart="@dimen/sm_30" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:text="@string/hint_fast_rewind" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/fast_forward_icon" android:layout_marginStart="@dimen/sm_30" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:text="@string/hint_fast_forward" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/info_icon" android:layout_marginStart="@dimen/sm_30" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:text="@string/hint_info" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/return_icon" android:layout_marginStart="@dimen/sm_30" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:text="@string/hint_return_to_epg" style="@style/CatchUp_MC_HintText" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView android:ellipsize="marquee" android:id="@id/mediacontroller_file_name" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_marginStart="5.0dp" style="@style/PureMediaController_Text" />
+    </LinearLayout>
+</RelativeLayout>

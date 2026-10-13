@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.recyclerview.widget.RecyclerView android:id="@id/userlistdlg_rv_userlist" android:background="@drawable/userlist_bg" android:layout_width="@dimen/width_600dp" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/userlist_left" android:layout_marginTop="@dimen/userlist_top" android:maxHeight="@dimen/userlist_height" />
+</LinearLayout>

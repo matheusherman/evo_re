@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:id="@+id/upgradepopviewl_ll_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10.0dip"
+    android:layout_alignParentBottom="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/upgradepopviewl_tv_new_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/text_24_f2f2f2" />
+
+    <com.live.tvcinema.widget.RoundProgressView
+        android:id="@+id/upgradepopviewl_pv_progress"
+        android:layout_width="38.0dip"
+        android:layout_height="38.0dip" />
+</LinearLayout>

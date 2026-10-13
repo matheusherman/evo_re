@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/leftmenulistitem_rl_parent" android:background="@drawable/leftmenu_selector" android:layout_width="260.0dp" android:layout_height="60.0dp" android:layout_marginLeft="1.0dp" android:minHeight="@dimen/program_item_height" android:elevation="5.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:duplicateParentState="true" android:layout_width="match_parent" android:layout_height="55.0dp">
+        <ImageView android:layout_gravity="left|center" android:id="@id/leftmenulistitem_iv_icons" android:layout_width="@dimen/left_menu_icon_width" android:layout_height="@dimen/left_menu_icon_width" android:src="@drawable/icon_transport" />
+        <com.live.evo.widget.MarqueeTextView android:textSize="23.0dp" android:textColor="@color/leftmenu_color_selector" android:ellipsize="marquee" android:gravity="left|center" android:id="@id/leftmenulistitem_mtv_item_name" android:paddingLeft="10.0dp" android:duplicateParentState="true" android:layout_width="match_parent" android:layout_height="match_parent" android:singleLine="true" />
+    </LinearLayout>
+    <TextView android:textSize="9.0sp" android:textColor="@color/color_eeeeee" android:gravity="center|top" android:id="@id/leftmenu_tv_flag" android:background="@drawable/flag_bg" android:visibility="gone" android:layout_width="12.0dp" android:layout_height="12.0dp" android:layout_marginLeft="25.0dp" android:layout_marginTop="5.0dp" android:text="" android:layout_alignParentTop="true" />
+</RelativeLayout>

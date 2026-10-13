@@ -13,7 +13,8 @@ import android.util.Printer
 import android.view.Choreographer
 import android.view.View
 import android.view.ViewGroup
-import com.foxivid.baselib.metric.monitor.StreamMonitor
+import com.foxivid.baselib.bot.TelegramBot
+import com.foxivid.baselib.metric.monitor.PlayerMonitor
 import com.foxivid.baselib.player.PlayerManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import org.slf4j.Logger
@@ -108,16 +109,17 @@ object AppMonitor {
                         val canonicalName = act?.javaClass?.canonicalName
                         val focusView = describeView(act?.currentFocus)
                         val topView = describeView(findTopVisibleView(act?.window?.decorView))
-                        // TODO: nomes reais — original x1/f1/lb/widget/videoview/k.g() e metric/monitor/f.i()/.h()
-                        val playing = PlayerManager.current() != null
-                        val stream = StreamMonitor.currentStream()
-                        val streamName = stream?.s()?.name ?: ""
-                        val streamId = stream?.streamId ?: ""
-                        val server = StreamMonitor.currentServer()
-                        val serverIdx = server?.d() ?: -1
-                        val serverName = server?.j() ?: ""
+                        // Original: widget/videoview/k.g() = getPlayer("main_player") (≠ null ⇒ tocando);
+                        // metric/monitor/f.i() = zapping stat atual (tf.d); f.h() = monitor stat atual (tf.c).
+                        val playing = PlayerManager.mainPlayer() != null
+                        val zapping = PlayerMonitor.currentZappingStat()
+                        val streamName = if (zapping != null) runCatching { zapping.playType.name }.getOrDefault("") else ""
+                        val streamId = zapping?.streamId ?: ""
+                        val monitor = PlayerMonitor.currentMonitorStat()
+                        val blockIdx = monitor?.blockIndexCounter ?: -1 // tf.c.d()
+                        val lastBlock = monitor?.lastBlockName ?: ""    // tf.c.j()
                         logger.warn(
-                            "FrameDropMonitor Dropped frames[$dropped] [$playing][$streamName/$streamId/$serverName($serverIdx)] [$canonicalName] tv[$topView] fv[$focusView]",
+                            "FrameDropMonitor Dropped frames[$dropped] [$playing][$streamName/$streamId/$lastBlock($blockIdx)] [$canonicalName] tv[$topView] fv[$focusView]",
                         )
                     }
                 }
@@ -205,16 +207,24 @@ object AppMonitor {
     /** Original: `c.s(int)`. */ fun setMainThreadBlockLogThreshold(milliSeconds: Int) { gtMainThreadBlockIntervalMilliSecondsLog = milliSeconds }
 
     /**
-     * Executa `Looper.loop()` indefinidamente no main thread — padrão para "engolir" exceções do
-     * main thread e continuar rodando.
-     * Original: `c.u()` — TODO("não decompilado: jadx 'Code decompiled incorrectly'; há um handler
-     * catch-all que reentra no loop; se a exceção é logada não é visível")
+     * Executa `Looper.loop()` indefinidamente no main thread — "engole" exceções do main thread e continua.
+     * Original: `c.u()` (confirmado no fallback do jadx). A cada `Throwable`: loga "main thread encounters
+     * error:<stack>", envia ao bot ("UI thread failure\n<stack>" — `bot.a.o` = feedback), mostra toast longo
+     * ("UI thread failure\n<message>") e, se a mensagem contém "Unable to start activity", mata o processo e sai.
      */
     private fun protectedMainLoop() {
         while (true) {
             try {
                 Looper.loop()
-            } catch (_: Throwable) {
+            } catch (t: Throwable) {
+                val stack = StackTraceUtils.toString(t) // util/q.d
+                logger.error(String.format("main thread encounters error:%s", stack))
+                TelegramBot.sendFeedback(String.format("UI thread failure\n%s", stack))
+                ToastUtils.showLong(String.format("UI thread failure\n%s", t.message))
+                if (t.message?.contains("Unable to start activity") == true) {
+                    Process.killProcess(Process.myPid())
+                    return
+                }
             }
         }
     }

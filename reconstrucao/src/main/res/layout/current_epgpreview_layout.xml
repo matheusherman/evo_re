@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@color/bottom_epg_layout_bg"
+    android:padding="10.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/iv_epg_icon"
+        android:layout_width="100.0dip"
+        android:layout_height="100.0dip" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:gravity="bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="35.0dip"
+            android:layout_marginLeft="70.0dip"
+            android:layout_marginRight="100.0dip">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12.0dip"
+                android:layout_toLeftOf="@id/tv_current_time">
+
+                <TextView
+                    android:textSize="28.0sp"
+                    android:textColor="@color/current_epg_channel_color"
+                    android:ellipsize="marquee"
+                    android:id="@+id/tv_epg_channel_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="500.0dip"
+                    android:singleLine="true" />
+
+                <ImageView
+                    android:id="@+id/epg_playback"
+                    android:background="@drawable/play_back"
+                    android:visibility="gone"
+                    android:layout_width="22.0dip"
+                    android:layout_height="22.0dip"
+                    android:layout_marginLeft="15.0dip"
+                    android:layout_marginTop="11.0dip"
+                    android:layout_toRightOf="@id/tv_epg_channel_name"
+                    android:layout_centerHorizontal="true" />
+
+                <ImageView
+                    android:id="@+id/epg_favorite"
+                    android:background="@drawable/mepg_favorited_selector"
+                    android:visibility="gone"
+                    android:layout_width="23.0dip"
+                    android:layout_height="19.0dip"
+                    android:layout_marginLeft="15.0dip"
+                    android:layout_marginTop="11.0dip"
+                    android:layout_toRightOf="@id/epg_playback"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <TextView
+                android:textSize="17.0dip"
+                android:textColor="@color/white"
+                android:ellipsize="marquee"
+                android:gravity="bottom"
+                android:id="@+id/tv_current_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3.0dip"
+            android:layout_marginRight="30.0dip">
+
+            <TextView
+                android:textSize="17.0dip"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/tv_current_epg_start"
+                android:layout_width="70.0dip"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="0.0dip"
+                android:layout_height="5.0dip"
+                android:layout_weight="1.0"
+                style="@style/ProgressBar_Mini" />
+
+            <TextView
+                android:textSize="17.0dip"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/tv_current_epg_stop"
+                android:layout_width="70.0dip"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="70.0dip"
+            android:layout_marginRight="100.0dip">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5.0dip"
+                android:layout_weight="1.0">
+
+                <TextView
+                    android:textSize="22.0sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/current"
+                    android:singleLine="true" />
+
+                <com.live.tvcinema.widget.MarqueeTextView
+                    android:textSize="22.0sp"
+                    android:textColor="@color/white"
+                    android:ellipsize="marquee"
+                    android:id="@+id/tv_current_epg_name"
+                    android:focusable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="4.0dip"
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:layout_weight="1.0">
+
+                <TextView
+                    android:textSize="22.0sp"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next"
+                    android:singleLine="true" />
+
+                <com.live.tvcinema.widget.MarqueeTextView
+                    android:textSize="22.0sp"
+                    android:textColor="@color/white"
+                    android:ellipsize="marquee"
+                    android:id="@+id/tv_next_epg_name"
+                    android:focusable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4.0dip"
+                    android:singleLine="true"
+                    android:marqueeRepeatLimit="marquee_forever" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="55.0dip"
+            android:layout_marginLeft="70.0dip"
+            android:layout_marginTop="5.0dip"
+            android:layout_marginRight="30.0dip">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/lly_left"
+                android:focusable="true"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginBottom="15.0dip"
+                android:layout_weight="45.0">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:src="@drawable/right_icon_light"
+                    android:contentDescription="@string/key_hint_left"
+                    android:rotation="180.0"
+                    style="@style/keyRemindImageNoLeft" />
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:src="@drawable/right_icon_light"
+                    android:contentDescription="@string/key_hint_right"
+                    style="@style/keyRemindImage" />
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:text="@string/function_selection"
+                    android:singleLine="true"
+                    style="@style/keyRemindText2" />
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15.0dip"
+                    android:src="@drawable/ok_icon_ligth"
+                    android:contentDescription="@string/key_hint_ok"
+                    style="@style/keyRemindImage" />
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:text="@string/key_hint_ok"
+                    style="@style/keyRemindText2" />
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:id="@+id/menu_pip_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_gravity="center"
+                        android:src="@drawable/menu_icon2"
+                        android:contentDescription="@string/key_hint_menu"
+                        style="@style/keyRemindImage" />
+
+                    <TextView
+                        android:layout_gravity="center"
+                        android:text="@string/pip_settings"
+                        android:drawablePadding="2.0dip"
+                        style="@style/keyRemindText2" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:clickable="true"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40.0dip"
+                android:layout_weight="55.0">
+
+                <androidx.leanback.widget.HorizontalGridView
+                    android:id="@+id/currentepg_menu_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginTop="5.0dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

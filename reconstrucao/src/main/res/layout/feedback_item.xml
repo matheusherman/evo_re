@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/feedbackitem_ll_parent" android:layout_width="match_parent" android:layout_height="40.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="14.0sp" android:textColor="@color/feedbackitem_tv_numbers_tc" android:gravity="center" android:id="@id/feedbackitem_tv_numbers" android:background="@drawable/feedback_num_bg" android:layout_width="@dimen/feedback_num_bg_width" android:layout_height="@dimen/feedback_num_bg_width" />
+    <TextView android:textSize="20.0sp" android:textColor="@color/color_feedback" android:ellipsize="marquee" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:id="@id/feedbackitem_tv_question" android:layout_width="500.0dp" android:layout_height="wrap_content" android:layout_marginLeft="20.0dp" android:maxWidth="500.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+</LinearLayout>

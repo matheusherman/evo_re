@@ -211,6 +211,8 @@ class AppUserManager private constructor() {
     /** Original: o() */ fun lockKey(): String? = lockKey
     /** Original: q() → EpgRepository.D() (modo de boas-vindas) */ fun welcomeMode(): Int = EpgRepository.welcomeMode()
     /** Original: s() */ fun pipSize(): Int = pipSize
+    /** Pede código de login por telefone; o helper original (`w1.a(l5.a)`) é vazio. Original: p(l5.a) */
+    fun requestLoginCode(@Suppress("UNUSED_PARAMETER") listener: Any?) {}
     /** Original: t(String) — QR code em bitmap. */ fun qrBitmap(text: String): Bitmap? = qrHelper.create(text)
     /** Original: v() */ fun isDebug(): Boolean = BaseLibConfig.isDebug()
     /** Original: w() — session id se "show_sessionid" (padrão true). */ fun sessionIdForDisplay(): String = if (getBoolean("show_sessionid", true)) mSessionId else ""

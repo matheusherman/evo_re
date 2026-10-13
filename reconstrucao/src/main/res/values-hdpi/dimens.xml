@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="load_activity_version_name_margin_top">64.0dp</dimen>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.live.tvcinema.widget.BubbleView
+        android:id="@+id/bubble_subject_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:arrowDirection="1"
+        app:bubbleBackColor="@color/subject_bubble_color"
+        app:bubbleHeight="120.0dip"
+        app:bubblePaintX="50.0dip"
+        app:bubbleWidth="240.0dip" />
+
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/color_text_base"
+        android:gravity="center"
+        android:id="@+id/bubble_subject_text"
+        android:layout_width="240.0dip"
+        android:layout_height="120.0dip"
+        android:text="@string/match_team_long_press_edit"
+        android:lineSpacingExtra="8.0dip" />
+</RelativeLayout>

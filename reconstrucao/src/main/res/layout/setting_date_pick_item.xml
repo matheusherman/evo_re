@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="horizontal" android:background="@drawable/picker_select_item" android:layout_width="match_parent" android:layout_height="64.0dp" android:minHeight="64.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true">
+        <t.v.c.widget.TextView android:textSize="8.0sp" android:id="@id/picker_item_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12.0dp" />
+    </RelativeLayout>
+</RelativeLayout>

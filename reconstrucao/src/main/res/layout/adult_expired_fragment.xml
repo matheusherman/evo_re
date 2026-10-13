@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/adultexpiredf_rl_parent" android:background="@drawable/login_bg" android:padding="30.0dp" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="40.0sp" android:textColor="@color/adultexpiredf_tv_title_tc" android:id="@id/adultexpiredf_tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="210.0dp" android:text="@string/your_account_is_expired" android:layout_centerHorizontal="true" />
+    <TextView android:textSize="20.0sp" android:textColor="@color/adultexpiredf_tv_remind_tc" android:gravity="center" android:id="@id/adultexpiredf_tv_remind" android:layout_width="1100.0dp" android:layout_height="wrap_content" android:layout_marginTop="30.0dp" android:layout_below="@id/adultexpiredf_tv_title" android:layout_centerHorizontal="true" />
+    <RelativeLayout android:gravity="center" android:layout_width="match_parent" android:layout_height="80.0dp" android:layout_marginBottom="60.0dp" android:layout_alignParentBottom="true">
+        <com.live.evo.widget.BaseButton android:textSize="@dimen/login_size" android:textColor="@color/adultexpiredf_btn_exit_tc" android:id="@id/adultexpiredf_btn_exit" android:background="@drawable/btn_bg_adult_selector" android:layout_width="200.0dp" android:layout_height="60.0dp" android:text="@string/exit" />
+        <com.live.evo.widget.BaseButton android:textSize="@dimen/login_size" android:textColor="@color/adultexpiredf_btn_tologin_tc" android:id="@id/adultexpiredf_btn_tologin" android:background="@drawable/btn_bg_adult_selector" android:layout_width="200.0dp" android:layout_height="60.0dp" android:layout_marginLeft="30.0dp" android:text="@string/to_login" android:layout_toRightOf="@id/adultexpiredf_btn_exit" />
+    </RelativeLayout>
+</RelativeLayout>

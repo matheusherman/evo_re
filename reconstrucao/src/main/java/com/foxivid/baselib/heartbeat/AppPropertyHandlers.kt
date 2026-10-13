@@ -1,12 +1,13 @@
 package com.foxivid.baselib.heartbeat
 
+import com.foxivid.baselib.network.HeaderInterceptor
+import com.foxivid.baselib.media.EpgManager
 import com.foxivid.baselib.ad.AdManager
 import com.foxivid.baselib.bot.TelegramBot
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.feedback.LogCatHelper
 import com.foxivid.baselib.log.RemoteLogger
 import com.foxivid.baselib.marquee.MarqueeManager
-import com.foxivid.baselib.media.EpgRepository
 import com.foxivid.baselib.metric.MetricReporter
 import com.foxivid.baselib.user.UserManager
 import com.foxivid.baselib.util.AppAttrUtils
@@ -209,7 +210,7 @@ internal object AppPropertyHandlers {
         map["email_be_blocked_host_list"] = ValueCallback {                                          // f$x
             hb.emailBeBlockedHosts = if (it.isEmpty()) HashSet() else it.split(",").mapTo(HashSet()) { s -> s.trim() }
         }
-        map["is_epg_enable"] = ValueCallback { if (it.isNotEmpty()) EpgRepository.setEpgEnable(it.toBoolean()) } // f$y
+        map["is_epg_enable"] = ValueCallback { if (it.isNotEmpty()) EpgManager.setEnable(it.toBoolean()) } // f$y
         map["email_host_block_tip"] = ValueCallback { hb.blockEmailHostTip = it }                    // f$z
         map["start_up_ad_count_num"] = ValueCallback {                                               // f$a0
             if (it.isEmpty()) return@ValueCallback
@@ -234,7 +235,7 @@ internal object AppPropertyHandlers {
         map["is_report_client_detail_log"] = ValueCallback { if (it.isNotEmpty()) hb.isReportClientDetail = it.toBoolean() } // f$k0
         map["is_telegram_bot_enable"] = ValueCallback { if (it.isNotEmpty()) TelegramBot.setEnable(it.toBoolean()) }         // f$l0
         map["is_remind_after_plan_expired"] = ValueCallback {                                        // f$m0
-            try { UserManager.setRemindAfterPlanExpired(it.toInt()) } catch (t: Throwable) { log.error("set remind flag for expired plan failure", t) }
+            try { UserManager.setRemindAfterExpired(it.toInt()) } catch (t: Throwable) { log.error("set remind flag for expired plan failure", t) }
         }
         map["is_remind_plan_not_bind_username"] = ValueCallback {                                    // f$n0
             try { UserManager.setRemindPlanNotBindUsername(it.toInt()) } catch (t: Throwable) { log.error("set remind flag for plan not bind username failure", t) }
@@ -312,7 +313,7 @@ internal object AppPropertyHandlers {
         }
         map["feedback_exe_did"] = ValueCallback {                                                    // f$l1
             // Gatilho remoto: o servidor lista dids; se o deste aparelho estiver no texto, captura logcat e envia.
-            if (it.isNotEmpty() && it.contains(AppAttrUtils.did())) {
+            if (it.isNotEmpty() && it.contains(HeaderInterceptor.deviceId())) {
                 LogCatHelper.startLogAndUpload(hb.feedbackLogcatExecuteDuration) { ok, code ->
                     log.info("feedback silent call $ok with $code")
                 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.FrameLayout android:background="@color/black" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.MyRelativelayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <t.v.c.widget.videoview.PlayerView android:layout_gravity="center" android:id="@id/video_view" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <t.v.c.widget.LinearLayout android:orientation="vertical" android:id="@id/bottom_menu" android:background="@color/tv_guide_hide_nav_bg_color" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+            <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/dp_10" android:layout_marginStart="@dimen/dp_10" android:layout_marginEnd="@dimen/dp_10">
+                <t.v.c.widget.ImageView android:id="@id/img_channel_logo" android:layout_width="66.0dp" android:layout_height="66.0dp" android:src="@drawable/tv_logo" />
+                <t.v.c.widget.TextView android:textSize="14.0sp" android:textStyle="bold" android:textColor="@color/main_font_key_label_white_color" android:ellipsize="end" android:id="@id/txt_channel_num" android:layout_width="0.0dp" android:layout_height="wrap_content" android:maxLines="2" android:layout_weight="1.0" android:layout_marginStart="5.0dp" android:layout_marginEnd="5.0dp" />
+                <t.v.c.widget.LinearLayout android:gravity="end|center" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                    <t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/white" android:id="@id/start_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/vod_start_time" />
+                    <t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/ " />
+                    <t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/white_60" android:id="@id/end_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/vod_end_time" />
+                </t.v.c.widget.LinearLayout>
+            </t.v.c.widget.LinearLayout>
+            <t.v.c.widget.FrameLayout android:id="@id/progress_layout" android:focusable="true" android:nextFocusDown="@id/episode_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dp" android:layout_marginBottom="3.0dp" android:layout_marginStart="@dimen/dp_10" android:layout_marginEnd="@dimen/dp_10">
+                <SeekBar android:layout_gravity="center_vertical" android:id="@id/progress_film" android:layout_width="match_parent" android:layout_height="wrap_content" android:maxHeight="20.0dp" android:indeterminateOnly="false" android:indeterminateDrawable="@drawable/drawable_layer_list_progress" android:progressDrawable="@drawable/drawable_layer_list_progress" android:minHeight="20.0dp" android:thumb="@drawable/vod_video_playing" android:paddingStart="15.0dp" android:paddingEnd="15.0dp" />
+            </t.v.c.widget.FrameLayout>
+            <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="25.0dp" android:layout_marginTop="@dimen/dp_10" android:layout_marginBottom="@dimen/dp_10" android:layout_marginStart="@dimen/dp_10" android:layout_marginEnd="@dimen/dp_10">
+                <t.v.c.widget.LinearLayout android:orientation="horizontal" android:layout_width="0.0dp" android:layout_height="match_parent" android:layout_weight="1.0">
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/episode_layout" android:nextFocusUp="@id/progress_layout" android:layout_width="wrap_content" android:layout_height="match_parent" />
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/favorite_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/next_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/start_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                </t.v.c.widget.LinearLayout>
+                <t.v.c.widget.LinearLayout android:gravity="end" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="match_parent">
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/player_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/subtitle_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/hd_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/audio_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                    <com.tvc.lib.mobile.ui.widget.FullscreenMenuView android:id="@id/screen_layout" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/dp_10" />
+                </t.v.c.widget.LinearLayout>
+            </t.v.c.widget.LinearLayout>
+        </t.v.c.widget.LinearLayout>
+    </t.v.c.widget.MyRelativelayout>
+    <t.v.c.widget.GlobalMarqueeTextView android:textSize="@dimen/font_global_marquee" android:textColor="@color/global_marquee_txt_color" android:ellipsize="marquee" android:background="@color/global_marquee_bg_color" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+</t.v.c.widget.FrameLayout>

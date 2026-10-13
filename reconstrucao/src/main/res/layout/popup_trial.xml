@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:id="@id/popuptrial_rl_parent" android:layout_width="300.0dp" android:layout_height="260.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.live.evo.widget.FreeTrialView android:layout_width="300.0dp" android:layout_height="260.0dp" app:backgroundColor="@color/free_trial_flow_color" app:text="@string/free_trial_period" app:textColor="@color/free_trial_text_color" app:textSize="20.0sp" />
+</RelativeLayout>

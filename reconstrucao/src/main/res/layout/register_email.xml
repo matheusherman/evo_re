@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/registeremail_rl_parent" android:background="@drawable/login_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/lly_login_switch" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="15.0dp" android:minHeight="@dimen/et_height" android:layout_centerHorizontal="true">
+            <com.google.android.material.tabs.TabLayout android:orientation="horizontal" android:id="@id/tab_layout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="10.0dp" android:layout_marginRight="10.0dp" android:minHeight="@dimen/et_height" app:tabBackground="@drawable/tablayout_bg" app:tabIndicatorColor="@color/loginf_tl_tab_layout_ic" app:tabMaxWidth="600.0dp" app:tabMinWidth="@dimen/login_tab_width" app:tabSelectedTextColor="@color/loginf_tl_tab_layout_focus_tc" app:tabTextAppearance="@style/TabLayoutTextStyle" app:tabTextColor="@color/loginf_tl_tab_layout_normal_tc">
+                <com.google.android.material.tabs.TabItem android:textSize="22.0sp" android:id="@id/tabitem_email" android:background="@drawable/bg_left_tablayout" android:layout_width="300.0dp" android:layout_height="match_parent" android:text="@string/register_email" />
+                <com.google.android.material.tabs.TabItem android:textSize="22.0sp" android:id="@id/tabitem_phone" android:background="@drawable/bg_right_tablayout" android:layout_width="300.0dp" android:layout_height="match_parent" android:text="@string/register_phone" />
+            </com.google.android.material.tabs.TabLayout>
+        </LinearLayout>
+        <ImageView android:id="@id/registeremail_iv_title" android:layout_width="@dimen/load_icon_width" android:layout_height="@dimen/load_icon_width" android:layout_marginTop="12.0dp" android:src="@mipmap/ic_launcher" />
+        <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="12.0dp">
+            <com.live.evo.widget.LightTextView android:textSize="20.0sp" android:textColor="@color/text_color_selector" android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/registeremail_ltv_remind" android:layout_width="1000.0dp" android:layout_height="wrap_content" />
+            <TextView android:textSize="20.0sp" android:textColor="@color/registeremail_tv_account_tc" android:id="@id/registeremail_tv_account" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="12.0dp" />
+            <com.live.evo.widget.EmailAutoCompleteTextView android:id="@id/registeremail_et_email" android:nextFocusDown="@id/tv_verify" android:layout_marginTop="12.0dp" android:hint="@string/account_id" style="@style/LoginEditText" />
+            <include android:id="@id/lly_phone" android:visibility="gone" android:nextFocusDown="@id/tv_verify" android:layout_width="@dimen/login_et_width" android:layout_height="@dimen/et_height" android:layout_marginTop="12.0dp" layout="@layout/spinner_phone_layout" />
+            <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/lly_verify" android:layout_width="650.0dp" android:layout_height="65.0dp" android:layout_marginTop="12.0dp">
+                <com.live.evo.widget.RemoveKeyCodeEnterEditText android:id="@id/registeremail_et_verify_code" android:layout_width="275.0dp" android:layout_height="@dimen/et_height" android:hint="@string/verification_code" android:maxLength="6" android:inputType="number" style="@style/LoginEditText" />
+                <TextView android:id="@id/tv_verify" android:layout_width="275.0dp" android:layout_marginLeft="20.0dp" android:text="@string/send_code" style="@style/VerifyStyle" />
+                <TextView android:id="@id/tv_verify_phone" android:visibility="gone" android:layout_width="275.0dp" android:layout_marginLeft="20.0dp" android:text="@string/send_code" style="@style/VerifyStyle" />
+            </LinearLayout>
+            <com.live.evo.widget.RemoveKeyCodeEnterEditText android:id="@id/et_pwd" android:layout_marginTop="12.0dp" android:hint="@string/new_password" style="@style/LoginEditText" />
+            <LinearLayout android:gravity="center" android:layout_width="560.0dp" android:layout_height="65.0dp" android:layout_marginTop="30.0dp">
+                <TextView android:id="@id/registeremail_tv_submit" android:background="@drawable/subscribe_btn_bg_selector" android:layout_width="150.0dp" android:text="@string/submit" style="@style/ButtonStyle" />
+                <TextView android:id="@id/registeremail_tv_button_return" android:background="@drawable/subscribe_btn_bg_selector" android:layout_width="150.0dp" android:layout_marginLeft="15.0dp" android:text="@string/tv_return" style="@style/ButtonStyle" />
+            </LinearLayout>
+            <TextView android:textSize="20.0sp" android:id="@id/tv_trial_tip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" />
+            <TextView android:layout_gravity="center|bottom" android:id="@id/registeremail_tv_error" android:layout_marginTop="10.0dp" style="@style/ErrorStyle" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

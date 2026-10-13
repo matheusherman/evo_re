@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/catchupplayera_rl_parent" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.live.evo.widget.LiveCatchUpVideoView android:id="@id/catchupplayera_vv_video_view" android:layout_width="match_parent" android:layout_height="match_parent" />
+    <com.youth.banner.Banner android:id="@id/catchupplayera_bn_banner" android:background="@drawable/banner_selector" android:focusable="true" android:visibility="gone" android:layout_width="@dimen/sm_400" android:layout_height="@dimen/sm_300" android:layout_centerInParent="true" />
+    <RelativeLayout android:id="@id/catchupplayera_ad_rl" android:visibility="gone" android:layout_width="533.0dp" android:layout_height="400.0dp" android:layout_marginTop="50.0dp" android:layout_centerHorizontal="true">
+        <ImageView android:id="@id/catchupplayera_ad_iv" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" />
+        <TextView android:textSize="20.0sp" android:textColor="@color/white" android:gravity="center" android:id="@id/catchupplayera_ad_tv" android:background="@drawable/bg_ad_pause" android:paddingLeft="15.0dp" android:paddingTop="9.0dp" android:paddingRight="15.0dp" android:paddingBottom="9.0dp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ad_pause_press" android:layout_alignParentTop="true" android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <ImageView android:id="@id/catchupplayera_iv_finished" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/bg_playback_finished" />
+    <com.live.evo.widget.SpeedTextView android:textSize="20.0sp" android:textColor="@color/catchupplayera_iv_notice_tc" android:ellipsize="marquee" android:gravity="center" android:id="@id/catchupplayera_iv_notice" android:layout_width="match_parent" android:layout_height="wrap_content" android:marqueeRepeatLimit="marquee_forever" />
+</RelativeLayout>

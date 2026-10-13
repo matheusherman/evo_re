@@ -61,14 +61,37 @@ class NoticeAlertDialog(private val context: Context) {
  * Original: com/live/evo/dialog/r.java
  */
 class RemindAlertDialog(private val context: Context, private val listener: Listener?) {
-    /** Original: r.c */ interface Listener { fun a(); fun b() }
+    /** Original: r.c — `a()` = botão secundário (return), `b()` = botão principal (right). */
+    interface Listener { fun a(); fun b() }
     private val view: View = LayoutInflater.from(context).inflate(R.layout.remind_alert_dialog, null, false)
-    private val dialog = BaseDialog(context, R.style.RechargeAlertialog).also { it.setContentView(view) }
     private val image: ImageView = view.findViewById(R.id.remindalertdlg_iv_recharge_img)
     private val title: TextView = view.findViewById(R.id.remindalertdlg_tv_title)
-    fun setTitle(s: String?) { title.text = s }          // g/h/k
+    private val reason: TextView = view.findViewById(R.id.remindalertdlg_tv_reason)
+    private val btnRight: android.widget.Button = view.findViewById(R.id.remindalertdlg_btn_right)
+    private val btnReturn: android.widget.Button = view.findViewById(R.id.remindalertdlg_btn_return)
+    private val code: TextView = view.findViewById(R.id.remindalertdlg_tv_code)
+    private val dialog = BaseDialog(context, R.style.RechargeAlertialog).also { it.setContentView(view) }
+    init {
+        com.live.evo.util.TextStyleUtils.d(title); com.live.evo.util.TextStyleUtils.c(reason)
+        com.live.evo.util.TextStyleUtils.c(code); com.live.evo.util.TextStyleUtils.d(btnRight)
+        btnRight.setOnClickListener { if (listener != null) { listener.b(); dialog.dismiss() } }
+        btnReturn.setOnClickListener { if (listener != null) { listener.a(); dialog.dismiss() } }
+    }
+    /** Esconde a imagem. Original: c() */ fun hideImage() { image.visibility = View.GONE }
+    /** Texto do botão secundário (e o mostra). Original: g(String) */
+    fun setReturnText(s: String) { btnReturn.visibility = View.VISIBLE; btnReturn.text = s }
+    /** Texto do botão principal (e o mostra). Original: h(String) */
+    fun setRightText(s: String) { btnRight.visibility = View.VISIBLE; btnRight.text = s }
+    /** Imagem de fundo (resId > 0). Original: i(int) */
+    fun setImage(resId: Int) { if (resId > 0) { image.visibility = View.VISIBLE; image.setBackgroundResource(resId) } }
+    /** Motivo (`reason`) e código de erro (`code`); ignorado se o motivo for vazio. Original: j(String, String) */
+    fun setMessage(msg: String?, errorCode: String?) {
+        if (!android.text.TextUtils.isEmpty(msg)) { reason.text = msg; if (errorCode != null) code.text = errorCode }
+    }
+    /** Título (ignora vazio). Original: k(String) */
+    fun setTitle(s: String?) { if (!android.text.TextUtils.isEmpty(s)) title.text = s }
     fun show() { dialog.show() }                         // l()
-    fun dismiss() { dialog.dismiss() }                   // c()
+    fun dismiss() { dialog.dismiss() }
 }
 
 /**

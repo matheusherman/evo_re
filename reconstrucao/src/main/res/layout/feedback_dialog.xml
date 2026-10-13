@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:id="@+id/feedbackdlg_ll_parent"
+    android:paddingLeft="100.0dip"
+    android:paddingTop="50.0dip"
+    android:paddingRight="100.0dip"
+    android:paddingBottom="50.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/feedbackdlg_ll_feedback"
+        android:background="@drawable/epg_dialog_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:textSize="25.0sp"
+            android:textColor="@color/feedbackdlg_tv_contact_tc"
+            android:gravity="center"
+            android:id="@+id/feedbackdlg_tv_contact"
+            android:background="@color/feedbackdlg_tv_contact_bgc"
+            android:layout_width="fill_parent"
+            android:layout_height="110.0dip"
+            android:text="@string/feedback_userfeedback_title_1" />
+
+        <include layout="@layout/feedback_fragment" />
+    </LinearLayout>
+</LinearLayout>

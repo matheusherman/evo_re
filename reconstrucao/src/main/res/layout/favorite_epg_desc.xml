@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:id="@id/favepgdesc_rl_parent" android:background="@drawable/favorite_epg_bg" android:paddingLeft="10.0dp" android:paddingTop="10.0dp" android:paddingRight="10.0dp" android:paddingBottom="10.0dp" android:layout_width="420.0dp" android:layout_height="220.0dp" android:layout_marginLeft="5.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:id="@id/favepgdesc_ll_time" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dp">
+        <TextView android:textSize="16.0sp" android:textColor="@color/favepgdesc_tv_epg_time_tc" android:id="@id/favepgdesc_tv_epg_time" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@id/favepgdesc_ll_program" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:layout_below="@id/favepgdesc_ll_time">
+        <com.live.evo.widget.MarqueeTextView android:textSize="24.0sp" android:textColor="@color/favepgdesc_tv_epg_channel_name_tc" android:ellipsize="marquee" android:id="@id/favepgdesc_tv_epg_channel_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" />
+    </LinearLayout>
+    <ImageView android:id="@id/favepgdesc_iv_icon_channel" android:visibility="gone" android:layout_width="80.0dp" android:layout_height="40.0dp" android:layout_marginTop="15.0dp" android:layout_marginRight="20.0dp" android:layout_alignParentRight="true" />
+    <LinearLayout android:textSize="@dimen/epg_program_desc" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="15.0dp" android:layout_below="@id/favepgdesc_ll_program">
+        <TextView android:textSize="@dimen/epg_program_desc" android:textStyle="bold" android:textColor="@color/favepgdesc_tv_desc_tc" android:id="@id/favepgdesc_tv_desc" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/epg_description" />
+        <TextView android:textSize="@dimen/epg_program_desc" android:textColor="@color/favepgdesc_tv_epg_desc_tc" android:ellipsize="end" android:id="@id/favepgdesc_tv_epg_desc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="6" android:lineSpacingExtra="3.0dp" />
+    </LinearLayout>
+</RelativeLayout>

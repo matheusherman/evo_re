@@ -87,7 +87,7 @@ object PlayPositionCache {
 
     /** Original: g.g() */
     private fun owner(): String = 
-        if (UserManager.isGuestOrNoAccount()) HeaderInterceptor.deviceId() else HeaderInterceptor.accountId() // user.f.c0()=="guest" || D0().isEmpty()
+        if ((UserManager.getAccountType() == "guest" || UserManager.getUsername().isEmpty())) HeaderInterceptor.deviceId() else HeaderInterceptor.accountId() // user.f.c0()=="guest" || D0().isEmpty()
 
     private fun key(videoName: String): String = TODO("x1.f1.lb.util.o.e(owner(), videoName) — util")
 

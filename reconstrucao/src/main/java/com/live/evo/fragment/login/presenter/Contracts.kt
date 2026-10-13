@@ -72,9 +72,9 @@ interface RegisterEmailPresenterContract : BasePresenter<RegisterEmailView> {
 interface RegisterEmailView : BaseView<RegisterEmailPresenterContract> {
     fun onCodeError(msg: String, code: String)  // A(String,String) — erro do servidor
     fun hideLoading()                           // a()
-    fun onCodeSent()                            // c()
+    fun onCodeSent()                            // h()
     fun onNetworkError()                        // d()
-    fun onRegistered()                          // h()
+    fun onRegistered()                          // c()
     fun showError(msg: String, sub: String)     // j(String,String) — exceção
 }
 

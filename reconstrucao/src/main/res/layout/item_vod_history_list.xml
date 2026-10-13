@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.MyRelativelayout android:id="@id/img_layout" android:layout_width="match_parent" android:layout_height="170.0dp" android:layout_margin="4.0dp">
+        <t.v.c.widget.FrameLayout android:id="@id/img_flt" android:layout_width="match_parent" android:layout_height="match_parent">
+            <t.v.c.widget.ImageView android:id="@id/img" android:layout_width="match_parent" android:layout_height="match_parent" />
+        </t.v.c.widget.FrameLayout>
+        <t.v.c.widget.TextView android:textSize="12.0sp" android:textColor="@color/selected_color" android:id="@id/score_tv" android:background="@drawable/shape_vod_list_score_bg" android:paddingTop="2.0dp" android:paddingBottom="2.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:text="9.0" android:paddingStart="6.0dp" android:paddingEnd="6.0dp" android:layout_marginStart="5.0dp" />
+        <t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/white" android:id="@id/s1_e2_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="@dimen/dp_10" android:text="S1:E2" android:layout_above="@id/progress_bar" android:layout_centerHorizontal="true" />
+        <t.v.c.widget.MyProgressBar android:id="@id/progress_bar" android:layout_width="match_parent" android:layout_height="2.0dp" android:layout_marginBottom="@dimen/dp_10" android:max="100" android:progress="50" android:progressDrawable="@drawable/progressbar_color" android:layout_alignParentBottom="true" android:layout_marginStart="@dimen/dp_10" android:layout_marginEnd="@dimen/dp_10" style="?android:progressBarStyleHorizontal" />
+        <t.v.c.widget.ImageView android:id="@id/del_iv" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/history_del_img" android:layout_centerInParent="true" />
+    </t.v.c.widget.MyRelativelayout>
+    <t.v.c.widget.TextView android:textSize="14.0sp" android:textColor="@color/white" android:ellipsize="end" android:id="@id/avatar_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3.0dp" android:text="Avatar" android:maxLines="1" android:layout_below="@id/img_layout" android:layout_marginStart="3.0dp" android:layout_marginEnd="5.0dp" />
+</RelativeLayout>

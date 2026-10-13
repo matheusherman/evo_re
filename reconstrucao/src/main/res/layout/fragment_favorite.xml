@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:orientation="vertical"
+    android:id="@+id/favoritef_fl_parent"
+    android:background="@color/favoritef_fl_parent_bgc"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentStart="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/favoritef_ll_favorite_title_layout"
+        android:layout_width="300.0dip"
+        android:layout_height="100.0dip"
+        android:layout_marginLeft="30.0dip"
+        android:layout_marginTop="50.0dip">
+
+        <TextView
+            android:textSize="22.0sp"
+            android:textColor="@color/favoritef_tv_favorite_title_tc"
+            android:id="@+id/favoritef_tv_favorite_title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/menu_channel" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="20.0dip"
+        android:layout_marginTop="110.0dip">
+
+        <com.live.tvcinema.widget.ProgramListView
+            android:id="@+id/favoritef_lv_favorite_channel_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@null" />
+    </LinearLayout>
+</FrameLayout>

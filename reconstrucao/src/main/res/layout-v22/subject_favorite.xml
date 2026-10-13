@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:id="@id/layout_team_edit" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="10.0dp" android:layout_marginTop="24.0dp" android:layout_marginRight="12.0dp">
+        <TextView android:textSize="@dimen/subject_edit_describe_text_size" android:textColor="@color/subject_edit_describe_color" android:gravity="center" android:id="@id/tv_team_edit_describe" android:background="@color/subject_edit_describe_bg" android:padding="@dimen/sm_16" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/match_team_favorite_describe" />
+        <TextView android:textSize="@dimen/subject_edit_hint_text_size" android:textColor="@color/subject_edit_hint_text_color" android:gravity="center" android:id="@id/tv_team_edit_hint" android:background="@drawable/selector_subject_team_bg" android:visibility="visible" android:layout_width="match_parent" android:layout_height="@dimen/subject_edit_hint_height" android:layout_marginTop="2.0dp" android:text="@string/match_team_favorite_edit_hint" />
+        <androidx.leanback.widget.VerticalGridView android:id="@id/vg_team_list" android:nextFocusLeft="@id/vg_team_list" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="2.0dp" android:layout_marginBottom="2.0dp" android:horizontalSpacing="1.0dp" android:verticalSpacing="1.0dp" android:layout_marginVertical="2.0dp" app:focusOutFront="true" app:focusOutSideStart="false" />
+    </LinearLayout>
+    <com.live.evo.widget.ProgramRecycleView android:id="@id/subject_match_listview" android:paddingLeft="10.0dp" android:paddingTop="12.0dp" android:visibility="gone" android:scrollbars="none" android:layout_width="match_parent" android:layout_height="match_parent" android:divider="@null" app:focusOutEnd="true" app:focusOutFront="true" />
+    <include android:id="@id/subject_match_listview_empty" android:visibility="gone" layout="@layout/subject_nodata" />
+</FrameLayout>

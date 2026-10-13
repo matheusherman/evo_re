@@ -72,9 +72,9 @@ abstract class PlayerViewHandler {
         if (durSec <= 0) throw Exception("catchup duration <0")
         val mediaId = channel.catchupRoute + "#" + channel.streamId + "#" + startSec + "#" + durSec
         val needUntil = System.currentTimeMillis() + (programme.stop - programme.start)
-        if (!UserManager.isMember() || UserManager.expireTime() < needUntil) { // user.f.K0(), m0()
+        if (!UserManager.hasUsername() || UserManager.getExpireTs() < needUntil) { // user.f.K0(), m0()
             // Original: EventBus nf.x(name, CATCHUP, 0); noSignalListener(1, R.string.no_stream_notice_message_no_free)
-            logger.info("[${PlayType.CATCHUP}][$name][$mediaId] start, but ${if (UserManager.isMember()) "not enough time left" else "guest"}")
+            logger.info("[${PlayType.CATCHUP}][$name][$mediaId] start, but ${if (UserManager.hasUsername()) "not enough time left" else "guest"}")
             stop(true)
             emit(0L); return@flow
         }
@@ -89,7 +89,7 @@ abstract class PlayerViewHandler {
     private suspend fun start(videoName: String, type: PlayType, positionKey: String, mediaId: String, routeId: String,
                               mediaMode: Int, playerArgs: String?, creator: PlayContext.FlowCreator, subtitleMediaId: String = ""): Flow<Long> {
         val ctx = mutex.withLock {
-            val uid = UserManager.uid(); val loginTime = UserManager.loginTime() // user.f.B0(), o0()
+            val uid = UserManager.getAccountIdString(); val loginTime = UserManager.getLatestLoginResponseTime() // user.f.B0(), o0()
             val cur = playingContext
             if (cur == null || cur.uid != uid || cur.loginTime != loginTime || cur.playType != type ||
                 cur.mediaId != mediaId || cur.routeId != routeId || cur.mediaMode != mediaMode) {

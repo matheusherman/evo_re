@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:background="@color/colorPrimaryDark" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <t.v.c.widget.MyRelativelayout android:id="@id/episodes_root_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8.0dp" android:layout_marginBottom="8.0dp">
+        <t.v.c.widget.LinearLayout android:gravity="center_vertical" android:id="@id/season_ll" android:background="@drawable/season_btn_border_bg" android:paddingTop="6.0dp" android:paddingBottom="6.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="7.0dp" android:layout_marginStart="12.0dp">
+            <t.v.c.widget.TextView android:textSize="8.0sp" android:textStyle="bold" android:textColor="#fcfcfc" android:gravity="center_vertical" android:id="@id/season_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingEnd="3.0dp" />
+            <t.v.c.widget.ImageView android:id="@id/seasons_btn" android:layout_width="10.0dp" android:layout_height="10.0dp" android:src="@mipmap/seasons_more_btn" android:scaleType="centerCrop" android:layout_centerVertical="true" android:layout_marginEnd="3.0dp" android:layout_alignEnd="@id/seasons_title" />
+        </t.v.c.widget.LinearLayout>
+        <t.v.c.widget.TextView android:textSize="8.0sp" android:textColor="#828487" android:gravity="center_vertical" android:id="@id/episodes_num_tv" android:paddingTop="2.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="12.0dp" android:layout_alignParentEnd="true" />
+    </t.v.c.widget.MyRelativelayout>
+    <RelativeLayout android:id="@id/ll_season_show" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/episodes_root_layout" android:layout_marginStart="12.0dp">
+        <androidx.recyclerview.widget.RecyclerView android:orientation="horizontal" android:id="@id/episodes_num_list_rv" android:visibility="visible" android:layout_width="match_parent" android:layout_height="@dimen/dp_40" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </RelativeLayout>
+</t.v.c.widget.MyRelativelayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/icon_transport" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:background="@color/pip_switch_bg" android:layout_width="match_parent" android:layout_height="45.0dp">
+        <RelativeLayout android:gravity="center" android:orientation="horizontal" android:id="@id/lly_pip_state" android:background="@drawable/bg_popmenu_item2" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="5.0dp" android:layout_marginTop="5.0dp" android:layout_marginBottom="5.0dp">
+            <TextView android:textSize="16.0sp" android:textColor="@color/color_program" android:gravity="left|center" android:layout_gravity="center" android:id="@id/tv_pip_state" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginLeft="10.0dp" android:text="@string/pip_settings" />
+            <Switch android:layout_gravity="center" android:id="@id/switch_pip" android:layout_width="100.0dp" android:layout_height="wrap_content" android:layout_marginRight="10.0dp" android:textOn="@string/on" android:textOff="@string/off" android:minWidth="70.0dp" android:thumb="@drawable/switch_thumb" android:layout_alignParentRight="true" android:layout_centerVertical="true" android:track="@drawable/switch_track" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:id="@id/lly_pip_grid" android:background="@color/pip_switch_bg" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:animateLayoutChanges="true">
+        <androidx.leanback.widget.VerticalGridView android:id="@id/previewmenu_view" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="5.0dp" />
+    </LinearLayout>
+</LinearLayout>

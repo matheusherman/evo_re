@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:background="@drawable/subject_ranking_item_bg" android:paddingTop="5.0dp" android:paddingBottom="5.0dp" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:gravity="center" android:id="@id/subject_ranking_rank" android:layout_width="100.0dp" android:layout_height="match_parent" />
+    <ImageView android:layout_gravity="center_vertical" android:id="@id/subject_ranking_iv" android:layout_width="35.0dp" android:layout_height="35.0dp" android:layout_marginLeft="15.0dp" android:scaleType="fitCenter" />
+    <TextView android:textSize="16.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="left|center" android:id="@id/subject_ranking_name" android:layout_width="200.0dp" android:layout_height="match_parent" android:layout_marginLeft="10.0dp" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:id="@id/subject_ranking_games" android:layout_width="200.0dp" android:layout_height="match_parent" android:singleLine="true" />
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_match_id" android:ellipsize="marquee" android:gravity="center" android:id="@id/subject_ranking_goals" android:layout_width="120.0dp" android:layout_height="match_parent" android:singleLine="true" />
+</LinearLayout>

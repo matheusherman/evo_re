@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center"
+    android:layout_gravity="center"
+    android:id="@+id/ll_item"
+    android:layout_width="@dimen/loginview_stylec_leftmenu_width"
+    android:layout_height="100.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:enabled="false"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/lly_menu_parent"
+        android:background="@drawable/stylec_leftmenu_item_selector"
+        android:focusable="true"
+        android:layout_width="120.0dip"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15.0dip" />
+
+        <TextView
+            android:textSize="@dimen/btn_text_size"
+            android:textColor="@color/loginf_c_login_tab_tc"
+            android:gravity="center"
+            android:id="@+id/tv"
+            android:layout_width="120.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.0dip"
+            android:layout_marginBottom="15.0dip" />
+    </LinearLayout>
+</LinearLayout>

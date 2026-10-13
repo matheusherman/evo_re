@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="horizontal" android:id="@id/seetings_item_parent" android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="@dimen/program_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/settings_item_image" android:layout_width="30.0dp" android:layout_height="30.0dp" android:layout_marginLeft="10.0dp" android:layout_marginTop="15.0dp" />
+    <TextView android:textSize="22.0dp" android:textColor="@color/text_color_setting" android:ellipsize="marquee" android:gravity="left|center" android:id="@id/settings_item_name" android:paddingLeft="5.0dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dp" android:text="@string/loading" android:singleLine="true" android:layout_toRightOf="@id/settings_item_image" android:layout_centerVertical="true" />
+    <TextView android:textSize="16.0dp" android:textColor="@color/text_color_setting" android:ellipsize="marquee" android:gravity="right|center" android:id="@id/settings_item_category" android:layout_width="100.0dp" android:layout_height="wrap_content" android:layout_marginRight="15.0dp" android:text="onrrrrrrr" android:singleLine="true" android:layout_alignParentRight="true" android:layout_centerVertical="true" />
+</RelativeLayout>

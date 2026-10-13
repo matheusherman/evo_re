@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mosaic_rl_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <x1.f1.lb.widget.videoview.PlayerView
+        android:id="@+id/mosaic_videoview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        app:log_tag="MosaicVideoView"
+        app:render_type="TextureView"
+        app:replace_render="true" />
+
+    <TextView
+        android:id="@+id/mosaic_text_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:textColor="@color/color_eeeeee"
+        android:textSize="15.0dip" />
+
+    <com.live.tvcinema.widget.sloading.SLoadingView
+        android:id="@+id/mosaic_loading"
+        android:layout_width="45.0dip"
+        android:layout_height="45.0dip"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:s_color="@color/color_c0c0c0"
+        app:s_type="RotateCircleBuilder" />
+
+    <ImageView
+        android:id="@+id/mosaic_nosignal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/no_signal"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/mosaic_channel_seq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5.0dip"
+        android:layout_marginRight="8.0dip"
+        android:text=""
+        android:textColor="@color/color_eeeeee"
+        android:textSize="11.0dip" />
+
+    <TextView
+        android:id="@+id/mosaic_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="18.0dip"
+        android:layout_marginRight="8.0dip"
+        android:text=""
+        android:textColor="@color/color_eeeeee"
+        android:textSize="11.0dip" />
+
+    <View
+        android:id="@+id/mosaic_view_border"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/mosaic_border"
+        android:visibility="gone" />
+</RelativeLayout>

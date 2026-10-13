@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center"
+    android:orientation="vertical"
+    android:id="@+id/confirmdlg_ll_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@drawable/bg_dialog_appinstall"
+        android:layout_width="@dimen/dialog_appinstall_error_width"
+        android:layout_height="@dimen/dialog_appinstall_error_height">
+
+        <TextView
+            android:textSize="28.0sp"
+            android:textColor="@color/appinstall_text_title"
+            android:id="@+id/appinstall_error_tv_title"
+            android:background="@color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30.0dip"
+            android:layout_marginTop="40.0dip"
+            android:layout_marginRight="30.0dip"
+            android:text="@string/appinstall_error_title"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:textSize="22.0sp"
+            android:textColor="@color/appinstall_text_info"
+            android:id="@+id/appinstall_error_tv_info"
+            android:background="@color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginTop="20.0dip"
+            android:layout_marginRight="20.0dip"
+            android:text="@string/appinstall_error_info"
+            android:layout_below="@id/appinstall_error_tv_title"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:enabled="true"
+            android:textSize="24.0sp"
+            android:textColor="@color/appinstall_text_install"
+            android:id="@+id/appinstall_error_btn_install"
+            android:background="@drawable/appdownload_btn_bg_selector"
+            android:layout_width="fill_parent"
+            android:layout_height="70.0dip"
+            android:layout_marginLeft="30.0dip"
+            android:layout_marginRight="30.0dip"
+            android:layout_marginBottom="15.0dip"
+            android:text="@string/appinstall_error_download"
+            android:layout_above="@id/appinstall_error_btn_exit"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="false" />
+
+        <Button
+            android:textSize="24.0sp"
+            android:textColor="@color/appinstall_text_exit"
+            android:id="@+id/appinstall_error_btn_exit"
+            android:background="@color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25.0dip"
+            android:minWidth="@dimen/confirm_btn_w"
+            android:text="@string/exit"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textAllCaps="false" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:orientation="vertical" android:id="@id/vod_meta_item_view" android:layout_width="86.0dp" android:layout_height="120.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.ImageView android:id="@id/img" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="3.0dp" android:scaleType="centerCrop" />
+    <t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/selected_color" android:id="@id/score_tv" android:background="@drawable/shape_vod_list_score_bg" android:paddingTop="2.0dp" android:paddingBottom="2.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:text="@string/vote_score" android:paddingStart="6.0dp" android:paddingEnd="6.0dp" android:layout_marginStart="5.0dp" />
+    <t.v.c.widget.TextView android:textSize="12.0sp" android:textColor="@color/white" android:ellipsize="end" android:id="@id/avatar_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="3.0dp" android:text="Avatar" android:maxLines="1" android:layout_below="@id/img" android:layout_marginStart="4.0dp" android:layout_marginEnd="5.0dp" />
+</t.v.c.widget.MyRelativelayout>

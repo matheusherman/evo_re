@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/subject_map_iv" android:layout_width="match_parent" android:layout_height="450.0dp" android:scaleType="fitCenter" />
+    <RelativeLayout android:id="@id/subject_vote_map" android:visibility="gone" android:layout_width="match_parent" android:layout_height="70.0dp" android:layout_marginTop="10.0dp" android:layout_marginBottom="10.0dp" android:layout_centerVertical="true">
+        <ImageView android:id="@id/subject_map_vote_iv" android:layout_width="70.0dp" android:layout_height="match_parent" android:layout_marginLeft="15.0dp" android:src="@drawable/qr_placehodler" />
+        <TextView android:textSize="16.0sp" android:textColor="@color/color_f1f1f1" android:ellipsize="marquee" android:gravity="left|bottom" android:id="@id/subject_map_vote_remind1" android:layout_width="300.0dp" android:layout_height="35.0dp" android:layout_marginLeft="10.0dp" android:text="@string/match_vote_remind1" android:singleLine="true" android:layout_toRightOf="@id/subject_map_vote_iv" />
+        <TextView android:textSize="12.0sp" android:textColor="@color/color_f1f1f1" android:ellipsize="marquee" android:gravity="left|top" android:id="@id/subject_map_vote_remind2" android:layout_width="300.0dp" android:layout_height="35.0dp" android:layout_marginLeft="10.0dp" android:layout_marginTop="5.0dp" android:text="@string/match_vote_remind2" android:singleLine="true" android:layout_toRightOf="@id/subject_map_vote_iv" android:layout_below="@id/subject_map_vote_remind1" />
+    </RelativeLayout>
+</LinearLayout>

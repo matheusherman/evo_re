@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.TextView android:textSize="8.0sp" android:textColor="#fcfcfc" android:id="@id/classify_tv" android:background="@drawable/shape_classify_selected_bg" android:paddingTop="2.0dp" android:paddingBottom="2.0dp" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="5.0dp" android:paddingEnd="5.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

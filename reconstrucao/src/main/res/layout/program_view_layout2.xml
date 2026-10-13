@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/programviewl_rl_parent"
+    android:background="@color/programviewl_rl_parent_bgc"
+    android:scrollbars="none"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:id="@+id/programviewl_rly_classify_parent"
+            android:background="@color/programviewl_rly_classify_parent_bgc"
+            android:layout_width="@dimen/classify_width"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/programviewl_ll_head_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="50.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/programviewl_iv_head_icon"
+                    android:background="@drawable/program_icon_selector"
+                    android:focusable="true"
+                    android:layout_width="28.0dip"
+                    android:layout_height="28.0dip" />
+
+                <TextView
+                    android:textSize="12.0sp"
+                    android:textColor="@color/programviewl_tv_myaccount_tc"
+                    android:id="@+id/programviewl_tv_myaccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/my_account" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/programviewl_view_head_line"
+                android:background="@color/programviewl_view_head_line_bgc"
+                android:layout_width="fill_parent"
+                android:layout_height="1.0px"
+                android:layout_below="@id/programviewl_ll_head_parent" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/programviewl_ll_user"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginTop="@dimen/program_lv_margin">
+
+                <TextView
+                    android:textSize="@dimen/remind_text_size"
+                    android:textColor="@color/programviewl_tv_user_id_1_tc"
+                    android:gravity="center"
+                    android:id="@+id/programviewl_tv_user_id_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.0dip"
+                    android:text="@string/email_id_2" />
+
+                <TextView
+                    android:textSize="@dimen/remind_text_size"
+                    android:textColor="@color/programviewl_tv_user_id_tc"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/programviewl_tv_user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/remind_text_size"
+                    android:textColor="@color/programviewl_tv_status_tc"
+                    android:gravity="center"
+                    android:id="@+id/programviewl_tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.0dip"
+                    android:text="@string/status_2" />
+
+                <TextView
+                    android:textSize="@dimen/remind_text_size"
+                    android:textColor="@color/programviewl_tv_user_status_tc"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/programviewl_tv_user_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Free trial" />
+
+                <TextView
+                    android:textSize="@dimen/remind_text_size"
+                    android:textColor="@color/programviewl_tv_expire_tc"
+                    android:gravity="center"
+                    android:id="@+id/programviewl_tv_expire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.0dip"
+                    android:text="@string/expire_date_2" />
+
+                <TextView
+                    android:textSize="@dimen/remind_text_size"
+                    android:textColor="@color/programviewl_tv_user_expire_date_tc"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/programviewl_tv_user_expire_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="20.0sp"
+                    android:textColor="@color/programviewl_tv_recharge_tc"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/programviewl_tv_recharge"
+                    android:background="@drawable/load_et_selector"
+                    android:paddingLeft="10.0dip"
+                    android:paddingRight="10.0dip"
+                    android:focusable="true"
+                    android:layout_width="130.0dip"
+                    android:layout_height="40.0dip"
+                    android:layout_marginTop="20.0dip"
+                    android:text="@string/recharge"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:textSize="20.0sp"
+                    android:textColor="@color/programviewl_tv_log_out_tc"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/programviewl_tv_log_out"
+                    android:background="@drawable/load_et_selector"
+                    android:paddingLeft="10.0dip"
+                    android:paddingRight="10.0dip"
+                    android:focusable="true"
+                    android:layout_width="130.0dip"
+                    android:layout_height="40.0dip"
+                    android:layout_marginTop="20.0dip"
+                    android:text="@string/log_out"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <com.live.tvcinema.widget.ProgramListView
+                android:id="@+id/programviewl_lv_main_program_listview_classify"
+                android:visibility="gone"
+                android:scrollbars="none"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="50.0dip"
+                android:layout_marginBottom="@dimen/program_lv_margin"
+                android:listSelector="@drawable/bg_delete"
+                android:divider="#553a393b"
+                android:dividerHeight="1.0dip"
+                android:fastScrollEnabled="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:id="@+id/programviewl_ll_iv"
+                android:background="@color/programviewl_ll_iv_bgc"
+                android:layout_width="15.0dip"
+                android:layout_height="fill_parent">
+
+                <ImageView
+                    android:id="@+id/programviewl_iv_left"
+                    android:focusable="false"
+                    android:visibility="gone"
+                    android:layout_width="15.0dip"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/arrow"
+                    android:layout_centerVertical="true"
+                    android:rotation="180.0" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:id="@+id/programviewl_rl_program"
+                android:background="@color/programviewl_rl_program_bgc"
+                android:layout_width="440.0dip"
+                android:layout_height="fill_parent"
+                android:layout_toRightOf="@id/programviewl_ll_iv">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@color/programviewl_tv_clssify_name_tc"
+                    android:gravity="center"
+                    android:id="@+id/programviewl_tv_clssify_name"
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45.0dip"
+                    android:layout_alignParentTop="true"
+                    style="@style/text_23_f2f2f2" />
+
+                <TextView
+                    android:textColor="@color/programviewl_tv_clssify_name_no_classify_tc"
+                    android:gravity="center"
+                    android:id="@+id/programviewl_tv_clssify_name_no_classify"
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45.0dip"
+                    android:text="@string/program_title"
+                    android:layout_alignParentTop="true"
+                    style="@style/text_32_yellow" />
+
+                <com.live.tvcinema.widget.ProgramListView
+                    android:id="@+id/programviewl_lv_main_program_listview"
+                    android:focusable="true"
+                    android:scrollbars="none"
+                    android:layoutAnimation="@anim/navagation_gridview_anim"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="45.0dip"
+                    android:layout_marginBottom="45.0dip"
+                    android:listSelector="@drawable/bg_delete"
+                    android:divider="#553a393b"
+                    android:dividerHeight="1.0dip" />
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45.0dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:textSize="23.0dip"
+                        android:id="@+id/programviewl_tv_program_current_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/text_30_c0c0c0" />
+
+                    <TextView
+                        android:textSize="23.0dip"
+                        android:id="@+id/programviewl_tv_program_all_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/text_30_c0c0c0" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:background="@color/programviewl_tv_program_all_num_bgc"
+            android:layout_width="15.0dip"
+            android:layout_height="fill_parent">
+
+            <ImageView
+                android:id="@+id/programviewl_iv_right"
+                android:focusable="false"
+                android:layout_width="15.0dip"
+                android:layout_height="75.0dip"
+                android:layout_marginLeft="2.0dip"
+                android:src="@drawable/arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/programviewl_ll_epg_parent"
+            android:layout_width="@dimen/epg_width"
+            android:layout_height="fill_parent">
+
+            <RelativeLayout
+                android:background="@color/programviewl_ll_epg_parent_bgc"
+                android:layout_width="@dimen/epg_lv_width"
+                android:layout_height="fill_parent">
+
+                <com.live.tvcinema.widget.MarqueeTextView
+                    android:textSize="23.0sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/programviewl_tv_epg_channel_tc"
+                    android:ellipsize="marquee"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/programviewl_tv_epg_channel"
+                    android:paddingTop="6.0dip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/epg_padding"
+                    android:singleLine="true" />
+
+                <com.live.tvcinema.widget.ProgramListView
+                    android:id="@+id/programviewl_lv_epg_listview"
+                    android:focusable="true"
+                    android:scrollbars="none"
+                    android:layout_width="@dimen/epg_lv_width"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="@dimen/epg_padding"
+                    android:layout_marginBottom="@dimen/epg_padding"
+                    android:listSelector="@drawable/bg_delete"
+                    android:divider="#553a393b"
+                    android:dividerHeight="1.0dip" />
+
+                <TextView
+                    android:textColor="@color/programviewl_tv_not_data_tc"
+                    android:gravity="center"
+                    android:id="@+id/programviewl_tv_not_data"
+                    android:background="@drawable/bg_delete"
+                    android:focusable="true"
+                    android:visibility="gone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60.0dip"
+                    android:text="@string/not_data"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/programviewl_l_epg_desc_parent"
+                layout="@layout/epg_desc" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

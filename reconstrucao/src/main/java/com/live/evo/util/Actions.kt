@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
+import com.live.evo.MyApplication
 import com.live.evo.event.ChangeChannelEvent
 import org.greenrobot.eventbus.EventBus
 
@@ -106,8 +107,43 @@ object NoticeActionHandler {
  * Original: com/live/evo/util/p1.java (ContactTemplate)
  */
 object ContactTemplate {
-    // TODO("parcial: usa AppUserManager.n().i(chave, padrão) — ver util/p1.b(String)")
-    fun apply(template: String): String = TODO("ver util/p1.b(String)")
+    private var email = ""; private var website = ""; private var whatsapp = ""; private var phone = ""
+    private var facebook = ""; private var twitter = ""; private var validTime = ""; private var trialDays = ""
+
+    /** Busca a propriedade remota [key] (padrão [def]) e aplica os placeholders. Original: a(String, String) */
+    fun a(key: String, def: String): String = apply(AppUserManager.get().getString(key, def))
+
+    private fun appVersionName(): String = try {
+        val ctx = MyApplication.get(); ctx.packageManager.getPackageInfo(ctx.packageName, 0).versionName ?: ""
+    } catch (e: Exception) { "" }
+
+    /** Original: b(String) — valores em cache nos campos estáticos (preenchidos uma vez). */
+    fun apply(template: String): String {
+        val um = AppUserManager.get()
+        if (email.isEmpty()) email = um.getString("contact_email", com.foxivid.baselib.heartbeat.HeartbeatManager.customerServiceEmail)
+        if (website.isEmpty()) website = um.getString("web_site", com.foxivid.baselib.user.UserManager.getMembershipUrl())
+        if (whatsapp.isEmpty()) whatsapp = um.getString("whatsapp", com.foxivid.baselib.heartbeat.HeartbeatManager.customerServiceGroupWhatsappLink)
+        if (phone.isEmpty()) phone = um.getString("phone", "")
+        if (facebook.isEmpty()) facebook = um.getString("facebook", "")
+        if (twitter.isEmpty()) twitter = um.getString("twitter", "")
+        if (template.contains("\${ValidTime}")) {
+            var t = um.expiryTime()
+            if (t <= 0) t = um.getLong("validTime", -1L)
+            if (t >= 0) {
+                val h = DateUtils.hoursBetween(DateUtils.now(), t)
+                validTime = h.toString() + " " + CommonUtils.string(if (h <= 1) com.live.evo.R.string.hour else com.live.evo.R.string.hours)
+            }
+        }
+        if (trialDays.isEmpty()) {
+            val d = um.getInt("TrialDays", 0)
+            trialDays = d.toString() + " " + CommonUtils.string(if (d > 1) com.live.evo.R.string.days else com.live.evo.R.string.day)
+        }
+        var appName = CommonUtils.string(com.live.evo.R.string.freetrial_app_name)
+        if (appName.isEmpty()) appName = appVersionName()   // k.t(): AppAttrUtils.appVersionName (privado no port; lido do PackageManager)
+        return template.replace("\${Email}", email).replace("\${Website}", website).replace("\${Whatsapp}", whatsapp)
+            .replace("\${Phone}", phone).replace("\${Facebook}", facebook).replace("\${Twitter}", twitter).replace("\${NewLine}", "<br/>")
+            .replace("\${AppName}", appName).replace("\${ValidTime}", validTime).replace("\${TrialDays}", trialDays)
+    }
 }
 
 /** Download de arquivo (OkHttp, buffer 2048, progresso 0..100). Original: com/live/evo/util/o.java */

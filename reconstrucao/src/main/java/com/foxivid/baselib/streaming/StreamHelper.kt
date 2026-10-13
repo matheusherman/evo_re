@@ -234,7 +234,7 @@ object StreamHelper {
     suspend fun restartEngine(type: PlayType? = null): Flow<Boolean> {
         engineRestartCnt++
         val t = type ?: lastPlayType
-        return UserManager.restartEngine(t).map { ok ->
+        return UserManager.startEngine(t).map { ok ->
             if (ok) {
                 engineRestartCnt = 0
                 lastUid = UserManager.uid()

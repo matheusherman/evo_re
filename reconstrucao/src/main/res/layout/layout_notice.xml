@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:background="@drawable/drawable_shape_black_and_blue_border" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.LinearLayout android:layout_gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="@color/main_font_key_label_white_color" android:gravity="center" android:id="@id/txt_notice_title" android:layout_width="match_parent" android:layout_height="15.0dp" android:layout_marginTop="6.0dp" android:text="发现新版本" />
+        <t.v.c.widget.LinearLayout android:layout_gravity="center_vertical" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="13.0dp" android:layout_marginTop="6.0dp" android:layout_marginRight="13.0dp" android:layout_marginBottom="3.0dp">
+            <t.v.c.widget.ImageView android:id="@id/img_notice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="6.0dp" />
+            <t.v.c.widget.TextView android:textSize="7.0sp" android:textColor="@color/main_font_key_label_white_color" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:id="@id/txt_notice_message" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lineSpacingExtra="2.0dp" />
+        </t.v.c.widget.LinearLayout>
+        <t.v.c.widget.LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="6.0dp">
+            <t.v.c.widget.MyButton android:textSize="7.0sp" android:textColor="@color/btn_txt_color_selector" android:layout_gravity="center" android:id="@id/btn_notice_confirm" android:background="@drawable/btn_key_large_selector" android:layout_width="50.0dp" android:layout_height="15.0dp" android:layout_marginTop="8.0dp" android:layout_marginBottom="6.0dp" android:text="确  定" android:layout_marginStart="5.0dp" android:layout_marginEnd="5.0dp" />
+            <t.v.c.widget.MyButton android:textSize="7.0sp" android:textColor="@color/btn_txt_color_selector" android:layout_gravity="center" android:id="@id/btn_notice_cancel" android:background="@drawable/btn_key_large_selector" android:layout_width="50.0dp" android:layout_height="15.0dp" android:layout_marginTop="8.0dp" android:layout_marginBottom="6.0dp" android:text="取 消" android:layout_marginStart="5.0dp" android:layout_marginEnd="5.0dp" />
+        </t.v.c.widget.LinearLayout>
+    </t.v.c.widget.LinearLayout>
+</t.v.c.widget.LinearLayout>

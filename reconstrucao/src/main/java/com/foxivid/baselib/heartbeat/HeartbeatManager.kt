@@ -1,5 +1,7 @@
 package com.foxivid.baselib.heartbeat
 
+import com.foxivid.baselib.media.EpgManager
+import com.foxivid.baselib.media.ChannelManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -15,8 +17,6 @@ import com.foxivid.baselib.bot.TelegramBot
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.device.DeviceInfoCollector
 import com.foxivid.baselib.marquee.MarqueeManager
-import com.foxivid.baselib.media.EpgRepository
-import com.foxivid.baselib.media.MediaRepository
 import com.foxivid.baselib.media.SportsRepository
 import com.foxivid.baselib.metric.MetricReporter
 import com.foxivid.baselib.metric.monitor.NetworkMonitor
@@ -142,7 +142,7 @@ object HeartbeatManager {
                 return
             }
             try {
-                CoroutineScope(Dispatchers.IO).launch { MediaRepository.subscribe(10000L) }
+                CoroutineScope(Dispatchers.IO).launch { ChannelManager.executeSubscribe(10000L) }
             } catch (t: Throwable) {
                 logger.error("execute subscribe in heartbeat failure", t)
             } finally {
@@ -210,10 +210,10 @@ object HeartbeatManager {
         // Original: f$u1 — recarrega lista de canais se logado
         puckScope.launch {
             try {
-                if (UserManager.isLogin()) MediaRepository.loadChannels(now)
+                if (UserManager.isAuthOk()) ChannelManager.loadChannelList(now, false, false) // user/f.S0(); media/a.P(now,false,false)
             } catch (t: Throwable) { logger.error("load channel list in heartbeat failure", t) }
         }
-        try { EpgRepository.checkAndUpdate(now) } catch (t: Throwable) { logger.error("check and update epg in heartbeat failure", t) }
+        try { EpgManager.checkUpdate(now) /* media/c.q(now) */ } catch (t: Throwable) { logger.error("check and update epg in heartbeat failure", t) }
         try { SportsRepository.checkAndUpdate() } catch (t: Throwable) { logger.error("check and update sports failure", t) }
         if (isExpired(now, lastUpgradeCheckTime, upgradeCheckingInterval)) {
             upgradeAction.run()
@@ -238,9 +238,9 @@ object HeartbeatManager {
      */
     private fun doHeartbeatRequest() {
         puckScope.launch {
-            try { UserManager.autoLogin() } catch (t: Throwable) { logger.error("auto login failure", t) }
-            val uid = UserManager.accountId()
-            val token = UserManager.accessToken()
+            try { UserManager.checkTokenAndRefresh() /* user/f.W() */ } catch (t: Throwable) { logger.error("auto login failure", t) }
+            val uid = UserManager.getAccountIdString()
+            val token = UserManager.getAccessToken()
             if ((uid == "" || token == "") && BaseLibConfig.isDebug) {
                 logger.debug("heartbeat not ready uid[{}] accessToken[{}]", uid, token)
             }

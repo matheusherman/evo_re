@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal"
+    android:background="@drawable/currentepg_item_selector"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_width="100.0dip"
+    android:layout_height="40.0dip"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:textSize="13.0dip"
+        android:textColor="@color/text_color_mepg_menu_selector"
+        android:ellipsize="marquee"
+        android:gravity="center|left"
+        android:id="@+id/epg_menu_name"
+        android:duplicateParentState="true"
+        android:layout_width="60.0dip"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10.0dip"
+        android:maxLines="2"
+        android:marqueeRepeatLimit="marquee_forever" />
+
+    <ImageView
+        android:layout_gravity="center_vertical"
+        android:id="@+id/epg_menu_icon"
+        android:duplicateParentState="true"
+        android:layout_width="18.0dip"
+        android:layout_height="18.0dip"
+        android:layout_marginLeft="15.0dip" />
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/subject_match_itemtop_bg" />
+    <stroke android:width="0.0dp" android:color="@color/subject_match_itemtop_bg" />
+    <corners android:topLeftRadius="@dimen/subject_match_item_radius" android:topRightRadius="@dimen/subject_match_item_radius" />
+</shape>

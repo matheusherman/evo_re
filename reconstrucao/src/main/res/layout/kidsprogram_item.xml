@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="horizontal"
+    android:background="@drawable/program_selector"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minHeight="@dimen/program_item_height"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:textSize="25.0sp"
+        android:textColor="@color/text_color_program"
+        android:id="@+id/program_name_tv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.0dip"
+        android:layout_marginRight="15.0dip"
+        android:layout_toLeftOf="@id/add_layout"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/add_layout"
+        android:layout_width="76.0dip"
+        android:layout_height="40.0dip"
+        android:layout_marginRight="15.0dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/kidsmode_title"
+            android:id="@+id/add_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD"
+            android:layout_centerVertical="true" />
+    </LinearLayout>
+</RelativeLayout>

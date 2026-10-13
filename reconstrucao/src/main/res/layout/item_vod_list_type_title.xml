@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/playlist_title_ll" android:tag="layout/item_vod_list_type_title_0" android:paddingTop="@dimen/dp_10" android:paddingBottom="@dimen/dp_10" android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="11.0sp" android:textStyle="bold" android:textColor="@color/base_font_normal_color" android:id="@id/title_tv" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_weight="1.0" android:layout_marginStart="@dimen/dp_6" />
+    <t.v.c.widget.TextView android:textSize="8.0sp" android:textColor="@color/vod_episode_choose_color" android:id="@id/view_all_tv" android:background="@drawable/shape_vf_tab_bg" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/view_all" android:layout_marginStart="@dimen/dp_10" android:layout_marginEnd="@dimen/dp_6" />
+</t.v.c.widget.LinearLayout>

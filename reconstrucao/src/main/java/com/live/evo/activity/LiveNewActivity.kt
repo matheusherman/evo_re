@@ -51,6 +51,7 @@ import com.live.evo.osd.presenter.OSDListProgramPresenter
 import com.live.evo.util.CommonUtils
 import com.live.evo.util.DateUtils
 import com.live.evo.util.EpgRepository
+import com.live.evo.util.TextStyleUtils
 import com.live.evo.util.FontUtils
 import com.live.evo.util.LoginConfig
 import com.live.evo.util.NetworkUtils
@@ -154,7 +155,7 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
 
     // --- logout / expiração / upgrade ---
     private var isInLogout = false
-    private var isPopupLoginOrRenewFragment = false
+    var isPopupLoginOrRenewFragment = false
     private val isLogoutDlgShow = AtomicBoolean(false)
     private var mExpiredStatus = -1
     private var isFirstStart = true
@@ -264,8 +265,8 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
         }
         mUiManager = LivePopupController.create(this, mHandler, LiveCatchUpClickHandler(this))
         SubscribeManager.init(this, mHandler, mSubscribeListener)
-        FontUtils.applyMedium(mNoticeView)
-        FontUtils.applyRegular(mPlayerStatInfoView)
+        TextStyleUtils.b(mNoticeView)
+        TextStyleUtils.c(mPlayerStatInfoView)
         mMosaicView = findViewById(R.id.livenewa_mosaic_view)
     }
 

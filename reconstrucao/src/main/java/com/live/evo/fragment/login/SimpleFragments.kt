@@ -11,10 +11,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.foxivid.baselib.media.MediaRepository
+import com.foxivid.baselib.user.UserManager
 import com.live.evo.AppUserManager
 import com.live.evo.R
 import com.live.evo.util.CommonUtils
+import com.live.evo.util.TextStyleUtils
 import java.util.concurrent.TimeUnit
 
 /**
@@ -115,7 +116,7 @@ class LoginFinishFragment : Fragment(), View.OnClickListener {
 
 /**
  * Conclusão "mini" da recarga (layout `login_finish_fragment_mini`): "remind_recharge_successfully" + validade
- * `MediaRepository.H()` formatada com `valid_until`. Tag "RechargeSuccessminiFragment".
+ * `UserManager.getExpireDateString()` (InteractionUtils.H) formatada com `valid_until`. Tag "RechargeSuccessminiFragment".
  * Original: com/live/evo/fragment/login/n.java
  */
 class LoginFinishMiniFragment : Fragment(), View.OnClickListener {
@@ -132,7 +133,7 @@ class LoginFinishMiniFragment : Fragment(), View.OnClickListener {
 
 /**
  * Tela "compartilhe seu código" (layout `sharecode_info_fragment`): gera QR com URL
- * `https://share-code-h5-tvebr.tomatoto.xyz?sh=<test>&a=<MediaRepository.Y()>&r=evo` (+ idioma pt/en/es),
+ * `https://share-code-h5-tvebr.tomatoto.xyz?sh=<test>&a=<UserManager.getAccountIdString()>&r=evo` (+ idioma pt/en/es),
  * textos `share_code_tip_title`/`share_code_remind`. Tag "ShareCodeInfoFragment".
  * Original: com/live/evo/fragment/login/v.java (base BaseFragment `fragment.c`)
  */
@@ -142,7 +143,7 @@ class ShareCodeInfoFragment : com.live.evo.fragment.BaseFragment(), View.OnClick
     fun buildShareUrl(url: String, share: String): String {
         if (url.isEmpty() || share.isEmpty()) return ""
         val base = if (url.endsWith("?")) url else "$url?"
-        return base + "sh=" + share + "&a=" + java.net.URLEncoder.encode(MediaRepository.appId(), "utf-8") + "&r=" + java.net.URLEncoder.encode("evo", "utf-8")
+        return base + "sh=" + share + "&a=" + java.net.URLEncoder.encode(UserManager.getAccountIdString(), "utf-8") + "&r=" + java.net.URLEncoder.encode("evo", "utf-8")
     }
     override fun onClick(v: View) { callback?.invoke(this) }
     companion object {
@@ -168,16 +169,56 @@ class BffInfoFragment : com.live.evo.fragment.BaseFragment(), View.OnClickListen
  * Back tratado ([LoginNavigator.BackHandler]). Tag "BindAccountTipFragment". Original: com/live/evo/fragment/login/f.java
  */
 class BindAccountTipFragment : com.live.evo.fragment.BaseFragment(), View.OnClickListener, LoginNavigator.BackHandler {
+    /** Original: f.a — `choice`: 0 = vincular e-mail, 1 = depois, 2 = não avisar mais. */
     interface Listener { fun a(f: Fragment, choice: Int) }
     private var listener: Listener? = null
-    override fun handleBack(): Boolean = TODO("ver login/f.H()")
-    override fun onClick(v: View) { TODO("ver login/f.onClick: listener.a(this, 0|1)") }
+    private var root: View? = null
+    private var tvTitle: TextView? = null; private var tvRemind: TextView? = null; private var tvNotTip: TextView? = null; private var tvError: TextView? = null
+    private var btnBind: Button? = null; private var btnLater: Button? = null
+
+    /** Back = "depois". Original: H() */
+    override fun handleBack(): Boolean { choose(1); return true }
+
+    private fun choose(choice: Int) { tvError?.visibility = View.INVISIBLE; listener?.a(this, choice) }
+
+    private fun refreshTexts() {
+        tvTitle!!.text = CommonUtils.string(R.string.tip_bind_title)
+        tvRemind!!.text = android.text.Html.fromHtml(CommonUtils.string(R.string.tip_bind_remind))
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.bindtipf_btn_bindemail -> choose(0)
+            R.id.bindtipf_btn_bindlater -> choose(1)
+            R.id.bindtipf_tv_not_tip -> choose(2)
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val v = inflater.inflate(R.layout.fragment_bindaccount_tip, container, false)
+        root = v
+        tvTitle = v.findViewById(R.id.bindtipf_tv_tip_title); tvRemind = v.findViewById(R.id.bindtipf_tv_tip_remind)
+        btnBind = v.findViewById(R.id.bindtipf_btn_bindemail); btnLater = v.findViewById(R.id.bindtipf_btn_bindlater)
+        tvNotTip = v.findViewById(R.id.bindtipf_tv_not_tip); tvError = v.findViewById(R.id.bindtipf_tv_error)
+        tvNotTip!!.paint.flags = android.graphics.Paint.UNDERLINE_TEXT_FLAG
+        for (t in listOf<TextView?>(tvTitle, tvRemind, btnBind, btnLater, tvNotTip, tvError)) TextStyleUtils.b(t)
+        refreshTexts()
+        btnBind!!.nextFocusRightId = R.id.btn_checkaccount_cancel; btnLater!!.nextFocusLeftId = R.id.btn_checkaccount_ok
+        btnBind!!.setOnClickListener(this); btnLater!!.setOnClickListener(this); tvNotTip!!.setOnClickListener(this)
+        return v
+    }
+
     companion object {
-        fun show(fm: FragmentManager, containerId: Int, l: Listener) {
-            val f = BindAccountTipFragment().also { it.listener = l }
+        private var instance: BindAccountTipFragment? = null
+        private fun get(): BindAccountTipFragment = instance ?: BindAccountTipFragment().also { instance = it }
+        /** Original: e0(FragmentManager, int container, a) */
+        @Synchronized fun show(fm: FragmentManager, containerId: Int, l: Listener) {
+            val f = get()
             val existing = fm.findFragmentByTag("BindAccountTipFragment")
-            if (existing == null) fm.beginTransaction().add(containerId, f, "BindAccountTipFragment").commitAllowingStateLoss()
-            else fm.beginTransaction().show(existing).commitAllowingStateLoss()
+            val tx = fm.beginTransaction()
+            f.listener = l
+            if (existing == null) tx.add(containerId, f, "BindAccountTipFragment").commitAllowingStateLoss()
+            else { f.root?.let { f.refreshTexts() }; tx.show(existing).commitAllowingStateLoss() }
         }
     }
 }

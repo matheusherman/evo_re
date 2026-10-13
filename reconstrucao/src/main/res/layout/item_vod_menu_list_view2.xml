@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="9.0sp" android:textStyle="bold" android:textColor="#fcfcfc" android:id="@id/vod_menu_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_marginStart="16.0dp" android:layout_alignParentStart="true" />
+    <androidx.recyclerview.widget.RecyclerView android:id="@id/vod_menu_rv" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/dp_8" android:layout_marginBottom="@dimen/dp_12" android:layout_below="@id/vod_menu_name" android:layout_marginStart="@dimen/dp_16" android:layout_marginEnd="12.0dp" />
+</t.v.c.widget.MyRelativelayout>

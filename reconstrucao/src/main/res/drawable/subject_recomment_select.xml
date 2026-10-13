@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="@dimen/subject_recommend_item_radius" />
+    <solid android:color="@color/subject_recommect_select_solid" />
+    <stroke android:width="@dimen/subject_recomment_image_margin" android:color="@color/subject_recommect_select_stroke" />
+</shape>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/ugc_layout" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@id/ugc_qr_banner_layout" android:background="@color/ugc_bg" android:layout_width="@dimen/ugc_width" android:layout_height="match_parent" android:layout_alignParentRight="true">
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/ugc_qr_layout" android:background="@color/ugc_qr_bg" android:paddingTop="20.0dp" android:paddingBottom="16.0dp" android:layout_width="@dimen/ugc_banner_width" android:layout_height="wrap_content" android:layout_marginLeft="17.0dp" android:layout_alignParentBottom="true">
+            <ImageView android:id="@id/ugc_qr_iv" android:layout_width="@dimen/ugc_qr_size" android:layout_height="@dimen/ugc_qr_size" android:src="@drawable/qr_placehodler" />
+            <TextView android:textSize="14.0sp" android:textColor="@color/ugc_qr_text_color" android:gravity="center" android:id="@id/ugc_qr_tv" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="10.0dp" android:layout_marginTop="15.0dp" android:layout_marginRight="10.0dp" android:text="@string/ugc_qr_tip" />
+        </LinearLayout>
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/ugc_banner" android:background="@drawable/myaccount_banner_bg" android:focusable="true" android:layout_width="@dimen/ugc_banner_width" android:layout_height="match_parent" android:layout_marginLeft="17.0dp" android:layout_marginBottom="17.0dp" android:scaleType="centerCrop" android:layout_above="@id/ugc_qr_layout" />
+    </RelativeLayout>
+    <RelativeLayout android:id="@id/chat_layout" android:background="@color/chat_bg" android:paddingLeft="17.0dp" android:paddingRight="36.0dp" android:visibility="gone" android:layout_width="@dimen/chat_width" android:layout_height="match_parent" android:layout_alignParentRight="true">
+        <Button android:textSize="20.0sp" android:textColor="@color/color_eeeeee" android:id="@id/chat_exit_btn" android:background="@drawable/chat_exit_btn_selector" android:visibility="gone" android:layout_width="match_parent" android:layout_height="45.0dp" android:layout_marginTop="15.0dp" android:text="@string/exit" android:layout_alignParentBottom="true" android:textAllCaps="false" />
+        <RelativeLayout android:orientation="vertical" android:id="@id/chat_list_layout" android:background="@color/chat_list_bg" android:paddingLeft="12.0dp" android:paddingRight="12.0dp" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_above="@id/chat_exit_btn">
+            <TextView android:textSize="16.0sp" android:textStyle="normal" android:textColor="@color/chat_title_text_color" android:id="@id/chat_title_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="13.0dp" android:layout_marginBottom="13.0dp" android:text="@string/chat_title" />
+            <View android:id="@id/chat_line2" android:background="@color/chat_line" android:layout_width="match_parent" android:layout_height="1.0px" android:layout_below="@id/chat_title_tv" />
+            <ListView android:id="@id/chat_listview" android:background="@color/transparent" android:scrollbars="none" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="8.0dp" android:layout_marginBottom="5.0dp" android:listSelector="@color/transparent" android:divider="@null" android:layout_above="@id/chat_line" android:layout_below="@id/chat_line2" />
+            <TextView android:textSize="20.0sp" android:textColor="@color/color_999999" android:gravity="center" android:id="@id/chat_nodata" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:text="@string/not_data" android:layout_above="@id/chat_line" android:layout_below="@id/chat_line2" />
+            <View android:id="@id/chat_line" android:background="@color/chat_line" android:layout_width="match_parent" android:layout_height="1.0px" android:layout_marginBottom="17.0dp" android:layout_above="@id/chat_qr_layout" />
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/chat_qr_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="17.0dp" android:layout_alignParentBottom="true">
+                <ImageView android:id="@id/chat_qr_iv" android:layout_width="@dimen/chat_qr_size" android:layout_height="@dimen/chat_qr_size" android:src="@drawable/qr_placehodler" />
+                <TextView android:textSize="14.0sp" android:textColor="@color/ugc_qr_text_color" android:id="@id/chat_qr_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="8.0dp" android:text="@string/chat_qr_tip" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

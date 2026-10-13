@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/loginfinishf_ll_parent" android:background="@drawable/login_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ImageView android:id="@id/loginfinishf_iv_icon" android:layout_width="30.0dp" android:layout_height="30.0dp" android:layout_marginTop="50.0dp" android:src="@drawable/successfully_icon" />
+        <TextView android:textSize="20.0sp" android:textColor="@color/loginfinishf_tv_remind1_tc" android:id="@id/loginfinishf_tv_remind1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" />
+        <TextView android:textSize="18.0sp" android:textColor="@color/loginfinishf_tv_remind2_tc" android:gravity="center" android:id="@id/loginfinishf_tv_remind2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:lineSpacingExtra="3.0dp" />
+        <TextView android:textSize="36.0sp" android:textColor="@color/loginfinishf_tv_remind3_tc" android:gravity="center" android:id="@id/loginfinishf_tv_remind3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="30.0dp" android:lineSpacingExtra="3.0dp" />
+        <Button android:textSize="@dimen/login_size" android:textColor="@color/text_color_selector_5" android:gravity="center" android:id="@id/loginfinishf_btn_start_play" android:background="@drawable/loginfinish_btn_selector" android:focusable="true" android:layout_width="wrap_content" android:layout_height="60.0dp" android:layout_marginTop="40.0dp" android:minWidth="150.0dp" android:text="@string/watch_now" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@color/black_80" android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/currentepgl_iv_icon" android:visibility="gone" android:layout_width="160.0dp" android:layout_height="100.0dp" android:layout_marginLeft="30.0dp" />
+    <LinearLayout android:orientation="vertical" android:id="@id/channel_pannel" android:layout_width="160.0dp" android:layout_height="120.0dp">
+        <TextView android:textSize="50.0sp" android:textColor="#ff036ac9" android:gravity="center" android:id="@id/currentepgl_tv_channel_pos" android:layout_width="match_parent" android:layout_height="0.0dp" android:text="3" android:layout_weight="1.0" />
+        <com.live.evo.widget.MarqueeTextView android:textSize="20.0sp" android:textColor="#ffd0d0d0" android:ellipsize="marquee" android:gravity="center" android:id="@id/currentepgl_tv_channel_name" android:layout_width="match_parent" android:layout_height="0.0dp" android:singleLine="true" android:layout_weight="1.0" android:layout_below="@id/currentepgl_tv_channel_pos" android:marqueeRepeatLimit="marquee_forever" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:layout_toRightOf="@id/channel_pannel">
+        <RelativeLayout android:gravity="bottom" android:visibility="gone" android:layout_width="match_parent" android:layout_height="35.0dp" android:layout_marginRight="30.0dp">
+            <TextView android:textSize="20.0sp" android:textColor="@color/item_normal_color" android:ellipsize="marquee" android:gravity="bottom" android:id="@id/currentepgl_tv_current_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+        <RelativeLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginRight="20.0dp">
+            <TextView android:textSize="17.0sp" android:textColor="#ffd0d0d0" android:gravity="center" android:id="@id/currentepgl_tv_current_epg_start" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" />
+            <TextView android:textSize="17.0sp" android:textColor="#ffd0d0d0" android:gravity="center" android:id="@id/currentepgl_tv_current_epg_stop" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1" android:layout_alignRight="@id/currentepgl_pb_progress" />
+            <ProgressBar android:id="@id/currentepgl_pb_progress" android:layout_width="match_parent" android:layout_height="5.0dp" android:layout_marginTop="5.0dp" android:layout_below="@id/currentepgl_tv_current_epg_start" style="@style/ProgressBar_Play" />
+        </RelativeLayout>
+        <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginRight="30.0dp">
+            <LinearLayout android:orientation="horizontal" android:paddingTop="10.0dp" android:layout_width="wrap_content" android:layout_height="0.0dp" android:layout_marginRight="5.0dp" android:layout_weight="1.0">
+                <TextView android:textSize="17.0sp" android:textColor="#ff7d7d7d" android:id="@id/currentepgl_tv_current_epg_title" android:layout_width="wrap_content" android:layout_height="27.0dp" android:text="@string/current" android:singleLine="true" />
+                <com.live.evo.widget.MarqueeTextView android:textSize="17.0sp" android:textColor="#ff7d7d7d" android:ellipsize="marquee" android:id="@id/currentepgl_mtv_current_epg_name" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="4.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+            </LinearLayout>
+            <LinearLayout android:gravity="end" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="0.0dp" android:layout_marginLeft="0.0dp" android:layout_weight="1.0">
+                <TextView android:textSize="17.0sp" android:textColor="#ff7d7d7d" android:id="@id/currentepgl_tv_next_epg_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/next" android:singleLine="true" />
+                <com.live.evo.widget.MarqueeTextView android:textSize="17.0sp" android:textColor="#ff7d7d7d" android:ellipsize="marquee" android:id="@id/currentepgl_mtv_next_epg_name" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/currentepgl_layout_keyimag" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="5.0dp" android:layout_marginRight="100.0dp">
+            <ImageView android:layout_width="18.0dp" android:layout_height="18.0dp" android:src="@drawable/right_icon" android:contentDescription="@string/key_hint_left" android:rotation="180.0" style="@style/keyRemindImage" />
+            <TextView android:id="@id/currentepgl_tv_epg_left" android:text="@string/key_hint_left" style="@style/keyRemindText" />
+            <ImageView android:src="@drawable/ok_icon" android:contentDescription="@string/key_hint_ok" style="@style/keyRemindImage_25" />
+            <TextView android:id="@id/currentepgl_tv_epg_ok" android:text="@string/key_hint_ok" style="@style/keyRemindText" />
+            <ImageView android:layout_width="18.0dp" android:layout_height="18.0dp" android:src="@drawable/right_icon" android:contentDescription="@string/key_hint_right" style="@style/keyRemindImage" />
+            <TextView android:id="@id/currentepgl_tv_epg_right" android:text="@string/key_hint_right" style="@style/keyRemindText" />
+            <ImageView android:src="@drawable/menu_icon" android:contentDescription="@string/key_hint_menu" style="@style/keyRemindImage" />
+            <TextView android:id="@id/currentepgl_tv_epg_menu" android:text="@string/key_hint_menu" style="@style/keyRemindText" />
+            <ImageView android:src="@drawable/del_icon1" android:contentDescription="@string/key_hint_del" style="@style/keyRemindImage_15" />
+            <TextView android:id="@id/currentepgl_tv_epg_del" android:text="@string/key_hint_del" style="@style/keyRemindText" />
+            <TextView android:textSize="15.0sp" android:textColor="@color/epg_text_color" android:gravity="right|center" android:id="@id/currentepgl_tv_sessionid" android:layout_width="match_parent" android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

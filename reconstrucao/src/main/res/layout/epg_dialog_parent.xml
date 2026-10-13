@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/epgdlgparent_ll_parent" android:layout_width="@dimen/epg_child_width" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:gravity="center" android:paddingLeft="@dimen/epg_paddingleft" android:layout_width="@dimen/epg_child_width" android:layout_height="75.0dp">
+        <TextView android:textSize="27.0sp" android:textStyle="bold" android:textColor="@color/epgdlgparent_tv_date_normal_tc" android:gravity="left|center" android:id="@id/epgdlgparent_tv_week" android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <TextView android:textSize="@dimen/epg_child" android:textStyle="bold" android:textColor="@color/epgdlgparent_tv_date_normal_tc" android:gravity="left|center" android:id="@id/epgdlgparent_tv_date" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@id/epgdlgparent_tv_week" />
+    </RelativeLayout>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+        <androidx.leanback.widget.VerticalGridView android:id="@id/epgdlgparent_gv_epg" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <TextView android:textSize="@dimen/epg_child" android:textColor="@color/epg_nodata_selector" android:gravity="left|center" android:id="@id/epgdlgparent_tv_not_data" android:background="@drawable/program_selector" android:paddingLeft="@dimen/date_move_right" android:focusable="true" android:visibility="gone" android:layout_width="match_parent" android:layout_height="60.0dp" android:text="@string/not_data" android:layout_centerInParent="true" />
+    </RelativeLayout>
+</LinearLayout>

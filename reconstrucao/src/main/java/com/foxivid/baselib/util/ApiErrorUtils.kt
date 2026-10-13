@@ -19,8 +19,8 @@ object ApiErrorUtils {
      * Retorna a mensagem de erro de uma resposta ("" quando `errCode == 0`).
      *
      * Efeitos colaterais:
-     *  - 9000010: posta `nf.u(code, "api")` e chama `UserManager.x1()` (provavelmente logout/sessão expirada);
-     *  - 9000042: posta `nf.u(code, "api")` e chama `UserManager.Z0("API", 1)`.
+     *  - 9000010: posta `nf.u(code, "api")` e chama `UserManager.markSessionExpired()` (user/f.x1()) (provavelmente logout/sessão expirada);
+     *  - 9000042: posta `nf.u(code, "api")` e chama `UserManager.onKickedOut("API", 1)` (user/f.Z0).
      *
      * Embora mapeie o código para um recurso de string ([codeToStringRes]), o original sempre devolve o
      * `errMsg` do servidor (ambos os ramos retornam `errMsg`).
@@ -31,10 +31,10 @@ object ApiErrorUtils {
         val errMsg = response.errMsg
         if (errCode == 9000010) {
             EventBus.getDefault().post(ApiAuthErrorEvent(errCode, "api"))
-            UserManager.x1() // TODO: nome real em UserManager (original user/f.x1())
+            UserManager.markSessionExpired() // Original: user/f.x1()
         } else if (errCode == 9000042) {
             EventBus.getDefault().post(ApiAuthErrorEvent(errCode, "api"))
-            UserManager.Z0("API", 1) // TODO: nome real em UserManager (original user/f.Z0(String,int))
+            UserManager.onKickedOut("API", 1) // Original: user/f.Z0(String,int)
         }
         val res = codeToStringRes(errCode)
         if (res == 0) return ""
