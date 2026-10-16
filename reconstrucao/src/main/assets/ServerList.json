@@ -1,0 +1,8 @@
+
+{
+  "server":"https://www.speedtest.net",
+  "dlURL":"https://www.speedtest.net/speedtest-servers-static.php",
+  "ulURL":"upload.php",
+  "pingURL":"speedtest-config.php",
+  "getIpURL":"speedtest-config.php"
+}

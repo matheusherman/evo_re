@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/favallprogramlistitem_rl_parent" android:background="@drawable/program_selector" android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="@dimen/program_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:id="@id/favoriteall_layout" android:layout_width="500.0dp" android:layout_height="match_parent" android:layout_centerVertical="true">
+        <RelativeLayout android:layout_gravity="center" android:layout_width="60.0dp" android:layout_height="40.0dp" android:layout_marginLeft="20.0dp">
+            <TextView android:textSize="16.0sp" android:textColor="@color/favallprogramlistitem_tv_channel_id_tc" android:gravity="center" android:id="@id/favallprogramlistitem_tv_channel_id" android:layout_width="match_parent" android:layout_height="match_parent" />
+            <RelativeLayout android:id="@id/favallprogramlistitem_rl_channel_layout" android:visibility="visible" android:layout_width="match_parent" android:layout_height="match_parent">
+                <ImageView android:id="@id/favallprogramlistitem_iv_image_favorite" android:background="@drawable/program_item_favorite_selector" android:layout_width="40.0dp" android:layout_height="match_parent" android:layout_marginLeft="10.0dp" />
+                <TextView android:textSize="14.0sp" android:textColor="@color/favallprogramlistitem_tv_channel_favorite_tc" android:gravity="center" android:id="@id/favallprogramlistitem_tv_channel_favorite" android:layout_width="match_parent" android:layout_height="match_parent" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/favallprogramlistitem_iv_program_icons" android:layout_width="77.0dp" android:layout_height="35.0dp" android:layout_marginLeft="5.0dp" android:src="@drawable/icon_transport" />
+        <TextView android:textSize="23.0dp" android:textColor="@color/color_program" android:ellipsize="marquee" android:id="@id/favallprogramlistitem_tv_program_item_name" android:paddingLeft="10.0dp" android:paddingTop="5.0dp" android:paddingBottom="5.0dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:singleLine="true" style="@style/text_28_c0c0c0" />
+    </LinearLayout>
+</RelativeLayout>

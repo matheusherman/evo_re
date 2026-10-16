@@ -9,9 +9,8 @@ import android.widget.RatingBar
 
 /**
  * RatingBar com estrelas customizáveis (cores, drawable, espaçamento, escala e modo direita-para-esquerda).
- * O drawable de progresso é `jf.e` (LayerDrawable de estrelas) montado com `jf.c` (fábrica de
- * drawables de estrela) — classes de terceiros/utilitárias fora deste módulo, referenciadas como
- * [StarProgressDrawable] / [StarDrawableFactory].
+ * O drawable de progresso é `jf.e` ([StarProgressDrawable], LayerDrawable de estrelas) montado
+ * com `jf.c` ([StarDrawableFactory]); ver StarDrawables.kt.
  *
  * Original: t/v/c/widget/ratingbar/MyRatingBar.java
  */
@@ -96,18 +95,3 @@ open class MyRatingBar @JvmOverloads constructor(
         if (right2Left) super.setRating(numStars - getRating())
     }
 }
-
-/** Referência a `jf.e` (drawable de progresso com tiles de estrelas). Não reconstruído (fora do módulo). */
-open class StarProgressDrawable(factory: StarDrawableFactory) : android.graphics.drawable.LayerDrawable(arrayOf()) {
-    /** Original: jf.e.b() */
-    open fun tileRatio(): Float = TODO("jf.e (drawable de progresso) fora do módulo")
-    /** Original: jf.e.d(int) */
-    open fun setNumStars(n: Int): Unit = TODO("jf.e (drawable de progresso) fora do módulo")
-}
-
-/** Referência a `jf.c` (fábrica de drawables das estrelas). Não reconstruído (fora do módulo). */
-class StarDrawableFactory(
-    val context: Context, val numStars: Int, val bgDrawable: Int, val starDrawable: Int,
-    val bgColor: ColorStateList?, val subStarColor: ColorStateList?, val starColor: ColorStateList?,
-    val keepOriginColor: Boolean
-)

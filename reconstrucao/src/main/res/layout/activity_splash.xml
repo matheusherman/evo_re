@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ViewStub android:id="@id/splash_view_stub" android:visibility="gone" android:layout="@layout/activity_splash_view_stub_mb" android:layout_width="match_parent" android:layout_height="match_parent" />
+    <t.v.c.widget.LinearLayout android:gravity="center_horizontal" android:layout_gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="16.0dp">
+        <t.v.c.widget.ImageView android:id="@id/appLogoImageView" android:visibility="gone" android:layout_width="128.0dp" android:layout_height="44.0dp" android:src="@drawable/brand_logo_tsp" android:scaleType="fitXY" />
+        <t.v.c.widget.TextView android:textSize="8.0sp" android:textStyle="bold" android:textColor="@color/white" android:id="@id/versionTextView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="108.0dp" android:alpha="0.8" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.ImageView android:gravity="center" android:layout_gravity="center" android:id="@id/adImageView" android:layout_width="match_parent" android:layout_height="match_parent" />
+    <t.v.c.widget.TextView android:textSize="12.0sp" android:textColor="@color/main_font_normal_label_gray_color" android:gravity="center" android:layout_gravity="end" android:id="@id/countdownView" android:background="@drawable/count_down_normal" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10.0dp" />
+    <t.v.c.widget.GlobalMarqueeTextView android:textSize="@dimen/font_global_marquee" android:textColor="@color/global_marquee_txt_color" android:ellipsize="marquee" android:background="@color/global_marquee_bg_color" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+    <include android:layout_gravity="center" android:id="@id/loading_layout" android:layout_width="wrap_content" android:layout_height="wrap_content" layout="@layout/s_loading_dialog_mb" />
+</t.v.c.widget.FrameLayout>

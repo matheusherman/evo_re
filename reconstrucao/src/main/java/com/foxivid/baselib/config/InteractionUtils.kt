@@ -1,12 +1,22 @@
 package com.foxivid.baselib.config
 
 import android.content.Context
+import androidx.lifecycle.Lifecycle
+import com.foxivid.baselib.heartbeat.HeartbeatManager
+import com.foxivid.baselib.heartbeat.UpgradeFailureEvent
+import com.foxivid.baselib.media.ChannelManager
+import com.foxivid.baselib.media.EpgManager
+import com.foxivid.baselib.model.extra.upgrade.UpgradeInfo
+import com.foxivid.baselib.model.meta.ChannelStreamResponse
+import com.foxivid.baselib.model.meta.EPGProgramme
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Fachada pública da UI para a baselib (canais, EPG, login, upgrade...). Aqui só é reconstruído
  * o ponto de entrada de inicialização do SDK; o restante pertence ao módulo `com.foxivid.ui`.
  *
- * Original: t/v/c/i/a.java (InteractionUtils) — apenas o método b0().
+ * Original: t/v/c/i/a.java (InteractionUtils) — b0() e os delegadores usados pelo módulo `ui`
+ * (os demais ~100 métodos são encaminhamentos de uma linha para [ChannelManager], [EpgManager], [HeartbeatManager], etc.).
  */
 object InteractionUtils {
 
@@ -48,6 +58,47 @@ object InteractionUtils {
         loggerEndPoint, imgEndPoint, clientSecret, serverPublicKeyPem, sportsEndPoint,
         historyName, favoritesName, allName,
     )
+
+    // ---- Delegadores usados pelo módulo ui (cada um é um encaminhamento de uma linha no original) ----
+
+    /** Pede/executa a instalação do APK. Original: a.E0(context, título, descrição, botão, logo, apkFile) -> HeartbeatManager.D0 */
+    fun installApk(context: Context, titleRes: Int, descRes: Int, btnRes: Int, logoRes: Int, apkFile: String?) {
+        HeartbeatManager.requestInstall(context, titleRes, descRes, btnRes, logoRes, apkFile ?: return)
+    }
+
+    /** Instante de expiração do plano (ms). Original: a.I() -> user.f.m0 */
+    fun I(): Long = com.foxivid.baselib.user.UserManager.getExpireTs()
+
+    /** Número de exibição do canal (ou "NA"). Original: a.b(response) -> media.a.p */
+    fun b(response: ChannelStreamResponse): String = ChannelManager.channelNumber(response)
+
+    /** Lista de datas de EPG disponíveis (padrão "" = todas). Original: a.B(String)/C(...) -> media.c.w */
+    suspend fun C(channelId: String = ""): List<String> = EpgManager.getDateList(channelId)
+
+    /** Programa em exibição em [timeMs]. Original: a.G(epgId, ts) -> media.c.C(epgId, ts, false) */
+    suspend fun G(epgId: String, timeMs: Long): EPGProgramme? = EpgManager.getProgrammeAt(epgId, timeMs, false)
+
+    /** Canais da coluna (padrão: coluna "todos"). Original: a.n(column, isIncludeAdult) -> media.a.w */
+    fun n(column: String?, isIncludeAdult: Boolean?): List<ChannelStreamResponse> =
+        ChannelManager.channelsOf(column ?: ChannelManager.columnAll(), isIncludeAdult)
+
+    /** A coluna só existe no modo adulto? Original: a.d0(column) -> media.a.G */
+    fun d0(column: String): Boolean = ChannelManager.isAdultColumn(column)
+
+    /** Modo adulto ativo? Original: a.e0() -> media.a.H */
+    fun e0(): Boolean = ChannelManager.isAdultMode()
+
+    /** Liga o modo adulto. Original: a.H0() -> media.a.d0 */
+    fun H0() = ChannelManager.enableAdultMode()
+
+    /** Desliga o modo adulto. Original: a.I0() -> media.a.e0 */
+    fun I0() = ChannelManager.disableAdultMode()
+
+    /** Fluxo de checagem de upgrade. Original: a.c(lifecycle, onProgress) -> HeartbeatManager.Y */
+    fun checkUpgradeFlow(
+        lifecycle: Lifecycle?,
+        onProgress: ((String, Int, String?, UpgradeFailureEvent?) -> Unit)?,
+    ): Flow<UpgradeInfo?> = HeartbeatManager.checkUpgrade(lifecycle, onProgress)
 
     /** clientSecret usado na assinatura X-Sign das requisições (valor real de InitActivity). */
     const val CLIENT_SECRET = "myQeN2Ql7NNL7I14DG2rGZ7dvR6TGNK2"

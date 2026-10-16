@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:background="@color/transparent" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:orientation="vertical" android:id="@id/adultnewkey_ll_parent" android:background="@color/adultnewkey_ll_parent_bgc" android:padding="16.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <TextView android:textSize="30.0dp" android:textColor="@color/adultnewkey_tv_title_tc" android:gravity="center" android:id="@id/adultnewkey_tv_title" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="" />
+        <RelativeLayout android:layout_gravity="center_horizontal" android:id="@id/adultnewkey_rl_layout_pwd" android:layout_width="400.0dp" android:layout_height="60.0dp" android:layout_marginTop="15.0dp">
+            <com.live.evo.widget.RemoveKeyCodeEnterEditText android:textSize="28.0sp" android:textColor="@color/adultkeyl_et_pwd_tc" android:textColorHint="@color/adultkeyl_et_pwd_tch" android:gravity="left|center" android:id="@id/adultnewkey_tv_adult_pwd" android:background="@drawable/bg_adult_password" android:paddingLeft="45.0dp" android:paddingTop="2.0dp" android:paddingBottom="2.0dp" android:focusable="true" android:focusableInTouchMode="false" android:layout_width="match_parent" android:layout_height="match_parent" android:cursorVisible="false" android:password="true" android:maxLength="4" android:inputType="number" android:imeOptions="flagNoExtractUi" android:textCursorDrawable="@drawable/et_cursor" />
+            <ImageView android:id="@id/adultnewkey_iv_adult_icon" android:background="@drawable/adult_icon" android:layout_width="25.0dp" android:layout_height="25.0dp" android:layout_marginLeft="15.0dp" android:layout_marginTop="15.0dp" />
+        </RelativeLayout>
+        <Button android:textSize="25.0dp" android:textColor="@color/adultnewkey_btn_go_tc" android:layout_gravity="center_horizontal" android:id="@id/adultnewkey_btn_go" android:background="@drawable/bg_adult_goahead" android:layout_width="200.0dp" android:layout_height="wrap_content" android:layout_marginTop="30.0dp" android:text="@string/adult_go_ahead" />
+        <TextView android:textSize="20.0dp" android:textColor="@color/adultnewkey_tv_hint_tc" android:gravity="center" android:id="@id/adultnewkey_tv_hint" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:text="@string/adult_key_first_hint" />
+    </LinearLayout>
+</FrameLayout>

@@ -40,7 +40,7 @@ abstract class BaseEpgListFragment<DB : ViewDataBinding> : BaseDataBindFragment<
             }
             if (BaseLibConfig.isRenewAutoRefresh && list.isEmpty()) {
                 // dia base (yyyyMMdd) em ms; programas fictícios das 06-07, 11-12... (offsets em ms)
-                val base = 0L // TODO("n.n().d(yyyyMMdd, \"yyyyMMdd\") — LegacyTvUtils.parse(date)")
+                val base = com.foxivid.baselib.util.LegacyTvUtils.getInstance().parse(yyyyMMdd, "yyyyMMdd") // n.n().d(yyyyMMdd, "yyyyMMdd")
                 val offsets = listOf(
                     Triple("test programme1", 21600000L, 25200000L),
                     Triple("test programme2", 39600000L, 46800000L),

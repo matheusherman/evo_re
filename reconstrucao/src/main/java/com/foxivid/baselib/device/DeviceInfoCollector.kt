@@ -12,6 +12,11 @@ import android.telephony.TelephonyManager
 import android.text.TextUtils
 import android.util.Log
 import com.foxivid.baselib.config.BaseLibConfig
+import com.foxivid.baselib.metric.model.SystemInfo
+import com.foxivid.baselib.upgrade.ApkInstaller
+import com.foxivid.baselib.util.AppAttrUtils
+import com.foxivid.baselib.util.NetworkInfoManager
+import com.foxivid.baselib.util.SignatureUtils
 import org.slf4j.LoggerFactory
 import java.io.BufferedReader
 import java.io.File
@@ -122,13 +127,13 @@ object DeviceInfoCollector {
 
     /**
      * Original: z.k(Context, boolean) — MAC Ethernet (double-checked locking).
-     * Valor vem de zf/f.f(context).d() (helper de rede de outro módulo).
+     * Valor vem de [NetworkInfoManager] (zf/f.f(context).d()).
      */
     private fun getEthernetMac(context: Context, printLog: Boolean): String {
         if (TextUtils.isEmpty(ethernetMac)) synchronized(this) {
             if (TextUtils.isEmpty(ethernetMac)) {
                 try {
-                    ethernetMac = TODO("zf/f.f(context).d(): MAC de eth0 sem ':' em minúsculas (helper de rede fora deste módulo)")
+                    ethernetMac = NetworkInfoManager.get(context).ethernetMac()   // zf/f.f(context).d(): MAC de eth0 sem ':' em minúsculas
                 } catch (t: Throwable) {
                     if (printLog) logger.warn("getEthernetMac error", t)
                 }
@@ -230,13 +235,13 @@ object DeviceInfoCollector {
         map["wifi_mac"] = getWifiMac(ctx, true)
         map["android_id"] = getAndroidId(ctx)
         // Original: x1/f1/lb/util/k (AppAttrUtils): x(), q(), s(), t()
-        map["package_name"] = TODO("AppAttrUtils.packageName (util/k.x())")
-        map["app_id"] = TODO("AppAttrUtils.appId (util/k.q())")
-        map["app_ver_code"] = TODO("AppAttrUtils.appVersion (util/k.s())")
-        map["app_ver_name"] = TODO("AppAttrUtils.appVersionName (util/k.t())")
-        map["system_app_flag"] = TODO("util/m0.a(context): flag de app de sistema")
+        map["package_name"] = AppAttrUtils.packageName()
+        map["app_id"] = AppAttrUtils.appId().toString()
+        map["app_ver_code"] = AppAttrUtils.appVersion().toString()
+        map["app_ver_name"] = AppAttrUtils.appVersionName()
+        map["system_app_flag"] = ApkInstaller.isSelfSystemApp(ctx).toString()   // m0.a(context)
         map["emmc_id"] = getEmmcId()
-        map["system_sign"] = TODO("util/y0.c(context, \"com.android.providers.settings\"): assinatura do pacote de sistema")
+        map["system_sign"] = SignatureUtils.getSignatureMd5(ctx, "com.android.providers.settings")   // y0.c
         loadCpuInfo()
         map["cpu_hadrware"] = cpuHardware // (sic) typo da chave no original
         map["cpu_serial"] = cpuSerial
@@ -265,7 +270,7 @@ object DeviceInfoCollector {
             while (true) {
                 val line = br.readLine() ?: break
                 val f = line.split(Regex("\\s+"))
-                if (f.size >= 3 && TODO("f2/a.f(f[2]): validação de endereço IP") as Boolean) {
+                if (f.size >= 3 && com.google.common.net.InetAddresses.isInetAddress(f[2])   // f2/a.f = Guava InetAddresses.isInetAddress) {
                     list.add(f[2]); break
                 }
             }
@@ -317,7 +322,12 @@ object DeviceInfoCollector {
      * Original: z.u() — monta tf/SystemInfo (modelo de métricas) com did, cpu_serial, macs,
      * android_id, manufacturer, hardware, display, brand, model, abis, build_user, build_host, fingerprint.
      */
-    fun getSystemInfo(): Any = TODO("construir tf.SystemInfo (modelo de métricas de outro módulo) com os campos acima")
+    fun getSystemInfo(): SystemInfo {
+        val p = getDeviceProperties()
+        fun v(key: String) = p[key] ?: ""
+        return SystemInfo(v("did"), v("cpu_serial"), v("eth_mac"), v("wifi_mac"), v("android_id"), v("manufacturer"), v("hardware"),
+            v("display"), v("brand"), v("model"), v("supported_abis"), v("build_user"), v("build_host"), v("fingerprint"), 0)
+    }
 
     /** Original: z.v(Context, boolean) — MAC Wi-Fi via zf/f.f(context).j(). */
     @SuppressLint("HardwareIds")
@@ -325,7 +335,7 @@ object DeviceInfoCollector {
         if (TextUtils.isEmpty(wifiMac)) synchronized(this) {
             if (TextUtils.isEmpty(wifiMac)) {
                 try {
-                    wifiMac = TODO("zf/f.f(context).j(): MAC de wlan0 sem ':' em minúsculas")
+                    wifiMac = NetworkInfoManager.get(context).wifiMac()   // zf/f.f(context).j(): MAC de wlan0 sem ':' em minúsculas
                 } catch (t: Throwable) {
                     if (printLog) logger.error("getWifiMac error", t)
                 }

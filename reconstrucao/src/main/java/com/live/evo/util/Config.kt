@@ -35,11 +35,78 @@ class LoginConfig private constructor() {
  */
 class SkinConfig private constructor() {
     private val context = MyApplication.get()
-    fun hasBootVideo(): Boolean = TODO("ver util/o0.z(): existe mp4 em diretório de skin")
-    fun bootVideoUri(): String = "android.resource://" + context.packageName + "/" + com.live.evo.R.raw.bootvideo
+    private val gson = GsonFactory.gson()
+
+    /** Info de operação (arquivo de skin baixado): só a URL/caminho (`url`) é usada. Original: i5/n.java (AppOperateInfo) */
+    class AppOperateInfo { var values: String? = null; var checksum = ""; var url = ""; var suffix = ""; var type = 0 }
+
+    private var videoEndPath: String? = null        // f7306c  key_load_video_end
+    private var ecoModePath: String? = null         // f7307d  key_load_ecomode
+    private var playIconPath: String? = null        // f7308e  key_load_play_icon
+    private var favoriteImgPath: String? = null     // f7309f  key_load_favorite_img
+    private var curtainPath: String? = null         // f7310g  key_load_curtain
+    private var loadType = 0                        // f7311h  key_load_type
+    private var bootMediaPath: String? = null       // f7312i  key_boot_media
+    private var loadingColor: String? = null        // f7313j  loading_view_color
+    private var epgProgressColor: String? = null    // f7314k  epg_current_progress_color
+    private var seekProgressColor: String? = null   // f7315l  playback_seekbar_progress_color
+    private var seekThumbColor: String? = null      // f7316m  playback_seekbar_thumb_color
+
+    /** Assina a chave de propriedade (JSON AppOperateInfo) e repassa só a `url`. Original: r(String, w0.a) + h(...) */
+    private fun watchFile(key: String, onPath: (String) -> Unit) {
+        com.foxivid.baselib.util.Preferences.getString(key, { json ->
+            val info = try { gson.fromJson(json, AppOperateInfo::class.java) } catch (_: Throwable) { null }
+            if (info != null) onPath(info.url)
+        }, "")
+    }
+
+    init {
+        watchFile("key_load_video_end") { videoEndPath = it }
+        watchFile("key_load_ecomode") { ecoModePath = it }
+        watchFile("key_load_play_icon") { playIconPath = it }
+        watchFile("key_load_favorite_img") { favoriteImgPath = it }
+        watchFile("key_load_curtain") { curtainPath = it }
+        watchFile("key_boot_media") { bootMediaPath = it }
+        val prefs = com.foxivid.baselib.util.Preferences
+        prefs.getString("loading_view_color", { loadingColor = it }, "")
+        prefs.getString("epg_current_progress_color", { epgProgressColor = it }, "")
+        prefs.getString("playback_seekbar_progress_color", { seekProgressColor = it }, "")
+        prefs.getString("playback_seekbar_thumb_color", { seekThumbColor = it }, "")
+        prefs.getString("key_load_type", { v ->
+            val t = if (v.isEmpty()) 0 else v.toInt()
+            loadType = if (bootMediaPath.isNullOrEmpty()) 0 else t   // só vale se há mídia de boot
+        }, "")
+    }
+
+    /** Há mídia de abertura habilitada (`key_load_type` == 1 com mídia)? Original: z() */
+    fun hasBootVideo(): Boolean = loadType == 1
+    /** URI do vídeo de abertura: o mp4 baixado (se existe) ou o `R.raw.bootvideo` embutido. Original: x() */
+    fun bootVideoUri(): String {
+        val path = bootMediaPath
+        if (!path.isNullOrEmpty()) {
+            val f = java.io.File(path)
+            if (f.exists() && f.name.endsWith(".mp4")) return path
+        }
+        return "android.resource://" + context.packageName + "/" + com.live.evo.R.raw.bootvideo
+    }
+    /** Cor(es) do loading, "#RRGGBB[,#RRGGBB]". Original: q() */ fun loadingViewColor(): String? = loadingColor
+    /** Alias de [loadingViewColor] usado por LiveNewActivity. */ fun loadingColors(): String? = loadingColor
+    /** Cor da barra de progresso "atual" da EPG. Original: m() */ fun epgCurrentProgressColor(): String? = epgProgressColor
+    /** Caminho da imagem de favorito. Original: o() */ fun favoriteImagePath(): String? = favoriteImgPath
+    /** Caminho do ícone de play. Original: s() */ fun playIconPath(): String? = playIconPath
+    /** Cor do progresso da barra de playback. Original: t() */ fun seekbarProgressColor(): String? = seekProgressColor
+    /** Cor do thumb da barra de playback. Original: u() */ fun seekbarThumbColor(): String? = seekThumbColor
+    /** Imagem de standby/eco (baixada ou `stopplay`). Original: n() */
+    fun ecoModeDrawable(): android.graphics.drawable.Drawable? = try {
+        if (java.io.File(ecoModePath).exists()) android.graphics.drawable.Drawable.createFromPath(ecoModePath)
+        else CommonUtils.drawable(com.live.evo.R.drawable.stopplay)
+    } catch (_: Exception) { CommonUtils.drawable(com.live.evo.R.drawable.stopplay) }
+    /** Cortina de abertura: `load_bg`. Original: v() */ fun bootCurtainDrawable(): android.graphics.drawable.Drawable? = CommonUtils.drawable(com.live.evo.R.drawable.load_bg)
+    /** Fundo ao fim da abertura: `load_bg`. Original: w() */ fun bootEndDrawable(): android.graphics.drawable.Drawable? = CommonUtils.drawable(com.live.evo.R.drawable.load_bg)
+
     companion object {
         private var instance: SkinConfig? = null
-        /** Original: p() */ fun get(): SkinConfig = instance ?: SkinConfig().also { instance = it }
+        /** Original: p() / y() */ fun get(): SkinConfig = instance ?: synchronized(this) { instance ?: SkinConfig().also { instance = it } }
     }
 }
 

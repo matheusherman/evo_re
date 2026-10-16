@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center_horizontal"
+    android:background="@drawable/epg_dialog_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/countdownl_iv_wallpapers"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:id="@+id/rly_bg"
+            android:background="@drawable/popup_dialog_bg"
+            android:layout_width="550.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120.0dip"
+            android:minHeight="300.0dip"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/img_eco_mode_icon"
+                android:background="@drawable/eco_mode_icon"
+                android:layout_width="@dimen/sm_150"
+                android:layout_height="@dimen/sm_150"
+                android:layout_marginTop="@dimen/sm_15"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:textSize="25.0sp"
+                android:textColor="#fff2f2f2"
+                android:id="@+id/countdownl_tv_time_countdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.0dip"
+                android:layout_below="@id/img_eco_mode_icon"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:textSize="20.0sp"
+                android:textColor="#fff2f2f2"
+                android:gravity="center"
+                android:id="@+id/countdownl_tv_remind_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.0dip"
+                android:text="@string/tv_start_remind"
+                android:layout_below="@id/countdownl_tv_time_countdown"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:textSize="20.0sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:id="@+id/countdownl_tv_remind_stop"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.0dip"
+                android:text="@string/tv_stop_remind"
+                android:singleLine="true"
+                android:layout_below="@id/img_eco_mode_icon"
+                android:layout_centerHorizontal="true" />
+
+            <View
+                android:id="@+id/countdownl_view_line"
+                android:background="@color/color_2f2f2f"
+                android:visibility="gone"
+                android:layout_width="500.0dip"
+                android:layout_height="1.0px"
+                android:layout_marginTop="10.0dip"
+                android:layout_below="@id/countdownl_tv_remind_stop"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:id="@+id/countdownl_ll_btn_parent"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="72.0dip"
+                android:layout_marginTop="10.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_below="@id/countdownl_view_line">
+
+                <com.live.tvcinema.widget.BaseButton
+                    android:textSize="18.0sp"
+                    android:textColor="@color/color_p_exit"
+                    android:id="@+id/countdownl_btn_sure"
+                    android:background="@drawable/playback_btn_bg_selector"
+                    android:layout_width="202.0dip"
+                    android:layout_height="62.0dip"
+                    android:layout_marginTop="5.0dip"
+                    android:text="@string/play"
+                    android:layout_alignParentRight="true" />
+
+                <com.live.tvcinema.widget.BaseButton
+                    android:textSize="18.0sp"
+                    android:textColor="@color/color_p_exit"
+                    android:id="@+id/countdownl_btn_cancel"
+                    android:background="@drawable/playback_btn_bg_selector"
+                    android:layout_width="202.0dip"
+                    android:layout_height="62.0dip"
+                    android:layout_marginLeft="20.0dip"
+                    android:layout_marginTop="5.0dip"
+                    android:text="@string/exit"
+                    android:layout_alignParentLeft="true" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

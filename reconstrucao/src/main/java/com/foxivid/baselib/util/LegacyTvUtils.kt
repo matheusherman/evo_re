@@ -194,7 +194,7 @@ class LegacyTvUtils private constructor() {
     }
 
     /** Hora do servidor. Original: n.b() */
-    fun now(): Long = ServerTime.serverNow()
+    fun now(): Long = ServerTime.now()
 
     /** Original: n.g() */
     fun formatNow(type: Int): String = formatTime(type, now())

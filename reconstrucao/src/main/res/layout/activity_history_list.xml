@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:tag="layout/activity_history_list_0" android:background="#1a1a23" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:id="@id/ll_toolbar" android:layout_width="match_parent" android:layout_height="@dimen/dp_40" app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_back" android:padding="@dimen/dp_12" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/iv_back" />
+        <TextView android:textSize="@dimen/sp_18" android:textStyle="bold" android:textColor="#fcfcfc" android:gravity="center" android:id="@id/tv_title" android:layout_width="0.0dp" android:layout_height="match_parent" android:text="@string/menu_history" android:layout_weight="1.0" />
+        <androidx.appcompat.widget.AppCompatImageView android:id="@id/iv_del" android:padding="@dimen/dp_12" android:layout_width="wrap_content" android:layout_height="match_parent" android:src="@mipmap/search_del" />
+        <TextView android:textSize="@dimen/sp_14" android:textColor="#e62f3a" android:gravity="center" android:id="@id/tv_cancel" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="@string/cancel" android:layout_marginEnd="@dimen/dp_14" />
+    </LinearLayout>
+    <com.google.android.material.tabs.TabLayout android:id="@id/tab_layout" android:background="#1a1a23" android:visibility="gone" android:layout_width="match_parent" android:layout_height="@dimen/dp_40" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintTop_toBottomOf="@id/ll_toolbar" app:tabGravity="fill" app:tabIndicatorColor="#e62f3a" app:tabIndicatorFullWidth="false" app:tabIndicatorHeight="@dimen/dp_1" app:tabMode="fixed" app:tabSelectedTextColor="#e62f3a" app:tabTextColor="#fcfcfc" />
+    <androidx.viewpager2.widget.ViewPager2 android:id="@id/view_pager2" android:layout_width="match_parent" android:layout_height="0.0dp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+</androidx.constraintlayout.widget.ConstraintLayout>

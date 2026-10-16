@@ -42,6 +42,6 @@ class SLoadingTextView @JvmOverloads constructor(
     fun setText(text: String) {
         this.text = text
         // original: if (builder instanceof q) ((q) builder).z(text)
-        builder?.setText(text)
+        (builder as? TextLoadingBuilder)?.setLabel(text)
     }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="rectangle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="4.0dp" />
+    <solid android:color="@color/catch_up_tv_selector_solid" />
+    <size android:height="@dimen/sm_12" android:width="@dimen/sm_12" />
+</shape>

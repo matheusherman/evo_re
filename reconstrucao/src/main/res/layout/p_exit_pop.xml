@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:id="@+id/exitpop_ll_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:id="@+id/exitpop_rl_dlg_layout"
+        android:background="@drawable/p_exit_bg2"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <TextView
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/exitpop_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.0dip"
+                android:text="@string/not_look_vod"
+                style="@style/text_42_f2f2f2" />
+
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70.0dip">
+
+                <com.live.tvcinema.widget.BaseButton
+                    android:textSize="36.0sp"
+                    android:textColor="@color/exitpop_btn_sure_tc"
+                    android:id="@+id/exitpop_btn_sure"
+                    android:background="@drawable/program_selector"
+                    android:layout_width="202.0dip"
+                    android:layout_height="62.0dip"
+                    android:text="@string/sure"
+                    android:layout_alignParentRight="true"
+                    android:textAllCaps="false" />
+
+                <com.live.tvcinema.widget.BaseButton
+                    android:textSize="36.0sp"
+                    android:textColor="@color/exitpop_btn_cancel_tc"
+                    android:layout_gravity="right"
+                    android:id="@+id/exitpop_btn_cancel"
+                    android:background="@drawable/program_selector"
+                    android:layout_width="202.0dip"
+                    android:layout_height="62.0dip"
+                    android:layout_marginLeft="20.0dip"
+                    android:text="@string/cancel"
+                    android:layout_alignParentLeft="true"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" />
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@android:color/transparent" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton android:id="@id/mediacontroller_play_pause" android:background="@color/transparent" android:visibility="gone" android:layout_width="@dimen/sm_101" android:layout_height="@dimen/sm_101" android:src="@drawable/play_icon" android:scaleType="fitXY" android:layout_centerInParent="true" />
+    <LinearLayout android:orientation="vertical" android:background="#b3000000" android:paddingLeft="80.0dp" android:layout_width="match_parent" android:layout_height="60.0dp" android:layout_marginTop="0.0dp">
+        <RelativeLayout android:orientation="vertical" android:background="@color/duo_right_bg" android:paddingLeft="30.0dp" android:paddingRight="30.0dp" android:layout_width="300.0dp" android:layout_height="match_parent">
+            <com.live.evo.widget.MarqueeTextView android:textSize="20.0sp" android:textColor="@color/item_normal_color" android:ellipsize="marquee" android:gravity="center" android:id="@id/channel_name" android:layout_width="match_parent" android:layout_height="wrap_content" android:singleLine="true" android:layout_centerVertical="true" android:marqueeRepeatLimit="marquee_forever" android:layout_marginStart="@dimen/sm_10" />
+            <ImageView android:background="@drawable/duo_line" android:layout_width="match_parent" android:layout_height="10.0dp" android:layout_below="@id/channel_name" />
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:background="@color/black" android:layout_width="match_parent" android:layout_height="@dimen/sm_80" android:layout_alignParentBottom="true">
+        <ImageView android:layout_gravity="right|center" android:id="@id/channel_logo" android:visibility="gone" android:layout_width="@dimen/sm_120" android:layout_height="@dimen/sm_66" android:layout_marginLeft="35.0dp" android:layout_marginBottom="@dimen/sm_5" />
+        <LinearLayout android:orientation="vertical" android:paddingTop="@dimen/sm_10" android:layout_width="match_parent" android:layout_height="match_parent">
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/sm_10">
+                <TextView android:textSize="@dimen/sm_20" android:textColor="@color/item_normal_color" android:gravity="bottom" android:id="@id/channel_programpos" android:layout_width="wrap_content" android:layout_height="match_parent" android:layout_marginStart="@dimen/sm_83" />
+                <ImageView android:gravity="bottom" android:id="@id/channel_catchup_icon" android:background="@drawable/tv_menu_playback_icon" android:layout_width="36.0dp" android:layout_height="36.0dp" android:layout_marginLeft="@dimen/sm_10" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:textSize="@dimen/sm_18" android:textColor="@color/item_normal_color" android:id="@id/mediacontroller_time_current" android:layout_width="@dimen/sm_90" android:layout_height="wrap_content" android:singleLine="true" android:textAlignment="textEnd" android:paddingStart="@dimen/sm_5" android:paddingEnd="@dimen/sm_5" />
+                <SeekBar android:id="@id/mediacontroller_seekbar" android:focusable="true" android:layout_width="0.0dp" android:layout_height="wrap_content" android:max="1000" android:layout_weight="1.0" style="@style/CatchUp_TVE_SeekBar" />
+                <TextView android:textSize="@dimen/sm_18" android:textColor="@color/item_normal_color" android:gravity="left" android:id="@id/mediacontroller_time_total" android:layout_width="@dimen/sm_90" android:layout_height="match_parent" android:singleLine="true" android:paddingStart="@dimen/sm_5" android:paddingEnd="@dimen/sm_5" />
+            </LinearLayout>
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <ImageView android:id="@id/image_playback_play" android:layout_width="@dimen/catchup_status_size" android:layout_height="@dimen/catchup_status_size" android:src="@drawable/playback_play_icon" android:layout_centerHorizontal="true" />
+                <ImageView android:id="@id/iv_speed_left" android:layout_width="@dimen/catchup_status_size" android:layout_height="@dimen/catchup_status_size" android:layout_marginRight="@dimen/sm_50" android:src="@drawable/speed_back_defult" android:layout_toLeftOf="@id/image_playback_play" />
+                <ImageView android:id="@id/iv_speed_right" android:layout_width="@dimen/catchup_status_size" android:layout_height="@dimen/catchup_status_size" android:layout_marginLeft="@dimen/sm_50" android:src="@drawable/speed_forward_default" android:layout_toRightOf="@id/image_playback_play" />
+            </RelativeLayout>
+            <LinearLayout android:orientation="horizontal" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/sm_83" android:layout_marginRight="@dimen/sm_25">
+                <LinearLayout android:orientation="horizontal" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_weight="1.0">
+                    <TextView android:textSize="@dimen/sm_17" android:textColor="@color/item_normal_color" android:id="@id/catchup_current" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/current" android:singleLine="true" />
+                    <com.live.evo.widget.MarqueeTextView android:textSize="@dimen/sm_17" android:textColor="@color/item_normal_color" android:ellipsize="marquee" android:id="@id/current_program" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+                </LinearLayout>
+                <LinearLayout android:gravity="end" android:orientation="horizontal" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/sm_5" android:layout_weight="1.0">
+                    <TextView android:textSize="@dimen/sm_17" android:textColor="@color/item_normal_color" android:id="@id/catchup_next" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/next" android:singleLine="true" />
+                    <com.live.evo.widget.MarqueeTextView android:textSize="@dimen/sm_17" android:textColor="@color/item_normal_color" android:ellipsize="marquee" android:id="@id/next_program" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/sm_5" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout android:gravity="center_vertical" android:layout_gravity="center_horizontal" android:orientation="horizontal" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/sm_8">
+                <ImageView android:src="@drawable/left_icon" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:id="@id/catchup_rewind" android:text="@string/hint_fast_rewind" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/ok_icon" android:layout_marginStart="@dimen/sm_20" style="@style/CatchUp_MC_HintIcon_26" />
+                <TextView android:id="@id/catchup_pause" android:text="@string/hint_play_pause" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/right_icon" android:layout_marginStart="@dimen/sm_20" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:id="@id/catchup_forward" android:text="@string/hint_fast_forward" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/info_icon" android:layout_marginStart="@dimen/sm_20" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:id="@id/catchup_info" android:text="@string/hint_info" style="@style/CatchUp_MC_HintText" />
+                <ImageView android:src="@drawable/back_icon" android:layout_marginStart="@dimen/sm_20" style="@style/CatchUp_MC_HintIcon" />
+                <TextView android:id="@id/catchup_back" android:text="@string/hint_return_to_epg" style="@style/CatchUp_MC_HintText" />
+            </LinearLayout>
+        </LinearLayout>
+        <TextView android:ellipsize="marquee" android:id="@id/mediacontroller_file_name" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_marginStart="5.0dp" style="@style/PureMediaController_Text" />
+    </LinearLayout>
+    <TextView android:gravity="right|bottom" android:id="@id/catchup_sessionid" android:layout_height="match_parent" android:layout_marginRight="@dimen/sm_51" android:layout_marginBottom="@dimen/sm_5" android:layout_alignParentRight="true" style="@style/CatchUp_MC_HintText" />
+</RelativeLayout>

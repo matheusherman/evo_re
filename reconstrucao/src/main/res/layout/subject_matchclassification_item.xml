@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:id="@id/subject_classification_layout" android:background="@drawable/subject_classification_selector" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="wrap_content" android:layout_height="@dimen/subject_date_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:id="@id/subject_classification_layout2" android:background="@drawable/subject_classification_selector2" android:paddingLeft="12.0dp" android:paddingTop="6.0dp" android:paddingRight="12.0dp" android:paddingBottom="6.0dp" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView android:id="@id/subject_classification_iv" android:layout_width="25.0dp" android:layout_height="25.0dp" android:scaleType="fitCenter" />
+        <View android:id="@id/subject_classification_mid" android:layout_width="6.0dp" android:layout_height="6.0dp" />
+        <TextView android:textSize="18.0sp" android:textColor="@drawable/subject_classifitiontext_selector" android:ellipsize="marquee" android:gravity="center" android:id="@id/subject_classification_tv" android:paddingLeft="6.0dp" android:paddingRight="6.0dp" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minWidth="@dimen/subject_classification_width" android:scrollHorizontally="true" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+    </LinearLayout>
+</LinearLayout>

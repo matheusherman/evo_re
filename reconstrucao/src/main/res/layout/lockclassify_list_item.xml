@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/lockclassifylistitem_rl_parent" android:layout_width="match_parent" android:layout_height="match_parent" android:minHeight="@dimen/program_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="23.0dp" android:textColor="@color/color_lockprogram" android:ellipsize="marquee" android:id="@id/lockclassifylistitem_tv_item_name" android:paddingLeft="5.0dp" android:paddingTop="5.0dp" android:paddingBottom="5.0dp" android:duplicateParentState="true" android:layout_width="450.0dp" android:layout_height="wrap_content" android:layout_marginLeft="15.0dp" android:singleLine="true" android:layout_centerVertical="true" style="@style/text_28_c0c0c0" />
+    <ImageView android:id="@id/lockclassifylistitem_iv_image" android:background="@drawable/lock_program" android:visibility="gone" android:layout_width="30.0dp" android:layout_height="30.0dp" android:layout_marginTop="15.0dp" android:layout_marginRight="20.0dp" android:layout_alignParentRight="true" />
+</RelativeLayout>

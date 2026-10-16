@@ -3,7 +3,7 @@ package com.foxivid.baselib.util
 import android.view.KeyEvent
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.event.EcoModeEvent
-import com.foxivid.baselib.metric.MetricMonitor
+import com.foxivid.baselib.metric.MetricReporter
 import com.foxivid.baselib.user.UserManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,7 +17,7 @@ import java.util.TimerTask
 
 /**
  * Modo econômico (protetor de tela/"eco mode") por inatividade do controle remoto.
- * Um Timer verifica a cada 30 s; se não houve tecla há mais que `UserManager.Y()` ms, posta
+ * Um Timer verifica a cada 30 s; se não houve tecla há mais que `UserManager.getEchoModeTime()` (user/f.Y()) ms, posta
  * `nf.f()` (entrar no eco mode) e registra a métrica "enterEcoMode". Qualquer tecla sai do modo
  * (`nf.f(false)`). Também contabiliza teclas/toques persistidos para decidir se o aparelho é
  * STB (só controle) ou touch.
@@ -50,11 +50,11 @@ object EcoModeHelper {
     /** Original: d0$a. */
     private class IdleCheckTask : TimerTask() {
         override fun run() {
-            if (lastEvent == null && ServerTime.elapsedNow() - lastKeyPress > UserManager.Y()) { // TODO nome real: user/f.Y() (timeout do eco mode)
+            if (lastEvent == null && ServerTime.elapsedNow() - lastKeyPress > UserManager.getEchoModeTime()) { // user/f.Y() — timeout do eco mode
                 val e = EcoModeEvent()
                 EventBus.getDefault().post(e)
                 lastEvent = e
-                MetricMonitor.j("enterEcoMode") // TODO nome real: uf/c.j(String)
+                MetricReporter.reportClickCount("enterEcoMode") // Original: uf/c.j(String)
             }
         }
     }

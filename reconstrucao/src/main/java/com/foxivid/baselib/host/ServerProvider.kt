@@ -72,7 +72,7 @@ class ServerProvider<T>(private val key: String, private val clazz: Class<T>) {
         }
         if (result == null) {
             // Original: new uf.b(list.toTypedArray(), RetrofitFactory.okHttpClient)
-            result = TODO("módulo metric: uf/b(servers, RetrofitFactory.okHttpClient)") as T
+            result = com.foxivid.baselib.metric.MetricAgent(list.toTypedArray(), RetrofitFactory.okHttpClient) as T
             api = result
         }
         if (oldServers != list) oldServers = list

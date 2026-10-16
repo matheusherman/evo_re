@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="40.0dip"
+    android:paddingRight="40.0dip"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:id="@+id/lly_login_switch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15.0dip"
+        android:maxWidth="@dimen/width_600dp"
+        android:minHeight="@dimen/et_height"
+        android:layout_centerHorizontal="true">
+
+        <com.google.android.material.tabs.TabLayout
+            android:orientation="horizontal"
+            android:id="@+id/tab_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:minHeight="@dimen/et_height"
+            app:tabBackground="@drawable/tablayout_bg"
+            app:tabIndicatorColor="@color/loginf_tl_tab_layout_ic"
+            app:tabMaxWidth="600.0dip"
+            app:tabMinWidth="200.0dip"
+            app:tabSelectedTextColor="@color/loginf_tl_tab_layout_focus_tc"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabTextColor="@color/loginf_tl_tab_layout_normal_tc">
+
+            <com.google.android.material.tabs.TabItem
+                android:textSize="22.0sp"
+                android:id="@+id/tabitem_email"
+                android:background="@drawable/bg_left_tablayout"
+                android:layout_width="100.0dip"
+                android:layout_height="fill_parent"
+                android:text="@string/user_email" />
+
+            <com.google.android.material.tabs.TabItem
+                android:textSize="22.0sp"
+                android:id="@+id/tabitem_phone"
+                android:background="@drawable/bg_right_tablayout"
+                android:layout_width="100.0dip"
+                android:layout_height="fill_parent"
+                android:text="@string/user_phone" />
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="20.0dip"
+        android:layout_below="@id/lly_login_switch">
+
+        <com.live.tvcinema.widget.LightTextView
+            android:textSize="15.0sp"
+            android:textColor="@color/text_color_selector"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/registeremail_ltv_remind"
+            android:paddingLeft="15.0dip"
+            android:paddingRight="15.0dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxHeight="@dimen/login_remind_height" />
+
+        <TextView
+            android:textSize="20.0sp"
+            android:textColor="@color/registeremail_tv_account_tc"
+            android:id="@+id/registeremail_tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12.0dip" />
+
+        <com.live.tvcinema.widget.EmailAutoCompleteTextView
+            android:id="@+id/registeremail_et_email"
+            android:nextFocusDown="@id/tv_verify"
+            android:layout_width="470.0dip"
+            android:layout_marginTop="15.0dip"
+            android:hint="@string/account_id"
+            android:maxLength="50"
+            style="@style/LoginEditText" />
+
+        <include
+            android:id="@+id/lly_phone"
+            android:visibility="gone"
+            android:nextFocusDown="@id/tv_verify"
+            android:layout_width="470.0dip"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginTop="15.0dip"
+            layout="@layout/spinner_phone_layout" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:id="@+id/lly_verify"
+            android:layout_width="470.0dip"
+            android:layout_height="65.0dip"
+            android:layout_marginTop="12.0dip">
+
+            <TextView
+                android:id="@+id/tv_verify"
+                android:layout_width="0.0dip"
+                android:text="@string/send_code"
+                android:layout_weight="1.0"
+                style="@style/VerifyStyle" />
+
+            <TextView
+                android:id="@+id/tv_verify_phone"
+                android:visibility="gone"
+                android:layout_width="0.0dip"
+                android:text="@string/send_code"
+                android:layout_weight="1.0"
+                style="@style/VerifyStyle" />
+
+            <com.live.tvcinema.widget.RemoveKeyCodeEnterEditText
+                android:id="@+id/registeremail_et_verify_code"
+                android:layout_width="0.0dip"
+                android:layout_height="@dimen/et_height"
+                android:layout_marginLeft="20.0dip"
+                android:hint="@string/verification_code"
+                android:maxLength="4"
+                android:layout_weight="1.0"
+                android:inputType="number"
+                style="@style/LoginEditText" />
+        </LinearLayout>
+
+        <com.live.tvcinema.widget.RemoveKeyCodeEnterEditText
+            android:id="@+id/et_pwd"
+            android:layout_width="470.0dip"
+            android:layout_marginTop="12.0dip"
+            android:hint="@string/new_password"
+            style="@style/LoginEditText" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="470.0dip"
+            android:layout_height="65.0dip"
+            android:layout_marginTop="20.0dip">
+
+            <TextView
+                android:id="@+id/registeremail_tv_submit"
+                android:background="@drawable/subscribe_btn_bg_selector"
+                android:layout_width="470.0dip"
+                android:text="@string/submit"
+                style="@style/ButtonStyle" />
+
+            <TextView
+                android:id="@+id/registeremail_tv_button_return"
+                android:background="@drawable/login_btn_return_select"
+                android:visibility="gone"
+                android:layout_width="275.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:text="@string/tv_return"
+                style="@style/ButtonStyle" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

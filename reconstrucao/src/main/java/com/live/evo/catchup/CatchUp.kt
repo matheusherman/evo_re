@@ -78,8 +78,17 @@ object CatchUpPlayInfoFactory {
         }
     }
 
-    /** Provider assíncrono (Flow) do info (`u.c<Flow<c>, c>` do SDK). Original: b(String) */
-    fun provider(channelId: String?): Any? = TODO("u.c<Flow<CatchUpPlayInfo>, CatchUpPlayInfo> — fornecido pelo SDK de reprodução")
+    /**
+     * Provider (blankj `Utils.Func1<Flow<CatchUpPlayInfo>, CatchUpPlayInfo>`, `u.c`) do "próximo" info de reprodução do canal.
+     * Original: b(String) -> `new x4.g$a(channelId)`.
+     * NÃO RECUPERÁVEL: a classe `x4/g$a` só tem o construtor/campo `channelId` no APK (o método `call` foi removido/ocultado e o
+     * jadx — inclusive no modo fallback — não mostra corpo). Comportamento adotado: nenhum próximo item (Flow vazio), o que faz
+     * o player de catch-up simplesmente terminar ao fim do programa. O provider só é guardado pelo CatchUpPlayerActivity.
+     */
+    fun provider(channelId: String?): com.blankj.utilcode.util.Utils.Func1<kotlinx.coroutines.flow.Flow<CatchUpPlayInfo>, CatchUpPlayInfo> =
+        object : com.blankj.utilcode.util.Utils.Func1<kotlinx.coroutines.flow.Flow<CatchUpPlayInfo>, CatchUpPlayInfo> {
+            override fun call(param: CatchUpPlayInfo?): kotlinx.coroutines.flow.Flow<CatchUpPlayInfo> = kotlinx.coroutines.flow.emptyFlow()
+        }
 
     /** Original: c(long) */
     fun formatTime(millis: Long): String = sdf.format(Date(millis))

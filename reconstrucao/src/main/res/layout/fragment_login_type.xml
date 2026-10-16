@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/rl_login_type" android:tag="layout/fragment_login_type_0" android:background="@color/nav_bg_color" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:id="@id/login_type_back" android:padding="11.0dp" android:layout_width="44.0dp" android:layout_height="44.0dp" android:src="@drawable/back_arrow" />
+    <ImageView android:id="@id/login_scan" android:padding="@dimen/dp_8" android:layout_width="@dimen/dp_38" android:layout_height="@dimen/dp_38" android:layout_marginTop="@dimen/dp_4" android:src="@drawable/login_scan" android:layout_marginEnd="@dimen/dp_11" android:layout_alignParentEnd="true" />
+    <ImageView android:id="@id/live_logo" android:layout_width="@dimen/dp_66" android:layout_height="@dimen/dp_66" android:layout_marginTop="@dimen/dp_100" android:src="@mipmap/ic_launcher" android:scaleType="fitCenter" android:layout_centerHorizontal="true" />
+    <TextView android:textSize="@dimen/sp_12" android:textStyle="bold" android:textColor="@color/base_normal_color" android:gravity="center" android:id="@id/tv_login_remind" android:paddingLeft="30.0dp" android:paddingRight="30.0dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" android:text="@string/login_title" android:layout_below="@id/live_logo" android:textAllCaps="false" />
+    <TextView android:textSize="14.0sp" android:textStyle="bold" android:textColor="@color/white" android:gravity="center" android:id="@id/tv_create_account" android:background="@drawable/btn_unfocus_round_stroke_bg" android:padding="5.0dp" android:focusable="true" android:clickable="true" android:layout_marginTop="10.0dp" android:layout_marginBottom="45.0dp" android:text="@string/create_a_new_account" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" android:textAllCaps="false" style="@style/loginItemStyle" />
+    <RelativeLayout android:gravity="center_vertical" android:id="@id/rl_or" android:layout_width="match_parent" android:layout_height="20.0dp" android:layout_marginTop="25.0dp" android:layout_above="@id/tv_create_account" android:layout_marginStart="51.0dp" android:layout_marginEnd="51.0dp">
+        <TextView android:textColor="@color/text_color_normal" android:gravity="center" android:id="@id/tv_or" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/or" android:layout_centerHorizontal="true" android:layout_marginStart="13.0dp" android:layout_marginEnd="13.0dp" />
+        <View android:background="@color/page_divider_color" android:layout_width="match_parent" android:layout_height="0.5dp" android:layout_centerVertical="true" android:layout_toStartOf="@id/tv_or" />
+        <View android:background="@color/page_divider_color" android:layout_width="match_parent" android:layout_height="0.5dp" android:layout_centerVertical="true" android:layout_toEndOf="@id/tv_or" />
+    </RelativeLayout>
+    <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="280.0dp" android:layout_above="@id/rl_or">
+        <RelativeLayout android:id="@id/rl_login_email" android:background="@drawable/btn_unfocus_round_stroke_bg" style="@style/loginItemStyle">
+            <ImageView android:layout_width="24.0dp" android:layout_height="24.0dp" android:src="@drawable/login_email" android:layout_centerVertical="true" android:layout_marginStart="16.0dp" />
+            <TextView android:textSize="14.0sp" android:textStyle="bold" android:textColor="@color/btn_unfocus_stroke_text_color" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/login_type_email" android:layout_centerVertical="true" android:layout_marginStart="52.0dp" />
+        </RelativeLayout>
+        <RelativeLayout android:id="@id/rl_login_phone" android:background="@drawable/btn_unfocus_round_stroke_bg" style="@style/loginItemStyle">
+            <ImageView android:layout_width="24.0dp" android:layout_height="24.0dp" android:src="@drawable/login_phone" android:layout_centerVertical="true" android:layout_marginStart="16.0dp" />
+            <TextView android:textSize="14.0sp" android:textStyle="bold" android:textColor="@color/btn_unfocus_stroke_text_color" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/login_type_phone" android:layout_centerVertical="true" android:layout_marginStart="52.0dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:id="@+id/confirmdlg_ll_parent"
+    android:background="@drawable/popup_dialog_bg"
+    android:layout_width="@dimen/normal_dialog_width"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="@dimen/normal_dialog_width"
+        android:layout_height="200.0dip"
+        android:layout_marginTop="30.0dip">
+
+        <TextView
+            android:textSize="25.0sp"
+            android:textColor="@color/confirmdlg_tv_msg_tc"
+            android:gravity="center"
+            android:id="@+id/confirmdlg_tv_title"
+            android:layout_width="@dimen/normal_text_width"
+            android:layout_height="50.0dip"
+            android:layout_marginLeft="@dimen/normal_dialog_padding"
+            android:textAlignment="center" />
+
+        <TextView
+            android:textSize="20.0sp"
+            android:textColor="@color/confirmdlg_tv_msg_tc"
+            android:gravity="center|top"
+            android:id="@+id/confirmdlg_tv_msg"
+            android:layout_width="@dimen/normal_text_width"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/normal_dialog_padding"
+            android:layout_marginTop="20.0dip"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:id="@+id/confirmdlg_ll_btn_cont"
+        android:layout_width="@dimen/normal_text_width"
+        android:layout_height="150.0dip"
+        android:layout_marginTop="20.0dip"
+        android:layout_marginBottom="10.0dip">
+
+        <Button
+            android:textSize="20.0sp"
+            android:textColor="@color/dialogconfirm_text_color"
+            android:id="@+id/confirmdlg_btn_ok"
+            android:background="@drawable/exit_btn_bg_selector2"
+            android:layout_width="400.0dip"
+            android:layout_height="@dimen/normal_btn_height"
+            android:text="@string/ok"
+            android:textAllCaps="false" />
+
+        <Button
+            android:textSize="20.0sp"
+            android:textColor="@color/dialogconfirm_text_color"
+            android:id="@+id/confirmdlg_btn_cancel"
+            android:background="@drawable/exit_cancel_btn_bg_selector2"
+            android:layout_width="400.0dip"
+            android:layout_height="@dimen/normal_btn_height"
+            android:layout_marginTop="20.0dip"
+            android:minWidth="@dimen/confirm_btn_w"
+            android:text="@string/cancel"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>

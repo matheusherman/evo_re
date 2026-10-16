@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/networkstatusdlg_ll_parent" android:background="@drawable/dialog_black_bg" android:padding="16.0dp" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="25.0sp" android:textColor="@color/networkstatusdlg_tv_diagnostics_tc" android:gravity="center" android:layout_gravity="center" android:id="@id/networkstatusdlg_tv_diagnostics" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/network_diagnostics" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dp">
+        <ImageView android:id="@id/networkstatusdlg_iv_logo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/box_logo" />
+        <ImageView android:id="@id/networkstatusdlg_iv_box_to_hub_l1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/undetect" />
+        <ImageView android:id="@id/networkstatusdlg_iv_box_to_hub_status" android:layout_width="@dimen/net_dialog_width" android:layout_height="@dimen/net_dialog_width" android:src="@drawable/unknown" />
+        <com.live.evo.widget.VodLoadAnimation android:id="@id/networkstatusdlg_vla_box_to_hub_loading" android:visibility="gone" android:layout_width="@dimen/net_dialog_width" android:layout_height="@dimen/net_dialog_width" />
+        <ImageView android:id="@id/networkstatusdlg_iv_box_to_hub_l2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/undetect" />
+        <ImageView android:id="@id/networkstatusdlg_iv_hub" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/hub" />
+        <ImageView android:id="@id/networkstatusdlg_iv_hub_to_internet_l1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/undetect" />
+        <ImageView android:id="@id/networkstatusdlg_iv_hub_to_internet_status" android:layout_width="@dimen/net_dialog_width" android:layout_height="@dimen/net_dialog_width" android:src="@drawable/unknown" />
+        <com.live.evo.widget.VodLoadAnimation android:id="@id/networkstatusdlg_vla_hub_to_internet_loading" android:visibility="gone" android:layout_width="@dimen/net_dialog_width" android:layout_height="@dimen/net_dialog_width" />
+        <ImageView android:id="@id/networkstatusdlg_iv_hub_to_internet_l2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/undetect" />
+        <ImageView android:id="@id/networkstatusdlg_iv_internet_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/internet_icon" />
+        <ImageView android:id="@id/networkstatusdlg_iv_internet_to_server_l1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/undetect" />
+        <ImageView android:id="@id/networkstatusdlg_iv_internet_to_server_status" android:layout_width="@dimen/net_dialog_width" android:layout_height="@dimen/net_dialog_width" android:src="@drawable/unknown" />
+        <com.live.evo.widget.VodLoadAnimation android:id="@id/networkstatusdlg_vla_internet_to_server_loading" android:visibility="gone" android:layout_width="@dimen/net_dialog_width" android:layout_height="@dimen/net_dialog_width" />
+        <ImageView android:id="@id/networkstatusdlg_iv_internet_to_server_l2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/undetect" />
+        <ImageView android:id="@id/networkstatusdlg_iv_server_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/server" />
+    </LinearLayout>
+    <TextView android:textSize="18.0sp" android:textColor="@color/networkstatusdlg_tv_test_result_tc" android:gravity="center" android:layout_gravity="center" android:id="@id/networkstatusdlg_tv_test_result" android:focusable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+    <LinearLayout android:gravity="center" android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="360.0dp" android:layout_height="70.0dp" android:layout_marginTop="20.0dp">
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/networkstatusdlg_btn_check_tc" android:id="@id/networkstatusdlg_btn_check" android:background="@drawable/subscribe_btn_bg_selector" android:paddingTop="5.0dp" android:paddingBottom="5.0dp" android:focusable="true" android:layout_width="150.0dp" android:layout_height="wrap_content" android:text="@string/check" android:singleLine="true" android:textAllCaps="false" />
+        <requestFocus />
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/networkstatusdlg_btn_cancel_tc" android:id="@id/networkstatusdlg_btn_cancel" android:background="@drawable/subscribe_btn_bg_selector" android:paddingTop="5.0dp" android:paddingBottom="5.0dp" android:layout_width="150.0dp" android:layout_height="wrap_content" android:layout_marginLeft="20.0dp" android:text="@string/cancel" android:singleLine="true" android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>

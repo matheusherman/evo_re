@@ -23,15 +23,105 @@ interface MeasureHelper {
     fun setVideoSize(w: Int, h: Int)                   // g
 }
 
-/** Original: ag/a.java (MeasureHelper do ijk-example, terceiros) — implementação padrão não reconstruída. */
-class IjkMeasureHelper(@Suppress("unused") private val view: View) : MeasureHelper {
-    override fun doMeasure(widthSpec: Int, heightSpec: Int) = TODO("ag.a.a — MeasureHelper do ijk-example")
-    override fun measuredHeight(): Int = TODO("ag.a.b")
-    override fun measuredWidth(): Int = TODO("ag.a.c")
-    override fun setAspectRatio(type: Int) = TODO("ag.a.d")
-    override fun setVideoRotation(degree: Int) = TODO("ag.a.e")
-    override fun setVideoSampleAspectRatio(num: Int, den: Int) = TODO("ag.a.f")
-    override fun setVideoSize(w: Int, h: Int) = TODO("ag.a.g")
+/**
+ * Original: ag/a.java — cópia do `MeasureHelper` do ijk-example (terceiros), com um log de debug em [setVideoSize].
+ * Tipos de aspecto: 0 FIT_PARENT, 1 FILL_PARENT, 2 WRAP_CONTENT, 3 MATCH_PARENT, 4 16:9 FIT_PARENT, 5 4:3 FIT_PARENT.
+ */
+class IjkMeasureHelper(view: View) : MeasureHelper {
+    private val logger = org.slf4j.LoggerFactory.getLogger(IjkMeasureHelper::class.java)
+    private val viewRef = WeakReference(view)       // f287b
+    private var videoWidth = 0                       // f288c
+    private var videoHeight = 0                      // f289d
+    private var videoSarNum = 0                      // f290e
+    private var videoSarDen = 0                      // f291f
+    private var videoRotationDegree = 0              // f292g
+    private var measuredW = 0                        // f293h
+    private var measuredH = 0                        // f294i
+    private var currentAspectRatio = 0               // f295j
+
+    /** Calcula [measuredW]/[measuredH] a partir das specs e do tamanho/SAR/rotação do vídeo. Original: a(int, int) */
+    override fun doMeasure(widthSpec: Int, heightSpec: Int) {
+        var wSpec = widthSpec
+        var hSpec = heightSpec
+        if (videoRotationDegree == 90 || videoRotationDegree == 270) { val t = wSpec; wSpec = hSpec; hSpec = t }
+        var width = View.getDefaultSize(videoWidth, wSpec)
+        var height = View.getDefaultSize(videoHeight, hSpec)
+        if (currentAspectRatio == 3) {
+            // MATCH_PARENT: o original devolve as próprias specs (já trocadas pela rotação) como "tamanho" medido
+            measuredW = wSpec
+            measuredH = hSpec
+            return
+        }
+        run {
+            if (videoWidth > 0 && videoHeight > 0) {
+                val widthMode = View.MeasureSpec.getMode(wSpec)
+                val widthSize = View.MeasureSpec.getSize(wSpec)
+                val heightMode = View.MeasureSpec.getMode(hSpec)
+                val heightSize = View.MeasureSpec.getSize(hSpec)
+                if (widthMode == View.MeasureSpec.AT_MOST && heightMode == View.MeasureSpec.AT_MOST) {
+                    val specAspect = widthSize.toFloat() / heightSize.toFloat()
+                    var displayAspect: Float
+                    when (currentAspectRatio) {
+                        1 -> {
+                            displayAspect = width.toFloat() / height
+                            if (videoRotationDegree == 90 || videoRotationDegree == 270) displayAspect = 1.0f / displayAspect
+                        }
+                        4 -> displayAspect = if (videoRotationDegree == 90 || videoRotationDegree == 270) 0.5625f else 1.7777778f
+                        5 -> displayAspect = if (videoRotationDegree == 90 || videoRotationDegree == 270) 0.75f else 1.3333334f
+                        else -> {
+                            displayAspect = videoWidth.toFloat() / videoHeight
+                            if (videoSarNum > 0 && videoSarDen > 0) displayAspect = displayAspect * videoSarNum / videoSarDen
+                        }
+                    }
+                    val shouldBeWider = displayAspect > specAspect
+                    when (currentAspectRatio) {
+                        0, 4, 5 -> {
+                            if (shouldBeWider) { width = widthSize; height = (widthSize / displayAspect).toInt() }
+                            else { height = heightSize; width = (heightSize * displayAspect).toInt() }
+                        }
+                        1 -> {
+                            if (shouldBeWider) { height = heightSize; width = (heightSize * displayAspect).toInt() }
+                            else { width = widthSize; height = (widthSize / displayAspect).toInt() }
+                        }
+                        else -> {
+                            if (shouldBeWider) { width = Math.min(videoWidth, widthSize); height = (width / displayAspect).toInt() }
+                            else { height = Math.min(videoHeight, heightSize); width = (height * displayAspect).toInt() }
+                        }
+                    }
+                } else if (widthMode == View.MeasureSpec.EXACTLY && heightMode == View.MeasureSpec.EXACTLY) {
+                    width = widthSize; height = heightSize
+                    if (videoWidth * height < width * videoHeight) width = height * videoWidth / videoHeight
+                    else if (videoWidth * height > width * videoHeight) height = width * videoHeight / videoWidth
+                } else if (widthMode == View.MeasureSpec.EXACTLY) {
+                    width = widthSize
+                    height = width * videoHeight / videoWidth
+                    if (heightMode == View.MeasureSpec.AT_MOST && height > heightSize) height = heightSize
+                } else if (heightMode == View.MeasureSpec.EXACTLY) {
+                    height = heightSize
+                    width = height * videoWidth / videoHeight
+                    if (widthMode == View.MeasureSpec.AT_MOST && width > widthSize) width = widthSize
+                } else {
+                    width = videoWidth; height = videoHeight
+                    if (heightMode == View.MeasureSpec.AT_MOST && height > heightSize) { height = heightSize; width = height * videoWidth / videoHeight }
+                    if (widthMode == View.MeasureSpec.AT_MOST && width > widthSize) { width = widthSize; height = width * videoHeight / videoWidth }
+                }
+            }
+            // sem tamanho de vídeo: usa os tamanhos padrão (View.getDefaultSize) calculados acima
+        }
+        measuredW = width
+        measuredH = height
+    }
+
+    override fun measuredHeight(): Int = measuredH      // b()
+    override fun measuredWidth(): Int = measuredW       // c()
+    override fun setAspectRatio(type: Int) { currentAspectRatio = type }          // d(int)
+    override fun setVideoRotation(degree: Int) { videoRotationDegree = degree }   // e(int)
+    override fun setVideoSampleAspectRatio(num: Int, den: Int) { videoSarNum = num; videoSarDen = den }   // f(int,int)
+    override fun setVideoSize(w: Int, h: Int) {                                    // g(int,int)
+        if (com.foxivid.baselib.config.BaseLibConfig.isDebug) logger.debug("@@@@: setVideoSize[$videoWidth, $videoHeight]")
+        videoWidth = w
+        videoHeight = h
+    }
 }
 
 /**

@@ -25,7 +25,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.player.PlayerView
 import com.foxivid.baselib.util.Callback
+import com.foxivid.baselib.util.EcoModeHelper
 import com.foxivid.baselib.util.ServerTime
+import com.foxivid.ui.mobile.media.VolumeChangeObserver
 import com.foxivid.ui.mobile.R
 import com.foxivid.ui.mobile.ext.setVisible
 import com.foxivid.ui.widget.MyButton
@@ -162,7 +164,7 @@ class MyVideoView @JvmOverloads constructor(
         }
         videoView = binding!!.videoView
         // original: z7.j.i(jVar, R.id.loading_layout_tvc_lib, R.color.white, binding.loadingContainer, 0, 8, null)
-        loading = null // TODO("fábrica de loading z7.j.i(...) (z7/j.java, fora deste módulo)")
+        loading = LoadingOverlay(binding!!.loadingContainer, R.id.loading_layout_tvc_lib, R.color.white, 0)   // z7.j.i(j, id, cor, container, 0, 8, null)
         val am = getContext().getSystemService("audio") as AudioManager
         audioManager = am
         maxVolume = am.getStreamMaxVolume(3)
@@ -307,7 +309,11 @@ class MyVideoView @JvmOverloads constructor(
                 audioManager?.setStreamVolume(3, 0, 0)
                 binding!!.ivVideoSound.setImageResource(R.mipmap.voice_close)
             } else {
-                // TODO("restaura lastVolume (trecho entre Q() e R() omitido na leitura): setStreamVolume(3, lastVolume) + ícone voice_open")
+                // sem volume: restaura o último (ou 50% do máximo), limitado a [0, max]
+                var target = (maxVolume * 0.5).toInt()
+                if (lastVolume!! > 0) target = lastVolume!!
+                if (target > maxVolume) target = maxVolume else if (target < 0) target = 0
+                audioManager?.setStreamVolume(3, target, 0)
                 binding!!.ivVideoSound.setImageResource(R.mipmap.voice_open)
             }
         }
@@ -315,7 +321,13 @@ class MyVideoView @JvmOverloads constructor(
 
     /** Registra o observador de volume do sistema (w7.a). Original: a0() */
     private fun initVolumeObserver() {
-        TODO("w7.a (VolumeChangeObserver): e(listener) + c() register — classe fora deste módulo; usa volumeListener")
+        val observer = VolumeChangeObserver(context)
+        volumeObserver = observer
+        observer.setListener { volume -> volumeListener.onVolumeChanged(volume) }
+        if (!volumeObserverRegistered) {
+            observer.register()
+            volumeObserverRegistered = true
+        }
     }
 
     /** Liga os listeners do PlayerView (info/prepared/error/completion), barra e play/pause. Original: R() */
@@ -360,8 +372,12 @@ class MyVideoView @JvmOverloads constructor(
                 handler.postDelayed(hideCtrlTask, exitMenuTime)
             }
         }
-        // TODO("demais códigos de info (ex.: 702/10001...) — corpo de V() só parcialmente lido")
-        return true
+        else if (what == 10008 && (isPlayBack || isVod)) {
+            // MEDIA_INFO_VIDEO_SEEK_RENDERING_START: atualiza o progresso
+            handler.removeMessages(messageUpdateProgress)
+            handler.sendEmptyMessage(messageUpdateProgress)
+        }
+        return false
     }
 
     /** Clique em play/pause (só em PLAYING/COMPLETED). Original: U(...) */
@@ -434,8 +450,13 @@ class MyVideoView @JvmOverloads constructor(
     // --------------------------------------------------------------- estado / UI
 
     private fun setPlayCompleted(mediaPlayer: IMediaPlayer?) {
-        // TODO("corpo parcialmente lido: define playState = PLAY_COMPLETED, ajusta progresso/ícone, mostra tip vod_play_complete e posta onCompletionListener.onCompletion")
+        isPause = true
+        handler.removeMessages(messageUpdateProgress)
+        videoView.stop(true)
         playState = statePlayCompleted
+        // a barra mostra o tempo total como tempo atual
+        startTime?.let { st -> endTime?.let { et -> st.text = et.text } }
+        binding!!.tipText.visibility = View.VISIBLE
         binding!!.tipText.text = context.getString(R.string.vod_play_complete)
         post { onCompletionListener?.onCompletion(mediaPlayer) }
     }
@@ -666,6 +687,9 @@ class MyVideoView @JvmOverloads constructor(
 
     // --------------------------------------------------------------- dependências fora do módulo
 
-    private fun appIsInBackgroundOrEco(): Boolean =
-        TODO("d0.f21360a.j() (x1/f1/lb/util/d0 = EcoModeHelper) — função de estado usada como guarda")
+    /** `d0.f21360a.j()` = [EcoModeHelper.isInEcoMode]: no modo eco não se mostra o botão de repetir. */
+    private fun appIsInBackgroundOrEco(): Boolean = EcoModeHelper.isInEcoMode()
+
+    private var volumeObserver: VolumeChangeObserver? = null          // mVolumeChangeObserver (w7.a)
+    private var volumeObserverRegistered = false                       // mVolumeChangeRegister
 }

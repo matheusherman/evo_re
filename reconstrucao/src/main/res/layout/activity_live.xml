@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/livea_rl_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/main_bg">
+
+    <x1.f1.lb.widget.videoview.PlayerView
+        android:id="@+id/livea_ijk_main_videoview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/livea_tv_player_stat_info"
+        style="@style/text_14_ffffff_blod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20.0dip"
+        android:text=""
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/osd_no_signal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone" />
+
+    <com.live.tvcinema.widget.LoadView
+        android:id="@+id/livea_lv_program_loadview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="36.0dip"
+        android:layout_marginRight="30.0dip"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40.0dip"
+        android:layout_marginRight="100.0dip"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/livea_program_name_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/livea_tv_program_id"
+                style="@style/AudioFileInfoOverlayText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right" />
+
+            <TextView
+                android:id="@+id/livea_tv_program_name"
+                style="@style/AudioFileInfoOverlayText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5.0dip" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/livea_tv_program_optimizing"
+            style="@style/AudioFileInfoOverlayText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/livea_rl_program_ad"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/black"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/livea_iv_program_ad_image"
+            android:layout_width="800.0dip"
+            android:layout_height="480.0dip"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/livea_tv_program_ad_countdown"
+            style="@style/text_42_f2f2f2"
+            android:layout_width="80.0dip"
+            android:layout_height="80.0dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="40.0dip"
+            android:layout_marginRight="40.0dip"
+            android:background="@color/livea_tv_program_ad_countdown_bgc"
+            android:gravity="center" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="650.0dip"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.live.tvcinema.widget.sloading.SLoadingView
+            android:id="@+id/livea_slv_program_prompt_progress_bar"
+            android:layout_width="70.0dip"
+            android:layout_height="70.0dip"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            app:s_color="@color/livea_slv_program_prompt_progress_bar_color"
+            app:s_color_extra="@color/livea_slv_program_prompt_progress_bar_extra_color"
+            app:s_type="@integer/livea_slv_program_prompt_progress_bar_style" />
+
+        <TextView
+            android:id="@+id/livea_tv_program_prompt"
+            style="@style/text_24_f2f2f2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/livea_ll_click_linearlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:id="@+id/livea_ll_osd_network_prompt"
+        android:layout_width="fill_parent"
+        android:layout_height="150.0dip"
+        android:background="@drawable/p_network_bg2"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/livea_iv_p_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/p_prompt" />
+
+        <TextView
+            android:id="@+id/livea_tv_network_not_connect"
+            style="@style/text_42_f2f2f2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20.0dip"
+            android:text="@string/network_not_connect"
+            android:textColor="@color/livea_tv_network_not_connect_tc" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/livea_rl_load_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/livea_tv_versionname"
+            style="@style/text_24_f2f2f2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20.0dip"
+            android:layout_marginBottom="10.0dip" />
+
+        <RelativeLayout
+            android:id="@+id/livea_rl_vod_loading_img"
+            android:layout_width="fill_parent"
+            android:layout_height="300.0dip"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.live.tvcinema.widget.sloading.SLoadingView
+                android:id="@+id/livea_slv_circle_load"
+                android:layout_width="80.0dip"
+                android:layout_height="80.0dip"
+                android:layout_centerInParent="true"
+                android:gravity="center_horizontal"
+                app:s_color="@color/livea_slv_circle_load_color"
+                app:s_color_extra="@color/livea_slv_circle_load_extra_color"
+                app:s_type="@integer/livea_slv_circle_load_style" />
+
+            <TextView
+                android:id="@+id/livea_tv_welcome_program_name"
+                style="@style/text_20_f2f2f2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/livea_slv_circle_load"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5.0dip"
+                android:gravity="center"
+                android:textSize="30.0sp" />
+        </RelativeLayout>
+
+        <com.live.tvcinema.widget.MarqueeTextView
+            android:id="@+id/livea_mtv_load_prompt"
+            style="@style/text_36_f2f2f2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/livea_ll_reload_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="110.0dip"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/livea_btn_vod_button_reload"
+                android:layout_width="202.0dip"
+                android:layout_height="62.0dip"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/bg_p_exit"
+                android:ellipsize="marquee"
+                android:focusableInTouchMode="true"
+                android:paddingLeft="5.0dip"
+                android:paddingRight="5.0dip"
+                android:singleLine="true"
+                android:text="@string/retry"
+                android:textColor="@color/livea_btn_vod_button_reload_tc"
+                android:textSize="30.0sp" />
+
+            <Button
+                android:id="@+id/livea_btn_vod_button_exit"
+                android:layout_width="202.0dip"
+                android:layout_height="62.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="right"
+                android:layout_marginLeft="20.0dip"
+                android:background="@drawable/bg_p_exit"
+                android:paddingLeft="5.0dip"
+                android:paddingRight="5.0dip"
+                android:text="@string/exit"
+                android:textColor="@color/livea_btn_vod_button_exit_tc"
+                android:textSize="30.0sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/livea_ll_upgrading_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20.0dip"
+        android:layout_marginBottom="10.0dip"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/livea_tv_upgrading"
+            style="@style/text_24_f2f2f2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <com.live.tvcinema.widget.RoundProgressView
+            android:id="@+id/livea_pv_upgrading_progress"
+            android:layout_width="38.0dip"
+            android:layout_height="38.0dip" />
+    </LinearLayout>
+</RelativeLayout>

@@ -104,7 +104,10 @@ class CatchUpPlayerActivity : FontBaseActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TODO("nativo/não decompilado: CatchUpPlayerActivity.onCreate — provável readArguments() + initViews()")
+        // INFERIDO (onCreate nativo): lê os argumentos (o flag mInitFromOnCreate evita um start() duplo em onStart) e monta a UI
+        setContentView(R.layout.activity_catch_up_player)
+        readArguments(savedInstanceState)
+        initViews()
     }
 
     /** Lê e limpa o holder estático; restaura posição/playInfo do bundle. Original: Y(Bundle) */

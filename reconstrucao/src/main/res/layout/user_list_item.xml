@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/useritem_bg_selector" android:layout_width="@dimen/width_600dp" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="22.0sp" android:textColor="@color/userlistitem_tv_email_tc" android:gravity="center" android:layout_gravity="center" android:id="@id/userlistitem_tv_email" android:duplicateParentState="true" android:layout_width="@dimen/userlist_width" android:layout_height="@dimen/userlist_item_height" />
+</LinearLayout>

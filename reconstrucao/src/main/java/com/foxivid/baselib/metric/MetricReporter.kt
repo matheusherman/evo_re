@@ -1,5 +1,6 @@
 package com.foxivid.baselib.metric
 
+import com.foxivid.baselib.network.HeaderInterceptor
 import com.foxivid.baselib.bot.TelegramBot
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.device.DeviceInfoCollector
@@ -69,9 +70,9 @@ object MetricReporter {
     /** Original: uf.c.d() */
     private fun baseFields(): HashMap<String, Any?> {
         if (baseMap.isEmpty()) {
-            baseMap["appStartupUid"] = AppAttrUtils.startupUid()
-            baseMap["did"] = AppAttrUtils.did()
-            baseMap["sn"] = AppAttrUtils.serialNumber()
+            baseMap["appStartupUid"] = HeaderInterceptor.accountId()
+            baseMap["did"] = HeaderInterceptor.deviceId()
+            baseMap["sn"] = HeaderInterceptor.serialNumber()
             baseMap["appId"] = AppAttrUtils.appId()
             baseMap["appDistributionChannel"] = AppAttrUtils.distributionChannel()
             baseMap["tenantId"] = AppAttrUtils.tenantId()
@@ -86,7 +87,7 @@ object MetricReporter {
     private fun commonFields(): MutableMap<String, Any?> {
         val map = HashMap<String, Any?>(baseFields())
         map["isMobile"] = DeviceInfoCollector.isMobileLike()
-        map["uid"] = AppAttrUtils.startupUid()
+        map["uid"] = HeaderInterceptor.accountId()
         DeviceInfoCollector.gateways().takeIf { it.isNotEmpty() }?.let { map["gateWay"] = it }
         DeviceInfoCollector.ipMasks().takeIf { it.isNotEmpty() }?.let { map["Ip/Mask"] = it }
         map["networkDesc"] = NetworkMonitor.describe()

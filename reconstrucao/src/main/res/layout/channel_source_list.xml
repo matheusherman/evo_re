@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/channelsourcelist_ll_parent" android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditText android:textSize="16.0sp" android:textColor="@color/channelsourcelist_et_server_search_tc" android:id="@id/channelsourcelist_et_server_search" android:background="@color/channelsourcelist_et_server_search_bgc" android:layout_width="500.0dp" android:layout_height="45.0dp" android:layout_marginLeft="15.0dp" />
+    <com.live.evo.widget.ProgramListView android:id="@id/channelsourcelist_plv_server_list" android:layout_width="match_parent" android:layout_height="match_parent" android:listSelector="@drawable/program_selector" />
+</LinearLayout>

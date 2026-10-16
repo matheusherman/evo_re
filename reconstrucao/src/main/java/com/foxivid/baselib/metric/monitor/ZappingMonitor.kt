@@ -1,7 +1,7 @@
 package com.foxivid.baselib.metric.monitor
 
+import com.foxivid.baselib.media.MediaPlayManager
 import com.foxivid.baselib.config.BaseLibConfig
-import com.foxivid.baselib.media.TrialRepository
 import com.foxivid.baselib.metric.MetricReporter
 import com.foxivid.baselib.metric.model.PlayType
 import com.foxivid.baselib.metric.model.PlayerZappingStat
@@ -104,7 +104,7 @@ object ZappingMonitor {
         rows.forEachIndexed { i, (at, ms, desc) ->
             if (i == 0) {
                 val mode = when (z.mediaPlayMode) { 0 -> "normal"; 1 -> "adult"; 2 -> "normal, free"; 3 -> "adult, free"; else -> "unknown play mode" }
-                val plan = if (UserManager.isTrial()) "trial(" + TrialRepository.watchedOf(z.streamId) + " / " + UserManager.trialLimit() + ")}" else "plan"
+                val plan = if (UserManager.isGuestOrLoggedOut()) "trial(" + MediaPlayManager.playedTime(z.streamId) + " / " + UserManager.getRemainingMs() + ")}" else "plan"
                 sb.append(desc).append(" [ ").append(ms).append(" ms ]").append("[ ")
                 if (BaseLibConfig.isDebug) sb.append(z.route).append(", ")
                 sb.append(z.streamId).append(", ").append(z.playType.toString()).append(", ").append(mode)

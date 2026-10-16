@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:tag="layout/account_activity_login_type_0" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.live.evo_mobile.ui.login.NoScrollViewPager android:id="@id/login_type_viewpager" android:layout_width="match_parent" android:layout_height="match_parent" />
+</RelativeLayout>

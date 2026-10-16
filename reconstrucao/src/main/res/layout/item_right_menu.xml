@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="@drawable/shape_season_list_selector" android:focusable="true" android:layout_width="match_parent" android:layout_height="@dimen/right_menu_height" android:paddingStart="@dimen/right_menu_padding_left" android:paddingEnd="@dimen/right_menu_padding_left"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="@dimen/right_menu_content_size" android:textColor="@color/white_80" android:ellipsize="end" android:gravity="center_vertical" android:id="@id/name" android:layout_width="0.0dp" android:layout_height="match_parent" android:maxLines="1" android:layout_weight="1.0" />
+    <t.v.c.widget.ImageView android:id="@id/ok_iv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/ok_red" android:tint="@color/theme" android:layout_marginStart="@dimen/dp_10" android:layout_marginEnd="@dimen/dp_10" />
+</t.v.c.widget.LinearLayout>

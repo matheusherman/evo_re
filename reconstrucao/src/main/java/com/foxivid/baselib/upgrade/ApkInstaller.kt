@@ -125,7 +125,7 @@ object ApkInstaller {
     fun isSystemUid(context: Context): Boolean = try {
         1000 == context.packageManager.getApplicationInfo(BaseLibConfig.applicationId, 0).uid
     } catch (_: Exception) {
-        false // TODO: o jadx omitiu o retorno do catch; assumido false
+        false // confirmado no fallback do jadx: o catch (Exception) retorna false
     }
 
     /** Original: m0.b(Context, File) — avisa (toast) se espaço livre < 3× tamanho do APK. */

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/trialreminddlg_ll_parent" android:background="@drawable/popup_dialog_bg" android:layout_width="@dimen/normal_dialog_width" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:layout_width="@dimen/normal_dialog_width" android:layout_height="wrap_content" android:layout_marginTop="30.0dp">
+        <TextView android:textSize="22.0sp" android:textColor="@color/trialreminddlg_tv_title_tc" android:gravity="center" android:id="@id/trialreminddlg_tv_title" android:layout_width="@dimen/normal_text_width" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/normal_dialog_padding" android:layout_marginTop="10.0dp" android:layout_marginBottom="5.0dp" />
+    </LinearLayout>
+    <View android:layout_gravity="center" android:id="@id/trialreminddlg_view_line" android:background="@color/trialreminddlg_view_line_bgc" android:layout_width="@dimen/normal_text_width" android:layout_height="1.0px" />
+    <LinearLayout android:gravity="center" android:layout_gravity="center" android:orientation="horizontal" android:layout_width="490.0dp" android:layout_height="@dimen/normal_btn_bg_height" android:layout_marginTop="10.0dp" android:layout_marginBottom="10.0dp">
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/text_color_selector" android:gravity="center" android:id="@id/trialreminddlg_btn_skip" android:background="@drawable/exit_btn_bg_selector" android:focusable="true" android:layout_width="0.0dp" android:layout_height="60.0dp" android:layout_marginLeft="30.0dp" android:layout_marginRight="30.0dp" android:text="@string/skip" android:layout_weight="1.0" />
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/text_color_selector" android:gravity="center" android:id="@id/trialreminddlg_btn_ok" android:background="@drawable/exit_btn_bg_selector" android:focusable="true" android:layout_width="0.0dp" android:layout_height="@dimen/normal_btn_height" android:layout_marginLeft="30.0dp" android:layout_marginRight="30.0dp" android:text="@string/sign_up" android:layout_weight="1.0" />
+    </LinearLayout>
+    <TextView android:textSize="20.0sp" android:textColor="@color/text_color_selector" android:layout_gravity="center|bottom" android:id="@id/trialreminddlg_tv_login_direct" android:background="@drawable/click_tologin" android:paddingLeft="5.0dp" android:paddingRight="5.0dp" android:focusable="true" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="20.0dp" />
+</LinearLayout>

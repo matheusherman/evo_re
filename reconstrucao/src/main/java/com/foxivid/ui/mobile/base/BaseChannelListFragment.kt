@@ -6,6 +6,11 @@ import com.foxivid.baselib.model.meta.ChannelStreamResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import android.text.TextUtils
+import com.foxivid.baselib.util.ServerTime
+import com.foxivid.ui.mobile.R
+import com.foxivid.ui.mobile.ext.StoryListData
 
 /**
  * Base de fragments de lista de canais: guarda a coluna atual (companion) e converte uma lista de
@@ -24,21 +29,35 @@ abstract class BaseChannelListFragment<DB : ViewDataBinding> : BaseDataBindFragm
     fun coverStoryList(
         column: String,
         channelList: List<ChannelStreamResponse>,
-        result: (List<Any /* u7.StoryListData */>, Int) -> Unit
+        result: (List<StoryListData>, Int?) -> Unit
     ) {
         CoroutineScope(Dispatchers.Default).launch {
-            // O corpo da corrotina (invokeSuspend, ~531 unidades de código) não foi decompilado pelo jadx
-            // (JadxOverflowException: "Regions stack size limit reached"). Do que se vê:
-            //  - noEPG = context?.getString(R.string.no_epg) ?: ""   (corrotina $noEPG$1)
-            //  - noProgramme = context?.getString(R.string.no_epg_program) ?: ""   ($noProgramme$1)
-            //  - o resultado final é entregue no Main: result(mStoryList, playingPosition) ($1$1)
-            TODO("nativo/não decompilado: BaseChannelListFragment.coverStoryList$1.invokeSuspend (JadxOverflowException)")
+            // strings lidas no Main (corrotinas $noEPG$1 / $noProgramme$1)
+            val noEPG = withContext(Dispatchers.Main) { context?.getString(R.string.no_epg) ?: "" }
+            val noProgramme = withContext(Dispatchers.Main) { context?.getString(R.string.no_epg_program) ?: "" }
+            val mStoryList = ArrayList<StoryListData>()
+            var playingPosition: Int? = null
+            val now = ServerTime.now()   // x1.f1.lb.util.d1.d()
+            for (i in channelList.indices) {
+                val channel = channelList[i]
+                if (channel.streamId == currentColumn) playingPosition = i   // a.f9214e.a(): id do canal em reprodução
+                val epgId = channel.epgId
+                val title = InteractionUtils.b(channel) + " " + channel.streamName
+                val dates = InteractionUtils.C()
+                if (!TextUtils.isEmpty(epgId) && dates.isNotEmpty()) {
+                    val programme = InteractionUtils.G(epgId!!, now)
+                    mStoryList.add(StoryListData(column, title, programme?.title ?: noProgramme, channel, i == 0))
+                } else {
+                    mStoryList.add(StoryListData(column, title, noEPG, channel, i == 0))
+                }
+            }
+            withContext(Dispatchers.Main) { result(mStoryList, playingPosition)   // null se nenhum canal coincide (b0<Integer>.element) }
         }
     }
 
     /** Lista de canais da coluna. Original: d0(String) */
     fun getChannels(column: String): List<ChannelStreamResponse> {
-        TODO("InteractionUtils (t/v/c/i/a).n(column, d0(column)) — fora deste módulo")
+        return InteractionUtils.n(column, InteractionUtils.d0(column))
     }
 
     companion object {

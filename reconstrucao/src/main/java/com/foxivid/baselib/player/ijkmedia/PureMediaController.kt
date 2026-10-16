@@ -260,7 +260,7 @@ open class PureMediaController : FrameLayout, MediaControllerContract {
 
     override fun showForever() = show(Int.MAX_VALUE)
 
-    protected open val layoutId: Int get() = TODO("R.layout.view_pure_player_mediacontroller (recurso do app)")
+    protected open val layoutId: Int get() = resources.getIdentifier("view_pure_player_mediacontroller", "layout", ctx!!.packageName) // R.layout.view_pure_player_mediacontroller
     protected open val pauseIconDrawable: Drawable get() = context.resources.getDrawable(resources.getIdentifier("mediacontroller_pause", "drawable", ctx!!.packageName))
     protected open val playIconDrawable: Drawable get() = context.resources.getDrawable(resources.getIdentifier("mediacontroller_play", "drawable", ctx!!.packageName))
 
@@ -290,8 +290,8 @@ open class PureMediaController : FrameLayout, MediaControllerContract {
     fun setOnSeekListener(l: MediaControllerContract.OnSeekListener?) {}
     fun setOnShownListener(l: MediaControllerContract.OnShownListener?) {}
 
-    /** Original: x1.f1.lb.util.c1.a(long) — formata ms em hh:mm:ss (módulo util). */
-    private fun formatTime(ms: Long): String = TODO("x1.f1.lb.util.c1.a — util")
+    /** Original: com.live.evo.util.c1.a(long) — mm:ss ou hh:mm:ss. */
+    private fun formatTime(ms: Long): String = com.live.evo.util.DurationFormatter.format(ms)
 
     private companion object {
         const val FADE_OUT = 1

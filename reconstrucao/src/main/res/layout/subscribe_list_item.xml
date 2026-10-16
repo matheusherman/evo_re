@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/subscribelistitem_rl_parent" android:background="@drawable/program_selector2" android:focusable="true" android:layout_width="450.0dp" android:layout_height="70.0dp" android:layout_marginLeft="25.0dp" android:layout_marginTop="5.0dp" android:minHeight="@dimen/program_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:id="@id/subscribelistitem_ll_info_layout" android:layout_width="330.0dp" android:layout_height="match_parent">
+        <LinearLayout android:orientation="horizontal" android:paddingTop="10.0dp" android:layout_width="match_parent" android:layout_height="40.0dp" android:layout_marginLeft="5.0dp">
+            <TextView android:textSize="20.0sp" android:textColor="@color/subscribelistitem_tv_date_tc" android:gravity="left|center" android:id="@id/subscribelistitem_tv_date" android:layout_width="300.0dp" android:layout_height="match_parent" />
+            <TextView android:textSize="20.0sp" android:textColor="@color/subscribelistitem_tv_channel_tc" android:id="@id/subscribelistitem_tv_channel" android:visibility="gone" android:layout_width="300.0dp" android:layout_height="match_parent" />
+        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="40.0dp" android:layout_marginLeft="5.0dp" android:layout_marginTop="-10.0dp">
+            <ImageView android:layout_gravity="center_vertical" android:id="@id/subscribelistitem_iv_channel_icon" android:paddingTop="5.0dp" android:paddingBottom="5.0dp" android:visibility="gone" android:layout_width="50.0dp" android:layout_height="35.0dp" android:src="@drawable/icon_transport" android:paddingStart="10.0dp" android:paddingEnd="10.0dp" />
+            <com.live.evo.widget.MarqueeTextView android:textSize="18.0sp" android:textColor="@color/subscribelistitem_tv_program_tc" android:ellipsize="marquee" android:gravity="left|center" android:id="@id/subscribelistitem_tv_program" android:layout_width="300.0dp" android:layout_height="match_parent" android:singleLine="true" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="120.0dp" android:layout_height="match_parent" android:layout_alignParentRight="true">
+        <TextView android:textSize="18.0sp" android:textColor="@color/subsrible_play_tv" android:gravity="center" android:id="@id/subscribelistitem_tv_set" android:background="@drawable/subscribe_playstatus_selector" android:layout_width="110.0dp" android:layout_height="40.0dp" android:layout_marginTop="15.0dp" />
+    </LinearLayout>
+</RelativeLayout>

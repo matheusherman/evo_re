@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:background="@color/colorPrimaryDark" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.LinearLayout android:orientation="vertical" android:id="@id/vod_bg" android:layout_width="match_parent" android:layout_height="match_parent">
+        <com.tvc.lib.mobile.ui.widget.MyVideoView android:id="@id/video_view" android:layout_width="match_parent" android:layout_height="@dimen/dp_210" />
+        <include android:id="@id/vod_film_remind" android:visibility="gone" layout="@layout/vod_film_remind_item" />
+        <include android:id="@id/vod_film_detail" layout="@layout/vod_film_detail_item" />
+        <include android:id="@id/vod_film_episodes" android:visibility="gone" layout="@layout/vod_film_episodes_item" />
+        <include android:id="@id/vod_film_introduce" layout="@layout/vod_film_introduce_item" />
+        <include android:id="@id/vod_film_more_like" layout="@layout/vod_film_more_like_item" />
+    </t.v.c.widget.LinearLayout>
+</ScrollView>

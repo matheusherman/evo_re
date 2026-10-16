@@ -41,3 +41,19 @@ object SandwichErrors {
         return BaseLibConfig.appContext?.getString(R.string.request_failure) ?: "Request failure"
     }
 }
+
+/**
+ * Exceção de erro HTTP convertida de `ApiResponse.Failure.Error`.
+ * Original: sf/a.java — `message` = [errorMsg] (mensagem já montada por [SandwichErrors.describe]).
+ */
+class HttpStatusException(val statusCode: Int, private val errorMsg: String) : Exception() {
+    override val message: String get() = errorMsg
+}
+
+/**
+ * Exceção de erro de negócio: o corpo `ApiResult` veio com `code != "0"`.
+ * Original: sf/b.java — `message` = `"<msg>(<code>)"`.
+ */
+class ApiCodeException(val errorCode: String, private val errorMsg: String) : Exception() {
+    override val message: String get() = "$errorMsg($errorCode)"
+}

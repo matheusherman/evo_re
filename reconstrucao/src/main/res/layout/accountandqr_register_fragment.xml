@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:id="@+id/registeremail_rl_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/registeremail_view_bg"
+        android:background="@drawable/login_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <ImageView
+        android:layout_gravity="start|center|top"
+        android:id="@+id/registeremail_iv_arrow_back"
+        android:background="@drawable/drawable_button_round_back"
+        android:focusable="true"
+        android:visibility="visible"
+        android:clickable="true"
+        android:layout_width="@dimen/sm_51"
+        android:layout_height="@dimen/sm_51"
+        android:layout_marginTop="@dimen/sm_40"
+        android:src="@drawable/icon_arrow_back"
+        android:layout_marginStart="@dimen/sm_40" />
+
+    <ImageView
+        android:id="@+id/registeremail_iv_title"
+        android:visibility="gone"
+        android:layout_width="@dimen/load_icon_width"
+        android:layout_height="@dimen/load_icon_width"
+        android:layout_margin="30.0dip"
+        android:src="@mipmap/ic_launcher_freetrial"
+        android:layout_alignParentRight="true" />
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:textSize="35.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/resetpwd_tv_remind_tc"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/registeremail_tv_title"
+            android:visibility="gone"
+            android:layout_width="600.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50.0dip" />
+
+        <TextView
+            android:textSize="30.0sp"
+            android:textColor="@color/resetpwd_tv_remind_tc"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/registeremail_tv_remind_started"
+            android:layout_width="600.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30.0dip" />
+
+        <TextView
+            android:textSize="18.0sp"
+            android:textColor="@color/resetpwd_tv_remind_tc"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/registeremail_tv_redmind"
+            android:layout_width="600.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10.0dip" />
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="460.0dip">
+
+            <include
+                android:id="@+id/qr_register_layout"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                layout="@layout/qr_register_layout" />
+
+            <include
+                android:id="@+id/account_register_layout"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="1.0"
+                layout="@layout/account_register_layout" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_gravity="bottom|center"
+        android:id="@+id/registeremail_tv_error"
+        android:layout_marginBottom="10.0dip"
+        style="@style/ErrorStyle" />
+</RelativeLayout>

@@ -61,6 +61,17 @@ class AppUserManager private constructor() {
     private var handler: Handler? = null          // S
     private val qrHelper = QrBitmapHelper(this)   // r
 
+    /** Tipo de renovação da conta (-1 = indefinido). Original: campo f7043z / e() */
+    var accountRenewType = -1
+    /** Recarga por plano (true por padrão). Original: campo C / f() */
+    var isPlanRecharge = true
+    /** Campo de código de recarga permitido (true por padrão). Original: campo B / u() */
+    var isRechargeCodeAllowed = true
+    /** Recarga por plano via web/QR. Original: campo E / I() */
+    var isPlanWebRecharge = false
+    /** Pagamento habilitado no SDK. Original: v() → x1.f1.lb.config.b.f() */
+    fun isPaymentEnabled(): Boolean = BaseLibConfig.displayMemberSite   // `displayMemberSite`
+
     /** Original: runnable T → [scheduleExpiredCheck] */
     private val scheduleRunnable = Runnable { scheduleExpiredCheck() }
     /** Original: runnable U → [rescheduleExpiredGrace] */
@@ -211,6 +222,8 @@ class AppUserManager private constructor() {
     /** Original: o() */ fun lockKey(): String? = lockKey
     /** Original: q() → EpgRepository.D() (modo de boas-vindas) */ fun welcomeMode(): Int = EpgRepository.welcomeMode()
     /** Original: s() */ fun pipSize(): Int = pipSize
+    /** Pede código de login por telefone; o helper original (`w1.a(l5.a)`) é vazio. Original: p(l5.a) */
+    fun requestLoginCode(@Suppress("UNUSED_PARAMETER") listener: Any?) {}
     /** Original: t(String) — QR code em bitmap. */ fun qrBitmap(text: String): Bitmap? = qrHelper.create(text)
     /** Original: v() */ fun isDebug(): Boolean = BaseLibConfig.isDebug()
     /** Original: w() — session id se "show_sessionid" (padrão true). */ fun sessionIdForDisplay(): String = if (getBoolean("show_sessionid", true)) mSessionId else ""

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentStart="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/programmenuf_ll_layout_arrow"
+        android:background="@drawable/menu_child_bg"
+        android:visibility="gone"
+        android:layout_width="50.0dip"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/programmenuf_iv_arrow_left"
+            android:paddingLeft="2.0dip"
+            android:focusable="false"
+            android:layout_width="@dimen/arrow_width"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_left_icon" />
+
+        <View
+            android:background="@color/color_line"
+            android:layout_width="@dimen/line_mid_2px"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/myaccountf_ll_layout_account"
+        android:background="@drawable/menu_child_bg"
+        android:layout_width="@dimen/info_bg_width"
+        android:layout_height="fill_parent"
+        android:layout_toRightOf="@id/programmenuf_ll_layout_arrow">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="80.0dip"
+            android:layout_marginLeft="68.0dip"
+            android:layout_marginTop="60.0dip">
+
+            <ImageView
+                android:layout_width="20.0dip"
+                android:layout_height="20.0dip"
+                android:src="@drawable/myaccount_user_icon" />
+
+            <TextView
+                android:textSize="23.0sp"
+                android:textColor="@color/myaccount_account_status_tc"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/myaccountf_tv_account_status"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10.0dip"
+                android:text="@string/user_free" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="80.0dip"
+            android:layout_marginLeft="68.0dip"
+            android:layout_marginTop="-5.0dip">
+
+            <TextView
+                android:textSize="18.0sp"
+                android:textColor="@color/myaccount_account_expiry_tc"
+                android:id="@+id/myaccountf_tv_account_expiry"
+                android:layout_width="fill_parent"
+                android:layout_height="30.0dip"
+                android:text="@string/expire_date_3" />
+
+            <TextView
+                android:textSize="40.0sp"
+                android:textColor="@color/myaccount_account_expirydate_tc"
+                android:gravity="center|top"
+                android:id="@+id/myaccountf_tv_account_expirydate"
+                android:layout_width="wrap_content"
+                android:layout_height="50.0dip"
+                android:text="12--12"
+                android:layout_below="@id/myaccountf_tv_account_expiry" />
+
+            <LinearLayout
+                android:gravity="center"
+                android:id="@+id/myaccountf_ll_refresh"
+                android:background="@drawable/bg_circle_selector"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_width="35.0dip"
+                android:layout_height="35.0dip"
+                android:layout_marginLeft="20.0dip"
+                android:layout_marginTop="40.0dip"
+                android:layout_toRightOf="@id/myaccountf_tv_account_expirydate">
+
+                <ImageView
+                    android:id="@+id/myaccountf_iv_refresh"
+                    android:duplicateParentState="true"
+                    android:layout_width="20.0dip"
+                    android:layout_height="20.0dip"
+                    android:src="@drawable/refresh_selector"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="68.0dip"
+            android:layout_marginTop="10.0dip">
+
+            <TextView
+                android:textSize="18.0sp"
+                android:textColor="@color/myaccount_account_userid_tc"
+                android:id="@+id/myaccountf_tv_account_userid"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="68.0dip"
+            android:layout_marginTop="70.0dip">
+
+            <Button
+                android:textSize="18.0sp"
+                android:textColor="@color/myaccount_btn_recharge_text"
+                android:id="@+id/myaccountf_btn_account_recharge"
+                android:background="@drawable/myaccount_btn_recharge_bg"
+                android:layout_width="300.0dip"
+                android:layout_height="55.0dip"
+                android:layout_marginTop="20.0dip"
+                android:text="@string/recharge_now"
+                android:textAllCaps="false" />
+
+            <Button
+                android:textSize="18.0sp"
+                android:textColor="@color/myaccount_btn_logout_text"
+                android:id="@+id/myaccountf_btn_account_logout"
+                android:background="@drawable/myaccount_btn_logout_bg"
+                android:layout_width="300.0dip"
+                android:layout_height="55.0dip"
+                android:layout_marginTop="20.0dip"
+                android:text="@string/log_out"
+                android:textAllCaps="false" />
+
+            <RelativeLayout
+                android:id="@+id/myaccountf_rl_login"
+                android:visibility="gone"
+                android:layout_width="300.0dip"
+                android:layout_height="50.0dip">
+
+                <TextView
+                    android:textSize="14.0sp"
+                    android:textColor="@color/myaccount_btn_logout_text"
+                    android:id="@+id/myaccountf_tv_account_logintip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6.0dip"
+                    android:text="@string/account_is_has"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:textSize="16.0sp"
+                    android:textColor="@color/myaccount_btn_logout_text"
+                    android:id="@+id/myaccountf_tv_account_login"
+                    android:background="@drawable/load_register_selector"
+                    android:focusable="true"
+                    android:nextFocusUp="@id/myaccountf_btn_account_logout"
+                    android:clickable="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/log_in"
+                    android:layout_toRightOf="@id/myaccountf_tv_account_logintip"
+                    android:layout_centerVertical="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/myaccount_bottom_tip"
+            android:gravity="bottom"
+            android:id="@+id/myaccountf_tv_bottom_tip"
+            android:padding="10.0dip"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="68.0dip"
+            android:layout_marginBottom="35.0dip"
+            android:text="" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line"
+        android:background="@color/color_line"
+        android:visibility="gone"
+        android:layout_width="@dimen/line_mid_2px"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/ayccount_line_margin"
+        android:layout_toRightOf="@id/programmenuf_ll_layout_arrow" />
+
+    <include
+        android:id="@+id/myaccountf_ll_layout_renew"
+        android:visibility="gone"
+        android:layout_width="@dimen/info_bg_width"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/info_bg_width"
+        android:layout_toRightOf="@id/programmenuf_ll_layout_arrow"
+        layout="@layout/recharge_renew_layout_b" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/myaccountf_ll_layout_account_banner"
+        android:visibility="gone"
+        android:layout_width="@dimen/banner_bg_width"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="@dimen/info_bg_width"
+        android:layout_toRightOf="@id/programmenuf_ll_layout_arrow">
+
+        <com.youth.banner.Banner
+            android:layout_gravity="center_vertical"
+            android:id="@+id/myaccountf_bn_myaccount_banner"
+            android:background="@drawable/myaccount_banner_bg"
+            android:focusable="true"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:textSize="18.0sp"
+        android:textColor="@color/error_color"
+        android:ellipsize="end"
+        android:gravity="center|left"
+        android:layout_gravity="bottom"
+        android:id="@+id/myaccountf_tv_error"
+        android:background="@drawable/toast_bg"
+        android:paddingLeft="20.0dip"
+        android:paddingRight="20.0dip"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="68.0dip"
+        android:layout_marginBottom="10.0dip"
+        android:text="@string/user_renewcode"
+        android:layout_toRightOf="@id/programmenuf_ll_layout_arrow"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/livenewa_rl_parent" android:background="@color/livenewa_rl_parent_bgc" android:clipChildren="false" android:clipToPadding="false" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <t.v.c.widget.videoview.PlayerView android:id="@id/livenewa_ijk_main_videoview" android:visibility="invisible" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_centerInParent="true" />
+    <FrameLayout android:id="@id/livenewa_mosaic_view" android:background="@color/transparent" android:visibility="visible" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_centerInParent="true" />
+    <RelativeLayout android:id="@id/preview_container" android:background="@color/black_80" android:focusable="false" android:focusableInTouchMode="false" android:visibility="invisible" android:clickable="false" android:layout_width="320.0dp" android:layout_height="180.0dp" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+        <include layout="@layout/preview_live_layout" />
+    </RelativeLayout>
+    <LinearLayout android:orientation="horizontal" android:id="@id/livenewa_ll_player_stat_container" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+        <TextView android:textSize="13.0sp" android:id="@id/livenewa_tv_prt_stat_info" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_marginLeft="10.0dp" android:text="" android:layout_weight="6.0" style="@style/text_14_ffffff_blod" />
+        <TextView android:textSize="13.0sp" android:id="@id/livenewa_tv_player_stat_info" android:layout_width="0.0dp" android:layout_height="wrap_content" android:layout_marginRight="10.0dp" android:text="" android:layout_weight="4.0" style="@style/text_14_ffffff_blod" />
+    </LinearLayout>
+    <com.live.evo.widget.LoadView android:id="@id/livenewa_lv_program_loadview" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="36.0dp" android:layout_marginRight="30.0dp" android:layout_alignParentTop="true" android:layout_alignParentRight="true" />
+    <LinearLayout android:orientation="vertical" android:id="@id/livenewa_ll_programinfo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="40.0dp" android:layout_marginRight="200.0dp" android:layout_alignParentRight="true">
+        <LinearLayout android:gravity="right" android:orientation="vertical" android:id="@id/livenewa_ll_program_name_container" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <TextView android:gravity="right" android:id="@id/livenewa_tv_program_id" android:layout_width="wrap_content" android:layout_height="wrap_content" style="@style/AudioFileInfoOverlayText_30" />
+            <TextView android:id="@id/livenewa_tv_program_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="-5.0dp" style="@style/AudioFileInfoOverlayText_38" />
+        </LinearLayout>
+        <TextView android:id="@id/livenewa_tv_program_optimizing" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="10.0dp" style="@style/AudioFileInfoOverlayText1" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@id/livenewa_ll_user_container" android:visibility="gone" android:layout_width="160.0dp" android:layout_height="wrap_content" android:layout_marginLeft="10.0dp" android:layout_marginBottom="20.0dp" android:layout_alignParentBottom="true">
+        <ImageView android:id="@id/livenewa_qr_user_info" android:layout_width="150.0dp" android:layout_height="150.0dp" android:src="@drawable/qr_placehodler" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" />
+    </LinearLayout>
+    <RelativeLayout android:id="@id/livenewa_rl_program_ad" android:background="@android:color/black" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ImageView android:id="@id/livenewa_iv_program_ad_image" android:layout_width="800.0dp" android:layout_height="480.0dp" android:layout_centerInParent="true" />
+        <TextView android:gravity="center" android:id="@id/livenewa_tv_program_ad_countdown" android:background="@color/livenewa_tv_program_ad_countdown_bgc" android:layout_width="80.0dp" android:layout_height="80.0dp" android:layout_marginTop="40.0dp" android:layout_marginRight="40.0dp" android:layout_alignParentRight="true" style="@style/text_42_f2f2f2" />
+    </RelativeLayout>
+    <RelativeLayout android:id="@id/livenewa_rl_rly_no_signal_parent" android:background="@color/livenewa_rl_rly_no_signal_parent_bgc" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ImageView android:id="@id/livenewa_iv_no_signal" android:layout_width="500.0dp" android:layout_height="500.0dp" android:layout_centerInParent="true" />
+    </RelativeLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/livenewa_ll_loading" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="-2.0dp" android:layout_centerVertical="true">
+        <com.live.evo.widget.sloading.SLoadingView android:gravity="center_horizontal" android:id="@id/livenewa_slv" android:visibility="gone" android:layout_width="@dimen/live_loading_width" android:layout_height="@dimen/live_loading_width" android:layout_marginRight="7.0dp" app:s_color="@color/livenewa_slv_color" app:s_color_extra="@color/livenewa_slv_extra_color" app:s_type="@integer/livenewa_slv_style" />
+        <TextView android:textSize="16.0sp" android:textColor="@color/livenewa_tv_program_prompt_tc" android:id="@id/livenewa_tv_program_prompt" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/loading_margin_top" style="@style/text_24_f2f2f2" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:id="@id/livenewa_ll_osd_network_prompt" android:background="@drawable/p_network_bg2" android:visibility="gone" android:layout_width="match_parent" android:layout_height="150.0dp">
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/livenewa_iv_p_prompt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/p_prompt" />
+        <TextView android:textColor="@color/livenewa_tv_network_not_connect_tc" android:layout_gravity="center_vertical" android:id="@id/livenewa_tv_network_not_connect" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dp" android:text="@string/network_not_connect" style="@style/text_42_f2f2f2" />
+    </LinearLayout>
+    <include android:visibility="gone" layout="@layout/live_ugc_chat_layout" />
+    <ImageView android:layout_gravity="center_vertical" android:id="@id/chat_banner" android:background="@drawable/myaccount_banner_bg" android:focusable="true" android:visibility="gone" android:layout_width="match_parent" android:layout_height="@dimen/chat_banner_height" android:scaleType="centerCrop" android:layout_alignParentBottom="true" />
+    <ViewStub android:id="@id/livenewa_vs_expired" android:layout="@layout/live_expired_layout" android:layout_width="match_parent" android:layout_height="match_parent" />
+    <FrameLayout android:id="@id/root" android:layout_width="match_parent" android:layout_height="match_parent" />
+    <com.live.evo.widget.SpeedTextView android:textColor="@color/livenewa_tv_notice_tc" android:ellipsize="marquee" android:gravity="center" android:id="@id/livenewa_tv_notice" android:layout_width="match_parent" android:layout_height="wrap_content" android:marqueeRepeatLimit="marquee_forever" />
+</RelativeLayout>

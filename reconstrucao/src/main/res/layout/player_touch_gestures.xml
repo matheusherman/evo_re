@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:gravity="center_vertical" android:id="@id/app_video_center_box" android:background="@drawable/player_center_bg" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/app_video_volume_box" android:visibility="gone" android:layout_width="60.0dp" android:layout_height="60.0dp">
+        <t.v.c.widget.ImageView android:layout_gravity="center" android:id="@id/app_video_volume_icon" android:layout_width="35.0dp" android:layout_height="35.0dp" android:src="@mipmap/player_volume_up_white" />
+        <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="@android:color/white" android:id="@id/app_video_volume" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="50%" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/app_video_brightness_box" android:visibility="gone" android:layout_width="60.0dp" android:layout_height="60.0dp">
+        <t.v.c.widget.ImageView android:layout_gravity="center" android:id="@id/app_video_brightness_icon" android:layout_width="35.0dp" android:layout_height="35.0dp" android:src="@mipmap/player_brightness_white" />
+        <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="@android:color/white" android:id="@id/app_video_brightness" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="50%" android:layout_below="@id/operation_bg" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/app_video_fastForward_box" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="8.0dp">
+        <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="@android:color/white" android:id="@id/app_video_fastForward" android:paddingTop="8.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="50%" android:layout_below="@id/operation_bg" />
+        <t.v.c.widget.LinearLayout android:orientation="horizontal" android:paddingTop="8.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="@android:color/white" android:id="@id/app_video_fastForward_target" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="50%" />
+            <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="#e0e0e0" android:id="@id/app_video_fastForward_all" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="50%" />
+        </t.v.c.widget.LinearLayout>
+    </t.v.c.widget.LinearLayout>
+</FrameLayout>

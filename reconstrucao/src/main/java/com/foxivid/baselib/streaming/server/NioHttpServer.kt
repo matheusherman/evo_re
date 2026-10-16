@@ -41,7 +41,7 @@ object NioHttpServer : HttpServerRequestCallback, LocalHttpServer {
     private val logger = LoggerFactory.getLogger(NioHttpServer::class.java)
 
     /** Original: i.c = x1.f1.lb.util.n.f21413l (executor compartilhado da lib). */
-    private val service: ExecutorService = TODO("x1.f1.lb.util.n.f21413l — executor de outro módulo (util)")
+    private val service: ExecutorService = com.foxivid.baselib.util.LegacyTvUtils.EXECUTOR
 
     private var server: AsyncHttpServer? = null
     private val httpServiceWrapper = HttpServiceWrapper()

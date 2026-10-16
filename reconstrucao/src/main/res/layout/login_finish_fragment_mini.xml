@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/loginfinishminif_ll_parent" android:background="@color/loginfinishminif_ll_parent_bgc" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/loginfinishminif_ll_main_layout" android:background="@drawable/rechargemini_bg" android:layout_width="560.0dp" android:layout_height="400.0dp" android:layout_centerInParent="true">
+        <ImageView android:id="@id/loginfinishminif_iv_icon" android:layout_width="30.0dp" android:layout_height="30.0dp" android:src="@drawable/successfully_icon" />
+        <TextView android:textSize="22.0sp" android:textColor="@color/loginfinishminif_tv_remind1_tc" android:id="@id/loginfinishminif_tv_remind1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" />
+        <TextView android:textSize="20.0sp" android:textColor="@color/loginfinishminif_tv_remind2_tc" android:gravity="center" android:id="@id/loginfinishminif_tv_remind2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" />
+        <TextView android:textSize="36.0sp" android:textColor="@color/loginfinishminif_tv_remind3_tc" android:gravity="center" android:id="@id/loginfinishminif_tv_remind3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="30.0dp" />
+        <com.live.evo.widget.BaseButton android:textSize="@dimen/login_size" android:textColor="@color/loginfinishminif_btn_start_play_tc" android:gravity="center" android:id="@id/loginfinishminif_btn_start_play" android:background="@drawable/load_btn_selector" android:focusable="true" android:layout_width="200.0dp" android:layout_height="60.0dp" android:layout_marginTop="20.0dp" android:text="@string/watch_now" />
+    </LinearLayout>
+</LinearLayout>

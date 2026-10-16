@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.TextView android:textSize="11.0sp" android:textColor="@color/main_font_normal_label_gray_color" android:ellipsize="marquee" android:gravity="start" android:id="@id/txt_feedback_pop_item" android:background="@drawable/user_feedback_selector" android:paddingTop="7.0dp" android:paddingBottom="7.0dp" android:focusable="true" android:layout_width="176.0dp" android:layout_height="27.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" android:paddingStart="11.0dp" android:paddingEnd="11.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

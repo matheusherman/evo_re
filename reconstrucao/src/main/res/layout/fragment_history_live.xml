@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:tag="layout/fragment_history_live_0" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.recyclerview.widget.RecyclerView android:id="@id/re_list" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="@dimen/dp_5" android:layout_marginStart="@dimen/dp_10" android:layout_marginEnd="@dimen/dp_5" app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintTop_toTopOf="parent" />
+    <include android:id="@id/include_history_del" android:visibility="gone" android:layout_width="match_parent" android:layout_height="@dimen/dp_94" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="parent" layout="@layout/include_history_del_view" />
+</androidx.constraintlayout.widget.ConstraintLayout>

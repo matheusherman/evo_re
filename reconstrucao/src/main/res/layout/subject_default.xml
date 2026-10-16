@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:scrollbars="vertical" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.live.evo.widget.ProgramRecycleView android:id="@id/subject_match_listview" android:paddingLeft="10.0dp" android:paddingTop="12.0dp" android:scrollbars="none" android:nextFocusLeft="@id/subject_date_listview" android:nextFocusRight="@id/subject_matchback_btn" android:nextFocusUp="@id/subject_classification_listview" android:layout_width="match_parent" android:layout_height="match_parent" android:divider="@null" />
+    <include android:id="@id/subject_match_listview_empty" android:visibility="gone" layout="@layout/subject_nodata" />
+</LinearLayout>

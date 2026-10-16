@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Handler
 import android.text.TextUtils
+import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -21,7 +23,15 @@ import com.live.evo.util.DateFormatFactory
 import com.live.evo.util.DateUtils
 import com.live.evo.util.ModelHelper
 import com.live.evo.util.ServerClock
+import com.live.evo.util.LoginConfig
+import com.live.evo.util.TextStyleUtils
 import com.live.evo.util.ToastUtils
+import com.live.evo.osd.EpgChildAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -98,9 +108,26 @@ class EpgDialog(
         override fun onFocusChanged(focused: Boolean) { if (arrowRight != null && focused) updateArrows() }
     }
 
-    /** Mostra/oculta setas conforme posição selecionada e itens visíveis (>=5 ou primeiro > 1). Original: E() */
+    /**
+     * Seta esquerda: visível (INVISIBLE caso contrário) se a posição selecionada >= 5 ou o 1º item visível não é o dia 1; seta direita:
+     * visível (GONE caso contrário) enquanto ainda há mais dias à frente (último visível < total ou faltam > 5 até ele). Usa a tag de
+     * cada item (índice+1 como String). Sem filhos, esconde ambas. Original: E()
+     */
     fun updateArrows() {
-        // TODO("parcial: cálculo com getChildAt(0)/getChildAt(last).tag (índice+1 como String) — ver dialog/f.E")
+        val grid = rvParent
+        val selected = grid?.selectedPosition ?: 0
+        val childCount = grid?.childCount ?: 0
+        var showLeft = false
+        var showRight = false
+        if (childCount > 0) {
+            val first = (grid!!.getChildAt(0).tag as String).toInt()
+            val last = (grid.getChildAt(childCount - 1).tag as String).toInt()
+            val itemCount = epgAdapter?.itemCount ?: 0
+            showLeft = selected >= 5 || first > 1
+            showRight = !(last >= itemCount && last - selected <= 5)
+        }
+        arrowLeft?.visibility = if (showLeft) View.VISIBLE else View.INVISIBLE
+        arrowRight?.visibility = if (showRight) View.VISIBLE else View.GONE
     }
 
     /** Original: s(String, boolean) */ fun markLoaded(channelId: String?, success: Boolean) { lastChannelId = channelId; lastSuccess = success }
@@ -119,12 +146,131 @@ class EpgDialog(
     private fun showLoading() { loadingParent?.visibility = View.VISIBLE; loadAnim?.start() }
     /** Original: y() */ fun hideLoading() { loadAnim?.cancel(); loadingParent?.visibility = View.INVISIBLE }
 
-    /** Corrotina `EpgDialog$fetchData$1`: coleta Flow de EPG do SDK. Original: u()→b */
+    /**
+     * Corrotina `EpgDialog$fetchData$1`: coleta `EpgManager` do canal (Flow<List<EPGProgramme>>), converte para [ProgramBean]
+     * (`ModelHelper.k(channelId, epgId, list)`) e atualiza o [EpgDayAdapter] na main thread (scroll até o dia central + seleção do
+     * programa atual; painel visível). Em erro: log "get epgId data error", esconde loading, limpa o painel, adapter vazio,
+     * [markLoaded](epgId, false).
+     */
     private fun fetchData(epgId: String) {
-        TODO("kotlinx.coroutines: MediaRepository.D(epgId).catch{log}.collect{ ModelHelper.k(...) -> withContext(Main){ adapter.setData } }")
+        CoroutineScope(Dispatchers.IO).launch {
+            ModelHelper.epgFlowFor(epgId)
+                .catch { t ->
+                    logger.error("get epgId data error", t)
+                    withContext(Dispatchers.Main) {
+                        hideLoading()
+                        selectListener?.onCatchUp("", "", "")
+                        mainView?.visibility = View.VISIBLE
+                        epgAdapter?.setData(null)
+                        rvParent?.post { epgAdapter?.notifyDataSetChanged() }
+                        markLoaded(epgId, false)
+                    }
+                }
+                .collect { list ->
+                    val beans = ModelHelper.toProgramBeans(currentChannel?.channelId, epgId, list)
+                    logger.debug("fetchEpgData query success size = {}", beans.size)
+                    withContext(Dispatchers.Main) {
+                        hideLoading()
+                        markLoaded(epgId, true)
+                        epgAdapter?.setData(beans)
+                        rvParent?.post {
+                            epgAdapter?.notifyDataSetChanged()
+                            handler.post {
+                                val center = epgAdapter?.centerIndex() ?: 0
+                                rvParent?.scrollToPosition(center)
+                                handler.post {
+                                    try {
+                                        rvParent?.setSelectedPosition(center, androidx.leanback.widget.ViewHolderTask { vh ->
+                                            val grid = (vh as EpgDayAdapter.DayHolder).grid
+                                            val child = grid.adapter as? EpgChildAdapter
+                                            val pos = child?.playingPosition() ?: 0
+                                            grid.scrollToPosition(pos)
+                                            grid.setSelectedPosition(pos)
+                                        })
+                                    } catch (e: Exception) { logger.error("EpgDialog", e) }
+                                }
+                            }
+                        }
+                        if (beans.isEmpty()) selectListener?.onCatchUp("", "", "")
+                        handler.post { mainView?.visibility = View.VISIBLE }
+                    }
+                }
+        }
     }
 
-    /** Cria o diálogo, adapter e mostra. Original: z()/C()/E()/A() — ver layout `epg_dialog` (epgdlg_*) */
-    fun show() { TODO("inflar R.layout.epg_dialog, ligar views epgdlg_*, new EpgDayAdapter(context, SelectListener(), rvParent), dialog.show(), loadOrShow(), handler.post(refreshRunnable)") }
-    fun dismiss() { isStop = true; handler.removeCallbacks(refreshRunnable); dialog?.dismiss() }
+    private var selectListener: SelectListener? = null
+    private var tvProgram: TextView? = null
+    private var icon: ImageView? = null
+    private var epgTime: TextView? = null
+    private var epgProgramName: TextView? = null
+    private var epgDesc: TextView? = null
+    private var loadingView: View? = null
+
+    init {
+        // C(): infla e liga as views `epgdlg_*`
+        val root = LayoutInflater.from(context).inflate(R.layout.epg_dialog, null, false)
+        val id = R.id
+        arrowLeft = root.findViewById(id.epgdlg_iv_epg_arrow_left)
+        arrowRight = root.findViewById(id.epgdlg_iv_epg_arrow_right)
+        tvProgram = root.findViewById(id.epgdlg_tv_program)
+        rvParent = root.findViewById(id.epgdlg_hgv_parent)
+        icon = root.findViewById(id.epgdlg_iv_icon)
+        currentTime = root.findViewById(id.epgdlg_tv_curtime)
+        epgTime = root.findViewById(id.epgdlg_tv_epg_time)
+        epgProgramName = root.findViewById(id.epgdlg_tv_epg_channel_name)
+        epgDesc = root.findViewById(id.epgdlg_tv_epg_desc)
+        mainView = root.findViewById(id.epgdlg_ll_epg_main_view)
+        loadingView = root.findViewById(id.epgdlg_view_loading)
+        loadingParent = root.findViewById(id.epgdlg_rl_loading)
+        epgInit = root.findViewById(id.epgdlg_tv_epg_init)
+        epgDataParent = root.findViewById(id.epgdlg_ll_epg_data_parent)
+        if (LoginConfig.get().flagA()) TextStyleUtils.c(tvProgram) else TextStyleUtils.d(tvProgram)
+        TextStyleUtils.b(currentTime); TextStyleUtils.b(root.findViewById(id.epgdlg_tv_time)); TextStyleUtils.b(epgTime)
+        TextStyleUtils.b(root.findViewById(id.epgdlg_tv_name)); TextStyleUtils.b(epgProgramName)
+        TextStyleUtils.b(root.findViewById(id.epgdlg_tv_epg_desc2)); TextStyleUtils.b(epgDesc)
+        // z(): adapter, animação de loading (rotação 360→0, 1 s, linear, infinita) e Dialog `EPGDialog` (gravity BOTTOM, MATCH_PARENT)
+        selectListener = SelectListener()
+        epgAdapter = EpgDayAdapter(context, selectListener, rvParent).also { rvParent?.adapter = it }
+        loadAnim = ObjectAnimator.ofFloat(loadingView, "rotation", 360.0f, 0.0f).apply {
+            duration = 1000L; repeatMode = ObjectAnimator.RESTART; interpolator = android.view.animation.LinearInterpolator(); repeatCount = -1
+        }
+        dialog = com.live.evo.widget.BaseDialog(context, R.style.EPGDialog).also { d ->
+            d.setContentView(root)
+            val attrs = d.window?.attributes
+            attrs?.gravity = android.view.Gravity.BOTTOM
+            attrs?.width = -1; attrs?.height = -1
+            d.window?.decorView?.setPadding(0, 0, 0, 0)
+            d.window?.attributes = attrs
+            // A()/B(): MENU fecha o diálogo (t()); BACK/ESC param o relógio e a animação de loading
+            d.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_MENU) { dismiss(); true }
+                else {
+                    if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_ESCAPE) { stopClock(); loadAnim?.cancel() }
+                    false
+                }
+            }
+        }
+    }
+
+    private fun startClock() { isStop = false; handler.post(refreshRunnable) }       // H()
+    private fun stopClock() { isStop = true; handler.removeCallbacks(refreshRunnable) }   // I()
+
+    /** O diálogo está aberto? Original: D() */ fun isShowing(): Boolean = dialog?.isShowing == true
+
+    /** Mostra a EPG do canal [channel]: título, ícone, relógio e carga de dados. Original: F(i5.h) */
+    fun show(channel: ChannelData) {
+        currentChannel = channel
+        tvProgram?.text = channel.name
+        icon?.let { com.live.evo.util.GlideImageLoader.load(context, channel.iconUrl, it) }
+        dialog?.show()
+        startClock()
+        loadOrShow()
+    }
+
+    /** Fecha o diálogo (se aberto), esconde loading e para o relógio. Original: t() */
+    fun dismiss() {
+        if (isShowing()) dialog?.cancel()
+        hideLoading()
+        stopClock()
+    }
 }

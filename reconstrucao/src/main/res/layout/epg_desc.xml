@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:id="@id/epgdesc_rl_parent" android:background="@color/black_40" android:paddingLeft="10.0dp" android:paddingTop="10.0dp" android:paddingRight="10.0dp" android:paddingBottom="10.0dp" android:layout_width="match_parent" android:layout_height="300.0dp" android:layout_marginLeft="5.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:id="@id/lly_time" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textSize="@dimen/epg_program_desc" android:textStyle="bold" android:textColor="@color/epgdesc_tv_time_tc" android:id="@id/epgdesc_tv_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/epg_duration" />
+        <TextView android:textSize="@dimen/epg_program_desc" android:textColor="@color/epgdesc_tv_epg_time_tc" android:id="@id/epgdesc_tv_epg_time" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@id/epgdesc_ll_program" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:layout_below="@id/lly_time">
+        <TextView android:textSize="@dimen/epg_program_desc" android:textStyle="bold" android:textColor="@color/epgdesc_tv_name_tc" android:id="@id/epgdesc_tv_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/epg_program" />
+        <TextView android:textSize="@dimen/epg_program_desc" android:textColor="@color/epgdesc_tv_epg_channel_name_tc" android:id="@id/epgdesc_tv_epg_channel_name" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout android:textSize="@dimen/epg_program_desc" android:orientation="vertical" android:id="@id/epgdesc_ll_desc" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:layout_below="@id/epgdesc_ll_program">
+        <TextView android:textSize="@dimen/epg_program_desc" android:textStyle="bold" android:textColor="@color/epgdesc_tv_desc_tc" android:id="@id/epgdesc_tv_desc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/epg_description" />
+        <TextView android:textSize="@dimen/epg_program_desc" android:textColor="@color/epgdesc_tv_epg_desc_tc" android:ellipsize="end" android:id="@id/epgdesc_tv_epg_desc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="8" android:lineSpacingExtra="3.0dp" />
+    </LinearLayout>
+</RelativeLayout>

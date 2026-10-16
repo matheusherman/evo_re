@@ -3,6 +3,7 @@ package com.live.evo.osd.presenter
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import com.live.evo.event.SavePlayHistoryEvent
+import com.live.evo.util.RxBus
 import com.live.evo.model.ChannelData
 import com.live.evo.model.ProgramBean
 import com.live.evo.util.EpgRepository
@@ -35,8 +36,7 @@ class OSDListProgramPresenter(
     private var getEpgSubscribe: Disposable? = null
 
     init {
-        // Original: mView.K(this); G() — registra o presenter na view e assina eventos.
-        subscribeHistory()
+        // Original: mView.K(this); G() — registra o presenter na view; G() é vazio (a assinatura ocorre em start() = v()).
     }
 
     /** Original: C() */ fun programSelect(): Int = mView?.programSelect ?: 0
@@ -44,7 +44,8 @@ class OSDListProgramPresenter(
 
     /** Assina [SavePlayHistoryEvent] no RxBus (`j1.a()`, original). Original: v()/G() */
     private fun subscribeHistory() {
-        // TODO("não detalhado: bus Rx (t.j1.a().c(b5.h).s(consumer, erro)) — corpo em C0110c.accept abaixo")
+        // Original: j1.a().c(b5.h.class).s(new C0110c(), d) — o consumidor de erro (d) é vazio.
+        mSaveHistorySubscription = RxBus.get().observe(SavePlayHistoryEvent::class.java).subscribe({ onHistoryEvent(it) }, { })
     }
 
     private fun onHistoryEvent(e: SavePlayHistoryEvent) {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:layout_gravity="center" android:orientation="vertical" android:background="@drawable/drawable_shape_black_and_blue_border" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="13.0sp" android:textColor="@color/chinese_silver" android:gravity="center" android:layout_width="400.0dp" android:layout_height="201.0dp" android:layout_marginTop="6.0dp" android:text="" />
+    <t.v.c.widget.TextView android:textSize="13.0sp" android:textColor="@color/chinese_silver" android:gravity="center" android:id="@id/txt_about_source" android:layout_width="400.0dp" android:layout_height="21.0dp" android:layout_marginTop="6.0dp" android:text="" />
+    <t.v.c.widget.LinearLayout android:gravity="center" android:layout_gravity="center" android:layout_width="300.0dp" android:layout_height="273.0dp" android:layout_marginTop="13.0dp">
+        <t.v.c.widget.ImageView android:gravity="center" android:layout_gravity="center_horizontal" android:id="@id/img_about" android:layout_width="240.0dp" android:layout_height="240.0dp" />
+    </t.v.c.widget.LinearLayout>
+</t.v.c.widget.LinearLayout>

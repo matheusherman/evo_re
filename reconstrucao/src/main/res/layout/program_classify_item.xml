@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/programclassifyitem_rl_parent" android:background="@drawable/program_selector" android:layout_width="match_parent" android:layout_height="65.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@id/programclassifyitem_layout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true">
+        <ImageView android:id="@id/programclassifyitem_iv_img" android:visibility="gone" android:layout_width="200.0dp" android:layout_height="50.0dp" android:layout_marginLeft="15.0dp" android:scaleType="fitStart" android:layout_centerVertical="true" />
+        <TextView android:textStyle="bold" android:textColor="@color/programclassifyitem_tv_channel_name_tc" android:ellipsize="marquee" android:id="@id/programclassifyitem_tv_name" android:paddingLeft="25.0dp" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="220.0dp" android:singleLine="true" android:layout_centerVertical="true" style="@style/text_23_f2f2f2" />
+    </RelativeLayout>
+    <ImageView android:id="@id/programclassifynew_iv_img" android:visibility="gone" android:layout_width="55.0dp" android:layout_height="25.0dp" android:layout_marginLeft="12.0dp" android:scaleType="fitCenter" android:layout_toRightOf="@id/programclassifyitem_layout" android:layout_centerVertical="true" />
+</RelativeLayout>

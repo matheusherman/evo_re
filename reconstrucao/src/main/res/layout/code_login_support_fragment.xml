@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:id="@id/registerremindf_ll_parent" android:background="@drawable/login_bg" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/code_first_login_success_parent" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <TextView android:textSize="22.0sp" android:textColor="@color/color_eeeeee" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/service_successfully_renewed" />
+        <TextView android:textSize="22.0sp" android:textStyle="bold" android:textColor="@color/color_eeeeee" android:id="@id/recharge_id" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" />
+        <TextView android:textSize="22.0sp" android:textColor="@color/color_eeeeee" android:gravity="center" android:id="@id/tv_first_login_success_remind" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:maxWidth="800.0dp" />
+        <TextView android:textSize="@dimen/login_size" android:textColor="@color/bind_text_color" android:gravity="center" android:id="@id/btn_bind" android:background="@drawable/loginfinish_btn_selector" android:paddingLeft="8.0dp" android:paddingRight="8.0dp" android:focusable="true" android:nextFocusRight="@id/tv_watch_now" android:clickable="true" android:layout_width="wrap_content" android:layout_height="50.0dp" android:layout_marginTop="40.0dp" android:text="@string/bind_email" />
+        <TextView android:textSize="@dimen/login_size" android:textColor="@color/color_eeeeee" android:id="@id/tv_watch_now" android:background="@drawable/checkbox_bg_selector" android:paddingLeft="8.0dp" android:paddingRight="8.0dp" android:focusable="true" android:nextFocusLeft="@id/btn_bind" android:clickable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:text="@string/watch_now" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/code_bind_parent" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <TextView android:textSize="24.0sp" android:textStyle="bold" android:textColor="@color/color_eeeeee" android:id="@id/code_bind_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/code_bind_title" />
+        <TextView android:textSize="22.0sp" android:textColor="@color/color_eeeeee" android:gravity="center" android:id="@id/code_bind_remind" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:maxWidth="800.0dp" android:text="@string/code_bind_remind" />
+        <LinearLayout android:gravity="center" android:layout_width="600.0dp" android:layout_height="70.0dp" android:layout_marginTop="20.0dp" android:layout_centerHorizontal="true">
+            <TextView android:id="@id/code_bind_now" android:background="@drawable/subscribe_btn_bg_selector2" android:nextFocusRight="@id/code_bind_later" android:nextFocusDown="@id/code_bind_checkbox" android:layout_width="200.0dp" android:layout_margin="15.0dp" android:text="@string/bind_now" style="@style/ButtonStyle" />
+            <TextView android:id="@id/code_bind_later" android:background="@drawable/login_btn_return_select" android:nextFocusLeft="@id/code_bind_now" android:nextFocusDown="@id/code_bind_checkbox" android:layout_width="200.0dp" android:layout_margin="15.0dp" android:text="@string/bind_later" style="@style/ButtonStyle" />
+        </LinearLayout>
+        <CheckBox android:textSize="20.0sp" android:textColor="@color/color_eeeeee" android:id="@id/code_bind_checkbox" android:background="@drawable/checkbox_bg_selector" android:padding="2.0dp" android:paddingLeft="5.0dp" android:paddingRight="5.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="20.0dp" android:text="@string/code_bind_tip" style="@style/TVCheckBoxStyle" />
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/code_confirm_parent" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <TextView android:textSize="20.0sp" android:textStyle="bold" android:textColor="@color/color_eeeeee" android:id="@id/code_confirm_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/fill_out_key" />
+        <com.live.evo.widget.RemoveKeyCodeEnterEditText android:id="@id/code_confirm_et" android:layout_marginTop="40.0dp" android:width="400.0dp" style="@style/LoginEditText" />
+        <LinearLayout android:gravity="center" android:layout_width="600.0dp" android:layout_height="70.0dp" android:layout_marginTop="20.0dp">
+            <TextView android:id="@id/code_confirm_ok" android:background="@drawable/dialog_btn_bg_selector" android:layout_width="200.0dp" android:layout_margin="15.0dp" android:text="@string/ok" style="@style/ButtonStyle" />
+            <TextView android:id="@id/code_confirm_close" android:background="@drawable/subscribe_btn_bg_selector" android:layout_width="200.0dp" android:layout_margin="15.0dp" android:text="@string/close" style="@style/ButtonStyle" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:id="@id/tv_error" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" style="@style/ErrorStyle" />
+</RelativeLayout>

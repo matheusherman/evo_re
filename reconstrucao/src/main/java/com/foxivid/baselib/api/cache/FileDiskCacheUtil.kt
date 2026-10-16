@@ -30,7 +30,7 @@ object FileDiskCacheUtil {
     private val logger = LoggerFactory.getLogger(FileDiskCacheUtil::class.java)
 
     /** Original: util/n.f21413l (executor compartilhado). */
-    private val executorService: ExecutorService get() = TODO("outro módulo: util/n.f21413l")
+    private val executorService: ExecutorService get() = com.foxivid.baselib.util.LegacyTvUtils.EXECUTOR
 
     /** Original: `fileCacheKey`. */
     private var fileCacheKey = HashMap<String, HashSet<String>>()
@@ -123,13 +123,36 @@ object FileDiskCacheUtil {
 
 /** Pontes para util/w0 (SPUtils) e util/b0 (DownloadUtils), de outros módulos. */
 internal object SpRef {
-    fun getString(key: String, dft: String): kotlinx.coroutines.flow.Flow<String> = TODO("util/w0.g()")
-    fun putString(key: String, value: String): Unit = TODO("util/w0.t()")
+    /** Original: w0.g(key, dft) — Flow com o valor salvo. */
+    fun getString(key: String, dft: String): kotlinx.coroutines.flow.Flow<String> = com.foxivid.baselib.util.Preferences.get(key, dft)
+    /** Original: w0.t(key, value) */
+    fun putString(key: String, value: String) = com.foxivid.baselib.util.Preferences.putString(key, value)
 }
 
 internal object DownloadRef {
     interface Task { val file: File; val tryTimes: java.util.concurrent.atomic.AtomicInteger }
-    fun newTask(url: String, dir: String, name: String, onError: (Throwable) -> Unit): Task = TODO("util/b0.c")
-    fun cacheDir(): String = TODO("util/b1.i()")
-    fun download(task: Task): Unit = TODO("util/b0.h(task)")
+    /**
+     * Tarefa de download sem cifra e sem zip cujas validações (arquivo existente / verificação) sempre aprovam; o listener só reporta falhas.
+     * Original: api/cache/b$b (extends util/b0$c) + b$c (listener)
+     */
+    fun newTask(url: String, dir: String, name: String, onError: (Throwable) -> Unit): Task {
+        val ctx = object : com.foxivid.baselib.util.DownloadUtils.PlainDownloadContext(url, dir, name, false, object : com.foxivid.baselib.util.DownloadUtils.Listener {
+            override fun onError(e: Throwable) = onError(e)
+            override fun onSaved(savedPath: String) {}
+            override fun onProgress(progress: Int) {}
+        }) {
+            override fun isExistingValid(file: File): Boolean = true   // b$b.f(File)
+            override fun verify(file: File): Boolean = true            // b$b.g(File)
+        }
+        return object : Task, com.foxivid.baselib.util.DownloadUtils.DownloadContext by ctx {
+            override val file: File get() = ctx.file
+            override val tryTimes get() = ctx.tryTimes
+        }
+    }
+    /** Diretório de dados em arquivo do app. Original: util/b1.i() */
+    fun cacheDir(): String = com.foxivid.baselib.util.AppPaths.fileDataPath()
+    /** Original: util/b0.h(task) = g(task, true, null) */
+    fun download(task: Task) {
+        com.foxivid.baselib.util.DownloadUtils.download(task as com.foxivid.baselib.util.DownloadUtils.DownloadContext, true, null)
+    }
 }

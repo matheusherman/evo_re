@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:orientation="vertical" android:background="@color/tv_guide_hide_nav_bg_color" android:layout_width="226.0dp" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="@dimen/font_minor" android:textStyle="bold" android:textColor="@color/main_font_key_label_white_color" android:layout_width="210.0dp" android:layout_height="15.0dp" android:layout_marginTop="16.0dp" android:text="@string/user_feedback_title" android:layout_marginStart="19.0dp" />
+    <t.v.c.widget.MyListView android:id="@id/lv_feedback" android:focusable="true" android:visibility="gone" android:scrollbars="none" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12.0dp" android:listSelector="@drawable/user_feedback_selector" android:cacheColorHint="@color/live_channel_nav_bg_color" android:dividerHeight="8.0dp" />
+    <t.v.c.widget.MyListView android:id="@id/lv_pop_feedback" android:focusable="true" android:visibility="gone" android:scrollbars="none" android:descendantFocusability="blocksDescendants" android:layout_width="210.0dp" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:listSelector="@drawable/user_feedback_selector" android:cacheColorHint="@color/live_channel_nav_bg_color" android:dividerHeight="6.0dp" android:layout_marginStart="10.0dp" />
+    <t.v.c.widget.TextView android:textSize="10.0sp" android:textColor="@color/main_font_normal_label_gray_color" android:layout_width="210.0dp" android:layout_height="16.0dp" android:layout_marginTop="12.0dp" android:text="@string/user_feedback_other_question" android:layout_marginStart="19.0dp" />
+    <t.v.c.widget.LinearLayout android:orientation="horizontal" android:layout_width="210.0dp" android:layout_height="16.0dp" android:layout_marginTop="3.0dp" android:layout_marginStart="12.0dp">
+        <t.v.c.widget.ImageView android:layout_width="13.0dp" android:layout_height="13.0dp" android:src="@drawable/email" android:layout_marginEnd="8.0dp" />
+        <t.v.c.widget.TextView android:textSize="9.0sp" android:textColor="@color/main_font_normal_label_gray_color" android:ellipsize="marquee" android:id="@id/txt_email" android:layout_width="176.0dp" android:layout_height="wrap_content" android:text="@string/contact_email" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.LinearLayout android:orientation="horizontal" android:visibility="gone" android:layout_width="210.0dp" android:layout_height="16.0dp" android:layout_marginTop="3.0dp" android:layout_marginStart="12.0dp">
+        <t.v.c.widget.ImageView android:layout_width="13.0dp" android:layout_height="13.0dp" android:src="@drawable/whatsapp" android:layout_marginEnd="8.0dp" />
+        <t.v.c.widget.TextView android:textSize="9.0sp" android:textColor="@color/main_font_normal_label_gray_color" android:ellipsize="marquee" android:id="@id/txt_whatsapp_tip" android:layout_width="176.0dp" android:layout_height="16.0dp" android:text="@string/user_whatsapp_tip" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.LinearLayout android:orientation="horizontal" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dp" android:layout_marginStart="12.0dp">
+        <t.v.c.widget.ImageView android:layout_width="13.0dp" android:layout_height="13.0dp" android:src="@drawable/telegram" android:layout_marginEnd="8.0dp" />
+        <t.v.c.widget.TextView android:textSize="9.0sp" android:textColor="@color/main_font_normal_label_gray_color" android:ellipsize="marquee" android:id="@id/txt_telegram_tip" android:layout_width="160.0dp" android:layout_height="16.0dp" android:text="@string/user_telegram_tip" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+    </t.v.c.widget.LinearLayout>
+    <t.v.c.widget.LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="3.0dp" android:layout_marginStart="12.0dp">
+        <t.v.c.widget.LinearLayout android:orientation="horizontal" android:id="@id/ll_feedback_whatsapp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <t.v.c.widget.ImageView android:layout_width="13.0dp" android:layout_height="13.0dp" android:src="@drawable/whatsapp" android:layout_marginStart="2.0dp" android:layout_marginEnd="8.0dp" />
+            <t.v.c.widget.TextView android:textSize="@dimen/font_micro" android:textColor="@color/main_font_normal_label_gray_color" android:ellipsize="marquee" android:id="@id/txt_feedback_whatsapp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/scan_with_whatsapp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+            <t.v.c.widget.ImageView android:id="@id/img_whatsapp" android:layout_width="@dimen/qr_size_middle" android:layout_height="@dimen/qr_size_middle" android:layout_marginTop="3.0dp" android:layout_marginStart="2.0dp" />
+        </t.v.c.widget.LinearLayout>
+        <t.v.c.widget.LinearLayout android:orientation="horizontal" android:id="@id/ll_feedback_telegram" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <t.v.c.widget.TextView android:textSize="@dimen/font_micro" android:textColor="@color/main_font_normal_label_gray_color" android:ellipsize="marquee" android:id="@id/txt_feedback_telegram" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/scan_with_telegram" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" android:layout_marginStart="10.0dp" />
+            <t.v.c.widget.ImageView android:layout_width="13.0dp" android:layout_height="13.0dp" android:src="@drawable/telegram" android:layout_marginStart="20.0dp" android:layout_marginEnd="8.0dp" />
+            <t.v.c.widget.ImageView android:id="@id/img_telegram" android:layout_width="@dimen/qr_size_middle" android:layout_height="@dimen/qr_size_middle" android:layout_marginTop="3.0dp" android:layout_marginStart="2.0dp" />
+        </t.v.c.widget.LinearLayout>
+    </t.v.c.widget.LinearLayout>
+</t.v.c.widget.LinearLayout>

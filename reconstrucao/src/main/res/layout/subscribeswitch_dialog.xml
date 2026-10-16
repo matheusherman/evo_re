@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/subscribeswitchdlg_ll_parent" android:background="@drawable/epg_dialog_bg" android:layout_width="@dimen/normal_dialog_width" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:layout_width="@dimen/normal_dialog_width" android:layout_height="@dimen/normal_dialog_text_height" android:layout_marginTop="30.0dp">
+        <TextView android:textSize="22.0sp" android:textColor="@color/subscribeswitchdlg_tv_switch_tips_tc" android:id="@id/subscribeswitchdlg_tv_switch_tips" android:layout_width="@dimen/normal_text_width" android:layout_height="match_parent" android:layout_marginLeft="@dimen/normal_dialog_padding" android:layout_marginTop="10.0dp" android:layout_marginBottom="5.0dp" />
+    </LinearLayout>
+    <View android:layout_gravity="center" android:id="@id/subscribeswitchdlg_view_line" android:background="@color/subscribeswitchdlg_view_line_bgc" android:layout_width="@dimen/normal_text_width" android:layout_height="1.0px" />
+    <LinearLayout android:layout_gravity="center" android:orientation="horizontal" android:layout_width="@dimen/normal_text_width" android:layout_height="@dimen/normal_btn_bg_height" android:layout_marginTop="20.0dp" android:layout_marginBottom="10.0dp">
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/subscribeswitchdlg_btn_sure_tc" android:gravity="center" android:id="@id/subscribeswitchdlg_btn_sure" android:background="@drawable/subscribe_btn_bg_selector" android:focusable="true" android:layout_width="@dimen/normal_btn_width" android:layout_height="@dimen/normal_btn_height" android:layout_marginLeft="@dimen/normal_btn_padding" android:layout_marginTop="10.0dp" android:text="@string/yes" />
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/subscribeswitchdlg_btn_cancel_tc" android:gravity="center" android:id="@id/subscribeswitchdlg_btn_cancel" android:background="@drawable/login_btn_return_select" android:focusable="true" android:layout_width="@dimen/normal_btn_width" android:layout_height="@dimen/normal_btn_height" android:layout_marginLeft="@dimen/normal_btn_centerpadding" android:layout_marginTop="10.0dp" android:text="@string/no" />
+    </LinearLayout>
+</LinearLayout>

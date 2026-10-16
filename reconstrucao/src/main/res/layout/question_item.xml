@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:paddingTop="15.0dp" android:paddingBottom="15.0dp" android:layout_width="match_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="17.0sp" android:textColor="@color/color_eeeeee" android:gravity="center" android:id="@id/tv_numbers" android:background="@drawable/feedback_num_bg" android:layout_width="@dimen/feedback_num_bg_width" android:layout_height="@dimen/feedback_num_bg_width" android:layout_marginTop="5.0dp" />
+    <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dp">
+        <TextView android:textSize="20.0sp" android:textColor="@color/color_eeeeee" android:ellipsize="marquee" android:layout_gravity="center_vertical" android:id="@id/tv_question" android:layout_width="600.0dp" android:layout_height="match_parent" android:maxWidth="500.0dp" android:singleLine="true" />
+        <TextView android:textSize="18.0sp" android:textColor="@color/contact" android:ellipsize="marquee" android:layout_gravity="center_vertical" android:id="@id/tv_answer" android:layout_width="600.0dp" android:layout_height="match_parent" android:text="The page can only view content through the upper and lower keys, and the function and edlting cannot be selected." />
+    </LinearLayout>
+</LinearLayout>

@@ -27,7 +27,7 @@ import java.util.zip.Deflater
  *   Base64 padrão RFC4648 sem quebra de linha).
  * - POST `<url>/api/metric/batch/v1`, até 4 tentativas fazendo rodízio entre as URLs.
  */
-class MetricAgent(urls: Array<String>, private val okHttpClient: OkHttpClient) {
+class MetricAgent(urls: Array<String>, private val okHttpClient: OkHttpClient) : com.foxivid.baselib.host.MetricClientRef(urls, okHttpClient) {
     private val logger = LoggerFactory.getLogger(MetricAgent::class.java)
     private val METRIC_URI = "/api/metric/batch/v1"
     private val urls: Array<String> = urls
@@ -46,6 +46,8 @@ class MetricAgent(urls: Array<String>, private val okHttpClient: OkHttpClient) {
 
     /** Original: uf.b.g() */
     fun stop() { stopped = true }
+
+    override fun close() = stop()
 
     /** Original: uf.b.c() */
     private fun loop() {

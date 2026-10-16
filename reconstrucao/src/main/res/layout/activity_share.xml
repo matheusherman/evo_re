@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:tag="layout/activity_share_0" android:background="#1a1a23" android:padding="24.0dp" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <include android:id="@id/share_app_header" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true" layout="@layout/layout_header" />
+    <TextView android:textSize="20.0sp" android:textStyle="bold" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Invite Your Friends" />
+    <ImageView android:id="@id/ivPreview" android:visibility="gone" android:layout_width="match_parent" android:layout_height="200.0dp" android:layout_marginTop="16.0dp" android:src="@drawable/brand_logo" android:scaleType="centerCrop" />
+    <TextView android:textColor="#666666" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16.0dp" android:text="@string/share_app_tip" android:paddingStart="@dimen/dp_10" android:paddingEnd="@dimen/dp_10" />
+    <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24.0dp">
+        <ImageButton android:id="@id/btnWhatsApp" android:background="?selectableItemBackgroundBorderless" android:layout_width="60.0dp" android:layout_height="60.0dp" android:src="@drawable/ic_whatsapp" android:scaleType="fitXY" />
+        <ImageButton android:id="@id/btnTelegram" android:background="?selectableItemBackgroundBorderless" android:layout_width="60.0dp" android:layout_height="60.0dp" android:src="@drawable/ic_telegram" android:scaleType="fitXY" android:layout_marginStart="32.0dp" />
+        <ImageButton android:id="@id/btnMore" android:background="?selectableItemBackgroundBorderless" android:layout_width="60.0dp" android:layout_height="60.0dp" android:src="@drawable/ic_more_horiz" android:scaleType="fitXY" android:layout_marginStart="32.0dp" />
+    </LinearLayout>
+</LinearLayout>

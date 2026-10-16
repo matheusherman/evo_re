@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:textSize="@dimen/sm_22" android:textColor="@color/white" android:ellipsize="marquee" android:gravity="center_vertical" android:id="@android:id/text1" android:background="@drawable/email_item_selector" android:paddingLeft="@dimen/sm_12" android:layout_width="match_parent" android:layout_height="@dimen/sm_50" android:singleLine="true"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <t.v.c.widget.LinearLayout android:gravity="center_horizontal" android:layout_gravity="center" android:orientation="vertical" android:visibility="visible" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="16.0dp">
+        <t.v.c.widget.ImageView android:id="@id/appLogoImageView" android:visibility="invisible" android:layout_width="128.0dp" android:layout_height="44.0dp" android:src="@drawable/brand_logo_tsp" android:scaleType="fitXY" />
+        <t.v.c.widget.TextView android:textSize="14.0sp" android:textColor="@color/white" android:id="@id/versionTextView" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/load_activity_version_name_margin_top" android:alpha="0.8" />
+    </t.v.c.widget.LinearLayout>
+    <RelativeLayout android:id="@id/loada_rl_parent" android:layout_width="match_parent" android:layout_height="match_parent">
+        <ImageButton android:id="@id/loada_iv_ad" android:background="@color/transparent" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:scaleType="centerCrop" />
+        <t.v.c.widget.videoview.VideoView android:id="@id/loada_video_view" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <com.live.evo.widget.sloading.SLoadingView android:id="@id/loada_loadingview" android:visibility="gone" android:layout_width="@dimen/normal_btn_centerpadding" android:layout_height="@dimen/normal_btn_centerpadding" android:layout_marginLeft="20.0dp" android:layout_marginBottom="50.0dp" android:layout_alignParentBottom="true" app:s_color="@color/color_focused" app:s_color_extra="@color/color_eeeeee" app:s_type="@integer/liveload_slv_circle_load_style" />
+        <TextView android:textSize="22.0sp" android:textColor="@color/item_normal_color" android:id="@id/loada_tv_version" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dp" android:layout_marginBottom="20.0dp" android:layout_alignParentBottom="true" />
+        <ImageView android:id="@id/loada_iv_video_curtain" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <FrameLayout android:id="@id/root" android:layout_width="match_parent" android:layout_height="match_parent" />
+        <com.live.evo.widget.SpeedTextView android:textSize="20.0sp" android:textColor="@color/white" android:ellipsize="marquee" android:gravity="center" android:id="@id/loada_tv_notice" android:layout_width="match_parent" android:layout_height="wrap_content" android:marqueeRepeatLimit="marquee_forever" />
+        <LinearLayout android:gravity="center_vertical" android:id="@id/loada_ad_canskip" android:background="@drawable/bg_ad" android:paddingLeft="17.0dp" android:paddingRight="17.0dp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="50.0dp" android:layout_marginTop="35.0dp" android:layout_marginRight="35.0dp" android:layout_alignParentTop="true" android:layout_alignParentRight="true">
+            <TextView android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/loada_ad_system_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <LinearLayout android:gravity="center_vertical" android:id="@id/loada_ad_canskip_ll" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="14.0dp">
+                <View android:background="#20ffffff" android:layout_width="2.0px" android:layout_height="30.0dp" />
+                <TextView android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/loada_ad_canskip_tv1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="14.0dp" android:text="@string/ad_start_press" />
+                <ImageView android:layout_width="25.0dp" android:layout_height="15.0dp" android:src="@drawable/icon_right_press" />
+                <TextView android:textSize="20.0sp" android:textColor="@color/white" android:id="@id/loada_ad_canskip_tv2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ad_start_skip" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <include android:layout_gravity="center" android:id="@id/loading_layout" android:layout_width="wrap_content" android:layout_height="wrap_content" layout="@layout/s_loading_dialog_mb" />
+</t.v.c.widget.FrameLayout>

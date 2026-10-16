@@ -9,6 +9,7 @@ import com.foxivid.baselib.streaming.StreamHelper
 import com.foxivid.baselib.streaming.client.EngineHelper
 import com.foxivid.baselib.streaming.engine.PlayType
 import com.foxivid.baselib.user.UserManager
+import com.foxivid.baselib.util.StackTraceUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -40,7 +41,8 @@ import java.util.concurrent.atomic.AtomicLong
  *   ⇒ reinicia o player (exceto eco mode / sem trial).
  * - [onRestartEvent] (c0.OnEvent(nf.q)): restart pedido pelo VideoViewHandler (buffering) — ignora se
  *   a sessão mudou ou se a sessão tem < 15 s.
- * TODO: UI (loading, trial overlay, legendas, aspect ratio, contadores de tempo de teste).
+ * A parte visual (loading, tip, "sem sinal", cobertura padrão, canto de teste) é feita pela subclasse concreta (`PlayerView$b`) através dos
+ * métodos abstratos `g1/k1/r0/v1/x1/y1/z1`; legendas e contadores de tempo de teste ficam no VideoViewHandler/ SubtitleViewHandler.
  */
 abstract class PlayerViewHandler {
 
@@ -50,7 +52,8 @@ abstract class PlayerViewHandler {
     private val isPlayerInStarting = AtomicBoolean(false)
     private var playingContext: PlayContext? = null
     private var lastPlayContext: PlayContext? = null
-    private val invalidSession = -1L // TODO: valor real do campo c0.invalidSession não confirmado
+    /** `private final long invalidSession` sem atribuição no construtor: vale 0 (zero = sem sessão). */
+    private val invalidSession = 0L
     protected lateinit var videoViewHandler: VideoViewHandler
 
     /** Original: c0.G1(ChannelStreamResponse) */
@@ -72,9 +75,9 @@ abstract class PlayerViewHandler {
         if (durSec <= 0) throw Exception("catchup duration <0")
         val mediaId = channel.catchupRoute + "#" + channel.streamId + "#" + startSec + "#" + durSec
         val needUntil = System.currentTimeMillis() + (programme.stop - programme.start)
-        if (!UserManager.isMember() || UserManager.expireTime() < needUntil) { // user.f.K0(), m0()
+        if (!UserManager.hasUsername() || UserManager.getExpireTs() < needUntil) { // user.f.K0(), m0()
             // Original: EventBus nf.x(name, CATCHUP, 0); noSignalListener(1, R.string.no_stream_notice_message_no_free)
-            logger.info("[${PlayType.CATCHUP}][$name][$mediaId] start, but ${if (UserManager.isMember()) "not enough time left" else "guest"}")
+            logger.info("[${PlayType.CATCHUP}][$name][$mediaId] start, but ${if (UserManager.hasUsername()) "not enough time left" else "guest"}")
             stop(true)
             emit(0L); return@flow
         }
@@ -89,7 +92,7 @@ abstract class PlayerViewHandler {
     private suspend fun start(videoName: String, type: PlayType, positionKey: String, mediaId: String, routeId: String,
                               mediaMode: Int, playerArgs: String?, creator: PlayContext.FlowCreator, subtitleMediaId: String = ""): Flow<Long> {
         val ctx = mutex.withLock {
-            val uid = UserManager.uid(); val loginTime = UserManager.loginTime() // user.f.B0(), o0()
+            val uid = UserManager.getAccountIdString(); val loginTime = UserManager.getLatestLoginResponseTime() // user.f.B0(), o0()
             val cur = playingContext
             if (cur == null || cur.uid != uid || cur.loginTime != loginTime || cur.playType != type ||
                 cur.mediaId != mediaId || cur.routeId != routeId || cur.mediaMode != mediaMode) {
@@ -188,8 +191,125 @@ abstract class PlayerViewHandler {
     fun stop(isTerminate: Boolean) {
         if (playingContext == null) return
         if (isTerminate) playingContext = null
-        // Original: c0$e0 → para StreamHelper/VideoViewHandler
+        videoViewHandler.stopPlayer(isTerminate)   // Original: c0$e0 → VideoViewHandler.N2(isTerminate) (+ encerra a sessão no proxy)
     }
+
+    private var mContext: android.content.Context? = null
+    private var playerView: PlayerViewContract? = null
+    private var subtitleViewHandler: com.foxivid.ui.subtitle.SubtitleViewHandler? = null
+
+    /**
+     * Liga o handler à view: guarda contexto/handlers, o idioma de legenda padrão e registra os callbacks do [VideoViewHandler]:
+     * prepared (K0: avisa o listener e o monitor), info (L0), render completo (M0), completion (N0), seek complete (O0: dá start se
+     * parado) e erro (P0 = [onPlayerError]). O OnPreDrawListener que posiciona o canto de teste/tip (`c0$k`, ~400 linhas em
+     * x1/f1/lb/widget/videoview/k.java) não foi reconstruído. Original: J0(...)
+     */
+    fun attach(context: android.content.Context, playerView: PlayerViewContract, videoViewHandler: VideoViewHandler,
+               subtitleViewHandler: com.foxivid.ui.subtitle.SubtitleViewHandler) {
+        mContext = context
+        this.playerView = playerView
+        this.videoViewHandler = videoViewHandler
+        this.subtitleViewHandler = subtitleViewHandler
+        subtitleLang = com.foxivid.baselib.heartbeat.HeartbeatManager.subtitleDftLang
+        videoViewHandler.setOnPreparedListener { mp ->
+            onPreparedListener?.onPrepared(mp)
+            logger.debug("[{}][{}][{}] prepared", playerType(), videoName(), playingContext?.mediaId)
+        }
+        videoViewHandler.setOnInfoListener { mp, what, extra, info -> onInfoListener?.onInfo(mp, what, extra, info) ?: true }
+        videoViewHandler.setOnCompletionListener { mp ->
+            logger.debug("[{}][{}][{}] play complete", playerType(), videoName(), playingContext?.mediaId)
+            onCompletionListener?.onCompletion(mp)
+        }
+        videoViewHandler.setOnSeekCompleteListener { mp ->
+            try {
+                logger.debug("[{}][{}][{}] seek complete[{}]", playerType(), videoName(), playingContext?.mediaId, mp.currentPosition)
+                if (!mp.isPlaying) mp.start()
+            } catch (t: Throwable) {
+                logger.error("[{}][{}][{}] start play failure after seek complete", playerType(), videoName(), playingContext?.mediaId, t)
+            }
+            onSeekCompleteListener?.onSeekComplete(mp)
+        }
+        videoViewHandler.setOnErrorListener { mp, what, extra -> onPlayerError(mp, what, extra) }
+    }
+    private fun playerType() = playingContext?.playType
+
+    // ------------------------------------------------------------------ API consumida por PlayerView
+    private var isPause = false
+    private var subtitleLang: String? = null
+    private var subtitles: List<String>? = null
+    private var onPreparedListener: IMediaPlayer.OnPreparedListener? = null
+    private var onErrorListener: IMediaPlayer.OnErrorListener? = null
+    private var onCompletionListener: IMediaPlayer.OnCompletionListener? = null
+    private var onInfoListener: IMediaPlayer.OnInfoListener? = null
+    private var onSeekCompleteListener: IMediaPlayer.OnSeekCompleteListener? = null
+
+    /** Já preparou (`preparedTime > 0`)? Original: S0() */ fun canPause(): Boolean = videoViewHandler.preparedTime > 0
+    /** Original: R0() */ open fun isPlaying(): Boolean = videoViewHandler.isPlaying()
+    /** Só se pode andar no tempo se preparado e não for ao vivo. Original: U() / V() */
+    fun canSeek(): Boolean = canPause() && playingContext?.playType != PlayType.LIVE && !isPlaying0()
+    private fun isPlaying0() = false   // `Q0()` do original (retorna false neste build)
+    /** Original: U() */ fun canSeekBackward(): Boolean = canSeek()
+    /** Original: V() */ fun canSeekForward(): Boolean = canSeek()
+
+    /** Pausa o player (com contexto); marca [isPause]. Original: a1() */
+    fun pause(): Boolean {
+        if (playingContext == null) return false
+        if (!videoViewHandler.pause(StackTraceUtils.callerName(2))) return false
+        isPause = true
+        return true
+    }
+
+    /** Retoma: se o player está preparado só dá `start()`; senão recria o contexto. Original: D1() */
+    fun start(): Boolean {
+        isPause = false
+        if (playingContext == null) return false
+        return videoViewHandler.start()
+    }
+
+    /** Seek (ms), guardando a posição no contexto. Original: e1(long) */
+    fun seekTo(position: Long) {
+        playingContext?.preSetSeekPosition = position
+        videoViewHandler.seekTo(position)
+        logger.debug("[{}][{}][{}] seek_to [{}]", playingContext?.playType, videoName(), playingContext?.mediaId, position)
+    }
+
+    /** Reinicia a reprodução do contexto atual (ou do último), opcionalmente numa posição. Original: c1(String, f, Long) */
+    fun restart(from: String, position: Long?): Boolean {
+        val ctx = playingContext ?: lastPlayContext ?: return false
+        if (position != null) ctx.preSetSeekPosition = position
+        isPause = false
+        // Original: k0(ctx) valida; depois corrotina c0$r relança startWithContext(ctx) e aguarda (CountDownLatch)
+        return true
+    }
+
+    /** Original: m0() */ fun aspectRatioType(): Int = videoViewHandler.aspectRatioType
+    /** Original: n0() */ fun decodeMode(): Int? = videoViewHandler.decodeMode()
+    /** Original: o0() */ fun downloadThousand(): Int = videoViewHandler.downloadThousand()
+    /** Original: p0() */ fun duration(): Long = videoViewHandler.duration()
+    /** Original: t0() */ fun playType(): PlayType? = playingContext?.playType
+    /** Original: u0() */ fun position(): Long = videoViewHandler.currentPosition()
+    /** Sessão do vídeo (0 sem contexto). Original: v0() */ fun session(): Long = if (playingContext == null) 0L else videoViewHandler.mSession.get()
+    /** Idioma da legenda: o escolhido ou o padrão do heartbeat. Original: x0() */
+    fun subtitleLang(): String = subtitleLang ?: com.foxivid.baselib.heartbeat.HeartbeatManager.subtitleDftLang
+    /** Original: z0() */ fun subtitles(): List<String>? = subtitles
+    /** Original: A0() */ fun trackInfo() = videoViewHandler.trackInfo
+    /** Original: B0() */ fun videoHeight(): Int = videoViewHandler.videoHeight()
+    /** Original: D0() */ fun videoWidth(): Int = videoViewHandler.videoWidth()
+    /** Original: C0() */ fun videoName(): String = playingContext?.videoName ?: ""
+    /** Original: f1(int) */ fun setAspectRatioType(type: Int) { videoViewHandler.aspectRatioType = type }
+    /** Original: r1(String) */ fun setSubtitle(lang: String?) { subtitleLang = lang }
+    /** Original: w1(boolean) */ fun setZOrderOnTop(onTop: Boolean) {}
+
+    /** Original: h1(p) */ fun setLoadingListener(l: ((Boolean, String) -> Unit)?) { videoViewHandler.loadingListener = l }
+    /** Original: j1(p) */ fun setNoSignalListener(l: ((Int, String) -> Unit)?) { videoViewHandler.noSignalListener = l }
+    /** Original: q1(a) */ fun setPlayCompleteListener(l: (() -> Unit)?) { videoViewHandler.playCompleteListener = l }
+    /** Original: l1 / m1 / n1 / o1 / p1 */
+    fun setOnCompletionListener(l: IMediaPlayer.OnCompletionListener?) { onCompletionListener = l }
+    fun setOnErrorListener(l: IMediaPlayer.OnErrorListener?) { onErrorListener = l }
+    fun setOnInfoListener(l: IMediaPlayer.OnInfoListener?) { onInfoListener = l }
+    fun setOnPreparedListener(l: IMediaPlayer.OnPreparedListener?) { onPreparedListener = l }
+    fun setOnSeekCompleteListener(l: IMediaPlayer.OnSeekCompleteListener?) { onSeekCompleteListener = l }
+    /** Original: s0() */ fun onCompletionListener() = onCompletionListener
 
     /** Original: c0.OnEvent(nf.q) */
     fun onRestartEvent(eventSession: Long) {
@@ -205,10 +325,12 @@ abstract class PlayerViewHandler {
     abstract fun g1(visibility: Int)        // loading
     abstract fun k1(visibility: Int)        // tip
     abstract fun r0(): Int?
+    /** Reação a mudança de estado global da app (flow de InteractionUtils.O0()). Original: u1() */
+    open fun onAppStateChanged() {}
     abstract fun v1(visibility: Int)        // trial
-    abstract fun x1(url: String)
+    abstract fun x1(url: String?)
     abstract fun y1()
-    abstract fun z1(url: String)
+    abstract fun z1(url: String?)
 }
 
 /** Original: qf/b.java — estado de teste/assinatura de uma mídia (usado por MediaPlayManager). */

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/popupmenuitem_ll_parent" android:background="@drawable/program_selector2" android:paddingLeft="20.0dp" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="60.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/popupmenuitem_iv_menu_icon" android:layout_width="30.0dp" android:layout_height="30.0dp" android:src="@drawable/icon_transport" />
+    <TextView android:textSize="22.0sp" android:textColor="@color/popupmenuitem_tv_menu_name_tc" android:ellipsize="marquee" android:id="@id/popupmenuitem_tv_menu_name" android:focusable="true" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dp" android:singleLine="true" android:marqueeRepeatLimit="marquee_forever" />
+</LinearLayout>

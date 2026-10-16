@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/popupsubscribe_ll_parent" android:background="@drawable/epg_dialog_bg" android:layout_width="600.0dp" android:layout_height="300.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:paddingTop="30.0dp" android:layout_width="550.0dp" android:layout_height="150.0dp" android:layout_marginLeft="10.0dp">
+        <ImageView android:id="@id/popupsubscribe_iv_icon" android:layout_width="120.0dp" android:layout_height="60.0dp" android:layout_marginLeft="10.0dp" android:layout_marginTop="20.0dp" />
+        <LinearLayout android:orientation="vertical" android:layout_width="500.0dp" android:layout_height="100.0dp" android:layout_marginLeft="30.0dp" android:layout_marginTop="20.0dp">
+            <TextView android:textSize="22.0sp" android:textColor="@color/popupsubscribe_tv_time_tc" android:gravity="left|center" android:id="@id/popupsubscribe_tv_time" android:layout_width="match_parent" android:layout_height="50.0dp" android:text="" />
+            <com.live.evo.widget.MarqueeTextView android:textSize="22.0sp" android:textColor="@color/popupsubscribe_mtv_program_tc" android:ellipsize="marquee" android:gravity="left|top" android:id="@id/popupsubscribe_mtv_program" android:layout_width="350.0dp" android:layout_height="40.0dp" android:text="" android:singleLine="true" />
+        </LinearLayout>
+    </LinearLayout>
+    <TextView android:textSize="22.0sp" android:textColor="@color/popupsubscribe_tv_timecount_tc" android:gravity="left|top" android:layout_gravity="center_vertical" android:id="@id/popupsubscribe_tv_timecount" android:layout_width="200.0dp" android:layout_height="wrap_content" android:layout_marginLeft="170.0dp" android:layout_marginTop="-30.0dp" android:text="" />
+    <LinearLayout android:layout_width="500.0dp" android:layout_height="100.0dp" android:layout_marginLeft="80.0dp">
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/popupsubscribe_btn_watch_tc" android:layout_gravity="center_vertical" android:id="@id/popupsubscribe_btn_watch" android:background="@drawable/subscribe_btn_bg_selector" android:layout_width="200.0dp" android:layout_height="60.0dp" android:layout_marginLeft="10.0dp" android:text="@string/watch_now" />
+        <com.live.evo.widget.BaseButton android:textSize="18.0sp" android:textColor="@color/popupsubscribe_btn_ignore_tc" android:layout_gravity="center_vertical" android:id="@id/popupsubscribe_btn_ignore" android:background="@drawable/login_btn_return_select" android:layout_width="200.0dp" android:layout_height="60.0dp" android:layout_marginLeft="20.0dp" android:text="@string/watch_ignore" />
+    </LinearLayout>
+</LinearLayout>

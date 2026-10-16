@@ -178,12 +178,21 @@ class LiveLoadActivity : LoginBaseActivity(), View.OnKeyListener {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TODO("nativo/não decompilado: LiveLoadActivity.onCreate — provável setupViews() + initSplashAds() + startLoad()")
+        // INFERIDO (onCreate nativo)
+        setupViews()
+        initSplashAds()
+        startLoad()
     }
 
     /** Inferência: `native`; provavelmente encaminha para BaseActivity e, se concedido, MSG_INIT_RUNTIME_ENV. */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        TODO("nativo/não decompilado: LiveLoadActivity.onRequestPermissionsResult")
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // INFERIDO (método nativo): a permissão de armazenamento foi pedida em requestPermissions() (requestCode 0); com ou sem
+        // concessão a sequência de boot segue para MSG_INIT_RUNTIME_ENV (registrando o estado em LoadingTimer "hasPermission").
+        if (requestCode == 0) {
+            LoadingTimer.set("hasPermission", if (grantResults.isNotEmpty() && grantResults.all { it == android.content.pm.PackageManager.PERMISSION_GRANTED }) 1L else 0L)
+            mHandler.sendEmptyMessage(MSG_INIT_RUNTIME_ENV)
+        }
     }
 
     /** Monta a UI. Original: d1() */

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/rly_parents" android:background="@color/transparent" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:background="@drawable/p_exit_bg2" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="200.0dp">
+        <TextView android:textSize="24.0sp" android:textColor="@color/text_white" android:id="@id/upgrade_text" android:padding="10.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:minHeight="180.0dp" android:singleLine="false" />
+        <RelativeLayout android:layout_gravity="center_horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:gravity="center|bottom" android:orientation="vertical" android:id="@id/pb_parents" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="40.0dp">
+                <TextView android:textSize="@dimen/remind_text_size" android:textColor="@color/text_white" android:id="@id/tv_progress" android:layout_width="500.0dp" android:layout_height="wrap_content" android:text="Downloading" />
+                <ProgressBar android:id="@id/pb_downloading" android:layout_width="500.0dp" android:layout_height="20.0dp" style="@style/ProgressBar_Mini" />
+            </LinearLayout>
+            <LinearLayout android:gravity="center|bottom" android:orientation="vertical" android:id="@id/btn_parents" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="30.0dp">
+                <TextView android:textSize="24.0sp" android:textColor="@color/text_white" android:layout_gravity="center_horizontal" android:id="@id/tv_update_select" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/update_select" />
+                <LinearLayout android:gravity="center_horizontal" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dp">
+                    <Button android:textSize="26.0sp" android:textStyle="normal" android:textColor="@color/color_p_exit" android:id="@id/btn_ok" android:background="@drawable/subscribe_btn_bg_selector" android:layout_width="202.0dp" android:layout_height="50.0dp" android:text="@string/yes_now" android:textAllCaps="false" />
+                    <Button android:textSize="26.0sp" android:textStyle="normal" android:textColor="@color/color_p_exit" android:id="@id/btn_cancel" android:background="@drawable/subscribe_btn_bg_selector" android:layout_width="202.0dp" android:layout_height="50.0dp" android:layout_marginLeft="30.0dp" android:text="@string/no_later" android:textAllCaps="false" />
+                </LinearLayout>
+                <TextView android:textSize="24.0sp" android:textColor="@color/text_white" android:layout_gravity="center_horizontal" android:id="@id/tv_update_message" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dp" android:text="" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:id="@id/install_view" android:background="@drawable/loading_dialog_background" android:paddingLeft="15.0dp" android:paddingTop="10.0dp" android:paddingRight="15.0dp" android:paddingBottom="10.0dp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <com.live.evo.widget.sloading.SLoadingView android:layout_width="60.0dp" android:layout_height="60.0dp" app:s_color="@color/sloading_color" app:s_type="LeafBuilder" />
+        <TextView android:textSize="25.0sp" android:textColor="@color/sloading_color" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/installing" />
+    </LinearLayout>
+</RelativeLayout>

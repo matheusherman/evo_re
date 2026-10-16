@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:color="@color/et_selected_text_color">
+        <layer-list>
+            <item android:color="@color/et_selected_text_color" />
+        </layer-list>
+    </item>
+    <item android:state_focused="false" android:color="@color/user_normal_color">
+        <layer-list>
+            <item android:color="@color/user_normal_color" />
+        </layer-list>
+    </item>
+</selector>

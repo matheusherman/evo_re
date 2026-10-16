@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:id="@id/recommend_rl_parent" android:background="@color/recommend_play_bg" android:focusable="false" android:focusableInTouchMode="false" android:clickable="false" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <t.v.c.widget.videoview.PlayerView android:id="@id/recommend_videoview" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_alignParentRight="true" app:log_tag="RecommendVideoView" app:render_type="TextureView" app:replace_render="true" />
+    <TextView android:textSize="15.0dp" android:textColor="@color/color_eeeeee" android:gravity="center" android:id="@id/recommend_text_loading" android:background="@color/transparent" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_centerInParent="true" />
+    <com.live.evo.widget.sloading.SLoadingView android:id="@id/recommend_loading" android:visibility="gone" android:layout_width="45.0dp" android:layout_height="45.0dp" android:layout_centerInParent="true" app:s_color="@color/color_c0c0c0" app:s_type="RotateCircleBuilder" />
+    <ImageView android:id="@id/recommend_nosignal" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_centerInParent="true" />
+    <TextView android:textSize="11.0dp" android:textColor="@color/color_eeeeee" android:id="@id/recommend_channel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5.0dp" android:layout_marginRight="8.0dp" android:text="" android:layout_alignParentRight="true" />
+    <TextView android:textSize="18.0dp" android:textColor="@color/color_eeeeee" android:gravity="center" android:id="@id/recommend_tip" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="20.0dp" android:text="" android:layout_centerInParent="true" />
+</RelativeLayout>

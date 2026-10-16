@@ -35,6 +35,9 @@ class KeyboardView @JvmOverloads constructor(
     private var upperCase = false             // B
     private var showNumbers = true            // C
 
+    /** Implementação delegada (aproximação do legado; ver KDoc da classe). */
+    private val delegate: KeyboardContainer by lazy { KeyboardContainer(context).also { addView(it) } }
+
     fun getKeyboardType(): String? = keyboardType
 
     /** Original: KeyboardView.J(EditText) — mostra o teclado para o EditText. */
@@ -43,11 +46,14 @@ class KeyboardView @JvmOverloads constructor(
             visibility = GONE
             return
         }
-        TODO("legado, não usado: lógica idêntica a KeyboardContainer.showFor — ver KeyboardContainer")
+        // INFERIDO (legado, não usado): o original (J, ~1150 linhas) é quase cópia de KeyboardContainer.showFor; delega-se a ele.
+        delegate.showFor(editText)
+        visibility = VISIBLE
     }
 
     /** Original: KeyboardView.l() — reconstrói as linhas (igual a KeyboardContainer.rebuild). */
     fun rebuild() {
-        TODO("legado, não usado: construção de linhas idêntica a KeyboardContainer.rebuild")
+        // INFERIDO (legado, não usado): mesma construção de linhas de KeyboardContainer.rebuild.
+        delegate.rebuild()
     }
 }

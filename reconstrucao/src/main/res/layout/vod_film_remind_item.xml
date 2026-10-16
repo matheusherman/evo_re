@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:background="@color/colorPrimaryDark" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12.0dp" android:layout_marginEnd="12.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="7.0sp" android:textColor="#f36227" android:id="@id/vod_filme_remind_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8.0dp" android:layout_marginBottom="8.0dp" android:layout_centerVertical="true" />
+    <t.v.c.widget.ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_alignParentEnd="true" />
+</t.v.c.widget.MyRelativelayout>

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:id="@+id/registeremail_rl_parent"
+    android:background="@drawable/login_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/registeremail_iv_title"
+        android:visibility="gone"
+        android:layout_width="@dimen/load_icon_width"
+        android:layout_height="@dimen/load_icon_height"
+        android:layout_margin="20.0dip"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentRight="true" />
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="50.0dip">
+
+        <TextView
+            android:textSize="35.0sp"
+            android:textStyle="bold"
+            android:textColor="@color/resetpwd_tv_remind_tc"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/registeremail_tv_title"
+            android:layout_width="600.0dip"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:textSize="30.0sp"
+            android:textColor="@color/resetpwd_tv_remind_tc"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/registeremail_tv_remind_started"
+            android:layout_width="600.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.0dip" />
+
+        <TextView
+            android:textSize="18.0sp"
+            android:textColor="@color/resetpwd_tv_remind_tc"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/registeremail_tv_redmind"
+            android:visibility="gone"
+            android:layout_width="600.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10.0dip" />
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10.0dip">
+
+            <com.live.tvcinema.widget.LightTextView
+                android:textSize="@dimen/sm_14"
+                android:textColor="@color/text_color_selector"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/registeremail_ltv_remind"
+                android:layout_width="@dimen/loginview_stylec_width"
+                android:layout_height="70.0dip" />
+
+            <TextView
+                android:textSize="20.0sp"
+                android:textColor="@color/registeremail_tv_account_tc"
+                android:id="@+id/registeremail_tv_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8.0dip" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="@dimen/loginview_stylec_width"
+                android:layout_height="400.0dip"
+                android:layout_marginTop="25.0dip">
+
+                <LinearLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="240.0dip">
+
+                    <com.live.tvcinema.widget.ProgramListView
+                        android:id="@+id/register_list_menu"
+                        android:layout_width="@dimen/loginview_stylec_leftmenu_width"
+                        android:layout_height="fill_parent"
+                        android:listSelector="@drawable/icon_transport"
+                        android:divider="@color/transparent"
+                        android:dividerHeight="40.0dip" />
+                </LinearLayout>
+
+                <View
+                    android:background="@color/account_white"
+                    android:layout_width="1.0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/loginview_stylec_line_mid" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:id="@+id/ll_email_login"
+                    android:visibility="visible"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/loginview_stylec_line_mid">
+
+                    <TextView
+                        android:textSize="@dimen/subscribe_btn_text_size"
+                        android:textColor="@color/resetpwd_tv_remind_tc"
+                        android:id="@+id/tv_accout_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30.0dip"
+                        android:text="@string/account_id" />
+
+                    <TextView
+                        android:textSize="@dimen/subscribe_btn_text_size"
+                        android:textColor="@color/resetpwd_tv_remind_tc"
+                        android:id="@+id/tv_phone_number"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="200.0dip"
+                        android:text="@string/phone_number" />
+
+                    <com.live.tvcinema.widget.EmailAutoCompleteTextView
+                        android:id="@+id/registeremail_et_email"
+                        android:nextFocusDown="@id/tv_verify"
+                        android:layout_width="fill_parent"
+                        android:layout_marginTop="10.0dip"
+                        style="@style/BlueLoginEditText" />
+
+                    <include
+                        android:id="@+id/lly_phone"
+                        android:visibility="gone"
+                        android:nextFocusDown="@id/tv_verify"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/et_height"
+                        android:layout_marginTop="10.0dip"
+                        layout="@layout/spinner_phone_layout_bluetv" />
+
+                    <TextView
+                        android:textSize="@dimen/subscribe_btn_text_size"
+                        android:textColor="@color/resetpwd_tv_remind_tc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="230.0dip"
+                        android:layout_marginTop="15.0dip"
+                        android:text="@string/verification_code" />
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:id="@+id/lly_verify"
+                        android:layout_width="fill_parent"
+                        android:layout_height="65.0dip"
+                        android:layout_marginTop="5.0dip">
+
+                        <TextView
+                            android:id="@+id/tv_verify"
+                            android:background="@drawable/login_btn_bg_selector_stylec"
+                            android:layout_width="200.0dip"
+                            android:text="@string/send_code"
+                            style="@style/VerifyStyle" />
+
+                        <TextView
+                            android:id="@+id/tv_verify_phone"
+                            android:background="@drawable/login_btn_bg_selector_stylec"
+                            android:visibility="gone"
+                            android:layout_width="200.0dip"
+                            android:text="@string/send_code"
+                            style="@style/VerifyStyle" />
+
+                        <com.live.tvcinema.widget.RemoveKeyCodeEnterEditText
+                            android:id="@+id/registeremail_et_verify_code"
+                            android:layout_width="fill_parent"
+                            android:layout_height="@dimen/et_height"
+                            android:layout_marginLeft="20.0dip"
+                            android:maxLength="4"
+                            android:inputType="number"
+                            style="@style/BlueLoginEditText" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:textSize="@dimen/subscribe_btn_text_size"
+                        android:textColor="@color/resetpwd_tv_remind_tc"
+                        android:id="@+id/reset_tv_pwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30.0dip"
+                        android:layout_marginTop="10.0dip"
+                        android:text="@string/new_password" />
+
+                    <com.live.tvcinema.widget.RemoveKeyCodeEnterEditText
+                        android:id="@+id/et_pwd"
+                        android:layout_width="fill_parent"
+                        android:layout_marginTop="10.0dip"
+                        style="@style/BlueLoginEditText" />
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="65.0dip"
+                        android:layout_marginTop="30.0dip"
+                        android:weightSum="100.0">
+
+                        <TextView
+                            android:id="@+id/registeremail_tv_submit"
+                            android:background="@drawable/login_btn_bg_selector_stylec"
+                            android:layout_width="0.0dip"
+                            android:text="@string/submit"
+                            android:layout_weight="45.0"
+                            style="@style/ButtonStyle" />
+
+                        <View
+                            android:id="@+id/register_view_in_sr"
+                            android:layout_width="0.0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="10.0" />
+
+                        <TextView
+                            android:id="@+id/registeremail_tv_button_return"
+                            android:background="@drawable/login_btn_bg_selector_stylec"
+                            android:layout_width="0.0dip"
+                            android:text="@string/tv_return"
+                            android:layout_weight="45.0"
+                            style="@style/ButtonStyle" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_gravity="bottom|center"
+                android:id="@+id/registeremail_tv_error"
+                style="@style/ErrorStyle" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

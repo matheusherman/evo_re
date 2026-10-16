@@ -43,13 +43,13 @@ object AppUsageMonitor {
         CoroutineScope(Dispatchers.IO).launch {
             TelegramBot.init()
             val gson = Gson()
-            Preferences.flowString("app_usage_system_info", "")
+            Preferences.get("app_usage_system_info", "")
                 .catch { logger.error("load system info failure", it) }
                 .collect {
                     if (it.isEmpty()) return@collect
                     try { lastSystemInfo = gson.fromJson(it, SystemInfo::class.java) } catch (t: Throwable) { logger.error("parse system info failure", t) }
                 }
-            Preferences.flowString("account_info", "")
+            Preferences.get("account_info", "")
                 .catch { logger.error("load account info failure", it) }
                 .collect {
                     if (it.isEmpty()) return@collect
@@ -141,7 +141,7 @@ object AppUsageMonitor {
                 } else {
                     val sep = if (prev.plan.isNullOrEmpty()) "" else ", "
                     TelegramBot.sendBiz("[client switch account]\nfrom: ${prev.username}(${prev.accountId}), ${prev.accountType}$sep${prev.plan}" +
-                        "\nto: ${accountInfo.username}(${accountInfo.accountId})type: ${UserManager.accountTypeText()}\nplan: ${accountInfo.plan}\nremain: $remainDays days")
+                        "\nto: ${accountInfo.username}(${accountInfo.accountId})type: ${UserManager.getAccountType()}\nplan: ${accountInfo.plan}\nremain: $remainDays days")
                 }
                 lastAccountInfo = accountInfo
                 lastLogAccountInfo = accountInfo

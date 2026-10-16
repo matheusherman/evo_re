@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:background="@drawable/vod_menu_bg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/dp_4" android:layout_marginBottom="@dimen/dp_4"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.TextView android:textSize="@dimen/sp_9" android:textColor="@color/vod_menu_unselected_color" android:ellipsize="end" android:gravity="center" android:id="@id/vod_menu_item_tv" android:paddingLeft="8.0dp" android:paddingRight="8.0dp" android:layout_width="wrap_content" android:layout_height="20.0dp" android:singleLine="true" android:paddingHorizontal="8.0dp" />
+    <ImageView android:id="@id/ok_iv" android:layout_width="12.0dp" android:layout_height="12.0dp" android:src="@mipmap/ok_red" android:layout_alignParentBottom="true" android:layout_alignEnd="@id/vod_menu_item_tv" />
+</t.v.c.widget.MyRelativelayout>

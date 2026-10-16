@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="@dimen/recommend_epg_width" android:layout_height="@dimen/recommend_epg_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:gravity="center" android:id="@id/recommend_epg_layout" android:background="@drawable/recommend_epg_selector" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="240.0dp" android:layout_height="136.0dp">
+        <ImageView android:id="@id/recommend_epg_iv" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginLeft="3.0dp" android:layout_marginTop="3.0dp" android:layout_marginRight="3.0dp" android:layout_marginBottom="3.0dp" android:scaleType="fitXY" />
+        <TextView android:textSize="16.0sp" android:textColor="@color/color_eeeeee" android:id="@id/recommend_epg_name_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="15.0dp" android:layout_marginBottom="4.0dp" android:layout_above="@id/recommend_epg_time_tv" />
+        <TextView android:textSize="16.0sp" android:textColor="@color/color_eeeeee" android:id="@id/recommend_epg_time_tv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="15.0dp" android:layout_marginBottom="8.0dp" android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+</LinearLayout>

@@ -39,6 +39,12 @@ object ToastUtils {
         val loc = IntArray(2); view.getLocationOnScreen(loc)
         if (loc[1] + view.height > ScreenUtils.size().y) show(context, resId, type)
     }
+    /** Versão com texto. Original: f(View, Context, String, int) */
+    fun showIfOffscreen(view: View?, context: Context, text: String, type: Int) {
+        if (view == null) return
+        val loc = IntArray(2); view.getLocationOnScreen(loc)
+        if (loc[1] + view.height > ScreenUtils.size().y) show(context, text, type)
+    }
 }
 
 /** Ponte para `x1.f1.lb.util.g1` (ToastHelper). */
@@ -66,13 +72,7 @@ object FontUtils {
     @JvmField var typeface1: Typeface? = null   // f7339b  → d()
     @JvmField var typeface2: Typeface? = null   // f7340c  → b()
     @JvmField var typeface3: Typeface? = null   // f7341d  → c()
-    /** Inferido (nomes usados em LiveLoadActivity): regular = typeface3, medium = typeface2 */
-    fun applyRegular(t: TextView?) { t?.typeface = typeface3 }
-    fun applyMedium(t: TextView?) { t?.typeface = typeface2 }
 }
-
-/** Atalhos inferidos usados por LiveLoadActivity: applyRegular = c, applyMedium = b. */
-object FontShortcuts
 
 /** Aplica fonte ao TextView (null-safe). Original: com/live/evo/util/t.java (a→typeface0, b→typeface2, c→typeface3, d→typeface1) */
 object TextStyleUtils {

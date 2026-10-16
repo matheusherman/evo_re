@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/confirmdlg_ll_parent" android:background="@drawable/popup_dialog_bg" android:layout_width="@dimen/normal_dialog_width" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:layout_width="@dimen/normal_dialog_width" android:layout_height="@dimen/normal_dialog_text_height2" android:layout_marginTop="10.0dp">
+        <TextView android:textSize="20.0sp" android:textColor="@color/confirmdlg_tv_msg_tc" android:gravity="center" android:id="@id/confirmdlg_tv_msg" android:layout_width="@dimen/normal_text_width" android:layout_height="match_parent" android:layout_marginLeft="@dimen/normal_dialog_padding" android:layout_marginTop="30.0dp" android:textAlignment="center" />
+    </LinearLayout>
+    <View android:layout_gravity="center" android:id="@id/confirmdlg_view_line" android:background="@color/confirmdlg_view_line_bgc" android:layout_width="@dimen/normal_text_width" android:layout_height="1.0px" />
+    <LinearLayout android:gravity="center_horizontal" android:layout_gravity="center" android:orientation="horizontal" android:id="@id/confirmdlg_ll_btn_cont" android:layout_width="@dimen/normal_text_width" android:layout_height="@dimen/normal_btn_bg_height" android:layout_marginTop="20.0dp" android:layout_marginBottom="10.0dp">
+        <View android:id="@id/confirmdlg_view_btn_left" android:visibility="gone" android:layout_width="80.0dp" android:layout_height="60.0dp" android:layout_marginLeft="@dimen/normal_btn_padding" />
+        <Button android:textSize="@dimen/confirm_btn_text_size" android:textColor="@color/dialogconfirm_text_color" android:id="@id/confirmdlg_btn_ok" android:background="@drawable/exit_btn_bg_selector2" android:layout_width="@dimen/normal_btn_width" android:layout_height="@dimen/normal_btn_height" android:layout_marginLeft="@dimen/normal_btn_padding" android:layout_marginTop="10.0dp" android:text="@string/ok" android:textAllCaps="false" />
+        <Button android:textSize="@dimen/btn_text_size" android:textColor="@color/dialogconfirm_text_color" android:id="@id/confirmdlg_btn_cancel" android:background="@drawable/exit_cancel_btn_bg_selector2" android:layout_width="@dimen/normal_btn_width" android:layout_height="@dimen/normal_btn_height" android:layout_marginLeft="@dimen/normal_btn_centerpadding" android:layout_marginTop="10.0dp" android:minWidth="@dimen/confirm_btn_w" android:text="@string/cancel" android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>

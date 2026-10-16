@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:id="@+id/registerl_ll_parent"
+    android:background="@drawable/expired_dialog_bg"
+    android:padding="20.0dip"
+    android:layout_width="@dimen/recharge_dialog_width"
+    android:layout_height="@dimen/recharge_dialog_height"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:textSize="@dimen/remind_text_size"
+        android:textColor="@color/registerl_tv_remind_title_tc"
+        android:gravity="center"
+        android:id="@+id/registerl_tv_remind_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:layout_marginBottom="10.0dip">
+
+        <TextView
+            android:textSize="20.0sp"
+            android:textColor="@color/registerl_tv_account_tc"
+            android:id="@+id/registerl_tv_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_number" />
+
+        <TextView
+            android:textSize="20.0sp"
+            android:textColor="@color/registerl_tv_remind_accountid_tc"
+            android:id="@+id/registerl_tv_remind_accountid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10.0dip" />
+    </LinearLayout>
+
+    <EditText
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/registerl_et_pwd"
+        android:hint="@string/password_register"
+        android:inputType="textPassword"
+        style="@style/LoginEditText" />
+
+    <EditText
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/registerl_et_confirm"
+        android:layout_marginTop="10.0dip"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        style="@style/LoginEditText" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="30.0dip"
+        android:layout_marginTop="10.0dip"
+        android:maxWidth="@dimen/login_et_width">
+
+        <CheckBox
+            android:id="@+id/registerl_cb_agree"
+            android:background="@drawable/cb_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10.0dip" />
+
+        <TextView
+            android:textSize="20.0sp"
+            android:textColor="@color/registerl_tv_keep_tc"
+            android:gravity="center"
+            android:id="@+id/registerl_tv_keep"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/register_remind_keep" />
+    </LinearLayout>
+
+    <TextView
+        android:enabled="false"
+        android:textSize="@dimen/login_size"
+        android:textColor="@color/registerl_tv_next_tc"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/registerl_tv_next"
+        android:background="@drawable/dialog_btn_bg_selector"
+        android:focusable="false"
+        android:layout_width="200.0dip"
+        android:layout_height="40.0dip"
+        android:layout_marginTop="20.0dip"
+        android:text="@string/register_next"
+        android:singleLine="true" />
+</LinearLayout>

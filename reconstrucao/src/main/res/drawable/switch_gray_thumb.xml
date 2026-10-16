@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape android:shape="oval"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="20.0dp" android:width="20.0dp" />
+    <solid android:color="@color/switch_unchecked_thumb_color" />
+    <corners android:bottomLeftRadius="10.0dp" />
+    <stroke android:width="@dimen/switch_tumb_stroke" android:color="@color/transparent" />
+</shape>

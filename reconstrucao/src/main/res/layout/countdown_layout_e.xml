@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:gravity="center_horizontal"
+    android:id="@+id/countdownl_rl_parent"
+    android:background="@drawable/epg_dialog_bg"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/countdownl_iv_wallpapers"
+            android:visibility="gone"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="480.0dip"
+            android:layout_height="270.0dip"
+            android:layout_centerInParent="true">
+
+            <RelativeLayout
+                android:id="@+id/countdownl_rl_bg"
+                android:background="@drawable/eco_mode_bg"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:textSize="16.0sp"
+                    android:textColor="@color/countdownl_tv_time_countdown_tc"
+                    android:id="@+id/countdownl_tv_time_countdown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25.0dip"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:textSize="16.0sp"
+                    android:textColor="@color/countdownl_tv_remind_start_tc"
+                    android:gravity="center"
+                    android:id="@+id/countdownl_tv_remind_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50.0dip"
+                    android:text="@string/tv_start_remind"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:textSize="16.0sp"
+                    android:textColor="@color/countdownl_tv_remind_stop_tc"
+                    android:gravity="center"
+                    android:id="@+id/countdownl_tv_remind_stop"
+                    android:visibility="invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50.0dip"
+                    android:text="@string/tv_stop_remind"
+                    android:layout_centerHorizontal="true" />
+
+                <View
+                    android:id="@+id/countdownl_view_line"
+                    android:background="@color/countdownl_view_line_bgc"
+                    android:visibility="visible"
+                    android:layout_width="440.0dip"
+                    android:layout_height="1.0px"
+                    android:layout_marginBottom="140.0dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
+
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:id="@+id/countdownl_ll_btn_parent"
+                    android:visibility="visible"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40.0dip"
+                    android:layout_alignParentBottom="true">
+
+                    <Button
+                        android:textSize="20.0sp"
+                        android:textColor="@color/color_p_exit"
+                        android:id="@+id/countdownl_btn_sure"
+                        android:background="@drawable/ecomode_bg"
+                        android:layout_width="180.0dip"
+                        android:layout_height="@dimen/button_exit_height"
+                        android:layout_marginRight="0.0dip"
+                        android:text="@string/play"
+                        android:layout_alignParentRight="true"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:textSize="20.0sp"
+                        android:textColor="@color/color_p_exit"
+                        android:layout_gravity="right"
+                        android:id="@+id/countdownl_btn_cancel"
+                        android:background="@drawable/ecomode_bg"
+                        android:layout_width="180.0dip"
+                        android:layout_height="@dimen/button_exit_height"
+                        android:layout_marginLeft="45.0dip"
+                        android:text="@string/exit"
+                        android:layout_alignParentLeft="true"
+                        android:textAllCaps="false" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:layout_weight="1.0" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

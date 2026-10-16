@@ -67,3 +67,38 @@ class QuestionBean(val question: String, val answer: String)
 
 /** Item de propriedade remota (id, grupo, chave, valor). Original: i5/a0.java */
 class AppProperty(val id: Long?, val group: String?, val key: String?, val value: String?)
+
+/**
+ * Conta salva/digitada nas telas de login (usuário, telefone + DDI, país, senha). Serializável (Gson).
+ * type: -1 desconhecido, 0 = e-mail/usuário, 1 = telefone.
+ * Original: i5/a.java (getters a=accountName, b=countryCode, c=password, d=phonePreCode, e=type)
+ */
+class AccountBean : java.io.Serializable {
+    @com.google.gson.annotations.SerializedName("e") var accountName: String? = ""
+    @com.google.gson.annotations.SerializedName("c") var countryCode: String? = ""
+    @com.google.gson.annotations.SerializedName("d") var password: String? = ""
+    @com.google.gson.annotations.SerializedName("b") var phonePreCode: String? = ""
+    @com.google.gson.annotations.SerializedName("a") var type: Int = -1
+
+    constructor()
+    constructor(type: Int, phonePreCode: String?, countryCode: String?, password: String?, accountName: String?) {
+        this.type = type; this.phonePreCode = phonePreCode; this.countryCode = countryCode; this.password = password; this.accountName = accountName
+    }
+    fun a(): String? = accountName
+    fun b(): String? = countryCode
+    fun c(): String? = password
+    fun d(): String? = phonePreCode
+    fun e(): Int = type
+}
+
+/**
+ * País para o campo de telefone: DDI (ex.: "+55"), sigla, nome, ordem de exibição e regex de validação.
+ * Original: i5/o.java (a = sigla, b = nome, c = DDI, d = regex, e = ordem)
+ */
+class PhoneCountry(val preCode: String, val code: String, val name: String, val order: Int, var regex: String) {
+    fun a(): String = code
+    fun b(): String = name
+    fun c(): String = preCode
+    fun d(): String = regex
+    fun e(): Int = order
+}

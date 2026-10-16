@@ -1,0 +1,21 @@
+com/live/evo/fragment/x.java	com.live.evo.fragment.ChannelFragment	Painel de canais (cola do ciclo de vida + OSDListProgramView); lógica dividida em fragment/channel/*
+com/live/evo/fragment/x.java (campos static/Companion)	com.live.evo.fragment.channel.ChannelMenuData	Dados estáticos M2/N2/O2/P2/Q2/R2/S2/T2
+com/live/evo/fragment/x.java (campos de instância)	com.live.evo.fragment.channel.ChannelMenuState	Estado mutável do painel
+com/live/evo/fragment/x.java (f0/d2)	com.live.evo.fragment.channel.ChannelViews	findViewById, foco D-pad entre colunas, fontes
+com/live/evo/fragment/x.java	com.live.evo.fragment.channel.ChannelMenuContext	Contexto compartilhado entre controladores
+com/live/evo/fragment/x.java (K1,J2,b3,S2,c0,...)	com.live.evo.fragment.channel.ChannelCategoryController	Categorias, lista de canais, favoritos/histórico, foco
+com/live/evo/fragment/x.java (L2,U1,c3,L,g3,Q2)	com.live.evo.fragment.channel.ChannelEpgPanel	Coluna de EPG (datas, programas, catch-up, lembrete)
+com/live/evo/fragment/x.java (N1,R1,x2,y2,q2)	com.live.evo.fragment.channel.ChannelAdultLock	PIN adulto e teclado virtual
+com/live/evo/fragment/x.java (j2,V2,Y1)	com.live.evo.fragment.channel.ChannelBannerController	Banners de canais e categoria
+com/live/evo/fragment/x.java (e2,f2..i2,x$b..x$e)	com.live.evo.fragment.channel.ChannelPanelAnimator	Animações de largura das colunas
+com/live/evo/fragment/x.java (x$f,x$g,x$h,x$k,v2,m2..p2)	com.live.evo.fragment.channel.ChannelListeners	Listeners de seleção/foco/clique
+com/live/evo/fragment/x.java (x$i,x$j)	com.live.evo.fragment.channel.ChannelHandler	Handler (msgs 1/8194/8195) e dica de PIP
+com/live/evo/fragment/x.java (onKey)	com.live.evo.fragment.channel.ChannelKeyHandler	Teclas do controle remoto
+n5/o.java	com.live.evo.fragment.channel.ChannelListAdapter	Adapter da lista de canais (program_list_item)
+n5/b.java	com.live.evo.fragment.channel.EpgDateAdapter	Adapter da lista de datas da EPG (epg_date_item)
+com/live/evo/fragment/x.java (chamadas a t.v.c.i.a / s0 / l)	com.live.evo.fragment.channel.ChannelSdkBridge	Ponte para ChannelManager/MediaConfigUtils/ModelHelper/AppUserManager
+com/live/evo/util/x.java	com.live.evo.fragment.channel.NumberKeyStrategy	Estratégia de tecla numérica
+x4/f.java	com.live.evo.fragment.epg.EpgClickListener	Listener (interface vazia no APK; métodos inferidos)
+com/live/evo/catchup/EPG.java	com.live.evo.fragment.epg.EPG	Grade de EPG em Canvas (reconstruída; substitui o stub catchup.EPG)
+com/live/evo/catchup/EPG.java (K)	com.live.evo.fragment.epg.EpgBitmapCache	Cache drawable->Bitmap
+com/live/evo/catchup/EPG_Dstyle.java	com.live.evo.fragment.epg.EPG_Dstyle	Grade D-style com coluna de categorias (estende EPG)

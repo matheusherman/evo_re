@@ -22,7 +22,13 @@ class ChannelSwitchHelper(private val activity: Activity, private val listener: 
     /** Original: d(i5.h) */
     fun switchTo(channel: ChannelData) = listener.onChannelSwitch(channel, HashMap(), "")
 
-    /** Original: g() = i(); h() */ fun release() {}
-    /** Original: b/c(b5.l TokenChangeEvent)/e(boolean,int)/f/a(int,Map) — vazios. */
+    /** Original: g() = i(); h() — ambos vazios. */ fun release() { stop(); reset() }
+    /** Original: i() — vazio. */ fun stop() {}
+    /** Original: h() — vazio. */ fun reset() {}
+    /** Original: b() — vazio (cancela preview). */ fun cancel() {}
+    /** Original: f() — vazio. */ fun onPlayerStatsToggle() {}
+    /** Original: e(boolean,int) — vazio (liga/desliga estatísticas por [intervalMs]). */ fun setStatsEnabled(enabled: Boolean, intervalMs: Int) {}
+    /** Original: a(int,Map) — vazio (envio de métrica de evento: 101 replay, 701/702 buffering). */ fun report(eventType: Int, data: Map<String, Any?>) {}
+    /** Original: c(b5.l TokenChangeEvent) — vazio. */
     fun onTokenChange(event: com.live.evo.event.TokenChangeEvent) {}
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="12.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="18.0sp" android:textColor="@color/subject_tables_group_title" android:gravity="center_vertical" android:id="@id/tv_tables_group_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="24.0dp" android:maxLines="1" />
+    <include android:id="@id/subject_tablestitle_layout" android:background="@color/tables_bg_normal_color" android:layout_width="match_parent" android:layout_height="40.0dp" android:layout_marginTop="12.0dp" layout="@layout/subject_tables_title_layout" />
+</LinearLayout>

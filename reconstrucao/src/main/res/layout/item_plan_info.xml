@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@drawable/selector_plan_info_item" android:paddingLeft="22.0dp" android:paddingRight="22.0dp" android:focusable="true" android:focusableInTouchMode="true" android:layout_width="match_parent" android:layout_height="60.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:duplicateParentState="true" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_centerVertical="true">
+        <TextView android:textSize="@dimen/plan_name_size" android:textColor="@color/plan_item_name_color" android:id="@id/tv_plan_name" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+        <TextView android:textSize="@dimen/plan_price_size" android:textColor="@color/plan_item_sale_price_color" android:id="@id/tv_plan_sale_price" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/tv_plan_name" />
+        <TextView android:textSize="@dimen/plan_price_size" android:textColor="@color/plan_item_origin_price_color" android:id="@id/tv_plan_origin_price" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="20.0dp" android:layout_toRightOf="@id/tv_plan_sale_price" android:layout_below="@id/tv_plan_name" />
+        <TextView android:textSize="@dimen/plan_describe_size" android:textColor="@color/plan_item_describe_color" android:ellipsize="marquee" android:id="@id/tv_plan_describe" android:duplicateParentState="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:layout_below="@id/tv_plan_sale_price" android:marqueeRepeatLimit="marquee_forever" />
+    </RelativeLayout>
+</RelativeLayout>

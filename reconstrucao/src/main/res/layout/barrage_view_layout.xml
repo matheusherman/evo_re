@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/barrage_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/barrage_qr_chat"
+        android:layout_width="180.0dip"
+        android:layout_height="180.0dip"
+        android:layout_marginTop="20.0dip"
+        android:layout_marginRight="20.0dip"
+        android:src="@drawable/qr_placehodler"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+
+    <master.flame.danmaku.ui.widget.DanmakuView
+        android:id="@+id/barrage_text"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10.0dip" />
+</RelativeLayout>

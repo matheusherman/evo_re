@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="false" android:drawable="@color/tables_bg_normal_color" />
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/subject_match_item_radius" />
+            <solid android:color="@color/subject_match_select" />
+        </shape>
+    </item>
+</selector>

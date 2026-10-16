@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tvc.lib.mobile.ui.widget.CustomTextView android:textSize="@dimen/sp_9" android:textColor="#a1a5b2" android:id="@id/search_hisotry_item_tv" android:background="@drawable/search_history_bg" android:paddingTop="@dimen/dp_4" android:paddingBottom="@dimen/dp_4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8.0dp" android:singleLine="true" android:paddingStart="@dimen/dp_8" android:paddingEnd="@dimen/dp_8"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

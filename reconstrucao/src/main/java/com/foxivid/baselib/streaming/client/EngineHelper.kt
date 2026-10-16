@@ -214,7 +214,7 @@ object EngineHelper {
     fun setHttpServer(server: LocalHttpServer) { httpServer = server }
 
     /** Original: x1.f1.lb.util.d0.f21360a.j() — "eco mode" (economia de energia, módulo util). */
-    private fun isInEcoMode(): Boolean = TODO("x1.f1.lb.util.d0.j() — módulo util")
+    private fun isInEcoMode(): Boolean = com.foxivid.baselib.util.EcoModeHelper.isInEcoMode()
 }
 
 /**

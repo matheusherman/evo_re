@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center" android:layout_width="match_parent" android:layout_height="match_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_gravity="center" android:layout_width="@dimen/epg_width2" android:layout_height="623.0dp">
+        <LinearLayout android:orientation="vertical" android:id="@id/main_view" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <RelativeLayout android:orientation="horizontal" android:background="@drawable/catch_up_bg" android:paddingLeft="30.0dp" android:paddingTop="30.0dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <ImageView android:id="@id/iv_icon" android:layout_width="150.0dp" android:layout_height="75.0dp" android:scaleType="fitXY" android:elevation="5.0dp" />
+                <LinearLayout android:orientation="vertical" android:id="@id/lly_desc" android:layout_width="@dimen/epg_width2" android:layout_height="125.0dp" android:layout_marginLeft="15.0dp" android:layout_toRightOf="@id/iv_icon">
+                    <TextView android:textSize="24.0sp" android:textColor="@color/epg_desc" android:id="@id/tv_program" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+                    <RelativeLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dp">
+                        <TextView android:textStyle="bold" android:id="@id/tv_time" android:text="@string/epg_duration" style="@style/epg_desc_dialog" />
+                        <TextView android:id="@id/tv_epg_time" android:layout_toRightOf="@id/tv_time" style="@style/epg_desc_dialog" />
+                        <TextView android:textStyle="bold" android:id="@id/tv_name" android:layout_marginLeft="240.0dp" android:text="@string/epg_program" style="@style/epg_desc_dialog" />
+                        <TextView android:ellipsize="end" android:id="@id/tv_epg_channel_name" android:maxWidth="400.0dp" android:singleLine="true" android:layout_toRightOf="@id/tv_name" style="@style/epg_desc_dialog" />
+                    </RelativeLayout>
+                    <TextView android:textSize="16.0sp" android:ellipsize="end" android:id="@id/tv_epg_desc" android:layout_marginRight="5.0dp" android:maxWidth="500.0dp" android:maxLines="2" style="@style/epg_desc_dialog" />
+                </LinearLayout>
+                <RelativeLayout android:gravity="right" android:paddingRight="30.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true">
+                    <TextView android:textSize="30.0dp" android:textColor="@color/epg_desc" android:id="@id/tv_current_time3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" />
+                    <TextView android:textSize="30.0dp" android:textColor="@color/epg_desc" android:id="@id/tv_current_time2" android:layout_width="10.0dp" android:layout_height="wrap_content" android:layout_toLeftOf="@id/tv_current_time3" />
+                    <TextView android:textSize="30.0dp" android:textColor="@color/epg_desc" android:id="@id/tv_current_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toLeftOf="@id/tv_current_time2" />
+                    <TextView android:textSize="14.0dp" android:textColor="@color/epg_desc" android:id="@id/tv_current_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="1.0dp" android:layout_marginRight="3.0dp" android:layout_below="@id/tv_current_time2" android:layout_alignRight="@id/tv_current_time3" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <com.live.evo.catchup.EPG android:id="@id/view_epg" android:layout_width="match_parent" android:layout_height="match_parent" />
+        </LinearLayout>
+        <RelativeLayout android:gravity="center" android:id="@id/lly_load" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="20.0dp" android:layout_marginBottom="20.0dp" android:layout_alignParentBottom="true" android:layout_alignParentEnd="true">
+            <View android:id="@id/iv_load" android:background="@drawable/circle_view_epg" android:layout_width="31.0dp" android:layout_height="31.0dp" android:layout_centerHorizontal="true" />
+            <TextView android:textColor="@color/epg_desc" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/loading" android:layout_below="@id/iv_load" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

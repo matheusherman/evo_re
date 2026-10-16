@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:id="@id/searchresultitem_ll_parent" android:background="@drawable/program_epg_selector" android:layout_width="@dimen/search_item_width" android:layout_height="65.0dp" android:layout_marginLeft="25.0dp" android:layout_marginTop="5.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:layout_gravity="center" android:id="@id/tv_channel_layout" android:layout_width="60.0dp" android:layout_height="50.0dp">
+        <ImageView android:id="@id/searchresultitem_iv_fav" android:background="@drawable/program_item_favorite_selector" android:visibility="gone" android:layout_width="40.0dp" android:layout_height="40.0dp" android:layout_marginLeft="10.0dp" android:layout_marginTop="5.0dp" />
+        <TextView android:textSize="16.0sp" android:textColor="@color/searchresultitem_tv_channelid_tc" android:gravity="center" android:id="@id/searchresultitem_tv_channelid" android:layout_width="match_parent" android:layout_height="match_parent" />
+    </RelativeLayout>
+    <ImageView android:id="@id/searchresultitem_iv_result_img" android:layout_width="70.0dp" android:layout_height="40.0dp" android:layout_marginTop="10.0dp" />
+    <RelativeLayout android:orientation="vertical" android:layout_width="300.0dp" android:layout_height="match_parent">
+        <TextView android:textSize="22.0sp" android:textColor="@color/searchresultitem_tv_name_tc" android:ellipsize="marquee" android:id="@id/searchresultitem_tv_name" android:paddingLeft="5.0dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:singleLine="true" android:layout_centerVertical="true" />
+        <TextView android:textSize="12.0sp" android:textColor="@color/searchresultitem_tv_programname_tc" android:ellipsize="marquee" android:id="@id/searchresultitem_tv_programname" android:paddingLeft="5.0dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:singleLine="true" android:layout_alignParentBottom="true" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.foxivid.baselib.log
 
+import com.foxivid.baselib.network.HeaderInterceptor
 import com.foxivid.baselib.device.DeviceInfoCollector
 import com.foxivid.baselib.media.PlayerState
 import com.foxivid.baselib.util.AppAttrUtils
@@ -133,7 +134,7 @@ object RemoteLogger {
                 val resolved = resolve(servers)
                 originalServers = servers
                 val s = udpLogger
-                if (s == null) udpLogger = UdpLogSender(resolved, AppAttrUtils.distributionChannel(), AppAttrUtils.startupUid(), AppAttrUtils.did())
+                if (s == null) udpLogger = UdpLogSender(resolved, AppAttrUtils.distributionChannel(), HeaderInterceptor.accountId(), HeaderInterceptor.deviceId())
                 else s.setServers(resolved)
             } catch (_: Throwable) {}
         }

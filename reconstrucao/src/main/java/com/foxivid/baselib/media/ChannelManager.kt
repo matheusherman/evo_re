@@ -9,13 +9,24 @@ import com.foxivid.baselib.model.meta.ChannelListResponse
 import com.foxivid.baselib.model.meta.ChannelStreamResponse
 import com.foxivid.baselib.model.meta.EPGProgramme
 import com.foxivid.baselib.network.HeaderInterceptor
+import com.foxivid.baselib.util.AppAttrUtils
+import com.foxivid.baselib.util.SandwichErrors
+import com.skydoves.sandwich.StatusCode
+import com.skydoves.sandwich.suspendOnError
+import com.skydoves.sandwich.suspendOnException
+import com.skydoves.sandwich.suspendOnFailure
+import com.skydoves.sandwich.suspendOnSuccess
 import com.foxivid.baselib.user.UserManager
 import com.foxivid.baselib.util.Preferences
+import com.foxivid.baselib.util.ServerTime
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.catch
+import org.greenrobot.eventbus.EventBus
 import kotlinx.coroutines.launch
 import org.slf4j.LoggerFactory
 import java.util.Locale
@@ -23,6 +34,15 @@ import java.util.Objects
 import java.util.TreeMap
 import java.util.concurrent.ConcurrentSkipListMap
 import java.util.concurrent.atomic.AtomicBoolean
+
+/** Original: nf/m — evento de EventBus "lembrete de programa vai começar" (postado por [ChannelManager.executeSubscribe]). */
+class SubscribeNoticeEvent(
+    val key: Int, val epgId: String?, val startTime: Long, val stopTime: Long,
+    val channelName: String?, val programmeTitle: String?, val desc: String?,
+)
+
+/** Original: nf/d — evento de EventBus "lista de canais carregada/falhou" (`isOK`, `code`, `msg`). */
+class ChannelListEvent(val isOK: Boolean = true, val code: String? = null, val msg: String? = null)
 
 /**
  * Original: x1/f1/lb/media/a.java ("ChannelManager.kt") (+ a$a..a$t)
@@ -57,6 +77,8 @@ object ChannelManager {
     private var playMode = 0
     private var nextUpdateTime: Long? = null
     private var botFailureTime = 0L
+    /** Original: a.y (f20779y) — instante da última execução de [executeSubscribe] com lembretes pendentes. */
+    private var lastExecuteSubscribeTime = 0L
     private var lastInSubscribedChangeTime = System.currentTimeMillis()
     private var lastInSubscribedSaveTime = lastInSubscribedChangeTime
 
@@ -93,7 +115,7 @@ object ChannelManager {
     /** Original: a.N(now, isRetryAfterFailure, isForce) */
     fun loadChannelList(now: Long, isRetryAfterFailure: Boolean = false, isForce: Boolean = false) {
         if (!isInLoading.compareAndSet(false, true)) { logger.warn("channel is in loading"); return }
-        val token = UserManager.streamToken() // user.f.A0()
+        val token = UserManager.getStreamToken() // user.f.A0()
         if (token.isNullOrEmpty()) {
             logger.warn("stream token is empty, channel list not load")
             isInLoading.set(false); return
@@ -113,12 +135,26 @@ object ChannelManager {
         val h = HeaderInterceptor
         val rsp = ApiStreamMetaClient.getChannelList(h.tenantId().toString(), h.appId().toString(), h.appVersion(),
             checksumInChannelList, h.deviceId(), h.language(), 1, 2000, System.currentTimeMillis(), h.streamToken(), h.accountId())
-        // TODO(sandwich): em ApiResponse.Success → onLoadChannelSuccess(body); em Failure.Error com
-        //  statusCode NotFound → API antiga:
-        //    ApiStreamMetaClient.getChannelList(did=user.j0(), uid=user.B0(), appId=user.f0(), appVer=util.k.s(),
-        //        requestTime, token=user.A0(), checksum, 1, 2000)
-        //  outros erros → onLoadChannelFailure(mensagem (v0.a/b/c), isRetry, token).
-        TODO("despacho de com.skydoves.sandwich.ApiResponse ($rsp) — ver KDoc")
+        // Original: a$h.invokeSuspend — encadeamento de handlers do sandwich (suspendOnSuccess / suspendOnFailure /
+        // suspendOnError / suspendOnException). Atenção: no original TODA falha passa primeiro por
+        // `onLoadChannelFailure(v0.c(...))` (mensagem genérica) e só depois pelo tratamento específico.
+        rsp.suspendOnSuccess { onLoadChannelSuccess(data, isRetryAfterFailure, token) }
+        rsp.suspendOnFailure { onLoadChannelFailure(SandwichErrors.describe(this), isRetryAfterFailure, token) }
+        rsp.suspendOnError {
+            if (statusCode == StatusCode.NotFound) {
+                logger.warn("load channel: new api not found try old api")
+                val u = UserManager
+                val old = ApiStreamMetaClient.getChannelList(u.getDid(), u.getAccountIdString(), u.getAppId(),
+                    AppAttrUtils.appVersion(), System.currentTimeMillis(), u.getStreamToken(), checksumInChannelList, 1, 2000)
+                old.suspendOnSuccess { onLoadChannelSuccess(data, isRetryAfterFailure, token) }
+                old.suspendOnFailure { onLoadChannelFailure(SandwichErrors.describe(this), isRetryAfterFailure, token) }
+                old.suspendOnError { onLoadChannelFailure(SandwichErrors.describe(this), isRetryAfterFailure, token) }
+                old.suspendOnException { onLoadChannelFailure(SandwichErrors.describe(this), isRetryAfterFailure, token) }
+            } else {
+                onLoadChannelFailure(SandwichErrors.describe(this), isRetryAfterFailure, token)
+            }
+        }
+        rsp.suspendOnException { onLoadChannelFailure(SandwichErrors.describe(this), isRetryAfterFailure, token) }
     }
 
     /** Original: a.U(ApiResult, isRetry, token) ("onLoadChannelSuccess") */
@@ -136,7 +172,8 @@ object ChannelManager {
             nextUpdateTime = now + 43200000 // 12 h
             // Original: métrica tf.e.u(now) + uf.c.p() na primeira carga
             buildChannels(data!!.channelStreams, data.categorySorts)
-            // Original: EventBus.removeSticky(nf.d); post(nf.d())
+            EventBus.getDefault().removeStickyEvent(ChannelListEvent::class.java) // nf.d
+            EventBus.getDefault().post(ChannelListEvent())
             EpgManager.update(data.channelEPGIndexResponse)
         } else if (!isInitComplete) {
             onLoadChannelFailure("got list response, but data is null, msg: ${result.msg}, code: ${result.code}", isRetryAfterFailure, token)
@@ -154,11 +191,28 @@ object ChannelManager {
         if (token.isNotEmpty() && token != current) { reload(isRetryAfterFailure); return } // token mudou no meio
         // Original: M(msg) — métrica de falha
         if (msg.lowercase(Locale.ROOT).contains("invalid token")) {
-            // Original: UserManager.g1() (re-login) → sucesso: "re-login complete[cause by: ...], reload channel list"
-            //  e Q(isRetry); falha: EventBus nf.d(false, "", msg)
-            TODO("fluxo de re-login do UserManager (outro módulo)")
+            // Original: UserManager.g1(null, null, false) ("login") coletado em a$n; erros do fluxo em a$m.
+            val retryAfter = isRetryAfterFailure
+            UserManager.login()
+                .catch { e ->
+                    logger.error("fetch channel list failure $msg, re-login failure", e)
+                    EventBus.getDefault().post(ChannelListEvent(false, "", msg))
+                    nextUpdateTime = System.currentTimeMillis() + if (isInitComplete) 300000L else 15000L
+                }
+                .collect { (ok, code, message) ->
+                    if (ok) {
+                        if (!isInitComplete && !isInLoading.get()) {
+                            logger.debug("re-login complete[cause by: $msg], reload channel list")
+                            reload(retryAfter)
+                        }
+                    } else {
+                        logger.error("re-login failure[cause by: $msg], [$message($code)]")
+                        EventBus.getDefault().post(ChannelListEvent(false, "", msg))
+                        nextUpdateTime = System.currentTimeMillis() + if (isInitComplete) 300000L else 15000L
+                    }
+                }
         } else {
-            TelegramBot.sendWarn("[load channel list]\nfailure:$msg") // bot.a.l
+            TelegramBot.sendSysError("[load channel list]\nfailure:$msg") // bot.a.l
             botFailureTime = System.currentTimeMillis()
             logger.error("fetch channel list failure $msg and keep retry?$isRetryAfterFailure")
             if (isRetryAfterFailure) {
@@ -183,7 +237,7 @@ object ChannelManager {
     private suspend fun buildChannels(list: List<ChannelStreamResponse>?, categorySorts: List<String>?) {
         if (list.isNullOrEmpty()) return
         if (botFailureTime > 0) {
-            TelegramBot.sendRecover("[load channel list]\nrecover in ${System.currentTimeMillis() - botFailureTime}")
+            TelegramBot.sendSysInfo("[load channel list]\nrecover in ${System.currentTimeMillis() - botFailureTime}")
             botFailureTime = 0
         }
         val byColumns = hashMapOf<Int, HashMap<String, MutableList<ChannelStreamResponse>>>(0 to HashMap(), 1 to HashMap())
@@ -288,11 +342,23 @@ object ChannelManager {
     }
 
     /**
-     * Original: a.R() ("loadLocalColumns") — NÃO decompilado (JadxOverflowException).
-     * Pelo contexto (tipo a$j = Map<Int, Pair<String, Long>> e chaves gravadas em [save]) carrega
-     * "favorites" e "play_history" das preferências.
+     * Original: a.R() ("loadLocalColumns") + a$i/a$j — para `play_history` e `favorites` lê o JSON
+     * `Map<Int, Pair<String, Long>>` (key → (streamId, timestamp)) das preferências e atribui a
+     * [playHistoryMap] / [favoritesMap]. Erros: logados ("load local [chave] failure") e segue para a próxima chave.
      */
-    private suspend fun loadLocalColumns(): Unit = TODO("nativo/não decompilado: x1.f1.lb.media.a.R()")
+    private suspend fun loadLocalColumns() {
+        for (type in arrayOf("play_history", "favorites")) {
+            try {
+                val json = Preferences.getString(type, "")
+                if (json.isBlank()) continue
+                val map: MutableMap<Int, Pair<String, Long>> =
+                    gson.fromJson(json, object : TypeToken<MutableMap<Int, Pair<String, Long>>>() {}.type)
+                if (type == "play_history") playHistoryMap = map else if (type == "favorites") favoritesMap = map
+            } catch (t: Throwable) {
+                logger.error("load local [$type] failure", t)
+            }
+        }
+    }
 
     /** Original: a.B(columnKey, mode) — favoritos (ordem displaySeq) ou histórico (ordem de acesso). */
     private fun localColumn(columnKey: String, mode: Int): List<ChannelStreamResponse> {
@@ -438,29 +504,196 @@ object ChannelManager {
         } catch (e: Exception) { logger.error("save subscribed channels failure", e) }
     }
 
-    /** Original: a.S() / a$k ("loadSubscribedChannel") — lê "subscribed_channels". */
+    /**
+     * Original: a.S() / a$k ("loadSubscribedChannel") — lê "subscribed_channels"
+     * (`Map<epgId, ConcurrentSkipListMap<início, Pair<lembrar?, Set<streamId>>>>`, tipo a$k$a). Vazio ⇒ mantém o mapa
+     * atual; erro ⇒ loga "load subscribed failure" e mantém.
+     */
     private fun loadSubscribedChannel() {
         puckScope.launch {
             try {
                 val json = Preferences.getString("subscribed_channels", "")
-                // TODO: desserialização exata (tipo a$k$a) e pós-processamento não visíveis no trecho decompilado
-                if (json.isNotEmpty()) TODO("parse Map<String, ConcurrentSkipListMap<Long, Pair<Boolean, Set<String>>>>")
+                if (json.isNotBlank()) {
+                    inSubscribedMap = gson.fromJson(json,
+                        object : TypeToken<MutableMap<String, ConcurrentSkipListMap<Long, Pair<Boolean, Set<String>>>>>() {}.type)
+                }
             } catch (t: Throwable) { logger.error("load subscribed failure", t) }
         }
     }
 
-    /** Original: a.q(long) ("executeSubscribe") — não decompilado (JadxOverflowException). */
-    suspend fun executeSubscribe(now: Long): Unit = TODO("nativo/não decompilado: x1.f1.lb.media.a.q(long)")
+    /**
+     * Original: a.q(now) ("executeSubscribe") + a$b — chamado pelo heartbeat. Dispara os avisos ("notice") dos
+     * lembretes que estão para começar:
+     * 1. janela = `remindMillisSecondsBeforeTheProgrammeStart` se entre 5001 e 599999 ms, senão 5000 ms;
+     * 2. para cada epgId/início de [inSubscribedMap] com `início <= now + janela` e flag `false` (ainda não avisado):
+     *    marca o flag como `true`, guarda `lastExecuteSubscribeTime = now` e resolve o programa por streamId:
+     *    com `epgId` vazio a partir do [SubscribeItem] em cache (ou programa vazio); senão por
+     *    [EpgManager.getProgrammeAt] (`início + 1`) — sem programa ou programa já terminado só gera warn
+     *    ("no program found" / "already expired, don't send notice"); itens do cache marcados indisponíveis são pulados;
+     * 3. epgIds cujas entradas estão todas dentro da janela (nada futuro) são removidos;
+     * 4. para cada canal da coluna de lembretes do modo atual com programa resolvido posta [SubscribeNoticeEvent]
+     *    (nf.m); por fim [removeExpiredSubscribes] e [saveSubscribes].
+     * (Reconstruído do fallback do jadx; a leitura de `epgId` vazio é a mais provável dado o registrador reutilizado.)
+     */
+    suspend fun executeSubscribe(now: Long) {
+        val serverNow = ServerTime.now() // util/d1.d()
+        val found = HashMap<String, EPGProgramme>()
+        val doneEpgIds = ArrayList<String>()
+        var window = 5000L
+        val cfg = BaseLibConfig.remindMillisSecondsBeforeTheProgrammeStart
+        if (cfg in 5001 until 600000) window = cfg
+        for ((epgId, times) in inSubscribedMap) {
+            var allWithinWindow = true
+            for (start in ArrayList(times.keys)) {
+                if (start > now + window) { allWithinWindow = false; continue }
+                val entry = times[start] ?: continue
+                if (BaseLibConfig.isDebug) logger.debug("SubscribeIO exec get a subscribe: [{}]->[{}]", start, entry)
+                if (entry.first) continue
+                times[start] = Pair(true, entry.second)
+                lastExecuteSubscribeTime = now
+                if (epgId.isEmpty()) {
+                    for (streamId in entry.second) {
+                        val item = SubscribeCache.get(subscribeKey(epgId, streamId, start))
+                        if (item != null && !item.isAvailable) continue
+                        found[streamId] = EPGProgramme().apply {
+                            channel = epgId
+                            if (item != null) { this.start = item.start; end = item.stop; title = item.title; desc = item.desc }
+                            else { this.start = start; title = ""; desc = "" }
+                        }
+                    }
+                } else {
+                    val programme = EpgManager.getProgrammeAt(epgId, start + 1)
+                    if (programme == null) {
+                        logger.warn("SubscribeIO exec no program found for subscribed, epgId[{}], startTime[{}]", epgId, start)
+                        continue
+                    }
+                    if (programme.end <= serverNow) {
+                        logger.warn("SubscribeIO exec subscribed program is already expired, don't send notice, epgId[{}], startTime[{}], [{} - {}]",
+                            epgId, start, programme.start, programme.end)
+                        continue
+                    }
+                    for (streamId in entry.second) {
+                        val item = SubscribeCache.get(subscribeKey(epgId, streamId, start))
+                        if (item != null && !item.isAvailable) continue
+                        found[streamId] = programme
+                    }
+                }
+            }
+            if (allWithinWindow) doneEpgIds.add(epgId)
+        }
+        for (epgId in doneEpgIds) {
+            inSubscribedMap.remove(epgId)
+            if (BaseLibConfig.isDebug) logger.debug("SubscribeIO exec remove from subscribed, epgId[{}]", epgId)
+        }
+        val subscribedChannels = channelsByColumns[playMode]?.get(columnSubscribes) ?: ArrayList()
+        for (ch in subscribedChannels) {
+            val p = found[ch.streamId] ?: continue
+            if (BaseLibConfig.isDebug) logger.debug("SubscribeIO notice:[{}]", p)
+            EventBus.getDefault().post(SubscribeNoticeEvent(ch.key, p.channel, p.start, p.end, ch.streamName, p.title, p.desc))
+        }
+        removeExpiredSubscribes()
+        saveSubscribes()
+    }
 
-    /** Original: a.s(String) ("generateSubscribeList") — não decompilado. */
-    suspend fun generateSubscribeList(key: String): List<Triple<Int, Long, EPGProgramme>> =
-        TODO("nativo/não decompilado: x1.f1.lb.media.a.s(String)")
+    /**
+     * Original: a.s(String) ("generateSubscribeList") + a$c — monta a lista de lembretes como
+     * `Triple(key do canal, início, programa)`. `key` = `"subscribed_channels"` (flag `false`) ou
+     * `"expired_subscribed_channels"` (flag `true`); outro valor ⇒ lista vazia. Passos:
+     * 1. inverte [inSubscribedMap] (epgId → início → (flag, {streamId})) em `streamId → (início → epgId)` considerando
+     *    só as entradas com `pair.first == flag`;
+     * 2. para cada canal do modo atual cujo `streamId` está nesse índice e para cada início: lê o [SubscribeItem] do
+     *    [SubscribeCache] (chave `epgId.streamId.início`); item existente mas indisponível é ignorado; com item monta
+     *    o [EPGProgramme] a partir dele (canal=epgId, stop/título/descrição do item); sem item usa
+     *    [EpgManager.getProgrammeAt] e, se não houver, um programa vazio com canal e início.
+     */
+    suspend fun generateSubscribeList(key: String): List<Triple<Int, Long, EPGProgramme>> {
+        val flag = when (key) {
+            "subscribed_channels" -> false
+            "expired_subscribed_channels" -> true
+            else -> return ArrayList()
+        }
+        val result = ArrayList<Triple<Int, Long, EPGProgramme>>()
+        val channelsOfMode = channelsMap[playMode] ?: return result
+        val byStream = HashMap<String, TreeMap<Long, String>>()
+        for ((epgId, times) in inSubscribedMap) {
+            for ((start, pair) in times) {
+                if (pair.first != flag) continue
+                for (streamId in pair.second) byStream.getOrPut(streamId) { TreeMap() }[start] = epgId
+            }
+        }
+        for ((channelKey, channel) in channelsOfMode) {
+            val streamId = channel.streamId
+            val times = byStream[streamId] ?: continue
+            for ((start, epgId) in times) {
+                val item = SubscribeCache.get(subscribeKey(epgId, streamId!!, start))
+                if (item != null && !item.isAvailable) continue
+                val programme: EPGProgramme = if (item != null) {
+                    EPGProgramme().apply {
+                        this.channel = epgId; this.start = start; this.end = item.stop
+                        title = item.title; desc = item.desc; category = ""
+                    }
+                } else {
+                    EpgManager.getProgrammeAt(epgId, start) ?: EPGProgramme().apply {
+                        this.channel = epgId; this.start = start; title = ""; desc = ""; category = ""
+                    }
+                }
+                result.add(Triple(channelKey, start, programme))
+            }
+        }
+        if (BaseLibConfig.isDebug) logger.debug("SubscribeIO generate[$key], from[{}] -> to[{}], result[{}]", inSubscribedMap, byStream, result)
+        return result
+    }
 
     /** Original: a.A() ("getInSubscribedProgrammes") — `generateSubscribeList("subscribed_channels")` ordenado por tempo. */
     suspend fun inSubscribedProgrammes(): List<Triple<Int, Long, EPGProgramme>> =
         generateSubscribeList("subscribed_channels").sortedBy { it.second }
 
-    /** Original: a.g0(...) ("toggleChannelSubscribe") — TODO: não reconstruído nesta passagem. */
-    suspend fun toggleSubscribe(key: Int, startTime: Long, epgId: String, item: SubscribeItem?): Boolean =
-        TODO("x1.f1.lb.media.a.g0 — não reconstruído")
+    /**
+     * Original: a.g0(key, startTime, epgId, item) ("toggleChannelSubscribe") — alterna o lembrete do programa
+     * (`epgId`, `startTime`) para o canal [key] do modo atual. Já inscrito ⇒ remove o `streamId` (apagando as
+     * entradas que ficarem vazias) e devolve `false`; senão adiciona (gravando [item] no [SubscribeCache] quando
+     * informado) e devolve `true`. Canal inexistente ⇒ `false`. Persiste via [saveSubscribes].
+     * (Inferência: o jadx perdeu a atribuição de `lastInSubscribedChangeTime = now` antes de `c0()`.)
+     */
+    suspend fun toggleSubscribe(key: Int, startTime: Long, epgId: String, item: SubscribeItem?): Boolean {
+        val channel = channelsMap[playMode]?.get(key) ?: return false
+        val streamId = channel.streamId!!
+        var times = inSubscribedMap[epgId]
+        val entry = times?.get(startTime)
+        val subscribed: Boolean
+        if (entry != null) {
+            val streams = entry.second as MutableSet<String>
+            if (streams.contains(streamId)) {
+                streams.remove(streamId)
+                if (BaseLibConfig.isDebug) logger.debug("SubscribeIO toggle remove from subscribed mode[{}], epgId[{}], time[{}], streamId[{}]", playMode, epgId, startTime, streamId)
+                if (streams.isEmpty()) {
+                    times?.remove(startTime)
+                    if (BaseLibConfig.isDebug) logger.debug("SubscribeIO toggle remove mode[{}], epgId[{}], startTime[{}]", playMode, epgId, startTime)
+                    if (times != null && times.isEmpty()) {
+                        inSubscribedMap.remove(epgId)
+                        if (BaseLibConfig.isDebug) logger.debug("SubscribeIO toggle remove mode[{}], epgId[{}]", playMode, epgId)
+                    }
+                }
+                subscribed = false
+            } else {
+                streams.add(streamId)
+                if (item != null) SubscribeCache.put(subscribeKey(epgId, streamId, startTime), item)
+                if (BaseLibConfig.isDebug) logger.debug("SubscribeIO toggle add to subscribed mode[{}], epgId[{}], time[{}], streamId[{}]", playMode, epgId, startTime, streamId)
+                subscribed = true
+            }
+        } else {
+            if (times == null) {
+                times = ConcurrentSkipListMap()
+                inSubscribedMap[epgId] = times
+            }
+            val created = times[startTime] ?: Pair<Boolean, Set<String>>(false, HashSet()).also { times[startTime] = it }
+            (created.second as MutableSet<String>).add(streamId)
+            if (item != null) SubscribeCache.put(subscribeKey(epgId, streamId, startTime), item)
+            if (BaseLibConfig.isDebug) logger.debug("SubscribeIO toggle add to subscribed mode[{}], epgId[{}], time[{}], streamId[{}]", playMode, epgId, startTime, streamId)
+            subscribed = true
+        }
+        lastInSubscribedChangeTime = System.currentTimeMillis()
+        saveSubscribes()
+        return subscribed
+    }
 }

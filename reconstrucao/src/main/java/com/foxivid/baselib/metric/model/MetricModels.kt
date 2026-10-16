@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * Modelos de estatística/métrica. No APK são POJOs Java R8-ofuscados (tf/*, vf/*, p6/c).
  * Os nomes de propriedade abaixo foram deduzidos das chaves usadas em uf/c (MetricReporter) e dos
  * pares getter/setter; a letra original do getter vem no comentário. Campos cujo uso não aparece
- * no módulo ficaram como `unknownX` (TODO).
+ * no módulo ficaram como `unknownX` (confirmados como nunca escritos no original).
  */
 
 /**
@@ -26,8 +26,15 @@ class MetricEvent {
     var values: Map<String, Any?>? = null
 }
 
-/** Tipo de reprodução. Original: v6/c.java (só LIVE é referenciado neste módulo) */
-enum class PlayType { LIVE, CATCHUP, VOD /* TODO: demais valores de v6.c não verificados */ }
+/** Tipo de reprodução. Original: v6/c.java — `VOD(0)`, `LIVE(1)`, `CATCHUP(2)` (`i(byte)` = [fromValue]). */
+enum class PlayType(val value: Byte) {
+    VOD(0), LIVE(1), CATCHUP(2);
+
+    companion object {
+        /** Original: v6/c.i(byte) */
+        fun fromValue(value: Byte): PlayType? = entries.firstOrNull { it.value == value }
+    }
+}
 
 /**
  * Info do aparelho persistida em prefs "app_usage_system_info". Os nomes JSON são as letras
@@ -106,7 +113,18 @@ class StartupStat {
     /** j */ var engineStartTime = 0L
     /** n */ var engineEndTime = 0L
     /** m */ var engineStartupFailure = ""
-    // TODO: campos b, c, g, h, k, l, o de tf.e não são usados neste módulo.
+
+    // Campos de falha, resolvidos a partir dos chamadores (user/f.java, media/a.java) — cada fase tem
+    // (instante da última falha, mensagem, contador de falhas):
+    /** b (setter s; user/f.java:4216) — instante da última falha de login */ var loginFailureTime = 0L
+    /** c (getter i / setter w) — nº de falhas de login */ var loginFailureCount = 0L
+    /** g (setter q; media/a.java:1881) — instante da última falha ao carregar canais */ var loadChannelFailureTime = 0L
+    /** h (getter h / setter v) — nº de falhas ao carregar canais */ var loadChannelFailureCount = 0L
+    /** k (setter o; user/f.java:4041) — instante da última falha ao iniciar o engine */ var engineFailureTime = 0L
+    /** l (getter b / setter m) — nº de falhas ao iniciar o engine */ var engineFailureCount = 0L
+    /** o (int, valor inicial 0) — declarado mas nunca lido nem escrito no original */ var unusedO = 0
+    // Observação: `loginEndTime` (e) é gravado em media/a.java no início do carregamento de canais, ou seja, é o
+    // instante em que o login terminou; `loginMs = e - a`, `loadChannelMs = f - e`, `startupEngineMs = n - j`.
 }
 
 /** Original: vf/c.java — métrica "liveUserStartup". */
@@ -126,7 +144,7 @@ class BlockStabilityStat(val blockName: String, seq: Long?, val index: Int) {
     /** a (setter p) */ var playType = ""
     /** b (setter n) */ var mediaPlayMode = 0
     /** g (setter s) */ var requestSeq = ""
-    /** h — nunca escrito neste módulo */ var unknownH = ""
+    /** h (getter b) — campo sem setter no original: fica sempre ""; vai para vf.b.c (sem getter) */ val unknownH = ""
     /** i (getter a) */ val createTime: Long = Clock.elapsed()
     /** j (setter u) */ var firstRequestTime = 0L
     /** k (setter w) */ var responseTime = 0L
@@ -224,6 +242,8 @@ class PlayerZappingStat {
     var playUrlInjectIntoPlayer = 0L; var playUrlReadyFromEngine = 0L
     var requestTSCntDuringPreparing = 0; var retryCnt = 0; var seq = 0; var session = 0L; var start = 0L
     var stopEnginePlay = 0L; var stopPlayer = 0L
+    /** Instante em que o motor foi chamado para iniciar o play (setter `e0` de tf.d; usado em [ZappingTimeMetric.startEnginePlayMs]). */
+    var startEnginePlay = 0L
     var monitorStat: PlayerMonitorStat? = null
     var player = ""; var channel = ""; var streamId = ""; var route = ""
     var sessionFromPlayerRequest = ""; var error = ""

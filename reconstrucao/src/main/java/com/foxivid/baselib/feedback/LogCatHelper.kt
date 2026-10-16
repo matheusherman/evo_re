@@ -1,5 +1,6 @@
 package com.foxivid.baselib.feedback
 
+import com.foxivid.baselib.network.HeaderInterceptor
 import android.os.Process
 import android.text.TextUtils
 import com.foxivid.baselib.user.UserManager
@@ -83,7 +84,7 @@ object LogCatHelper {
                 dumpOnly = true
             }
             val path = if (TextUtils.isEmpty(fileName))
-                dirPath + "logcat-" + AppAttrUtils.ofE() + "-" + AppAttrUtils.ofD() + "-" + Clock.now() + ".log"
+                dirPath + "logcat-" + HeaderInterceptor.mac() + "-" + HeaderInterceptor.brandId() + "-" + Clock.now() + ".log"
             else fileName!!
             val process = (if (withSu) ProcessBuilder("su") else ProcessBuilder("sh")).redirectErrorStream(true).start()
             out = DataOutputStream(process.outputStream)
@@ -125,7 +126,7 @@ object LogCatHelper {
             val gz = gzipLogs(File(StoragePaths.logDir()), logFile, true)
             if (gz == null || !gz.exists()) { logFile.delete(); callback(false, "-3"); return@launch }
             try {
-                val resp: FeedbackUploadResponse? = UserManager.uploadFeedback(gz).firstOrNull()
+                val resp: FeedbackUploadResponse? = UserManager.uploadFeedbackFile(gz).firstOrNull()
                 logger.info("upload response {$resp}")
                 when {
                     resp == null -> callback(false, "-4")

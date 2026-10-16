@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/toast_layout_root" android:background="@drawable/shape_toast_bg" android:paddingTop="8.0dp" android:paddingBottom="8.0dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="@dimen/dp_10" android:paddingEnd="@dimen/dp_10"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <t.v.c.widget.ImageView android:id="@id/icon" android:layout_width="@dimen/dp_10" android:layout_height="@dimen/dp_10" />
+    <t.v.c.widget.TextView android:textSize="14.0sp" android:textColor="@color/white" android:ellipsize="end" android:id="@id/content" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxWidth="300.0dp" android:maxLines="3" android:layout_marginStart="5.0dp" />
+</t.v.c.widget.LinearLayout>

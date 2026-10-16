@@ -20,13 +20,13 @@ object FirebaseEvents {
     /**
      * Evento `user_add_plan` quando a data de expiração da assinatura muda (comparada com
      * a preferência `user_last_expire_ts.<accountId>`). Ignorado para convidados/não logados
-     * (`UserManager.O0()`).
+     * (`UserManager.isGuestOrLoggedOut()`, original user/f.O0()).
      * Original: `j0.c()` + `j0.d(...)`.
      */
     fun reportPlanChange() {
         val fa = AppMonitor.firebaseAnalytics() ?: return
-        if (UserManager.O0()) return // TODO: nome real (original user/f.O0(): convidado/sem sessão)
-        val expireTs = UserManager.m0() // TODO: nome real (original user/f.m0(): expiração da assinatura)
+        if (UserManager.isGuestOrLoggedOut()) return // Original: user/f.O0() — convidado/sem sessão
+        val expireTs = UserManager.getExpireTs() // Original: user/f.m0() — expiração da assinatura
         val key = "user_last_expire_ts." + HeaderInterceptor.accountId()
         Preferences.getLong(key, { last -> onLastExpire(expireTs, fa, key, last) }, 0L)
     }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<t.v.c.widget.MyRelativelayout android:layout_width="match_parent" android:layout_height="30.0dp"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <View android:background="@color/vod_episode_unchoose_color" android:layout_width="match_parent" android:layout_height="1.0dp" android:layout_marginLeft="16.0dp" android:layout_marginRight="16.0dp" android:layout_marginHorizontal="16.0dp" />
+    <t.v.c.widget.TextView android:textSize="8.0sp" android:textColor="#a7a7a7" android:id="@id/vod_menu_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_marginStart="16.0dp" android:layout_alignParentStart="true" />
+    <ImageView android:id="@id/ok_iv" android:visibility="gone" android:layout_width="12.0dp" android:layout_height="12.0dp" android:src="@mipmap/ok_red" android:layout_centerVertical="true" android:layout_marginEnd="16.0dp" android:layout_alignParentEnd="true" />
+</t.v.c.widget.MyRelativelayout>

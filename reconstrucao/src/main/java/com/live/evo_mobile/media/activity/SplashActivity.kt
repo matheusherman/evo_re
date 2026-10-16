@@ -50,10 +50,13 @@ class SplashActivity : BaseActivity() {
     private var isAdComplete = true
     private var retryDialog: Any? = null          // v7.c (diálogo de retry do ui lib)
 
-    /** `native` no original (Jiagu): TODO inferido de campos e helpers. */
+    /** `native` no original (Jiagu): reconstrução inferida de campos e helpers. */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TODO("nativo/não decompilado: SplashActivity.onCreate — provável setContentView + countdownView + initAds()")
+        // INFERIDO (onCreate nativo)
+        setContentView(R.layout.activity_splash)
+        countdownView = findViewById(R.id.countdownView)
+        kotlinx.coroutines.MainScope().launch { initAds() }
     }
 
     /** Original: coroutine `SplashActivity$initAd$1` (b): lê startup_ad_list e mostra ou segue. */

@@ -15,7 +15,7 @@ import org.apache.commons.lang3.builder.ToStringStyle
 /**
  * Base serializável de quase todos os modelos; toString por reflexão.
  * Original: n6/a.java (lib compartilhada; nome original ofuscado).
- * TODO: estilo exato (`commons-lang ToStringStyle` em `d.f1063g`) não identificado.
+ * Estilo do toString (`ToStringStyle` em `d.f1063g`): INFERIDO como SHORT_PREFIX_STYLE (o valor da constante não é recuperável da decompilação).
  */
 abstract class BaseModel : Serializable {
     override fun toString(): String = ReflectionToStringBuilder.toString(this, ToStringStyle.SHORT_PREFIX_STYLE)

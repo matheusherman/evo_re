@@ -47,6 +47,20 @@ class ProgramNameLayer(context: Context, root: View) : OsdLayer() {
     /** Original: e() */
     fun idText(): String = idText.text.toString()
 
+    /** Texto digitado exibido (alias usado por LiveNewActivity). Original: e() */
+    fun typedNumber(): String = idText()
+
+    /** Guarda o id (índice 0-based) sem mexer na tela; ignora vazio. Original: g(String) */
+    fun setProgramId(id: String) { if (id.isEmpty()) return; programId = id }
+
+    /** Mostra índice 0-based [id] como número 1-based mais o nome do canal. Original: h(String,String) */
+    fun show(id: String, name: String?) {
+        if (id.isEmpty()) return
+        programId = id
+        idText.text = (id.toInt() + 1).toString()
+        nameText.text = name
+    }
+
     /** Número do canal como Int (0 se inválido). Original: f() */
     fun idNumber(): Int = try { programId.toInt() } catch (e: Exception) { 0 }
 }
