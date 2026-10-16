@@ -55,7 +55,7 @@ object AppAttrUtils {
                 logger.debug(
                     "App attr init, [ {} - {} - {} - {} - {} - {} - {} ]",
                     appDistributionChannel, tenantId, brandId, appId, appType, appVersion, appVersionName,
-                ) // TODO: ordem exata dos 4 últimos argumentos truncada na descompilação
+                ) // ordem confirmada no decompile em modo fallback: canal, tenant, brand, appId, appType, versionCode, versionName
             }
         } catch (e: PackageManager.NameNotFoundException) {
             logger.error("get app distribution channel failure", e)

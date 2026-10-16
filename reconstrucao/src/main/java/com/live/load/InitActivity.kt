@@ -61,7 +61,7 @@ class InitActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // TODO("nativo/não decompilado: InitActivity.onCreate — inflar binding, setContentView, t(), x(), lançar onCreate\$1")
+        // INFERIDO (onCreate nativo)
         binding = ActivityInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loadCachedAppType()

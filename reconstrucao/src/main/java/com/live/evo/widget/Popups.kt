@@ -7,7 +7,12 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.graphics.Color
+import android.graphics.drawable.ClipDrawable
+import android.graphics.drawable.ColorDrawable
+import android.text.TextUtils
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -16,6 +21,14 @@ import androidx.leanback.widget.VerticalGridView
 import androidx.recyclerview.widget.RecyclerView
 import com.live.evo.R
 import com.live.evo.model.ChannelData
+import com.live.evo.model.ProgramBean
+import com.live.evo.util.EpgBeanDaoUtils
+import com.live.evo.util.SkinConfig
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 import com.live.evo.util.CommonUtils
 import com.live.evo.util.DateUtils
 import com.live.evo.util.GlideImageLoader
@@ -51,6 +64,10 @@ class PopupCurrentEpgWindow(private val context: Context, private val handler: H
     private lateinit var tvStart: TextView; private lateinit var tvStop: TextView
     private lateinit var tvTime: TextView; private lateinit var progress: ProgressBar
     private lateinit var icon: ImageView
+    private lateinit var tvCurrentTitle: TextView; private lateinit var imgPlayBack: ImageView
+    private lateinit var tvNextTitle: TextView; private lateinit var layoutKey: LinearLayout
+    private lateinit var tvEpgOk: TextView; private lateinit var tvEpgLeft: TextView; private lateinit var tvEpgRight: TextView
+    private lateinit var tvEpgDel: TextView; private lateinit var tvEpgMenu: TextView; private lateinit var tvSession: TextView
 
     /** Atualiza o relógio a cada 1 s (formato `yyyyMMddHHmmss` do recurso, fuso default). Original: a (Runnable) */
     private val refreshRunnable = object : Runnable {
@@ -70,7 +87,37 @@ class PopupCurrentEpgWindow(private val context: Context, private val handler: H
         setBackgroundDrawable(CommonUtils.drawable(R.drawable.bg_popup_menu))
         isOutsideTouchable = false
         width = -1; height = -2
-        // findViewById de currentepgl_* (iv_icon, tv_channel_pos, tv_channel_name, mtv_current_epg_name, ...) omitido por brevidade
+        icon = root.findViewById(R.id.currentepgl_iv_icon)
+        tvPos = root.findViewById(R.id.currentepgl_tv_channel_pos)
+        tvName = root.findViewById(R.id.currentepgl_tv_channel_name)
+        tvCurrentTitle = root.findViewById(R.id.currentepgl_tv_current_epg_title)
+        tvCurrentName = root.findViewById(R.id.currentepgl_mtv_current_epg_name)
+        imgPlayBack = root.findViewById(R.id.currentepgl_playback)
+        tvTime = root.findViewById(R.id.currentepgl_tv_current_time)
+        tvStart = root.findViewById(R.id.currentepgl_tv_current_epg_start)
+        progress = root.findViewById(R.id.currentepgl_pb_progress)
+        tvStop = root.findViewById(R.id.currentepgl_tv_current_epg_stop)
+        tvNextTitle = root.findViewById(R.id.currentepgl_tv_next_epg_title)
+        tvNextName = root.findViewById(R.id.currentepgl_mtv_next_epg_name)
+        layoutKey = root.findViewById(R.id.currentepgl_layout_keyimag)
+        tvEpgOk = root.findViewById(R.id.currentepgl_tv_epg_ok)
+        tvEpgLeft = root.findViewById(R.id.currentepgl_tv_epg_left)
+        tvEpgRight = root.findViewById(R.id.currentepgl_tv_epg_right)
+        tvEpgDel = root.findViewById(R.id.currentepgl_tv_epg_del)
+        tvEpgMenu = root.findViewById(R.id.currentepgl_tv_epg_menu)
+        tvSession = root.findViewById(R.id.currentepgl_tv_sessionid)
+        // Cor da barra de progresso: SkinConfig `epg_current_progress_color` (#RRGGBB / #AARRGGBB, vírgulas removidas)
+        val skinColor = SkinConfig.get().epgCurrentProgressColor()
+        if (!TextUtils.isEmpty(skinColor)) {
+            val hex = skinColor!!.replace(",", "")
+            if (Pattern.matches("^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$", hex)) {
+                progress.progressDrawable = ClipDrawable(ColorDrawable(Color.parseColor(hex)), 19, 1)
+                progress.setBackgroundColor(context.resources.getColor(R.color.progressbar_play_background))
+            }
+        }
+        // fontes: typeface2 (TextStyleUtils.b) nos textos/horas, typeface3 (TextStyleUtils.c) no nome do canal e dicas de tecla
+        listOf(tvTime, tvStart, tvStop, tvCurrentTitle, tvCurrentName, tvNextTitle, tvNextName, tvSession, tvPos).forEach { TextStyleUtils.b(it) }
+        listOf(tvName, tvEpgOk, tvEpgLeft, tvEpgRight, tvEpgDel, tvEpgMenu).forEach { TextStyleUtils.c(it) }
     }
 
     /** Limpa os campos de programa. Original: r() */
@@ -96,10 +143,53 @@ class PopupCurrentEpgWindow(private val context: Context, private val handler: H
                 clearPrograms()
                 tvCurrentName.setText(R.string.epg_none); tvNextName.setText(R.string.epg_none)
             } else {
-                // corrotina: EpgBeanDaoUtils.getTwoEpg(epgId).collect { lista -> handler.post { render(lista) } }
-                // render: programa em curso = primeiro com start < agora (progress = (agora-start)*100/(fim-início));
-                //         próximo = o seguinte; vazios -> R.string.epg_none
-                TODO("coletar Flow e renderizar (ver widget/q.b.C0119b.d)")
+                // Original: corrotina `satData$1` (Dispatchers.Default): getTwoEpg(epgId).catch{log}.collect { handler.post { render } }
+                val finalEpgId = epgId
+                CoroutineScope(Dispatchers.Default).launch {
+                    EpgBeanDaoUtils.getTwoEpg(finalEpgId)
+                        .catch { logger.error("PopupCurrentEpgWindow", it) }
+                        .collect { list -> handler.post { render(list, finalEpgId) } }
+                }
+            }
+            if (data != null) imgPlayBack.visibility = View.GONE      // Original: v(dataBean)
+        }
+    }
+
+    /**
+     * Preenche programa atual (primeiro com início < agora; barra de progresso em %) e o próximo. Lista vazia ou canal já trocado
+     * => "sem EPG" nos dois. Original: q$b$b.d(q, list, epgId)
+     */
+    private fun render(list: List<ProgramBean>, epgId: String) {
+        clearPrograms()
+        if (list.isEmpty() || !TextUtils.equals(epgId, currentEpgId)) {
+            tvCurrentName.text = CommonUtils.string(R.string.epg_none)
+            tvNextName.text = CommonUtils.string(R.string.epg_none)
+            return
+        }
+        lastChannelId = currentEpgId ?: ""
+        lastTime = ServerClock.get().now()
+        val now = ServerClock.get().now()
+        var currentDone = false
+        var nextDone = false
+        for (program in list) {
+            val start = program.f()
+            if (start < now && !currentDone) {
+                val stop = program.g()
+                val startText = DateUtils.format(start, CommonUtils.string(R.string.HHmm))
+                val stopText = DateUtils.format(stop, CommonUtils.string(R.string.HHmm))
+                var title = program.e()
+                if (TextUtils.isEmpty(title)) title = CommonUtils.string(R.string.epg_none)
+                tvCurrentName.text = title
+                tvStart.text = startText
+                tvStop.text = stopText
+                val total = stop - start
+                progress.progress = if (total <= 0) 0 else (((ServerClock.get().now() - start) * 100) / total).toInt()
+                currentDone = true
+            } else if (!nextDone) {
+                var title = program.e()
+                if (TextUtils.isEmpty(title)) title = CommonUtils.string(R.string.epg_none)
+                tvNextName.text = title
+                nextDone = true
             }
         }
     }
@@ -198,8 +288,8 @@ class TrialPopup(context: Context) : PopupWindow(context) {
 /** ItemDecoration com espaçamento fixo. Original: com/live/evo/widget/v.java */
 class SpaceItemDecoration(private val space: Int) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(outRect: android.graphics.Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        // TODO("parcial: offsets conforme layout manager — ver widget/v.java")
-        outRect.set(space, space, space, space)
+        outRect.bottom = space
+        if (parent.getChildPosition(view) != 0) outRect.top = space   // Original: v.getItemOffsets
     }
 }
 

@@ -91,7 +91,7 @@ open class EPG @JvmOverloads constructor(
     // --- dimensões (R.dimen.epg_*) e cores ---
     protected val margin = resources.getDimensionPixelSize(R.dimen.epg_channel_layout_margin)          // f5558m
     private val padding = resources.getDimensionPixelSize(R.dimen.epg_channel_layout_padding)        // f5559n
-    private val rowHeight = resources.getDimensionPixelSize(R.dimen.epg_channel_layout_height)       // f5560o
+    protected val rowHeight = resources.getDimensionPixelSize(R.dimen.epg_channel_layout_height)       // f5560o
     protected val channelWidth = resources.getDimensionPixelSize(R.dimen.epg_channel_layout_width)     // f5561p
     private val channelBg = resources.getColor(R.color.epg_channel_layout_background)               // f5562q
     private val eventBg = resources.getColor(R.color.epg_event_layout_background)                   // f5563r

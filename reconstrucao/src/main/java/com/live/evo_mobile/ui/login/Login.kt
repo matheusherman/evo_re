@@ -34,7 +34,11 @@ class LoginTypeActivity : BaseDataBindActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TODO("nativo/não decompilado: LoginTypeActivity.onCreate — ver KDoc (inferência)")
+        // INFERIDO (onCreate nativo): origem da tela (extra `loginFrom`, padrão LOGIN_FROM_START) e pilha de passos começando na
+        // página 0; o DataBinding `z4.a` e o adapter de páginas `t0` não estão reconstruídos (ver KDoc da classe).
+        loginFrom = intent.getIntExtra("loginFrom", LOGIN_FROM_START)
+        stepRecord.clear()
+        stepRecord.add(0)
     }
 
     /** Original: Z(int index, boolean skipRecord) */
@@ -108,10 +112,33 @@ data class LoginAccountInput(val accountStr: String?, val emailStr: String?, val
 /** Código de país (phonePreCode, countryCode, countryShowName). Original: com/live/evo_mobile/ui/login/c.java */
 data class CountryCode(val phonePreCode: String, val countryCode: String, val countryShowName: String)
 
-/** Adapter da lista de países (spinner). Original: com/live/evo_mobile/ui/login/b.java */
-class CountryCodeAdapter(private val dataList: List<CountryCode>) : BaseAdapter() {
+/**
+ * Adapter da lista de países (spinner): cada item mostra `phonePreCode(countryShowName)` no TextView `area_code` (layouts
+ * `account_area_item_select` e, no dropdown, `account_area_item_select_drop`), com ViewHolder guardado em `tag`.
+ * Original: com/live/evo_mobile/ui/login/b.java (nome real AreaSpinnerAdapter, com ViewHolder interno `a`)
+ */
+class CountryCodeAdapter(private val ctx: android.content.Context, private val dataList: List<CountryCode>) : BaseAdapter() {
+    private val li: android.view.LayoutInflater = android.view.LayoutInflater.from(ctx)
+
+    /** Original: b.a */
+    inner class ViewHolder(view: android.view.View) {
+        val areaCode: android.widget.TextView = view.findViewById(com.live.evo.R.id.area_code)
+        init { view.setTag(this) }
+    }
+
     override fun getCount() = dataList.size
     override fun getItem(position: Int) = dataList[position]
     override fun getItemId(position: Int) = position.toLong()
-    override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup?): android.view.View = TODO("item de país")
+
+    private fun bind(layoutId: Int, position: Int, convertView: android.view.View?): android.view.View {
+        val view = convertView ?: android.view.View.inflate(ctx, layoutId, null).also { ViewHolder(it) }
+        (view.tag as ViewHolder).areaCode.text = getItem(position).phonePreCode + "(" + getItem(position).countryShowName + ")"
+        return view
+    }
+
+    override fun getDropDownView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup?): android.view.View =
+        bind(com.live.evo.R.layout.account_area_item_select_drop, position, convertView)
+
+    override fun getView(position: Int, convertView: android.view.View?, parent: android.view.ViewGroup?): android.view.View =
+        bind(com.live.evo.R.layout.account_area_item_select, position, convertView)
 }

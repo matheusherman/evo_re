@@ -10,7 +10,9 @@ import androidx.annotation.IntegerRes
 import com.foxivid.baselib.crypto.ApiCrypto
 import com.foxivid.baselib.device.DeviceInfoCollector
 import com.foxivid.baselib.heartbeat.HeartbeatManager
+import com.foxivid.baselib.heartbeat.TsPushMode
 import com.foxivid.baselib.log.RemoteLogger
+import com.foxivid.baselib.util.CrashHandler
 import com.foxivid.baselib.media.ChannelManager
 import com.foxivid.baselib.user.UserManager
 import com.foxivid.baselib.util.AesEcbCipher
@@ -59,7 +61,7 @@ object BaseLibConfig {
     var proxyType: String = "TS"
 
     /** Modo de push do proxy TS (enum v6.d; padrão UDP). Original: `tsPushMode` (f). */
-    var tsPushMode: Any? /* v6.d */ = null // TODO("enum v6.d fora deste módulo; valor padrão original = v6.d.UDP")
+    var tsPushMode: TsPushMode? = TsPushMode.UDP
 
     /** Original: `maxDownloadingBlockCnt` (g). */
     var maxDownloadingBlockCnt: Int? = null
@@ -181,7 +183,7 @@ object BaseLibConfig {
             StartStat.addStep("0.1.App onCreate initLogger")
             initLogger()
             // Original: Thread.setDefaultUncaughtExceptionHandler(new util.q0())
-            // TODO("outro módulo: util/q0 (UncaughtExceptionHandler)") — omitido aqui para não abortar o init
+            Thread.setDefaultUncaughtExceptionHandler(CrashHandler())
             /*
              * Restante do bloco sincronizado (Original, em ordem):
              *  - util/b1.m(filesDir)                       -> inicializa diretórios de cache (PathUtils)
@@ -448,7 +450,12 @@ internal object LogCipherRef {
 
 /** Original: q6.c.e(q6.a). */
 internal object LoggerBackendRef {
-    fun install(backend: Any): Unit = TODO("biblioteca q6 (logger) fora deste módulo")
+    /** Backend ativo; Original: q6.c.b (campo estático, `null` => usa o backend padrão que imprime em stdout). */
+    @Volatile var backend: Any? = null
+        private set
+
+    /** Original: q6.c.e(q6.a) — apenas troca o backend de log global. */
+    fun install(backend: Any) { this.backend = backend }
 }
 
 /** Original: x1/f1/lb/log/a (RemoteLogger). */

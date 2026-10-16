@@ -242,6 +242,8 @@ class PlayerZappingStat {
     var playUrlInjectIntoPlayer = 0L; var playUrlReadyFromEngine = 0L
     var requestTSCntDuringPreparing = 0; var retryCnt = 0; var seq = 0; var session = 0L; var start = 0L
     var stopEnginePlay = 0L; var stopPlayer = 0L
+    /** Instante em que o motor foi chamado para iniciar o play (setter `e0` de tf.d; usado em [ZappingTimeMetric.startEnginePlayMs]). */
+    var startEnginePlay = 0L
     var monitorStat: PlayerMonitorStat? = null
     var player = ""; var channel = ""; var streamId = ""; var route = ""
     var sessionFromPlayerRequest = ""; var error = ""

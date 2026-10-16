@@ -6,7 +6,14 @@ import com.live.evo.AppUserManager
 import com.live.evo.model.CategoryBean
 import com.live.evo.model.ChannelData
 import com.live.evo.model.ProgramBean
+import com.foxivid.baselib.media.EpgManager
+import com.foxivid.baselib.util.LegacyTvUtils
+import com.live.evo.osd.SubscribeManager
 import com.live.evo.util.ModelHelper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * "Ponte" entre o menu de canais ([com.live.evo.fragment.ChannelFragment]) e o SDK/camada de modelos.
@@ -113,7 +120,7 @@ internal fun AppUserManager.isPipAtPosition1(): Boolean = isPipPosition1()
 internal fun AppUserManager.pipPreviewDelayMs(): Long = 100L
 
 /**
- * Funções de data de `com.live.evo.util.q1` (DateUtils) que o reconstruído deixou como TODO parcial em Time.kt.
+ * Funções de data de `com.live.evo.util.q1` (DateUtils); equivalentes agora também em [com.live.evo.util.DateUtils].
  * Original: com/live/evo/util/q1.java — `c(long,int)`, `d(long,int)`, `o(int)`.
  */
 internal object ChannelDateShims {
@@ -150,7 +157,11 @@ internal object ChannelModelShims {
      */
     fun getChannelProgramName(epgId: String?, time: Long, callback: (com.foxivid.baselib.model.meta.EPGProgramme?) -> Unit) {
         if (epgId == null) { callback(null); return }
-        TODO("depende de t.v.c.i.a.G(epgId, tempo) = EpgManager (programa no ar) — corrotina s0\$b")
+        // corrotina `ModelHelper$getChannelProgramName$1` (s0.b): `InteractionUtils.G(epgId, tempo)` = EpgManager.getProgrammeAt em IO; callback na main
+        CoroutineScope(Dispatchers.IO).launch {
+            val program = EpgManager.getProgrammeAt(epgId, time)
+            withContext(Dispatchers.Main) { callback(program) }
+        }
     }
 
     /**
@@ -158,8 +169,15 @@ internal object ChannelModelShims {
      * (`t.v.c.i.a.B(epgId)`, lista de strings de dia) e conta quantas vêm antes do dia de hoje
      * (`x1.f1.lb.util.n.n().g(2)`); devolve a contagem ao callback.
      */
-    fun getEpgPastDays(epgId: String?, callback: (Int) -> Unit): Unit =
-        TODO("depende de t.v.c.i.a.B(epgId) (lista de dias da EPG) — corrotina s0\$e")
+    fun getEpgPastDays(epgId: String?, callback: (Int) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {      // corrotina `ModelHelper$getEpgPastDays$1` (s0.e)
+            val dates = EpgManager.getDateList(epgId)                       // InteractionUtils.B(epgId)
+            val today = LegacyTvUtils.getInstance().formatNow(2)             // util/n.n().g(2)
+            var pastDays = 0
+            for (d in dates) { if (d == today) break; pastDays++ }
+            withContext(Dispatchers.Main) { callback(pastDays) }
+        }
+    }
 
     /** Original: `s0.J(programa, channelId)` — `SubscribeBean` do programa se ele já estiver agendado, senão null. */
     fun getSubscribeBean(program: com.live.evo.model.ProgramBean, channelId: String?): com.live.evo.model.SubscribeBean? {
@@ -168,7 +186,7 @@ internal object ChannelModelShims {
     }
 
     /** Original: `s0.Y(s0, SubscribeBean, null)` = `s0.X(bean, null)` = `ModelHelper.updateSubscribe` (cancela o lembrete). */
-    fun updateSubscribe(bean: com.live.evo.model.SubscribeBean): Unit = TODO("corrotina s0.updateSubscribe — ver ModelHelper.subscribeProgram()")
+    fun updateSubscribe(bean: com.live.evo.model.SubscribeBean) { ModelHelper.updateSubscribeList(bean, null) }
 
     /** Original: `o0.p().o()` — caminho do arquivo da imagem de favorito (skin `key_load_favorite_img`), ou vazio. */
     fun favoriteImagePath(): String? = null
@@ -227,24 +245,25 @@ internal object ChannelSubscribeShims {
      * lembrete do programa (`ModelHelper.W(...)`, que atualiza o banco e chama o [listener] com o `SubscribeBean`).
      */
     fun subscribe(channelName: String?, icon: String?, inAllPos: Int, program: com.live.evo.model.ProgramBean,
-                  channelId: String?, listener: com.live.evo.osd.OnUpdateListener): Unit =
-        TODO("osd/u.s -> s0.W(...): ainda não reconstruído (SubscribeManager)")
+                  channelId: String?, listener: com.live.evo.osd.OnUpdateListener) {
+        SubscribeManager.subscribe(channelName, icon, inAllPos, program, channelId, "channel", listener, null)
+    }
 
     /**
      * Original: `u.o(novo, antigo, listener)` — mostra o `SubscribeSwitchDialog` ("trocar lembrete") se ainda não
      * estiver visível e a activity estiver viva (`com.live.evo.util.b.b(activity)`).
      */
     fun showSwitchDialog(newProgram: com.live.evo.model.ProgramBean, oldBean: com.live.evo.model.SubscribeBean,
-                         listener: com.live.evo.dialog.SubscribeSwitchDialog.Listener): Unit =
-        TODO("osd/u.o: ainda não reconstruído (SubscribeManager)")
+                         listener: com.live.evo.dialog.SubscribeSwitchDialog.Listener) {
+        SubscribeManager.showSwitchDialog(newProgram, oldBean, listener)
+    }
 }
 
 /**
  * Original: `y1.a(int)` (implementado em `l1.f`): leva o foco para a barra de abas do menu (`MenuTabLayout`).
  * A interface `OnTabEventListener` reconstruída ainda não declara seus métodos (`a(int)`, `b()`, `c()`).
  */
-internal fun com.live.evo.fragment.OnTabEventListener.focusTabs(position: Int): Unit =
-    TODO("y1.a(int) — declarar em OnTabEventListener e implementar em MenuParent (l1.f.a: tabLayout.requestFocus())")
+internal fun com.live.evo.fragment.OnTabEventListener.focusTabs(position: Int) = a(position)   // y1.a(int): no menu (l1.f.a) faz tabLayout.requestFocus()
 
 /**
  * Estratégia de tecla numérica (zapping por número). Interface com um método `a(keyCode, event)`.

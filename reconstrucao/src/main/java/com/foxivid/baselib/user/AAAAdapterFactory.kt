@@ -87,7 +87,7 @@ object AAAAdapterFactory {
         override fun describe(): String =
             "l[$isLogin], r[$isRefreshAccessToken], f[$from], u[$username], p[" +
                 (if (password.isNullOrEmpty()) "null" else "*") + "], c[" +
-                TODO("util/l.a(code): mascara o código (oculta o 2º quarto)") + "]"
+                com.foxivid.baselib.util.MaskUtils.mask(loginByCode) + "]"
 
         override suspend fun convert(errCode: Int, errMsg: String?, data: X?): AuthResult? {
             if (data == null) {

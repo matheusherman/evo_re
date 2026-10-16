@@ -4,7 +4,14 @@ import com.foxivid.baselib.bot.TelegramBot
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.network.HeaderInterceptor
 import com.foxivid.baselib.streaming.engine.DeviceType
+import com.foxivid.baselib.event.StreamingEvent
+import com.foxivid.baselib.event.StreamingNoticeEvent
+import com.foxivid.baselib.metric.MetricReporter
+import com.foxivid.baselib.metric.model.StreamEndStabilityMetric
+import com.foxivid.baselib.streaming.engine.EngineException
 import com.foxivid.baselib.streaming.engine.EngineListener
+import com.foxivid.baselib.streaming.engine.StreamEngineFactory
+import org.greenrobot.eventbus.EventBus
 import com.foxivid.baselib.streaming.engine.EngineOptions
 import com.foxivid.baselib.streaming.engine.MediaType
 import com.foxivid.baselib.streaming.engine.PlayType
@@ -97,7 +104,7 @@ class EngineService(private val metricListener: MetricListener) {
             botStreamingEvent(mediaId, code)
         }
         override fun onNotice(code: Int, msg: String) {
-            // Original: EventBus.postSticky(nf.t(session, player, code, msg))
+            EventBus.getDefault().postSticky(StreamingNoticeEvent(playSession, player, code, msg))   // xe.c.c().o(new nf.t(...))
             if (BaseLibConfig.isDebug) logger.info("[Listener]On notice [{}][{}]", code, msg)
         }
         override fun onTrackerTimeout() {
@@ -130,8 +137,44 @@ class EngineService(private val metricListener: MetricListener) {
                 for ((k, v) in map) sb.append(k).append(": ").append(now - v).append(" back to normal").append("\n")
                 TelegramBot.sendSysInfo(sb.toString()) // Original: bot.a.m(...)
             }
-            // TODO: agregação estatística detalhada em vf.d (min/max/média/distribuições) e
-            //  metricListener.n(...) — classe de métrica de outro módulo; omitida aqui.
+            // Agregação da sessão (vf.d = StreamEndStabilityMetric): min/max/média incremental e distribuições por faixa.
+            var stat = sessionStat
+            if (stat == null) {
+                stat = StreamEndStabilityMetric().also {
+                    it.route = routeId; it.streamId = mediaId; it.loginSession = UserManager.getLoginSession(); it.session = playSession
+                    it.playType = playType.name; it.mediaPlayMode = mediaMode
+                }
+                sessionBytes = 0L
+                sessionMillis = 0L
+                sessionStat = stat
+            }
+            sessionBytes += blockSize.toLong()
+            sessionMillis += costMillis
+            val n = ++stat.blockCnt
+            if (stat.minBlockSize > blockSize) stat.minBlockSize = blockSize else if (stat.maxBlockSize < blockSize) stat.maxBlockSize = blockSize
+            stat.avgBlockSize += (blockSize - stat.avgBlockSize) / n
+            val sizeUnit = Math.pow(10.0, Math.log10(blockSize.toDouble()).toInt().toDouble()).toInt()
+            increment(stat.sizeDistributionMap, if (sizeUnit <= 0) 0 else (blockSize / sizeUnit) * sizeUnit)
+            if (stat.minTime > costMillis) stat.minTime = costMillis else if (stat.maxTime < costMillis) stat.maxTime = costMillis
+            stat.avgTime += (costMillis - stat.avgTime) / n
+            val timeUnit = Math.pow(10.0, Math.log10(costMillis.toDouble()).toInt().toDouble()).toLong()
+            increment(stat.timeDistribution, if (timeUnit <= 0L) 0L else timeUnit * (costMillis / timeUnit))
+            if (stat.minResendCnt > resendCount) stat.minResendCnt = resendCount else if (stat.maxResendCnt < resendCount) stat.maxResendCnt = resendCount
+            stat.avgResendCnt += (resendCount - stat.avgResendCnt) / n
+            increment(stat.resendCntDistributionMap, resendCount)
+            if (stat.minResendRate > resendRate) stat.minResendRate = resendRate else if (stat.maxResendRate < resendRate) stat.maxResendRate = resendRate
+            stat.avgResendRate += (resendRate - stat.avgResendRate) / n
+            increment(stat.resendRateDistributionMap, if (resendRate < 10) resendRate else (resendRate / 10) * 10)
+            if (stat.minAvgLossRate > avgLossRate) stat.minAvgLossRate = avgLossRate else if (stat.maxAvgLossRate < avgLossRate) stat.maxAvgLossRate = avgLossRate
+            stat.avgAvgLossRate += (avgLossRate - stat.avgAvgLossRate) / n
+            increment(stat.avgLossRateDistributionMap, if (avgLossRate < 10) avgLossRate else (avgLossRate / 10) * 10)
+            val speedBps = if (sessionMillis > 0L) (sessionBytes * 8000) / sessionMillis else 0L   // bits/s acumulado da sessão
+            val rttInt = rtt.toInt()
+            if (stat.minRTT > rtt) stat.minRTT = rttInt else if (stat.maxRTT < rtt) stat.maxRTT = rttInt
+            stat.avgRTT += (rtt - stat.avgRTT) / n
+            metricListener.n(blockSize.toLong(), resendCount.toLong(), resendRate, costMillis, avgLossRate, speedBps, rttInt, stat.minRTT, stat.maxRTT, stat.avgRTT.toInt())
+            if (BaseLibConfig.isDebug) logger.debug("onBlockMetric mediaId[{}], blockId[{}], blockSize[{}], resendCount[{}], resendRate[{}], avgLossRate[{}], avgSpeed[{}]",
+                mediaId, blockId, blockSize, resendCount, resendRate, avgLossRate, speedBps)
         }
     }
 
@@ -172,7 +215,8 @@ class EngineService(private val metricListener: MetricListener) {
 
     /** Original: EventBus.post(new nf.v(mediaId, session, player, code, msg)) — evento de outro módulo. */
     private fun postStreamingEvent(mediaId: String, code: Int, msg: String, sticky: Boolean = false) {
-        // TODO("nf.v / xe.c (EventBus) — classes de evento do app")
+        val event = StreamingEvent(mediaId, playSession, player, code, msg)
+        if (sticky) EventBus.getDefault().postSticky(event) else EventBus.getDefault().post(event)   // xe.c.c().o(...) / .l(...)
     }
 
     /**
@@ -194,7 +238,10 @@ class EngineService(private val metricListener: MetricListener) {
             applyConfig()
         }
         this.uid = uid ?: ""
-        val e: StreamEngine = TODO("new x6.c(uid, did, token, tenantId, peerId, DeviceType.of(deviceType), type, options, listener) — motor proprietário não reconstruído")
+        // NÃO RECUPERÁVEL: `new x6.c(uid, did, token, tenantId, peerId, DeviceType.of(deviceType), type, options, listener)` instancia o motor P2P
+        // proprietário (pacotes x6/y6/c7/e7/g7/h7/a7, ~3,7 mil linhas) que não faz parte do SDK x1/f1/lb e não foi reconstruído.
+        // Comportamento aproximado: a fábrica [StreamEngineFactory] falha com UnsupportedOperationException (sem motor não há streaming).
+        val e: StreamEngine = StreamEngineFactory.create(uid ?: "", did, token, tenantId, peerId, DeviceType.of(deviceType), type, options!!, listener)
         e.startTracker(trackers)
         playType = type
         if (BaseLibConfig.isDebug) logger.debug("start_engin_with [{}, {}, {}, {}, {}, {}, {}]", uid, did, playSession, deviceType, type, mediaId, token)
@@ -282,9 +329,18 @@ class EngineService(private val metricListener: MetricListener) {
             return data
         } catch (t: Throwable) {
             if (!e.isPrConnected()) return null
-            val closed = lastStopSession >= session
-            // TODO: se t é b7.a (exceção do motor) com code 2001 ou 1001 ⇒ warn e null
-            val msg = (t.localizedMessage ?: t.message ?: "get data failure,") + " [$session/${if (closed) "closed" else "active"}] [$mediaId/$name]"
+            val state = if (lastStopSession >= session) "closed" else "active"
+            var msg = ""
+            if (t is EngineException) {   // b7.a: exceção do motor (código + mensagem)
+                msg = String.format(Locale.ENGLISH, "get data failure, [%d/%s] [%s/%s], %d:%s", session, state, mediaId, name, t.code, t.msg)
+                if (t.code == 2001 || t.code == 1001) { logger.warn(msg); return null }
+            }
+            if (msg.isEmpty()) {
+                var localized = t.localizedMessage
+                if (localized.isNullOrEmpty()) localized = t.message
+                if (localized.isNullOrEmpty()) localized = "get data failure,"
+                msg = String.format(Locale.ENGLISH, "%s [%d/%s] [%s/%s]", localized, session, state, mediaId, name)
+            }
             logger.error("get data failure", t)
             throw RuntimeException(msg, t)
         }
@@ -293,7 +349,8 @@ class EngineService(private val metricListener: MetricListener) {
     /** Original: b.I() — aplica ts_push_mode e maxDownloadingBlockCnt vindos do heartbeat. */
     private fun applyConfig() {
         val opt = options ?: return
-        (BaseLibConfig.tsPushMode as? com.foxivid.baselib.streaming.engine.PushMode)?.let {
+        BaseLibConfig.tsPushMode?.let { mode ->
+            val it = com.foxivid.baselib.streaming.engine.PushMode.of(mode.value) ?: return@let   // v6.d -> mesmo valor numérico
             if (it != opt.pushMode) { logger.info("set push mode [{} -> {}]", opt.pushMode, it); opt.pushMode = it }
         }
         BaseLibConfig.maxDownloadingBlockCnt?.let {
@@ -302,7 +359,22 @@ class EngineService(private val metricListener: MetricListener) {
     }
 
     /** Original: b.H() — envia a métrica de sessão acumulada (vf.d → uf.c.q). */
-    private fun flushMetric() { /* TODO métrica de outro módulo */ }
+    private fun flushMetric() {
+        val stat = sessionStat ?: return
+        sessionStat = null
+        MetricReporter.reportStreamEndStability(stat)   // uf.c.q(vf.d)
+    }
+
+    // Acumuladores da sessão corrente (campos f21023c/f21034n/f21035o do original)
+    private var sessionStat: StreamEndStabilityMetric? = null
+    private var sessionMillis = 0L
+    private var sessionBytes = 0L
+
+    /** Incrementa o contador da faixa [key] (cria com 1). Original: b.y(Map, K) */
+    private fun <K> increment(map: MutableMap<K, java.util.concurrent.atomic.AtomicInteger>, key: K) {
+        val c = map[key]
+        if (c == null) map[key] = java.util.concurrent.atomic.AtomicInteger(1) else c.incrementAndGet()
+    }
 
     /** Original: b.C(String) — "isConnected": motor existe, tracker pronto e tipo igual. */
     fun isConnected(type: String): Boolean {

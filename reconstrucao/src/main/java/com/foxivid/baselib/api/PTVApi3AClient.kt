@@ -254,7 +254,8 @@ object SportsApiClient {
 /** Pontes para util/u0 (strings de recurso com fallback) e util/d1.b (formatar duração). */
 internal object ResRef {
     /** Original: u0.a(R.string.<name>, dft). */
-    fun string(resName: String, dft: String): String = TODO("outro módulo: util/u0.a(R.string.$resName, \"$dft\")")
+    fun string(resName: String, dft: String): String = com.foxivid.baselib.util.ResStrings.get(
+        (com.foxivid.baselib.config.BaseLibConfig.appContext)?.let { it.resources.getIdentifier(resName, "string", it.packageName) } ?: 0, dft)   // util/u0.a(R.string.x, dft)
     /** Original: d1.b(ms, null). */
-    fun duration(ms: Long): String = TODO("outro módulo: util/d1.b(ms, null)")
+    fun duration(ms: Long): String = com.foxivid.baselib.util.ServerTime.formatDuration(ms, null)
 }

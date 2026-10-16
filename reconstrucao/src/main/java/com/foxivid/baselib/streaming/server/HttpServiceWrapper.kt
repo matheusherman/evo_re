@@ -3,6 +3,11 @@ package com.foxivid.baselib.streaming.server
 import android.util.LruCache
 import com.foxivid.baselib.api.ApiStreamMetaClient
 import com.foxivid.baselib.config.BaseLibConfig
+import com.foxivid.baselib.event.StreamingEvent
+import com.foxivid.baselib.metric.monitor.StreamingMonitor
+import com.foxivid.baselib.util.DownloadUtils
+import com.foxivid.baselib.util.StartStatUtil
+import com.skydoves.sandwich.getOrThrow
 import com.foxivid.baselib.network.HeaderInterceptor
 import com.foxivid.baselib.model.meta.CatchupPlayRequest
 import com.foxivid.baselib.model.meta.CatchupPlayResponse
@@ -85,7 +90,11 @@ class HttpServiceWrapper {
     fun attach(server: LocalHttpServer) {
         httpServer = server
         if (clientEngineService == null) {
-            clientEngineService = EngineService(TODO("x1.f1.lb.metric.monitor.g.f20917a — monitor de métricas (outro módulo)"))
+            clientEngineService = EngineService(object : EngineService.MetricListener {   // StreamingMonitor (g) implementa b$c
+                override fun n(bytes: Long, resendCount: Long, resendRate: Int, costMillis: Long, avgLossRate: Int, avgSpeedBps: Long,
+                               rtt: Int, minRtt: Int, maxRtt: Int, avgRtt: Int) =
+                    StreamingMonitor.onBlockNetStats(bytes, resendCount, resendRate, costMillis, avgLossRate, avgSpeedBps, rtt, minRtt, maxRtt, avgRtt)
+            })
         } else {
             logger.info("local client engine service already started")
         }
@@ -175,7 +184,7 @@ class HttpServiceWrapper {
             playSession.set(session)
             playListRequestCnt = 0; playBlockResponseCnt = 0
             blockDurations = HashMap(); blockCacheHitMap = HashMap()
-            // Original: x1.f1.lb.metric.monitor.g.y(session) — TODO métricas (outro módulo)
+            StreamingMonitor.registerSession(session)   // x1.f1.lb.metric.monitor.g.y(session)
             return true
         } catch (t: Throwable) {
             throw RuntimeException("${t.localizedMessage ?: t.message} [$mediaId, $mediaMode]", t)
@@ -299,8 +308,8 @@ class HttpServiceWrapper {
         val map = StreamingKeys.parseParams(cb.param(params, StreamingKeys.paramsKey))
         val mediaId = map["mediaId"] ?: ""
         val mediaMode = map["mediaMode"]?.toByte() ?: 2
-        playListRequestCnt++
-        // Original: na 1ª requisição registra "<mediaId>.receive_player_request" (x1.f1.lb.util.a1) — TODO métricas
+        // 1ª requisição de playlist da sessão: registra a etapa "<mediaId>.receive_player_request" (x1.f1.lb.util.a1.h)
+        if (playListRequestCnt++ == 0) StartStatUtil.addStep(session, "$mediaId.receive_player_request")
         try {
             val index = clientEngineService?.getData(session, mediaId, "playlist.m3u8")
             val lines = splitLines(index)
@@ -455,7 +464,7 @@ class HttpServiceWrapper {
         val net = ApiStreamMetaClient.getPlayUrl(h.tenantId().toString(), h.appId().toString(), h.appVersion(), "",
             h.deviceId(), h.language(), 1, 2000, System.currentTimeMillis(), h.streamToken(), h.accountId(), request)
         // Original: com.skydoves.sandwich.b.b(...) — extrai o corpo (n6.b) mesmo em erro
-        val rsp: com.foxivid.baselib.model.common.ApiResult<CatchupPlayResponse> = TODO("unwrap sandwich ApiResponse: $net")
+        val rsp: com.foxivid.baselib.model.common.ApiResult<CatchupPlayResponse> = net.getOrThrow()   // com.skydoves.sandwich.b.b(...) = getOrThrow (lança se falha de rede/HTTP)
         val cost = System.currentTimeMillis() - start
         val data = rsp.data
         if (data != null) {
@@ -464,8 +473,8 @@ class HttpServiceWrapper {
         }
         if (rsp.code == "200-3") {
             val p = try { player.toInt() } catch (t: Throwable) { logger.error("invalid player id[$player]", t); 0 }
-            // Original: EventBus.post(nf.v(catchupStreamId, session, p, 1000, msg ?: "not free"))
-            TODO("evento nf.v (EventBus) de outro módulo: streaming event 1000 para $p")
+            // Original: EventBus.post(nf.v(catchupStreamId, session, p, 1000, msg ?: "not free"))  [xe.c.c().o(...) = postSticky]
+            org.greenrobot.eventbus.EventBus.getDefault().postSticky(StreamingEvent(request.catchupStreamId, session, p, 1000, rsp.msg ?: "not free"))
         }
         logger.error("$from failure [$session][${request.streamId}][${request.catchupStreamId}][${request.startTimestamp}][${request.endTimestamp}][$cost ms]: [${rsp.code}][${rsp.msg}]")
         return null
@@ -624,6 +633,7 @@ class HttpServiceWrapper {
  * Declarado aqui apenas como ponto de referência.
  */
 internal object HttpDownloader {
-    fun get(url: String, onSuccess: (InputStream?) -> Unit, onFailure: (Throwable) -> Unit): Unit =
-        TODO("x1.f1.lb.util.b0.f — pertence ao módulo util")
+    /** Delegação a [DownloadUtils.get] (util/b0.f): GET HTTP; 200 → [onSuccess] com o corpo; falha → [onFailure] (ou [onSuccess](null) + log). */
+    fun get(url: String, onSuccess: (InputStream?) -> Unit, onFailure: (Throwable) -> Unit) =
+        DownloadUtils.download(url, com.foxivid.baselib.util.Callback { onSuccess(it) }, com.foxivid.baselib.util.Callback { onFailure(it) })
 }

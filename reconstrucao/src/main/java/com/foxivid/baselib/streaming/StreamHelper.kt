@@ -1,5 +1,11 @@
 package com.foxivid.baselib.streaming
 
+import com.foxivid.baselib.metric.model.PlayerZappingStat
+import com.foxivid.baselib.metric.monitor.ZappingMonitor
+import com.foxivid.baselib.util.ServerTime
+import com.foxivid.baselib.util.StartStatUtil
+import com.foxivid.baselib.util.TextCipher
+
 import android.util.Base64
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.model.meta.ChannelStreamResponse
@@ -105,9 +111,11 @@ object StreamHelper {
             val seq = count.incrementAndGet()
             lastUrlReadyEvent = null; lastMetaId = null; lastMediaMode = null; lastRouteId = null
             val session = SessionClock.now() // Original: d1.c()
-            val zappingStat: ZappingStat = TODO("x1.f1.lb.metric.monitor.h.a(playType, videoName, mediaId, routeId, session, mediaMode) — métrica (outro módulo)")
+            // h.a(playType, videoName, mediaId, routeId, session, mediaMode): abre a métrica de zapping (fecha/relata a anterior)
+            val zappingStat: ZappingStat = ZappingStatAdapter(
+                ZappingMonitor.startZapping(playType, videoName ?: "", mediaId ?: "", routeId ?: "", session, mediaMode))
             zappingStat.setStart(SessionClock.now())
-            // Original: a1.h(session, "<mediaId>.create_session") — rastreio de zapping (util)
+            StartStatUtil.addStep(session, "$mediaId.create_session")   // Original: a1.h(session, "<mediaId>.create_session")
 
             val playFlow: Flow<PlayUrlReadyEvent> =
                 // Nota: o jadx mostra `if (m.a(lastUid, uid) || type != lastPlayType)` mas as duas ramificações
@@ -258,12 +266,20 @@ object StreamHelper {
 
 /** Original: x1.f1.lb.util.a (chamado com isRandomKey = true) — outro módulo (util). */
 internal object ParamCipher {
-    fun encrypt(s: String): String = TODO("util.a.c(text, randomKey): AES/ECB/ZeroBytePadding (util.o0)")
-    fun decrypt(s: String): String = TODO("util.a.a(text, randomKey)")
+    fun encrypt(s: String): String = TextCipher.encrypt(s, true)   // util.a.c(text, randomKey): AES/ECB/ZeroBytePadding
+    fun decrypt(s: String): String = TextCipher.decrypt(s, true)   // util.a.a(text, randomKey)
 }
 
 /** Original: x1.f1.lb.util.d1.c() — relógio de sessão da lib (outro módulo). */
-internal object SessionClock { fun now(): Long = TODO("x1.f1.lb.util.d1.c()") }
+internal object SessionClock { fun now(): Long = ServerTime.elapsedNow() }   // d1.c(): início do processo + tempo decorrido
+
+/** Adaptador de [PlayerZappingStat] (tf.d): `setStart` = start, `markEngineStart` = startEnginePlay (e0), `markUrlReady` = playUrlReadyFromEngine (X), falha = (errorType, errorCode, error). */
+private class ZappingStatAdapter(private val s: PlayerZappingStat) : ZappingStat {
+    override fun setStart(t: Long) { s.start = t }
+    override fun markEngineStart(t: Long) { s.startEnginePlay = t }
+    override fun markUrlReady(t: Long) { s.playUrlReadyFromEngine = t }
+    override fun setFailure(stage: Int, code: Int, msg: String) { s.errorType = stage; s.errorCode = code; s.error = msg }
+}
 
 /** Original: tf.d — estatística de zapping (módulo metric). Só os métodos usados aqui. */
 interface ZappingStat {

@@ -108,3 +108,18 @@ interface StreamEngine {
     /** Original: c.t() */
     fun onPlayerRestart()
 }
+
+/** Exceção do motor com código de erro e mensagem (2001/1001 = erros "esperados" ao ler dados). Original: b7/a.java */
+class EngineException(val code: Int, val msg: String?) : Exception(msg)
+
+/**
+ * Fábrica do motor de streaming (equivale a `new x6.c(uid, did, token, tenantId, peerId, deviceType, playType, options, listener)`).
+ * NÃO RECUPERÁVEL neste projeto: x6.c e seus componentes (x6/y6/c7/e7/g7/h7 — cliente de tracker, cliente PR, cache de blocos
+ * em disco, protocolo UDP/P2P) formam um motor proprietário que não foi reconstruído. Em lugar de um stub silencioso, a fábrica falha
+ * explicitamente.
+ */
+object StreamEngineFactory {
+    fun create(uid: String, did: String?, token: String?, tenantId: String?, peerId: String, deviceType: DeviceType?, playType: PlayType,
+               options: EngineOptions, listener: EngineListener): StreamEngine =
+        throw UnsupportedOperationException("motor de streaming proprietário (x6.c) não reconstruído — ver docs/pendencias_finais.md")
+}

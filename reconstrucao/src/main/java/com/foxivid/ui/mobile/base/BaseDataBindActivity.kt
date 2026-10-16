@@ -14,6 +14,9 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.foxivid.baselib.config.InteractionUtils
+import com.foxivid.baselib.heartbeat.HeartbeatManager
+import com.foxivid.baselib.heartbeat.UpgradeFailureEvent
 import com.foxivid.baselib.heartbeat.UpgradeReadyEvent
 import com.foxivid.baselib.model.extra.upgrade.UpgradeInfo
 import com.foxivid.baselib.util.FirebaseEvents
@@ -111,18 +114,25 @@ abstract class BaseDataBindActivity<DB : ViewDataBinding> : AppCompatActivity(),
      * mostra a versão, progresso, e quando há apk posta [UpgradeReadyEvent]; erros viram toast.
      * Original: l(p onProgress) — corrotina BaseDataBindActivity$checkUpgrade$1
      */
-    fun checkUpgrade(onProgress: ((Int?, Any? /* a0: ApiError com errMsg */) -> Unit)? = null) {
+    fun checkUpgrade(onProgress: ((Int?, UpgradeFailureEvent?) -> Unit)? = null) {
         if (isInChecking.compareAndSet(false, true)) {
             CoroutineScope(Dispatchers.Default).launch {
-                // t.v.c.i.a.c(lifecycle, callback) -> Flow<UpgradeInfo?> (classe fora deste módulo)
-                TODO("InteractionUtils.checkUpgradeFlow(lifecycle, (version, progress, apkPath, error) -> ...)")
+                InteractionUtils.checkUpgradeFlow(lifecycle) { version, progress, apkPath, error ->
+                    // o callback do SDK é repassado ao thread principal (BaseDataBindActivity$b.f -> g)
+                    handler.post { onUpgradeProgress(version, onProgress, progress, error, apkPath, error?.message) }
+                }
+                    .catch { th ->
+                        withContext(Dispatchers.Main) { ToastUtils.showShort(getString(R.string.request_failure) + ":" + th.message) }
+                        logger.error("check upgrade failure", th)
+                    }
+                    .collect { onUpgradeInfo(it, onProgress) }
             }
         }
     }
 
     /** Callback de progresso postado no Main. Original: BaseDataBindActivity$b.g(...) */
     private fun onUpgradeProgress(
-        version: String?, onProgress: ((Int?, Any?) -> Unit)?, progress: Int?, error: Any?, apkPath: String?, errMsg: String?
+        version: String?, onProgress: ((Int?, UpgradeFailureEvent?) -> Unit)?, progress: Int?, error: UpgradeFailureEvent?, apkPath: String?, errMsg: String?
     ) {
         if (latestNewVersion != version && !TextUtils.isEmpty(version)) {
             latestNewVersion = version
@@ -138,7 +148,7 @@ abstract class BaseDataBindActivity<DB : ViewDataBinding> : AppCompatActivity(),
     }
 
     /** Emissão do flow: guarda UpgradeInfo, libera o lock e avisa se não há update. Original: BaseDataBindActivity$b$b.emit */
-    private fun onUpgradeInfo(info: UpgradeInfo?, onProgress: ((Int?, Any?) -> Unit)?) {
+    private fun onUpgradeInfo(info: UpgradeInfo?, onProgress: ((Int?, UpgradeFailureEvent?) -> Unit)?) {
         upgradeInfo = info
         isInChecking.set(false)
         if ((info?.upgradeStatus ?: 0) == 0) {
@@ -158,8 +168,8 @@ abstract class BaseDataBindActivity<DB : ViewDataBinding> : AppCompatActivity(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 100 && resultCode == -1) {
-            // x1/f1/lb/heartbeat/f.G0() — reinicia o heartbeat após retorno bem-sucedido
-            TODO("HeartbeatManager.G0() (x1/f1/lb/heartbeat/f) — outro módulo")
+            // x1/f1/lb/heartbeat/f.G0() — executa a ação pendente registrada (ex.: retomar instalação do APK)
+            HeartbeatManager.runPendingActivityAction()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

@@ -109,10 +109,12 @@ object CommonUtils {
     fun setFreeTrialMode(freeTrial: Boolean) = applyBranding(freeTrial)
 
     /**
-     * Troca ícone/nome do app para o modo "free trial" (a.f5198r/f5199s do AppConfig). Original: a(boolean)
+     * Troca ícone/nome do app para o modo "free trial" (a.f5198r/f5199s, aqui [AppConstants.launcherIcon]/[AppConstants.appNameRes]). Original: a(boolean)
      */
     fun applyBranding(freeTrial: Boolean) {
-        // Original: se freeTrial: nome = R.string.freetrial_app_name; senão id literal 2131951743; ícone sempre ic_launcher.
-        TODO("nativo/não decompilado: escreve nos campos estáticos a.f5198r/f5199s (ícone/nome) — AppConfig não expõe esses campos")
+        // Original (x1.a): ícone sempre R.mipmap.ic_launcher; nome = freetrial_app_name se freeTrial, senão o id literal 2131951743
+        // (0x7f1300ff = R.string.chat_qr_tip no APK recuperado; o valor literal é mantido tal como no original).
+        AppConstants.launcherIcon = R.mipmap.ic_launcher
+        AppConstants.appNameRes = if (freeTrial) R.string.freetrial_app_name else 2131951743
     }
 }

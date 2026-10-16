@@ -21,7 +21,10 @@ class AppLifecycleObserver : DefaultLifecycleObserver {
 
     override fun onStop(owner: LifecycleOwner) {
         logger.debug("AppLifecycle on onStop")
-        // InteractionUtils = t/v/c/i/a (módulo baselib.config)
-        TODO("InteractionUtils.e0()/I0() (t/v/c/i/a) — fora deste módulo; ao ser true: I0() e EventBus.postSticky(ResultEvent(true, \"\", \"enter family\"))")
+        // InteractionUtils = t/v/c/i/a (módulo baselib.config): e0() = modo adulto ativo; I0() = desliga o modo adulto
+        if (InteractionUtils.e0()) {
+            InteractionUtils.I0()
+            EventBus.getDefault().postSticky(com.foxivid.baselib.media.ChannelListEvent(true, "", "enter family"))   // nf/d
+        }
     }
 }

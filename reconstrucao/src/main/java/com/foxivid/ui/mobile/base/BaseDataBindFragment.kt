@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.foxivid.baselib.util.LocaleManager
 import com.foxivid.ui.mobile.R
+import com.foxivid.ui.mobile.widget.sloading.SLoadingDialog
+import com.foxivid.ui.mobile.widget.sloading.SLoadingType
 
 /**
  * Fragment com DataBinding: infla [layoutId], guarda a activity e o binding e cria um diálogo de
@@ -74,7 +76,7 @@ abstract class BaseDataBindFragment<DB : ViewDataBinding> : Fragment() {
 }
 
 /**
- * Referência a `y7.a` (diálogo de loading): `d()` = dismiss, `h()` = show. Fora deste módulo.
+ * Diálogo de loading (`y7.a`): `d()` = dismiss, `h()` = show; implementado por [SLoadingDialog].
  * Original: y7/a.java
  */
 interface LoadingViewDialog {
@@ -83,6 +85,9 @@ interface LoadingViewDialog {
 
     companion object {
         fun create(activity: FragmentActivity, color: Int): LoadingViewDialog =
-            TODO("fábrica j.l(activity, color) (classe j, fora deste módulo)")
+            SLoadingDialog(activity).apply {                       // Original: z7.j.l(context, colorFocused)
+                setType(SLoadingType.TRANSLATE_CIRCLE)
+                setColor(androidx.core.content.ContextCompat.getColor(activity, color))
+            }
     }
 }

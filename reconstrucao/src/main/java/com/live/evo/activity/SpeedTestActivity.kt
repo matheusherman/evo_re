@@ -45,7 +45,11 @@ class SpeedTestActivity : AppCompatActivity(), SpeedTestManager.Listener {
     /** Inferência: `native`; provavelmente setContentView + [readLocale] (n) + [findViews] (s) + [initListeners] (o). */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TODO("nativo/não decompilado: SpeedTestActivity.onCreate")
+        // INFERIDO (onCreate nativo)
+        setContentView(R.layout.activity_speed_test)
+        readLocale()
+        findViews()
+        initListeners()
     }
 
     /** Original: n() */

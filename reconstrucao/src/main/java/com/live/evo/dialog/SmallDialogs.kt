@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.live.evo.R
+import com.live.evo.util.NoticeActionHandler
 import com.live.evo.util.TextStyleUtils
 import com.live.evo.widget.BaseButton
 import com.live.evo.widget.BaseDialog
@@ -49,10 +50,19 @@ class NoticeAlertDialog(private val context: Context) {
     private val directButton: BaseButton = view.findViewById(R.id.noticealertdlg_btn_direct)
     private val textLayout: LinearLayout = view.findViewById(R.id.noticealertdlg_tv_layout)
     private val icon: ImageView = view.findViewById(R.id.noticealertdlg_iv)
-    init { dialog.setContentView(view); TextStyleUtils.c(title) }
+    init {
+        dialog.setContentView(view)
+        TextStyleUtils.c(title)
+        TextStyleUtils.d(okButton)
+        // Original: d() — OK fecha; "direct" chama NoticeActionHandler.d(activity, null) (corpo vazio no APK) e fecha
+        okButton.setOnClickListener { if (dialog.isShowing) dialog.dismiss() }
+        directButton.setOnClickListener {
+            if (context is android.app.Activity) NoticeActionHandler.onNotice(context, null)
+            if (dialog.isShowing) dialog.dismiss()
+        }
+    }
     /** Original: c() — fecha. */ fun dismiss() { dialog.dismiss() }
     /** Original: f() */ fun isShowing() = dialog.isShowing
-    // TODO("parcial: g(View)/h(View) — cliques OK/direct usam NoticeActionHandler; ver dialog/q.java")
 }
 
 /**

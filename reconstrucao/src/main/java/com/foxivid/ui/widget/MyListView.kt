@@ -54,7 +54,7 @@ open class MyListView : ListView {
                 y = if (selectionDirection != 20) 0 else height - h
             }
             try {
-                if (BaseLibConfig.isDebug) logger.debug("my_list_view[{}][{}][{}][{}][{}]", height, visible, child?.height ?: 0, h, y) // TODO: args exatos truncados
+                if (BaseLibConfig.isDebug) logger.debug("my_list_view[{}][{}][{}][{}][{}]", height, visible, child?.height ?: 0, if (visible > 0) height / visible else 0, y)
             } catch (_: Exception) {}
         } catch (_: Exception) {
             y = 0

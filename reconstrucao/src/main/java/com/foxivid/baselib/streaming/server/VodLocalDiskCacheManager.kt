@@ -88,8 +88,8 @@ object VodLocalDiskCacheManager : BlockCache {
      * Cálculo: alocação = esperado − histórico; se o livre < alocação ⇒ (livre > 1 GiB ? livre − 1 GiB : 0).
      */
     fun init(cacheDirectory: String, fullDataDirectory: String, appVersion: Int, maxSize: Long, fullDataMaxSize: Long) {
-        val free: Long = TODO("b1.f21324a.j() — espaço livre (util)")
-        val total: Long = TODO("b1.f21324a.l() — espaço total (util)")
+        val free: Long = com.foxivid.baselib.util.AppPaths.freeStorage()
+        val total: Long = com.foxivid.baselib.util.AppPaths.totalStorage()
         Preferences.getLong("sp_quick_start_cache_size", 0L) { history ->
             var alloc = maxSize - history
             if (free < alloc) alloc = if (free > 1073741824L) free - 1073741824L else 0L

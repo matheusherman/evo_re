@@ -61,6 +61,17 @@ class AppUserManager private constructor() {
     private var handler: Handler? = null          // S
     private val qrHelper = QrBitmapHelper(this)   // r
 
+    /** Tipo de renovação da conta (-1 = indefinido). Original: campo f7043z / e() */
+    var accountRenewType = -1
+    /** Recarga por plano (true por padrão). Original: campo C / f() */
+    var isPlanRecharge = true
+    /** Campo de código de recarga permitido (true por padrão). Original: campo B / u() */
+    var isRechargeCodeAllowed = true
+    /** Recarga por plano via web/QR. Original: campo E / I() */
+    var isPlanWebRecharge = false
+    /** Pagamento habilitado no SDK. Original: v() → x1.f1.lb.config.b.f() */
+    fun isPaymentEnabled(): Boolean = BaseLibConfig.displayMemberSite   // `displayMemberSite`
+
     /** Original: runnable T → [scheduleExpiredCheck] */
     private val scheduleRunnable = Runnable { scheduleExpiredCheck() }
     /** Original: runnable U → [rescheduleExpiredGrace] */

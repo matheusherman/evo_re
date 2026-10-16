@@ -72,8 +72,8 @@ abstract class SLoadingBuilder : ValueAnimator.AnimatorUpdateListener, Animator.
 
     fun isRunning(): Boolean = animator!!.isRunning                 // m()
     fun setCallback(callback: Drawable.Callback) { this.callback = callback } // r()
-    fun setText(text: String?) { this.text = text }                // u()
-    fun setTextVisible(visible: Boolean) { textVisible = visible } // v()
+    open fun setText(text: String?) { this.text = text }           // u()
+    open fun setTextVisible(visible: Boolean) { textVisible = visible } // v()
 
     /** Original: a.w() */
     fun start() {

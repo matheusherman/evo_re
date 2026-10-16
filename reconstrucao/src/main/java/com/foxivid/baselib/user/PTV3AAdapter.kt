@@ -1,6 +1,13 @@
 package com.foxivid.baselib.user
 
 import com.foxivid.baselib.api.PTVApi3AClient
+import com.foxivid.baselib.model.extra.IApiResponse
+import com.foxivid.baselib.network.HeaderInterceptor
+import com.foxivid.baselib.util.ApiErrorUtils
+import com.foxivid.baselib.util.LegacyTvUtils
+import com.foxivid.baselib.util.SandwichErrors
+import com.foxivid.baselib.util.ServerTime
+import com.foxivid.baselib.util.StackTraceUtils
 import com.foxivid.baselib.model.feedback.FeedbackUploadResponse
 import com.foxivid.baselib.model.ptv.ApiResponse
 import com.foxivid.baselib.model.ptv.ApiResponseBasic
@@ -58,10 +65,10 @@ class PTV3AAdapter : AccountAdapter<ApiResponse<*>> {
         if (contact.startsWith(digitalCode)) contact.replace(digitalCode, "") else contact
 
     /** Original: d.t(String) — MD5 da senha (util/n.o()). */
-    private fun md5(clearPassword: String): String = TODO("util/n.n().o(clearPassword): MD5 hex")
+    private fun md5(clearPassword: String): String = LegacyTvUtils.getInstance().md5Hex(clearPassword) ?: ""   // util/n.n().o(str)
 
     /** Original: util/q.b(3) — "Classe.metodo()@linha:arquivo" do chamador, usado nas mensagens ao bot. */
-    private fun callerName(): String = TODO("util/q.b(3): nome do chamador via stack trace")
+    private fun callerName(): String = StackTraceUtils.callerName(3)   // util/q.b(3)
 
     /**
      * Converte resposta "básica" (sem payload).
@@ -95,12 +102,12 @@ class PTV3AAdapter : AccountAdapter<ApiResponse<*>> {
         if (response == null) {
             return flowOf(AAAAdapterFactory.reportIfFailure(caller, Triple(false, -1, "response is null")))
         }
-        val clientRequestTimestamp: Long = TODO("util/d1.c(): relógio monotônico (ms)")
+        val clientRequestTimestamp: Long = ServerTime.elapsedNow()   // util/d1.c(): relógio monotônico (ms) = início do processo + tempo decorrido
         return flow {
             response.suspendOnSuccess {
                 val api = data
                 val serverTime = 1000L * api.serverTime
-                if (serverTime > 0) TODO("util/d1.f(\"api\", agora, clientRequestTimestamp, serverTime): ajuste de relógio")
+                if (serverTime > 0) ServerTime.sync("api", ServerTime.elapsedNow(), clientRequestTimestamp, serverTime)   // util/d1.f: ajuste de relógio
                 val failure = { AAAAdapterFactory.reportIfFailure(caller, Triple(false, api.errCode, apiErrorMessage(api)), convertor.describe()) }
                 if (api.isSuccess) {
                     emit(convertor.convert(api.errCode, api.errMsg, api.data) ?: failure())
@@ -120,13 +127,13 @@ class PTV3AAdapter : AccountAdapter<ApiResponse<*>> {
      */
     private suspend fun <T> FlowCollector<AuthResult>.emitFailures(response: SandwichResponse<T>, caller: String) {
         response.suspendOnFailure {
-            emit(AAAAdapterFactory.reportIfFailure(caller, networkError(TODO("util/v0.c(failure): mensagem"))))
+            emit(AAAAdapterFactory.reportIfFailure(caller, networkError(SandwichErrors.describe(this))))
         }
         response.suspendOnException {
-            emit(AAAAdapterFactory.reportIfFailure(caller, networkError(TODO("util/v0.b(exception): mensagem"))))
+            emit(AAAAdapterFactory.reportIfFailure(caller, networkError(SandwichErrors.describe(this))))
         }
         response.suspendOnError {
-            emit(AAAAdapterFactory.reportIfFailure(caller, networkError(TODO("util/v0.a(error): mensagem"))))
+            emit(AAAAdapterFactory.reportIfFailure(caller, networkError(SandwichErrors.describe(this))))
         }
     }
 
@@ -134,8 +141,7 @@ class PTV3AAdapter : AccountAdapter<ApiResponse<*>> {
     private fun networkError(msg: String): AuthResult = Triple(false, -3, msg)
 
     /** Original: util/e.a(IApiResponse) — mensagem de erro + efeitos colaterais de sessão. */
-    private fun apiErrorMessage(response: Any): String =
-        TODO("util/e.a(response): em 9000010 chama UserManager.markSessionExpired(); em 9000042 UserManager.onKickedOut(\"API\",1)")
+    private fun apiErrorMessage(response: IApiResponse): String = ApiErrorUtils.getErrorMessage(response)   // trata 9000010 (sessão expirada) e 9000042 (kicked out)
 
     /** Original: d.a() — logout; código -9 é convertido em sucesso `(true, null, "")`. */
     override suspend fun logout(): Flow<AuthResult> = flow {
@@ -154,7 +160,7 @@ class PTV3AAdapter : AccountAdapter<ApiResponse<*>> {
     ): Flow<AuthResult> {
         // Original: new RegisterRequest(of.a.b() /* accountId */, UserManager.b0() /* accessToken */, str, str2, str3, str5)
         val request = RegisterRequest(
-            TODO("of/a.b(): accountId do provider de parâmetros"), UserManager.getAccessToken(),
+            HeaderInterceptor.accountId()   // of/a.b(): accountId do provider de parâmetros, UserManager.getAccessToken(),
             contact, password, verificationCode, invitationCode,
         )
         return callApi(

@@ -126,7 +126,7 @@ object HttpClientFactory {
     }
 
     /** Original: `new mf.b()`. */
-    private fun customDns(): Dns = TODO("outro módulo: mf/b (DNS assíncrono com fallback para Dns.SYSTEM)")
+    private fun customDns(): Dns = AppDns()
 }
 
 /**

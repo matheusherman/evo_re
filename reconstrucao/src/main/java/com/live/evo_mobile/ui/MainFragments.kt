@@ -18,15 +18,61 @@ import com.live.evo_mobile.ui.login.LoginTypeActivity
  * Original: com/live/evo_mobile/ui/d1.java (nome real MainTVFragment.kt, 1526 linhas) — resumo.
  */
 class MainTVFragment {
-    /** Original: Q0(String channelId) */
-    fun playChannel(channelId: String) { TODO("d1.Q0: seleciona canal e inicia reprodução") }
+    /** `mCurrFragment`: aba/fragment atual (ChannelListFragment, SubscribeListFragment ou EpgListFragment). */
+    var currentFragment: Any? = null
+    /** `mChannelListFragment` (aba "canais"). */
+    var channelListFragment: ChannelListFragment? = null
+    /** `T().f22994g` (mainRl: cabeçalho da guia/EPG) e `T().f22993f` (RadioGroup `rb_channel`/`rb_favorite`) do binding. */
+    var mainRl: android.view.View? = null
+    var tabGroup: android.widget.RadioGroup? = null
+    /** Id de `R.id.rb_channel`. */
+    var rbChannelId: Int = 0
+
+    /**
+     * Mostra a aba de canais (se ainda não está nela) e seleciona/reproduz o canal [streamId] na lista.
+     * Original: Q0(String streamId)
+     *  - fora da aba de canais: se `mainRl` visível, esconde-o, mostra o RadioGroup e chama `q1(0)`; senão marca `rb_channel`;
+     *  - com streamId: delega a [ChannelListFragment.selectStream] (n.z0).
+     */
+    fun playChannel(streamId: String?) {
+        if (currentFragment !is ChannelListFragment) {
+            if (mainRl?.visibility == android.view.View.VISIBLE) {
+                mainRl?.visibility = android.view.View.GONE
+                tabGroup?.visibility = android.view.View.VISIBLE
+                showTab(0)
+            } else {
+                tabGroup?.check(rbChannelId)
+            }
+        }
+        if (streamId != null) channelListFragment!!.selectStream(streamId)
+    }
+
+    /**
+     * Troca de aba (índice 0 = canais, 1 = lembretes, 2 = EPG). Original: q1(int) + w1(from, to, tag).
+     * NÃO RECUPERÁVEL: a transação de fragment e os títulos em negrito dependem do binding `z4.*` (layout `fragment_main_tv`)
+     * e dos fragments mobile, não reconstruídos; aqui só se registra a aba atual (e, para a EPG, a visibilidade de `mainRl`).
+     */
+    fun showTab(index: Int) {
+        when (index) {
+            0 -> currentFragment = channelListFragment
+            2 -> { mainRl?.visibility = android.view.View.VISIBLE; tabGroup?.visibility = android.view.View.INVISIBLE }
+        }
+    }
 }
 
 /**
  * Lista de canais por categoria (`ChannelTitleData` à esquerda + `StoryListData`/canais à direita), carregada via
  * `channelListLoader` e atualizada por Handler. Original: com/live/evo_mobile/ui/n.java (base LazyBase `z4.y`).
  */
-class ChannelListFragment
+class ChannelListFragment {
+    /**
+     * Seleciona na lista o canal [channelId] (rola até ele e dispara a reprodução). Original: n.z0(String)
+     * NÃO RECUPERÁVEL: depende do RecyclerView/adapters (`z4.y`, `t0()`/`s0()`) e do carregamento por categoria do fragment `n`,
+     * não reconstruídos; comportamento original: procura o `StoryListData` com o streamId na lista atual, rola (r0) e envia a
+     * mensagem 2 ao handler; se não achar, escolhe a categoria (adulta ou "todos") e recarrega a lista (coverStoryList).
+     */
+    fun selectStream(channelId: String) {}
+}
 
 /**
  * Guia de programação ("tv_guide_today"/"tv_guide_none"): seletor de data ([com.live.evo_mobile.adapter.DatePickAdapter]) +

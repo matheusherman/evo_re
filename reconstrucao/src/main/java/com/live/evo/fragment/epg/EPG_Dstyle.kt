@@ -14,6 +14,8 @@ import com.live.evo.model.ChannelData
 import com.live.evo.model.ProgramBean
 import com.live.evo.util.CommonUtils
 import com.live.evo.util.DateUtils
+import com.live.evo.util.ImageCache
+import com.live.evo.util.ModelHelper
 import com.live.evo.util.ToastUtils
 import java.util.TimerTask
 import java.util.concurrent.TimeUnit
@@ -32,10 +34,10 @@ import java.util.concurrent.TimeUnit
  * As categorias são as colunas do SDK, sem "favorite", vazias ou adultas ([initCategories]).
  *
  * O desenho específico (coluna de categorias, ícones de canal via `ModelHelper.y`) não foi reconstruído
- * linha a linha: reaproveita o `onDraw` da [EPG]. Pontos não reconstruídos estão marcados com TODO.
+ * linha a linha: reaproveita o `onDraw` da [EPG]. Os ícones são carregados por [getChannelIconBitmap].
  *
  * Original: com/live/evo/catchup/EPG_Dstyle.java (2223 linhas; classes internas `a`/`b` = TimerTask de carga,
- * `c` = gestos; stub anterior em catchup/EpgViews.kt)
+ * `c` = gestos; o stub antigo de catchup/EpgViews.kt foi removido)
  */
 class EPG_Dstyle @JvmOverloads constructor(
     context: Context,
@@ -118,7 +120,7 @@ class EPG_Dstyle @JvmOverloads constructor(
             playingChannel = 0
             val store = dataStore
             if (store != null) {
-                loadChannelIcons()
+                getChannelIconBitmap()
                 var from = selectedChannel - 4
                 var to = selectedChannel + 8
                 if (from < 0) from = 0
@@ -140,11 +142,37 @@ class EPG_Dstyle @JvmOverloads constructor(
         }
     }
 
+    /** Cache de bitmaps dos ícones, retido pelo FragmentManager da activity. Original: campo `V1` = y.l(fm, new y.b()) */
+    private val imageCache: ImageCache by lazy {
+        ImageCache.create((context as androidx.fragment.app.FragmentActivity).supportFragmentManager, ImageCache.Params())
+    }
+
     /**
-     * Pré-carrega os ícones dos canais visíveis (`ModelHelper.y(...)` em IO). Original: `getChannelIconBitmap()` / `S(List)`
+     * Pré-carrega os ícones dos canais visíveis e, em seguida, o restante da lista. A altura de linha do original (`f5591o`) é aqui
+     * a mesma [rowHeight] da [EPG] (INFERIDO: o campo do original é inicializado com o mesmo tamanho de linha).
+     * Original: `getChannelIconBitmap()`
      */
-    fun loadChannelIcons() {
-        TODO("s0.y(canais, imageCache, resources, callback): carrega bitmaps dos ícones dos canais visíveis (ModelHelper.prefetch)")
+    fun getChannelIconBitmap() {
+        var first = getFirstVisibleChannelPosition()
+        var visible = (height / rowHeight) - 1
+        if (visible < 0) visible = 6
+        var end = first + visible
+        val list = dataStore?.channels ?: return
+        if (first > list.size) {
+            first = if (list.size - visible >= 0) list.size - visible else 0
+            end = list.size
+        }
+        if (end >= list.size) {
+            loadChannelIcons(list.subList(first, list.size))
+        } else {
+            loadChannelIcons(list.subList(first, end))
+            loadChannelIcons(list.subList(end, list.size))
+        }
+    }
+
+    /** Carrega os bitmaps (corrotina IO) e redesenha ao terminar. Original: `S(List)` = s0.y(list, V1, resources, invalidate) */
+    fun loadChannelIcons(list: List<ChannelData>) {
+        ModelHelper.prefetch(list, imageCache, resources) { invalidate() }
     }
 
     // ------------------------------------------------------------------ teclas

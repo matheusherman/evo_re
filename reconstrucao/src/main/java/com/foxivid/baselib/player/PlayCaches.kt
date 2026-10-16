@@ -89,7 +89,7 @@ object PlayPositionCache {
     private fun owner(): String = 
         if ((UserManager.getAccountType() == "guest" || UserManager.getUsername().isEmpty())) HeaderInterceptor.deviceId() else HeaderInterceptor.accountId() // user.f.c0()=="guest" || D0().isEmpty()
 
-    private fun key(videoName: String): String = TODO("x1.f1.lb.util.o.e(owner(), videoName) — util")
+    private fun key(videoName: String): String = com.foxivid.baselib.util.HexUtils.md5Key(owner(), videoName)   // util/o.e(owner, videoName): MD5 de "<owner>.<videoName>."
 
     /** Original: g.e(dir, appVersion, maxSize) */
     fun init(cacheDirectory: String, appVersion: Int, maxSize: Long) {

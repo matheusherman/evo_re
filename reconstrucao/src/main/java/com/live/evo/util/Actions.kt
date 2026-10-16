@@ -81,6 +81,9 @@ object AppLauncher {
  * Original: com/live/evo/util/r0.java
  */
 object NoticeActionHandler {
+    /** Original: d(Activity, i5.x) — corpo vazio no APK (o método existe mas não faz nada). */
+    fun onNotice(activity: Activity?, item: Any? /* i5.x: item de aviso */) {}
+
     fun isSupported(type: String?) = type == "channelId" || type == "h5Link"
     fun hasAction(type: String?) = !type.isNullOrEmpty()
 
@@ -149,8 +152,50 @@ object ContactTemplate {
 /** Download de arquivo (OkHttp, buffer 2048, progresso 0..100). Original: com/live/evo/util/o.java */
 object FileDownloader {
     interface Callback { fun onError(e: Exception); fun onDone(path: String); fun onProgress(percent: Int) }
-    fun download(url: String, target: java.io.File, deleteFirst: Boolean, cb: Callback?) {
-        // Original: okhttp3.z de ServerTimeClient.client(); stream -> FileOutputStream; erro apaga o arquivo parcial.
-        TODO("não detalhado: ver util/o.a(String, File, boolean, b)")
+    /**
+     * Baixa [url] para [target] (flag `async`: enfileira no OkHttp; senão executa na thread corrente). Escreve em blocos de
+     * 2048 bytes apagando o arquivo anterior, notifica o progresso (0..100, só se o tamanho for conhecido); em erro apaga o
+     * arquivo parcial e chama onError; ao fim chama onDone(caminho absoluto).
+     * Original: o.a(String, File, boolean, b) + o$a (okhttp3.f)
+     */
+    fun download(url: String, target: java.io.File, async: Boolean, cb: Callback?) {
+        val client = ServerTimeClient.get().client
+        val request = okhttp3.Request.Builder().url(url).build()
+        val handler = object : okhttp3.Callback {
+            override fun onFailure(call: okhttp3.Call, e: java.io.IOException) { cb?.onError(e) }
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                val buffer = ByteArray(2048)
+                var input: java.io.InputStream? = null
+                var output: java.io.FileOutputStream? = null
+                try {
+                    input = response.body!!.byteStream()
+                    val contentLength = response.body!!.contentLength()
+                    target.delete()
+                    output = java.io.FileOutputStream(target)
+                    var written = 0L
+                    while (true) {
+                        val n = input.read(buffer)
+                        if (n == -1) break
+                        output.write(buffer, 0, n)
+                        written += n
+                        if (contentLength > 0) cb?.onProgress((((written * 1.0f) / contentLength) * 100.0f).toInt())
+                    }
+                    output.flush()
+                    cb?.onDone(target.absolutePath)
+                } catch (e: Exception) {
+                    cb?.onError(e)
+                    target.delete()
+                } finally {
+                    try { input?.close() } catch (_: Exception) {}
+                    try { output?.close() } catch (_: Exception) {}
+                }
+            }
+        }
+        val call = client.newCall(request)
+        if (async) {
+            call.enqueue(handler)
+            return
+        }
+        try { handler.onResponse(call, call.execute()) } catch (e: java.io.IOException) { handler.onFailure(call, e) }
     }
 }

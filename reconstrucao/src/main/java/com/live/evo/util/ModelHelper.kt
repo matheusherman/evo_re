@@ -5,7 +5,12 @@ import com.foxivid.baselib.heartbeat.HeartbeatManager
 import com.foxivid.baselib.media.ChannelManager
 import com.foxivid.baselib.media.EpgManager
 import com.foxivid.baselib.user.UserManager
+import com.foxivid.baselib.media.SportsManager
+import com.foxivid.baselib.util.LegacyTvUtils
 import com.live.evo.model.AccountBean
+import com.live.evo.model.CategoryBean
+import com.live.evo.model.SubjectType
+import com.live.evo.model.SubjectTypeResponse
 import com.live.evo.model.SubscribeBean
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,7 +56,97 @@ object ModelHelper {
         catch (t: Throwable) { logger.error("get channel by id[$channelId] failure", t); null }
     }
     /** Pré-carrega imagens dos canais (corrotina). Original: y(channels, imageCache, resources, callback) */
-    fun prefetch(channels: List<ChannelData>, cache: ImageCache, resources: android.content.res.Resources, callback: () -> Unit): Unit = TODO("s0.y corrotina c")
+    fun prefetch(channels: List<ChannelData>, cache: ImageCache, resources: android.content.res.Resources, callback: () -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {   // corrotina `ModelHelper$getChannelsBitmapFromUrl$1` (classe c)
+            val width = resources.getDimensionPixelSize(com.live.evo.R.dimen.catchup_channel_icon_width_d)
+            val height = resources.getDimensionPixelSize(com.live.evo.R.dimen.catchup_channel_icon_height_d)
+            for (ch in channels) {
+                val url = ch.iconUrl ?: ""
+                try {
+                    if (cache.get(url) == null) {
+                        val trimmed = url.trim()
+                        if (trimmed != "") {
+                            val bitmap = ImageCache.decodeSampledBitmapFromUrl(java.net.URL(url), width, height)
+                            if (bitmap != null) cache.put(url, android.graphics.drawable.BitmapDrawable(resources, bitmap))
+                        }
+                    }
+                } catch (e: java.io.IOException) {
+                    logger.error("get channel bitmap from url failure", e)
+                }
+            }
+            withContext(Dispatchers.Main) { callback() }   // `kotlinx.coroutines.m0.b()` = scope Main
+        }
+    }
+
+    // --- listas de canais do SDK (usadas por LiveNewActivity) ---
+
+    /** Todos os canais do SDK (coluna `InteractionUtils.A()`, com adultos). Original: w() */
+    fun allChannels(): List<ChannelData> = channelsOfColumn(ChannelManager.columnAll(), true)
+
+    /** Mapa categoria -> canais (cada categoria respeita se é coluna adulta). Original: C() */
+    fun channelsByCategory(): HashMap<String, List<ChannelData>> {
+        val map = HashMap<String, List<ChannelData>>()
+        for (column in ChannelManager.columns(true)) map[column] = channelsOfColumn(column, ChannelManager.isAdultColumn(column))
+        return map
+    }
+
+    /** Mapa categoria -> [CategoryBean] (a seq decresce a partir do total). Original: t() + o(int, String) */
+    fun groups(): Map<String, CategoryBean> {
+        val map = HashMap<String, CategoryBean>()
+        val columns = ChannelManager.columns(true)
+        var seq = columns.size
+        for (column in columns) {
+            map[column] = CategoryBean(seq, column, column, if (ChannelManager.isAdultColumn(column)) 1 else 0)
+            seq--
+        }
+        return map
+    }
+
+    /** Canais indexados por channelId (ordem de inserção). Original: u() */
+    fun channelsById(): Map<String, ChannelData> {
+        val map = LinkedHashMap<String, ChannelData>()
+        for (c in allChannels()) map[c.channelId ?: ""] = c
+        return map
+    }
+
+    /** Mapa sportId -> nome preenchido por [loadSubjectTypes] (campo `sportMap` do original). */
+    var sportMap: Map<String, String> = emptyMap()
+        private set
+    /** Flow da EPG de um canal (todos os dias). Original: InteractionUtils.D(epgId) = EpgManager.z(epgId) */
+    fun epgFlowFor(epgId: String): Flow<List<EPGProgramme>> = EpgManager.programmesFlow(epgId)
+
+    /**
+     * Converte a lista de programas do SDK para [ProgramBean]; em ambiente "dev" ([BaseLibConfig.env] contém "dev") preenche lacunas de
+     * -7..+7 dias com programas de teste ("test programme1..3", 06-07 h, 11-13 h e 17-18 h). Original: k(channelId, epgId, list) + S(...)
+     */
+    fun toProgramBeans(channelId: String?, epgId: String, programs: List<EPGProgramme>): List<ProgramBean> {
+        val out = ArrayList<ProgramBean>()
+        for (p in programs) out.add(toProgram(p))
+        if (com.foxivid.baselib.config.BaseLibConfig.env.lowercase(java.util.Locale.ROOT).contains("dev")) {
+            val dayMs = java.util.concurrent.TimeUnit.DAYS.toMillis(1L)
+            var midnight = LegacyTvUtils.getInstance().parse(LegacyTvUtils.getInstance().formatTime(2, DateUtils.now()), "yyyyMMdd")
+            for (i in -7 until 8) {
+                val day = midnight + i * dayMs
+                for ((n, range) in listOf(1 to (21600000L to 25200000L), 2 to (39600000L to 46800000L), 3 to (61200000L to 64800000L))) {
+                    val start = day + range.first; val end = day + range.second
+                    if (!overlaps(out, start, end)) {
+                        out.add(ProgramBean(start, epgId, start, "test programme$n", end, epgId + start, "this is a auto generate programe for test"))
+                    }
+                }
+            }
+        }
+        return out
+    }
+
+    /** Algum programa começa ou termina dentro de [start, stop]? Original: S(List, long, long) */
+    private fun overlaps(list: List<ProgramBean>, start: Long, stop: Long): Boolean {
+        for (p in list) {
+            val s0 = p.f()
+            if (start > s0 || s0 > stop) { val e0 = p.g(); if (start <= e0 && e0 <= stop) return true } else return true
+        }
+        return false
+    }
+
     /** Original: l(EPGProgramme) */
     fun toEpgBean(p: EPGProgramme): ProgramBean = toProgram(p)
     /** (seq, epgBean, channel) -> SubscribeBean. Original: e(int, p, ChannelStreamResponse) */
@@ -133,7 +228,38 @@ object ModelHelper {
     /** Original: F() */ fun notices(): List<Any> = emptyList()
 
     /** Carrega tipos de subject (esportes) do SDK com callback. Original: I(callback) */
-    fun loadSubjectTypes(callback: (Any?) -> Unit): Unit = TODO("MediaRepository subject types (j5.h)")
+    fun loadSubjectTypes(callback: (SubjectTypeResponse?) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {   // corrotina `ModelHelper$getSubjectTypeDatas$1` (classe h)
+            val sports = SportsManager.getSports()    // x1/f1/lb/media/j.G()
+            val list = sports?.sports
+            try {
+                if (list != null && list.isNotEmpty()) {
+                    val response = SubjectTypeResponse()
+                    val types = ArrayList<SubjectType>()
+                    response.types = types
+                    val names = LinkedHashMap<String, String>()
+                    for (sport in list) {
+                        val type = SubjectType()
+                        val id = sport.sportId
+                        if (id != null) {
+                            val idStr = id.toString()
+                            val name = sport.name ?: ""
+                            type.id = idStr
+                            type.name = name
+                            types.add(type)
+                            names[idStr] = name
+                        }
+                    }
+                    sportMap = names
+                    withContext(Dispatchers.Main) { callback(response) }
+                    return@launch
+                }
+                logger.error("get sports is empty")
+            } catch (t: Throwable) {
+                logger.error("get sports failure", t)
+            }
+        }
+    }
     /** Última conta salva (AccountBean). Original: p() */
     fun savedAccount(): AccountBean? {
         val name = UserManager.getUsername().ifEmpty { UserManager.getLocalSessionInfo()?.lastUsername ?: "" }   // InteractionUtils.i()

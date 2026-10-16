@@ -26,12 +26,28 @@ class EpgListAdapter
 class HistoryLiveListAdapter
 /** Resultado da busca de canais (LiveSearchListData). Original: com/live/evo_mobile/adapter/g.java */
 class LiveSearchAdapter
-/** Lista de strings (histórico de busca / dados simples) com listener de clique. Original: com/live/evo_mobile/adapter/i.java */
-class StringListAdapter(private val dataList: List<String>, private val inflater: LayoutInflater, private val listener: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+/**
+ * Lista de strings (histórico de busca, layout `item_search_history`, TextView `search_hisotry_item_tv`) com listener de clique;
+ * [setData] troca a lista e notifica. Original: com/live/evo_mobile/adapter/i.java (+ i$a listener, i$b ViewHolder)
+ */
+class StringListAdapter(private var dataList: List<String>, private val inflater: LayoutInflater, private val listener: (String) -> Unit) : RecyclerView.Adapter<StringListAdapter.ViewHolder>() {
+    /** Original: i.b */
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val textView: android.widget.TextView = itemView.findViewById(com.live.evo.R.id.search_hisotry_item_tv)
+    }
+
     override fun getItemCount() = dataList.size
     override fun getItemId(position: Int) = position.toLong()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = TODO("item de texto")
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) { holder.itemView.setOnClickListener { listener(dataList[position]) } }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(inflater.inflate(com.live.evo.R.layout.item_search_history, parent, false))
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item = dataList[position]
+        holder.textView.text = item
+        holder.itemView.setOnClickListener { listener(item) }
+    }
+
+    /** Original: e(List) */
+    fun setData(data: List<String>) { dataList = data; notifyDataSetChanged() }
 }
 /** Itens de configuração (MainSettingData). Original: com/live/evo_mobile/adapter/k.java */
 class MainSettingAdapter

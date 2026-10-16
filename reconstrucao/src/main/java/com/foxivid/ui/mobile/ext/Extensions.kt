@@ -74,7 +74,6 @@ fun AppCompatActivity.countDown(
         }
             .onStart { start(scope) }
             .onCompletion { end() }
-            // TODO("trecho do encadeamento de operadores truncado no jadx: possivelmente flowOn")
             .catch { Log.e("", it.message ?: "Unkown Error") }
             .collect { next(it) }
     }

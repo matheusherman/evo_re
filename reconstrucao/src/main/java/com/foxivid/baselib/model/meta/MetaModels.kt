@@ -189,5 +189,5 @@ class ShowTypeCfg : BaseModel() {
 
 /** Ponte para util/l0.a(url). */
 internal object ImageUrlRef {
-    fun resolve(url: String): String = TODO("outro módulo: util/l0.a(url)")
+    fun resolve(url: String): String = com.foxivid.baselib.util.ImageUrlBuilder.build(url)
 }

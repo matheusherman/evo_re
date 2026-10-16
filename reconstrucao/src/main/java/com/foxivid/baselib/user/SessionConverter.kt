@@ -1,5 +1,8 @@
 package com.foxivid.baselib.user
 
+import com.foxivid.baselib.network.HeaderInterceptor
+import com.foxivid.baselib.util.AppAttrUtils
+import com.foxivid.baselib.util.ServerTime
 import com.foxivid.baselib.config.BaseLibConfig
 import com.foxivid.baselib.bot.TelegramBot
 import com.foxivid.baselib.model.extra.subscription.RechargeInfo
@@ -24,7 +27,7 @@ object SessionConverter {
 
     private val logger = LoggerFactory.getLogger(SessionConverter::class.java)
 
-    private fun now(): Long = TODO("util/d1.d(): timestamp atual (ms), corrigido pela hora do servidor")
+    private fun now(): Long = ServerTime.now()   // util/d1.d(): timestamp atual (ms), corrigido pela hora do servidor
 
     /**
      * Resposta do backend PTV (login, refresh, updateSession) -> sessão local.
@@ -121,10 +124,24 @@ object SessionConverter {
         val username = UserManager.getUsername()
         if (s.lastUsername.isNullOrEmpty() && username.isNotEmpty()) s.lastUsername = username
         if (BaseLibConfig.isDebug) logger.debug("convert session to local [{}] -> [{}}", info, s)
-        // Original: monta tf.AccountInfo(tenant?, android_id, canal, appType, accountId, accountType,
-        // username, email, phone, code, planName, expireTime) e chama
-        // x1.f1.lb.metric.monitor.a (AppUsageMonitor).p(accountInfo, remainingDays ?: "0").
-        TODO("AppUsageMonitor.p(AccountInfo(...), remainingDays) — métricas, outro módulo")
+        // Monta tf.AccountInfo(did, android_id, canal de distribuição, appType, accountId, accountType, username, email, phone, code,
+        // planName, expireTime) e envia ao AppUsageMonitor.p(accountInfo, remainingDays ?: "0").
+        val accountInfo = com.foxivid.baselib.metric.model.AccountInfo(
+            HeaderInterceptor.deviceId(),
+            com.foxivid.baselib.device.DeviceInfoCollector.getAndroidId(),
+            AppAttrUtils.distributionChannel(),
+            AppAttrUtils.appType(),
+            s.accountId,
+            s.accountType ?: "",
+            s.username ?: UserManager.getUsername(),
+            s.email ?: "",
+            s.phone ?: "",
+            s.code ?: "",
+            info.planName ?: "",
+            info.expireTime,
+        )
+        com.foxivid.baselib.metric.monitor.AppUsageMonitor.setAccountInfo(accountInfo, info.remainingDays ?: "0")
+        return s
     }
 
     /** Trecho repetido de g.d(): access/refresh token e expirações (só aumenta a expiração). */
@@ -276,7 +293,7 @@ object SessionConverter {
         s.businessType = data.businessType
         s.latestTokenUpdateTime = now()
         try {
-            TODO("streaming/client/a (EngineHelper).p(data.streamToken): refreshToken do engine")
+            com.foxivid.baselib.streaming.client.EngineHelper.refreshToken(data.streamToken)   // streaming/client/a.p(token)
         } catch (t: Throwable) {
             logger.warn("refresh stream token failure", t)
         }

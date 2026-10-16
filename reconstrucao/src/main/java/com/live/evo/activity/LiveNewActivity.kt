@@ -1,6 +1,19 @@
 package com.live.evo.activity
 
 import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.Color
+import android.os.Build
+import android.text.Html
+import android.util.Log
+import android.view.ViewStub
+import com.live.evo.model.CategoryBean
+import com.live.evo.util.AppPropertiesStore
+import com.live.evo.util.ModelHelper
+import com.live.evo.util.PlaybackPrefs
+import com.live.evo.util.RxUtils
+import com.live.evo.util.SkinConfig
+import tv.danmaku.ijk.media.player.IMediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -239,7 +252,27 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        TODO("nativo/não decompilado: LiveNewActivity.onCreate")
+        // INFERIDO (onCreate nativo): ordem deduzida dos helpers que sobreviveram no dex (T2/J2/N2) e do layout `activity_live_new`.
+        setContentView(R.layout.activity_live_new)
+        initViews()                 // T2(): findViewById + listeners do player + LivePopupController + SubscribeManager
+        initServices()              // J2(): listas (S2), status de expiração (M2), testador de rede, OSD (Q2), eco/recarga, ChannelSwitchHelper
+        consumeIntentChannel(intent)    // N2(intent): u2() lê o channelId (extra ou deep-link `livetvcontent`) e remove o extra
+        // O registro no EventBus e a primeira carga de canais (q3 -> onLoadDataSuccess) acontecem via BaseActivity/onStart/onResume
+        // (MSG_NETWORK_OK em onStart agenda onLoadDataSuccess + eco).
+    }
+
+    /** Lê e descarta o extra `channelId` da intent. Original: N2(Intent) */
+    private fun consumeIntentChannel(intent: Intent?) {
+        extractChannelId(intent)
+        intent?.removeExtra("channelId")
+    }
+
+    /** channelId do deep-link `livetvcontent://...?channelId=` ou do extra `channelId`. Original: u2(Intent) */
+    private fun extractChannelId(intent: Intent?): String? {
+        if (intent == null) return null
+        val data = intent.data
+        return if (intent.scheme != null && "livetvcontent" == intent.scheme && data != null) data.getQueryParameter("channelId")
+        else intent.getStringExtra("channelId")
     }
 
     /** Liga views e listeners do player. Original: T2() */
@@ -411,7 +444,7 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
         val idx = newCode.toInt() - 1
         mOsdProgramNum?.show(idx.toString(), channelNameAt(idx))
         trackAction(newCode)
-        mInputCodeRepeatHandler.fire()
+        mInputCodeRepeatHandler.trigger()
         val logicalNumbers = com.live.evo.config.ChannelNumberMode.get().isEnabled()
         val list = mListLiveDataAll
         if (idx >= 0 && idx < (list?.size ?: 0) && !logicalNumbers) {
@@ -453,7 +486,7 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
         updateOsdIndex(target.index)
         showChannelBanner(target)
         trackAction("keydown:$down")
-        mKeyUpDownRepeatHandler.fire()
+        mKeyUpDownRepeatHandler.trigger()
     }
 
     // ---------------------------------------------------------------- reprodução
@@ -488,13 +521,12 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
     fun startPlay(liveData: ChannelBean?) {
         if (InteractionUtils.isForcedLogout()) { toLogoutProcess(); return }
         hideNoSignal()       // f4()
-        mOsdProgramPromptLoading?.showLoading()
-        if (needsBanner()) {     // j2()
-            try {
-                if (window.decorView.windowToken != null) showChannelBanner(liveData)
-                else mHandler.postDelayed({ try { if (window.decorView.windowToken != null) showChannelBanner(liveData) } catch (e: Exception) { logger.error(e.message, e) } }, 200L)
-            } catch (e: Exception) { logger.error(e.message, e) }
-        }
+        mOsdProgramPromptLoading?.showLoadView()
+        if (!needsBanner()) return      // j2(): sem canais na categoria (mesmo após recarregar) nada é tocado
+        try {
+            if (window.decorView.windowToken != null) showChannelBanner(liveData)
+            else mHandler.postDelayed({ try { if (window.decorView.windowToken != null) showChannelBanner(liveData) } catch (e: Exception) { logger.error(e.message, e) } }, 200L)
+        } catch (e: Exception) { logger.error(e.message, e) }
         updateOsdIndex(playInAllIdx)
         mLiveErrorCount = 0
         mLiveLastError = ""
@@ -506,7 +538,7 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
             hideOsd(true)
             return
         }
-        if (mOsdProgramPromptSignalPoor?.getVisibility() == View.VISIBLE) mOsdProgramPromptSignalPoor?.setVisibility(View.GONE)
+        if (mOsdProgramPromptSignalPoor?.visibility() == View.VISIBLE) mOsdProgramPromptSignalPoor?.setVisibility(View.GONE)
         mVideoPath = url
         mIsAdult = liveData != null && liveData.isAdult()
         mMosaicView?.visibility = View.GONE
@@ -559,10 +591,10 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
             mVideoView?.let { if (it.visibility != View.VISIBLE) { it.visibility = View.VISIBLE; it.requestFocus() } }
             setNoSignalVisibility(View.GONE)
             lastPlayedLiveChannel = cur
-            if (mOsdProgramPromptRetrying?.getVisibility() != View.VISIBLE) { mOsdManager?.show(mOsdProgramPromptLoading); mOsdProgramPromptLoading?.showLoading() }
-            livePlayHandler?.play(cur)
+            if (mOsdProgramPromptRetrying?.visibility() != View.VISIBLE) { mOsdManager?.show(mOsdProgramPromptLoading); mOsdProgramPromptLoading?.showLoadView() }
+            cur?.let { livePlayHandler?.switchTo(it) }
             stopReplayTimer(false)
-            if (mOsdProgramPromptRetrying?.getVisibility() != View.VISIBLE) { mOsdManager?.show(mOsdProgramPromptLoading); mOsdProgramPromptLoading?.showLoading() }
+            if (mOsdProgramPromptRetrying?.visibility() != View.VISIBLE) { mOsdManager?.show(mOsdProgramPromptLoading); mOsdProgramPromptLoading?.showLoadView() }
         } catch (e: Exception) {
             ToastHelper.show(getString(R.string.play_unknown_err))
             logger.error("Error in preparePlay", e)
@@ -590,7 +622,7 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
     /** Carga de canais concluída: toca o último canal e inicia monitor de tráfego. Original: q3() */
     private fun onLoadDataSuccess() {
         loadChannelLists()   // P2()
-        if (hasChannels()) { trackAction("onLoadDataSuccess"); changeChannel(playInAllIdx) }
+        if (shouldResumePlayback()) { trackAction("onLoadDataSuccess"); changeChannel(playInAllIdx) }
         mOSDListProgramPresenter?.let { val c = it.currentIndex(); it.setNumber((c + 1).toString()); it.selectInGroup(c) }
         try { startTrafficMonitor() } catch (e: Exception) { logger.error(e.toString(), e) }
     }
@@ -645,16 +677,16 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
                     { isLogoutDlgShow.set(false) })
             }
             3 -> {
-                mOsdProgramPromptLoading?.showProgress()
+                mOsdProgramPromptLoading?.showSpinner()
                 CoroutineScope(Dispatchers.IO).launch {
                     InteractionUtils.loginFlow()
                         .catch { t ->
-                            mHandler.post { mOsdProgramPromptLoading?.hideAll() }
+                            mHandler.post { mOsdProgramPromptLoading?.hideLoadView() }
                             logger.error("stream token expired, login failure", t)
                         }
                         .collect { (ok, code, msg) ->
                             mHandler.post {
-                                mOsdProgramPromptLoading?.hideAll()
+                                mOsdProgramPromptLoading?.hideLoadView()
                                 if (!ok) logger.error("stream token expired, login failure[$msg($code)")
                                 else restartPlay()
                             }
@@ -746,17 +778,23 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
 
     /** Logout manual de conta (`A0("main_activity")`). Original: X1(String) + corrotina accountLogout$1 (f) */
     fun accountLogout(message: String) {
-        // TODO("parcial: X1() exibe a mensagem antes de lançar a corrotina — corpo exato não detalhado")
+        // Original: X1(String) — o parâmetro [message] não é usado no corpo.
+        isInLogout = true
+        hideOsd(true)
+        mVideoView?.stop(true)
+        livePlayHandler?.reset()
+        releaseReceivers()
+        mOsdProgramPromptLoading?.showSpinner()
         CoroutineScope(Dispatchers.IO).launch {
             InteractionUtils.logout("main_activity")
                 .catch { t ->
                     isInLogout = false
-                    mHandler.post { mOsdProgramPromptLoading?.hideAll() }
+                    mHandler.post { mOsdProgramPromptLoading?.hideLoadView() }
                     ToastHelper.show(getString(R.string.log_out_fail) + ":" + t.message)
                 }
                 .collect { (ok, _, msg) ->
                     mHandler.post {
-                        mOsdProgramPromptLoading?.hideAll()
+                        mOsdProgramPromptLoading?.hideLoadView()
                         if (!ok) { ToastHelper.show(getString(R.string.log_out_fail) + ":" + msg); return@post }
                         ToastHelper.show(getString(R.string.log_out))
                         mVideoView?.requestFocus()
@@ -865,7 +903,30 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
     /** Verificação de upgrade (corrotina checkUpgrade$1 — análoga à de LiveLoadActivity). Original: o2() + i */
     private fun checkUpgrade() {
         if (isInChecking.compareAndSet(false, true)) {
-            TODO("não detalhado: corrotina LiveNewActivity\$checkUpgrade\$1 (classe i) — mesmo padrão de LiveLoadActivity.checkUpdate")
+            // Corrotina LiveNewActivity$i (checkUpgrade$1): igual a LiveLoadActivity.checkUpdate, mas sem loading de tela.
+            CoroutineScope(Dispatchers.IO).launch {
+                InteractionUtils.checkUpgrade(lifecycle) { version: String?, _: Int?, apkPath: String?, error: com.foxivid.baselib.upgrade.UpgradeError? ->
+                    mHandler.post {
+                        if (lastVersion != version && !version.isNullOrEmpty()) {
+                            lastVersion = version
+                            ToastHelper.show("${getString(R.string.new_version)}:$version")
+                        }
+                        if (!apkPath.isNullOrEmpty()) {
+                            apkFile = apkPath
+                            upgradeInfo?.let { onUpgradeEvent(com.live.evo.event.UpgradeReadyEvent(it, apkPath, false)) }
+                        }
+                        if (error != null) ToastHelper.show(error.message)
+                        isInChecking.set(false)
+                    }
+                }.catch { t ->
+                    runOnUiThread { ToastHelper.show(getString(R.string.check_failed) + ":" + t.message) }
+                    logger.error("check upgrade failure", t)
+                }.collect { info ->
+                    upgradeInfo = info
+                    isInChecking.set(false)
+                    if ((info?.upgradeStatus ?: 0) != 0) ToastHelper.show(getString(R.string.update_msg))
+                }
+            }
         }
     }
 
@@ -897,11 +958,11 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
         if (isFinishing || isDestroyed) { mHandler.postDelayed({ System.exit(0) }, 500L); return }
         mUiManager?.showExitDialog {
             if (!InteractionUtils.isBusy()) { exit(true); return@showExitDialog }
-            mOsdProgramPromptLoading?.setText(getString(R.string.exiting))
-            mOsdProgramPromptLoading?.showProgress()
+            mOsdProgramPromptLoading?.setPromptText(getString(R.string.exiting))
+            mOsdProgramPromptLoading?.showSpinner()
             CoroutineScope(Dispatchers.IO).launch {
                 while (InteractionUtils.isBusy()) delay(200L)
-                withContext(Dispatchers.Main) { mOsdProgramPromptLoading?.hideAll(); exit(true) }
+                withContext(Dispatchers.Main) { mOsdProgramPromptLoading?.hideLoadView(); exit(true) }
             }
         }
     }
@@ -962,14 +1023,14 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
     override fun onResume() {
         prepareResume()                    // H2()
         super.onResume()
-        registerReceivers()                // L2()
-        refreshUserState()                 // F3()
+        setupExpiredLayout()               // L2()
+        registerReceivers()                // F3()
         refreshChannels()                  // S2()
         mKeyUpDownRepeatHandler.subscribe { changeChannelByKeyUpDown() }
         mInputCodeRepeatHandler.subscribe { changeChannelByInputCode() }
-        if (hasChannels()) {
+        if (shouldResumePlayback()) {
             startEcoTimer()
-            mVideoView?.let { if (it.visibility != View.VISIBLE) it.visibility = View.VISIBLE; mOsdProgramPromptLoading?.showLoading(); resumeLastChannel() }
+            mVideoView?.let { if (it.visibility != View.VISIBLE) it.visibility = View.VISIBLE; mOsdProgramPromptLoading?.showLoadView(); resumeLastChannel() }
         } else if (!isFirstStart && mExpiredStatus == 2) {
             onServiceExpired(ServiceExpiredEvent())
         }
@@ -1011,12 +1072,120 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
     override fun onSaveInstanceState(outState: Bundle) { super.onSaveInstanceState(outState) /* remove rechargeAction */ }
 
     // ---------------------------------------------------------------- helpers usados acima
-    // Os métodos abaixo existem no original; corpos não detalhados (ajustes de view/estado/telemetria).
 
-    /** Canal atual (lista global, playInAllIdx). Original: A2() */
-    fun currentChannel(): ChannelBean? = channelAt(playInAllIdx)
-    /** Original: B2(int) */
-    fun channelAt(index: Int): ChannelBean? = mListLiveDataAll?.getOrNull(index)
+    /** Canal atual (lista global, playInAllIdx; se o índice estourou a lista volta ao 0). Original: A2() */
+    fun currentChannel(): ChannelBean? {
+        return try {
+            val list = mListLiveDataAll
+            val size = list?.size ?: 0
+            if (size == 0) return null
+            var i = playInAllIdx
+            if (i >= size) i = 0
+            list?.get(i)
+        } catch (e: Exception) { logger.error("Error in getProgramData()", e); null }
+    }
+
+    /** Original: B2(int) — índice fora da lista cai em 0. */
+    fun channelAt(index: Int): ChannelBean? {
+        return try {
+            val list = mListLiveDataAll
+            val i = if (index >= (list?.size ?: 0)) 0 else index
+            list?.get(i)
+        } catch (e: Exception) { logger.error("Error in getProgramData() index = $index", e); null }
+    }
+
+    // --- diálogo de plano expirado (ViewStub `livenewa_vs_expired`) ---
+    private var mExpiredLayout: ViewStub? = null
+    private var mExpiredTitle: TextView? = null
+    private var mTVCountdownTime: TextView? = null
+    private var mRechargeGuide: TextView? = null
+    private var mMemberQR: ImageView? = null
+    private var mExpiredParent: RelativeLayout? = null
+    private var mRechargeHint: TextView? = null
+    private var expiredExperienceTimes = 0L
+
+    // --- outros campos de estado (declarados no original, sem uso fora dos trechos abaixo) ---
+    private var mGroupsList: Map<String, CategoryBean>? = null
+    private var tipNoNetworkTime = 0L
+    private var replayTask: TimerTask? = null
+    private var mPlayType = ""
+    private var mPlayerInfoWhat = 0
+    private var mBufferingAllocateByPosition = false
+    private var mTrafficCount = 0
+    private var lastKeyTime = 0L
+    private var isOnKeyAfterFocusLost = false
+    private var upgradeInfo: com.foxivid.baselib.model.extra.upgrade.UpgradeInfo? = null
+    /** Runnable de "modo eco" (diálogo de standby; classe `LiveNewActivity$b`). */
+    private var ecoModeAction: Runnable? = null
+    /** Lembrete de recarga a cada 12 h (classe `LiveNewActivity$d`). */
+    private var rechargeAction: Runnable? = null
+
+    /**
+     * Receiver das ações `com.bb.action.*` (broadcasts de launchers/apps parceiros). Original: mMsgReceiver
+     * - EPG → [showEpgDialog]; CONNECTIVITY_CHANGE → sem rede e sem eco: MSG_NETWORK_LOST; com rede: reconecta o tracker (`zf.f.e().u()`).
+     * - FAVORITE (`channelFavorite`, `channelId`, `channelName`) → atualiza favoritos ([updateFavoriteByEvent]/[updateFavoriteForCurrent]).
+     * - EXIT (`withProcess`) → [exit]; feedback → [showFeedbackDialog]; PIP (AddPIP/switchpip/closepip) → só toast quando PIP ligado.
+     * - popupmenuview → menu lateral; showprogram (`showType` 1 = busca) → lista de canais; update → [checkUpgrade].
+     * - switchprogram (`playindex`, `playGroupindex`) → posiciona grupo/índice sem trocar de canal.
+     */
+    private val mMsgReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: android.content.Context, intent: Intent) {
+            when (intent.action) {
+                "com.bb.action.EPG" -> { showEpgDialog(); return }
+                "android.net.conn.CONNECTIVITY_CHANGE" -> {
+                    if (!isNetworkAvailable()) {
+                        if (com.foxivid.baselib.util.EcoModeHelper.isInEcoMode()) return   // d0.j()
+                        mHandler.sendEmptyMessage(MSG_NETWORK_LOST)
+                    } else {
+                        com.live.evo.util.TrackerConnection.get()?.reconnect()      // zf.f.e().u()
+                    }
+                    return
+                }
+                "com.bb.action.FAVORITE" -> {
+                    val fav = intent.getIntExtra("channelFavorite", 0)
+                    val id = intent.getStringExtra("channelId")
+                    val name = intent.getStringExtra("channelName")
+                    var idx = playInAllIdx
+                    if (id.isNullOrEmpty()) updateFavoriteForCurrent(fav) else idx = updateFavoriteByEvent(id, name, fav)
+                    if (UiFunctionConfig.get().favoriteEnabled() && playGroupIdx == UiFunctionConfig.get().favoriteGroupIndex() && fav == 0) isRemoveFavorite = true
+                    if (UiFunctionConfig.get().favoriteEnabled() && fav == 0 && currentChannel()?.index == idx) {
+                        isRemoveFavorite = true; isPlayFavoriteList = false; playGroupIdx = 0; playInGroupIdx = idx
+                    }
+                    return
+                }
+                "com.bb.action.EXIT" -> { exit(intent.getBooleanExtra("withProcess", false)); return }
+                "com.bb.action.feedback" -> { showFeedbackDialog(); return }
+                "com.bb.action.AddPIP" -> { if (UiFunctionConfig.get().pipEnabled()) ToastUtils.show(CommonUtils.string(R.string.no_signal)); return }
+                "com.bb.action.switchpip" -> { if (UiFunctionConfig.get().pipEnabled()) ToastUtils.show(CommonUtils.string(R.string.pip_not_open)); return }
+                "com.bb.action.closepip" -> return
+                "com.bb.action.popupmenuview" -> {
+                    mUiManager?.showMenu()   // a4() e t() chamam o mesmo LivePopupController.t()
+                    return
+                }
+                "com.bb.action.showprogram" -> {
+                    mOSDListProgramPresenter?.show(supportFragmentManager, if (intent.getIntExtra("showType", 0) == 1) "Search" else "Channel List")
+                    mUiManager?.isAnyPopupShowing()   // G2(): LivePopupController.h() fecha o banner
+                    return
+                }
+                "com.bb.action.update" -> { checkUpgrade(); return }
+                "com.bb.action.switchprogram" -> {
+                    val playIndex = intent.getIntExtra("playindex", 0)
+                    val groupIndex = intent.getIntExtra("playGroupindex", 0)
+                    if (mCategoryIdList.isNullOrEmpty()) mCategoryIdList = InteractionUtils.getCategoryIds(true)
+                    val cats = mCategoryIdList
+                    if (cats.isNullOrEmpty()) return
+                    val list = mMapCategoryPrograms?.get(cats[groupIndex])
+                    if (list.isNullOrEmpty()) return
+                    var pos = 0
+                    if (playIndex < 0) pos = list.size - 1 else if (playIndex < list.size) pos = playIndex
+                    if (currentChannel() == list[pos]) mKeyUpDownRepeatHandler.trigger()
+                    playInGroupIdx = pos
+                    playGroupIdx = groupIndex
+                }
+            }
+        }
+    }
+
     /** Original: W3(ChannelBean) — LivePopupController.r(canal, posGrupo, grupo, 0). */
     fun showChannelBanner(ch: ChannelBean?) { mUiManager?.showChannelInfo(ch, playInGroupIdx, playGroupIdx, 0) }
     /** Original: B4() — LivePopupController.s(canal atual) → EpgDialog. */
@@ -1029,54 +1198,764 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
     @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     fun onClearHistory(event: com.live.evo.event.ClearHistoryEvent) { mMapCategoryPrograms?.put("history", emptyList()) }
 
-    private fun refreshNetworkState(): Unit = TODO("não detalhado: K0() (p5.a, estado de rede do OSD)")
-    private fun startEcoTimer(): Unit = TODO("não detalhado: G3() (modo eco/standby)")
-    private fun resetIdleTimer(): Unit = TODO("não detalhado: K3()")
-    private fun updateFavoriteLists(fav: Int, ch: ChannelBean?): Unit = TODO("não detalhado: E4(int, ChannelBean)")
-    private fun channelNameAt(idx: Int): String? = TODO("não detalhado: D2(int)")
-    private fun trackAction(action: String): Unit = TODO("não detalhado: h4(String) — telemetria de ação")
-    private fun jumpToChannelNumber(ch: ChannelBean?, inputCode: Int): Unit = TODO("não detalhado: X3(ChannelBean, int)")
-    private fun updateOsdIndex(inAllPos: Int): Unit = TODO("não detalhado: b4(int)/c4() — OSD número/nome")
-    private fun setNoSignalVisibility(v: Int): Unit = TODO("não detalhado: R3(int)")
-    private fun hideNoSignal(): Unit = TODO("não detalhado: f4()")
-    private fun needsBanner(): Boolean = TODO("não detalhado: j2()")
-    private fun showAdultLock(ch: ChannelBean): Unit = TODO("não detalhado: U3(ChannelBean) — senha adulto")
-    fun hideOsd(closeOsd: Boolean): Unit = TODO("não detalhado: k4(boolean)")
-    private fun showNoticeFor(channelId: String): Unit = TODO("não detalhado: n2(String)")
-    private fun isSameAsPlaying(ch: ChannelBean): Boolean = TODO("não detalhado: c3(ChannelBean)")
-    private fun resetPlayerState(): Unit = TODO("não detalhado: E2()")
-    private fun retryPlay(): Unit = TODO("não detalhado: s2()")
-    private fun stopReplayTimer(exitThread: Boolean): Unit = TODO("não detalhado: m4(boolean)")
-    private fun stopTimers(): Unit = TODO("não detalhado: l4()")
-    private fun reportBuffering(id: String, ev: Int, times: Int, dur: Long): Unit = TODO("não detalhado: k3() — métrica de buffering")
-    private fun loadChannelLists(): Unit = TODO("não detalhado: P2() — monta mListLiveDataAll/mCategoryIdList/mMapCategoryPrograms a partir do SDK")
-    private fun hasChannels(): Boolean = TODO("não detalhado: b3()")
-    private fun saveLastPosition(g: Int, ig: Int, all: Int): Unit = TODO("não detalhado: P3() — salva posição (lookBackInfo)")
-    private fun resumeLastChannel() { loadChannelLists(); trackAction("getLastLookAndPlay"); changeChannel(playInAllIdx) } // w2()
-    private fun isAdultCategoryLocked(channelId: String): Pair<Boolean, String> = TODO("não detalhado: k2(String)")
-    private fun onPlayerLoading(loading: Boolean, text: String?): Unit = TODO("não detalhado: U2()")
-    private fun onNoSignal(code: Int, desc: String?): Unit = TODO("não detalhado: X2()/Y2()")
-    private fun onPlayComplete(): Unit = TODO("não detalhado: Z2()")
-    private fun prepareResume(): Unit = TODO("não detalhado: H2()")
-    private fun registerReceivers(): Unit = TODO("não detalhado: L2()")
-    private fun unregisterReceivers(): Unit = TODO("não detalhado: unregisterReceiver(mMsgReceiver) (API>=26)")
-    private fun refreshUserState(): Unit = TODO("não detalhado: F3()")
-    private fun refreshChannels(): Unit = TODO("não detalhado: S2()")
-    private fun releaseTimers(): Unit = TODO("não detalhado: a2()")
-    private fun releaseReceivers(): Unit = TODO("não detalhado: n4()")
-    private fun releaseNotice(): Unit = TODO("não detalhado: Z1()")
-    private fun changeChannelByKeyUpDown(): Unit = TODO("não detalhado: LiveNewActivity\$h (j8.c) — efetiva troca após 100 ms")
-    private fun changeChannelByInputCode(): Unit = TODO("não detalhado: LiveNewActivity\$g (j8.c) — efetiva troca após 2 s")
+    /** O player está tocando e com a posição avançando? Original: d3() */
+    fun isLivePlaying(): Boolean = try { mVideoView?.isPlaying() == true } catch (_: Throwable) { false }
 
-    private val mVideoPrepareListener: Any get() = TODO("não detalhado: listener de prepared")
-    private val mVideoOnErrorListener: Any get() = TODO("não detalhado: listener de erro")
-    private val mVideoOnInfoListener: Any get() = TODO("não detalhado: LiveNewActivity\$p — 701/702 → onBufferingStart/onBufferingEnd")
-    private val mVideoOnCompletionListener: Any get() = TODO("não detalhado")
-    private val mTrafficHandler: Handler get() = TODO("não detalhado: LiveNewActivity\$o — atualiza mPlayerStatInfoView com velocidade")
-    private val mSubscribeListener: SubscribeManager.Listener get() = TODO("não detalhado: LiveNewActivity\$m")
-    private val subscribePopupListener: SubscribePopup.Listener get() = TODO("não detalhado: LiveNewActivity\$s/\$q")
-    /** Original: LiveNewActivity$c — reexibe prompt de OSD (repeatCnt). */
-    private val mOsdPromptRunnable = object : Runnable { var repeatCnt = 0; override fun run() { TODO("não detalhado: LiveNewActivity\$c.run") } }
+    /** Mantém o foco no player a cada segundo enquanto `isOnKeyAfterFocusLost` é falso. Original: classe `LiveNewActivity$v` */
+    private val keepFocusRunnable = object : Runnable {
+        override fun run() {
+            if (isOnKeyAfterFocusLost) return
+            mVideoView?.requestFocus()
+            mHandler.postDelayed(this, 1000L)
+        }
+    }
+
+    /** Diálogo de teste de rede fechou: volta a retomar o foco do player. Original: Q3() */
+    fun onNetworkDialogClosed() {
+        isOnKeyAfterFocusLost = false
+        runOnUiThread(keepFocusRunnable)
+    }
+
+    /** Recarga concluída: se ainda vencido reabre o aviso de expiração; senão esconde o aviso e retoma a reprodução. Original: L3() */
+    fun onExpiryRenewed() {
+        if (AppUserManager.get().expiryTime() <= ServerClock.get().now()) { onServiceExpired(ServiceExpiredEvent()); return }
+        expiredRemindTimeTask?.cancel()
+        mExpiredParent?.visibility = View.GONE
+        releaseReceivers()
+        restartPlay()
+    }
+    private var expiredRemindTimeTask: TimerTask? = null
+
+    // ---------------------------------------------------------------- estado de rede / timers
+
+    /**
+     * Original: `LiveNewActivity.K0(this)` — acessor sintético que devolve `null` (o campo `p5.a` foi removido do APK);
+     * as chamadas no original são só `K0(this);` sem efeito.
+     */
+    private fun refreshNetworkState() {
+        // NÃO RECUPERÁVEL: a classe p5.a (provável monitor de rede/publicidade) não existe no APK; no original a chamada é um no-op.
+    }
+
+    /** Original: G3() — corpo vazio no APK (ponto de extensão do "modo eco"/standby; o diálogo `$b` só é criado por [ecoModeAction]). */
+    private fun startEcoTimer() { /* no-op no original */ }
+
+    /** Registra o tempo da última tecla; se passou de 60 s sem tecla, reinicia o eco. Original: K3() */
+    private fun resetIdleTimer() {
+        val now = SystemClock.elapsedRealtime()
+        val diff = now - lastKeyTime
+        lastKeyTime = now
+        if (diff > 60_000L) startEcoTimer()   // FileWatchdog.DEFAULT_DELAY = 60000
+    }
+
+    /** Cancela o timer de tráfego. Original: l4() */
+    private fun stopTimers() {
+        try { trafficTask?.cancel(); mTimer.purge() } catch (_: Exception) {}
+    }
+
+    /** Original: m4(boolean) — corpo vazio no APK. */
+    private fun stopReplayTimer(exitThread: Boolean) { /* no-op no original */ }
+
+    /** Original: a2() — remove o runnable do modo eco. */
+    private fun releaseTimers() { ecoModeAction?.let { mHandler.removeCallbacks(it) } }
+    /** Original: n4() — corpo vazio no APK. */
+    private fun releaseReceivers() { /* no-op no original */ }
+    /** Original: Z1() — remove o lembrete de recarga. */
+    private fun releaseNotice() { rechargeAction?.let { mHandler.removeCallbacks(it) } }
+    /** Original: h4(String) — "telemetria de ação"; corpo vazio no APK. */
+    private fun trackAction(action: String) { /* no-op no original */ }
+    /** Original: n2(String) — aviso por canal; corpo vazio no APK. */
+    private fun showNoticeFor(channelId: String) { /* no-op no original */ }
+    /** Original: j4(long) — corpo vazio no APK (chamado com 1500 ms ao preparar). */
+    private fun onPreparedDelay(delay: Long) { /* no-op no original */ }
+
+    // ---------------------------------------------------------------- favoritos
+
+    /** Comparador por número lógico do canal. Original: F4(i5.h, i5.h) */
+    private fun compareByIndex(a: ChannelBean?, b: ChannelBean?): Int = (a?.index ?: 0).compareTo(b?.index ?: 0)
+
+    /**
+     * Mantém a lista da categoria de favoritos: adiciona (sem repetir, ordenado por número) ou remove.
+     * Original: E4(int, ChannelBean)
+     */
+    private fun updateFavoriteLists(fav: Int, ch: ChannelBean?) {
+        if (ch == null) return
+        var cat = UiFunctionConfig.get().favoriteGroupIndex()
+        if (com.live.evo.config.ChannelNumberMode.get().isEnabled()) cat = 0   // a5.b.a().b()
+        val key = mCategoryIdList?.getOrNull(cat) ?: return
+        val current = mMapCategoryPrograms?.get(key) ?: return
+        val list = ArrayList(current)
+        if (fav > 0) {
+            list.add(ch)
+            val dedup = LinkedHashSet(list)   // HashSet no original; ordem restabelecida pelo sort abaixo
+            list.clear(); list.addAll(dedup)
+            if (list.isNotEmpty()) list.sortWith { a, b -> compareByIndex(a, b) }
+        } else {
+            list.remove(ch)
+        }
+        mMapCategoryPrograms?.put(key, list)
+    }
+
+    /** Favorito vindo do broadcast sem channelId: aplica ao canal atual. Original: i2(int) */
+    private fun updateFavoriteForCurrent(favorite: Int) {
+        val ch = currentChannel()
+        ch?.favorite = favorite
+        updateFavoriteLists(favorite, ch)
+    }
+
+    /** Favorito vindo do broadcast com channelId/nome; devolve o índice global do canal. Original: h2(String,String,int) */
+    private fun updateFavoriteByEvent(channelId: String, channelName: String?, favorite: Int): Int {
+        val list = mListLiveDataAll ?: return playInAllIdx
+        val idx = list.indexOfFirst { it.channelId == channelId }
+        if (idx < 0) return playInAllIdx
+        val ch = list[idx]
+        ch.favorite = favorite
+        updateFavoriteLists(favorite, ch)
+        return ch.index
+    }
+
+    // ---------------------------------------------------------------- OSD / número do canal
+
+    /** Nome exibido no OSD para o índice digitado; fora da lista ou canal adulto → "no_program". Original: D2(int) */
+    private fun channelNameAt(idx: Int): String? {
+        val logical = com.live.evo.config.ChannelNumberMode.get().isEnabled()   // a5.b.a().b()
+        val list = mListLiveDataAll
+        val noProgram = getText(R.string.no_program).toString()
+        if ((list?.size ?: 0) > idx && idx >= 0) {
+            val ch = list?.get(idx)
+            // As duas ramos (com/sem numeração lógica) fazem o mesmo no original: nome do canal se não for adulto.
+            if (ch != null && !ch.isAdult()) return ch.name ?: noProgram
+            if (logical && ch != null && !ch.isAdult()) return ch.name ?: noProgram
+        }
+        return noProgram
+    }
+
+    /** Atualiza o OSD com número/nome do canal [inAllPos] na main thread. Original: b4(int) + c4(int, LiveNewActivity) */
+    private fun updateOsdIndex(inAllPos: Int) {
+        RxUtils.runOnUiThread {
+            var i = if (inAllPos <= 0) 0 else if (inAllPos >= (mListLiveDataAll?.size ?: 0)) 0 else inAllPos
+            var number = inAllPos
+            if (com.live.evo.config.ChannelNumberMode.get().isEnabled()) number = mListLiveDataAll?.getOrNull(i)?.index ?: 0
+            mOsdProgramNum?.show(number.toString(), mListLiveDataAll?.getOrNull(i)?.name)
+            mOsdProgramNum?.setVisibility(View.VISIBLE)
+        }
+    }
+
+    /** Original: X3(ChannelBean, int) — LivePopupController.r(canal, posGrupo, grupo, código digitado). */
+    private fun jumpToChannelNumber(ch: ChannelBean?, inputCode: Int) {
+        mUiManager?.showChannelInfo(ch, playInGroupIdx, playGroupIdx, inputCode)
+    }
+
+    private fun setNoSignalVisibility(v: Int) {   // Original: R3(int)
+        mNoSignal?.visibility = v
+        mNoSignalIv?.visibility = v
+    }
+
+    /** Mostra a imagem de "sem sinal" (padrão `no_signal`) e esconde o vídeo. Original: S3(Integer) + j3(Integer) */
+    private fun showNoSignalImage(resId: Int?) {
+        val iv = mNoSignalIv ?: return
+        mVideoView?.stop(true)
+        try {
+            iv.setImageDrawable(null)
+            setNoSignalVisibility(View.VISIBLE)
+            com.live.evo.util.GlideImageLoader.load(this, resId ?: R.drawable.no_signal, 0, iv)
+        } catch (_: Exception) {}
+    }
+
+    /** Agenda (500 ms) a atualização do estado do popup de trial no [LivePopupController]. Original: f4() + g4(...) */
+    private fun hideNoSignal() {
+        val flag = InteractionUtils.flagK0()
+        mHandler.postDelayed({
+            if (window.decorView.windowToken != null) mUiManager?.showTrial(flag)
+        }, 500L)
+    }
+
+    /**
+     * Há canais na categoria atual? Se a lista está vazia recarrega do SDK ([refreshChannels]) e testa de novo.
+     * Original: j2()
+     */
+    private fun needsBanner(): Boolean {
+        fun current(): List<ChannelBean>? =
+            if (isPlayFavoriteList) favoriteChannels() else mMapCategoryPrograms?.get(mCategoryIdList?.getOrNull(playGroupIdx) ?: "")
+        if (!current().isNullOrEmpty()) return true
+        refreshChannels()
+        return !current().isNullOrEmpty()
+    }
+
+    /** Senha de canal adulto: fecha popups e abre [com.live.evo.dialog.AdultKeyDialog]. Original: U3(ChannelBean) + LiveNewActivity$w */
+    private fun showAdultLock(ch: ChannelBean) {
+        mUiManager?.dismissExitDialog()   // com.live.evo.g.g()
+        AppUserManager.get().showAdultKeyDialog(this, object : com.live.evo.dialog.AdultKeyNewDialogFragment.Callback {
+            override fun onUnlocked(channel: ChannelBean?) {
+                mOSDListProgramPresenter?.hide()
+                startPlay(channel)
+                if (!isPlayFavoriteList) saveLastPosition(playGroupIdx, playInGroupIdx, playInAllIdx)
+            }
+            override fun onCancelled() { resumeLastChannel() }   // w2()
+        }, ch)
+    }
+
+    /**
+     * Esconde OSD e (opcionalmente) para o player. Com canal já em reprodução e a propriedade `stop_prev_play_imm`
+     * (padrão true) o player é parado; com [closeOsd] esconde as camadas de prompt. Sem canal anterior, só pára o
+     * player se ele estiver tocando. Sempre avisa o [livePlayHandler]. Original: k4(boolean)
+     */
+    fun hideOsd(closeOsd: Boolean) {
+        if (lastPlayedLiveChannel != null) {
+            try {
+                if (AppUserManager.get().getBoolean("stop_prev_play_imm", true)) mVideoView?.stop(true)
+                if (closeOsd) {
+                    mOsdProgramPromptSignalPoor?.let { mOsdManager?.hide(it) }
+                    mOsdProgramPromptLoading?.let { mOsdManager?.hide(it) }
+                    mOsdProgramPromptOptimizing?.let { mOsdManager?.hide(it) }
+                    mOsdProgramPromptRetrying?.let { mOsdManager?.hide(it) }
+                }
+            } catch (_: Throwable) {}
+        } else if (mVideoView?.isPlaying() == true) {
+            mVideoView?.stop(true)
+        }
+        livePlayHandler?.release()
+    }
+
+    /** O canal é o mesmo que está tocando (compara channelId)? Original: c3(ChannelBean) — note: devolve true quando DIFERENTE. */
+    private fun isSameAsPlaying(ch: ChannelBean): Boolean {
+        val cur = currentChannel() ?: return true
+        return ch.channelId != cur.channelId
+    }
+
+    /** Original: E2() — esconde o layout de plano expirado (título, guia, dica, QR). */
+    private fun resetPlayerState() {
+        mExpiredParent?.visibility = View.GONE
+        mExpiredTitle?.visibility = View.GONE
+        mRechargeGuide?.visibility = View.GONE
+        mRechargeHint?.visibility = View.GONE
+        mMemberQR?.visibility = View.GONE
+    }
+
+    /** Pára o player (Original: s2()). */
+    private fun retryPlay() { mVideoView?.stop(true) }
+
+    /** Métrica de buffering enviada ao [livePlayHandler]. Original: k3(String,int,int,long) */
+    private fun reportBuffering(id: String, ev: Int, times: Int, dur: Long) {
+        val h = livePlayHandler ?: return
+        h.report(ev, hashMapOf<String, Any?>("channel_id" to id, "times" to times, "duration" to dur))
+    }
+
+    // ---------------------------------------------------------------- posição / listas
+
+    /**
+     * Restaura a última posição ("grupo,posGrupo,posGlobal" de [PlaybackPrefs]) validando contra as listas atuais;
+     * canal travado/adulto cai em 0,0,0 (ou 1 se já era 0,0,0). Persiste o resultado. Original: P2()
+     */
+    private fun loadChannelLists() {
+        val saved = PlaybackPrefs.lastPosition()
+        lookBackInfo = "-1,-1,-1"
+        val parts = saved.split(",").dropLastWhile { it.isEmpty() }
+        playGroupIdx = parts[0].toInt(); playInGroupIdx = parts[1].toInt(); playInAllIdx = parts[2].toInt()
+        val g0 = playGroupIdx; val ig0 = playInGroupIdx; val all0 = playInAllIdx
+        val cats = ArrayList(mCategoryIdList!!)
+        if (UiFunctionConfig.get().hasPrivateGroups()) {   // com.live.evo.k.b().h()
+            for (p in AppPropertiesStore.group("private_group")) {
+                if (mCategoryIdList?.contains(p.key) == true && p.value == "1") cats.remove(p.key)
+            }
+        }
+        try {
+            val key = cats[playGroupIdx]
+            val list = mMapCategoryPrograms?.get(key)
+            val ch = list?.get(playInGroupIdx)
+            val group = ModelHelper.groups()[key]
+            if (playInAllIdx >= 0 && playInAllIdx < (mListLiveDataAll?.size ?: 0) && playGroupIdx < cats.size &&
+                !list.isNullOrEmpty() && playInGroupIdx < list.size && ch != null && !ch.isLocked() && group != null && group.type != 1) {
+                val inAll = mListLiveDataAll?.get(playInAllIdx)
+                if ((inAll != null && inAll.isAdult()) || InteractionUtils.isAdultMode()) {
+                    playGroupIdx = 0; playInGroupIdx = 0; playInAllIdx = 0
+                    if (g0 == 0 && ig0 == 0 && all0 == 0) playInAllIdx = 1
+                }
+            } else {
+                playGroupIdx = 0; playInGroupIdx = 0; playInAllIdx = 0
+            }
+        } catch (t: Throwable) {
+            playGroupIdx = 0; playInGroupIdx = 0; playInAllIdx = 0
+        }
+        saveLastPosition(playGroupIdx, playInGroupIdx, playInAllIdx)
+    }
+
+    /** Guarda a posição anterior em [lookBackInfo] e grava a nova em [PlaybackPrefs]. Original: P3(int,int,int) */
+    private fun saveLastPosition(g: Int, ig: Int, all: Int) {
+        lookBackInfo = PlaybackPrefs.lastPosition()
+        PlaybackPrefs.save(g.toString(), ig.toString(), all.toLong())
+    }
+
+    /**
+     * Pode retomar a reprodução? Se voltou do catch-up (resumeFrom == 3) não; senão se há plano válido ou (plano vencido
+     * mas status de expiração 0/1 e sem popup de login/recarga). Original: b3()
+     */
+    private fun shouldResumePlayback(): Boolean {
+        if (resumeFrom == 3) { resumeFrom = null; return false }
+        val expiry = InteractionUtils.expiryTimeMillis()
+        val now = ServerClock.get().now()
+        return expiry > now || (expiry < now && (mExpiredStatus == 0 || mExpiredStatus == 1) && !isPopupLoginOrRenewFragment)
+    }
+
+    private fun resumeLastChannel() { loadChannelLists(); trackAction("getLastLookAndPlay"); changeChannel(playInAllIdx) } // w2()
+
+    /**
+     * Procura [channelId] nos grupos privados (`private_group`) presentes nas categorias; posiciona
+     * playGroupIdx/playInGroupIdx e devolve (grupo é "1"/travado, id do último grupo privado). Original: k2(String)
+     */
+    private fun isAdultCategoryLocked(channelId: String): Pair<Boolean, String> {
+        val props = AppPropertiesStore.group("private_group")
+        val cats = InteractionUtils.getCategoryIds(true)
+        var groupId = ""
+        var locked = false
+        for (p in props) {
+            if (cats.contains(p.key)) {
+                groupId = p.key
+                val list = ModelHelper.channelsByCategory()[p.key]
+                if (list != null) {
+                    var i = 0
+                    for (c in list) {
+                        if (channelId == c?.channelId) {
+                            playGroupIdx = cats.indexOf(p.key); playInGroupIdx = i
+                            locked = p.value == "1"
+                            break
+                        }
+                        i++
+                    }
+                }
+            }
+        }
+        return Pair(locked, groupId)
+    }
+
+    // ---------------------------------------------------------------- callbacks do player
+
+    /** Callback de "loading" do player: mostra/oculta o prompt de carregamento. Original: U2() = U2(boolean,String) + V2/W2 */
+    private fun onPlayerLoading(loading: Boolean, text: String?) {
+        if (loading) {
+            if (mOsdProgramPromptLoading?.visibility() != View.VISIBLE) {
+                mHandler.post {
+                    mOsdProgramPromptLoading?.showLoadView()
+                    mOsdProgramPromptLoading?.let { mOsdManager?.show(it) }
+                }
+            }
+        } else {
+            mHandler.post {
+                mOsdProgramPromptLoading?.let { mOsdManager?.hide(it) }
+                mOsdProgramPromptLoading?.hideLoadView()
+            }
+        }
+    }
+
+    /**
+     * Callback de "sem sinal" do player (código, descrição), executado na main thread. Original: X2() + Y2(int,LiveNewActivity,String)
+     * -1 esconde; 0/8 timeout (+ MSG_NETWORK_LOST se passou de [tipNoNetworkTime]); 1 serviço expirado; 2 toast
+     * `no_stream_notice_message_no_server`; 3/4 logout forçado; 5 upgrade; 6 sem sinal; 7 canal não encontrado.
+     */
+    private fun onNoSignal(code: Int, desc: String?) {
+        mHandler.post {
+            when (code) {
+                -1 -> { setNoSignalVisibility(View.GONE); mNoticeView?.visibility = View.GONE }
+                0, 8 -> {
+                    setNoSignalVisibility(View.VISIBLE); mNoticeView?.visibility = View.VISIBLE
+                    showNoSignalImage(R.drawable.requesttimeout)
+                    if (isPopupLoginOrRenewFragment) { logger.warn("there is a popup window, ignore $code"); return@post }
+                    else if (lastPlayTime >= tipNoNetworkTime) {
+                        tipNoNetworkTime = DateUtils.now()
+                        mHandler.sendMessage(mHandler.obtainMessage(MSG_NETWORK_LOST))
+                    }
+                }
+                1 -> onServiceExpired(ServiceExpiredEvent())
+                2 -> ToastHelper.show(getString(R.string.no_stream_notice_message_no_server))
+                3, 4 -> {
+                    if (isPopupLoginOrRenewFragment) { logger.warn("there is a popup window, ignore $code"); return@post }
+                    toLogoutProcess()
+                }
+                5 -> if (apkFile.isNotEmpty()) installDownloadedApk() else checkUpgrade()
+                6 -> { setNoSignalVisibility(View.VISIBLE); mNoticeView?.visibility = View.VISIBLE; showNoSignalImage(R.drawable.no_signal) }
+                7 -> ToastHelper.show(getString(R.string.channel_not_found))
+            }
+            mNoticeView?.text = desc
+        }
+    }
+
+    /** Fim de reprodução: toast `vod_play_complete`. Original: Z2() */
+    private fun onPlayComplete() { ToastHelper.show(getString(R.string.vod_play_complete)) }
+
+    /** Se a lista de canais não está visível, garante (após 100 ms) que ela esteja escondida. Original: H2() + I2(presenter) */
+    private fun prepareResume() {
+        val p = mOSDListProgramPresenter ?: return
+        if (p.isShowing()) return
+        mHandler.postDelayed({ p.hide() }, 100L)
+    }
+
+    /** Layout de plano vencido (ViewStub `livenewa_vs_expired`): textos de recarga com ${MS}/${RS}/${CS}. Original: L2() */
+    private fun setupExpiredLayout() {
+        if (InteractionUtils.expiryTimeMillis() > ServerClock.get().now() || mExpiredLayout != null) return
+        mExpiredLayout = findViewById<ViewStub>(R.id.livenewa_vs_expired)
+        mExpiredLayout?.inflate()
+        mExpiredTitle = findViewById(R.id.tv_expired_remind_title)
+        mExpiredParent = findViewById(R.id.expired_remind_parent)
+        mTVCountdownTime = findViewById(R.id.tv_free_experience_countdown_time)
+        mRechargeGuide = findViewById(R.id.tv_recharge_guide)
+        mMemberQR = findViewById(R.id.iv_qr_membersite)
+        mRechargeHint = findViewById(R.id.tv_remind_hint)
+        val guide = CommonUtils.string(R.string.recharge_guide)
+        val title = String.format(CommonUtils.string(R.string.expired_remind_for_live), 10)
+        val hint = CommonUtils.string(R.string.how_to_renew)
+        val site = InteractionUtils.memberSite()
+        val g = guide.replace("\${MS}", site).replace("\${RS}", site).replace("\${CS}", InteractionUtils.customerService())
+        mRechargeGuide?.text = Html.fromHtml(g)
+        mExpiredTitle?.text = Html.fromHtml(title)
+        mRechargeHint?.text = Html.fromHtml(hint)
+        mExpiredParent?.visibility = View.GONE
+    }
+
+    /** Registra [mMsgReceiver] (API >= 26, flag RECEIVER_EXPORTED=2|... — o original passa 4). Original: F3() */
+    private fun registerReceivers() {
+        val f = IntentFilter().apply {
+            listOf("com.bb.action.EPG", "com.bb.action.feedback", "android.net.conn.CONNECTIVITY_CHANGE", "com.bb.action.FAVORITE",
+                "com.bb.action.EXIT", "com.bb.action.AddPIP", "com.bb.action.switchpip", "com.bb.action.closepip",
+                "com.bb.action.switchprogram", "com.bb.action.popupmenuview", "com.bb.action.showprogram", "com.bb.action.update").forEach(::addAction)
+        }
+        if (Build.VERSION.SDK_INT >= 26) {
+            try { registerReceiver(mMsgReceiver, f, 4) } catch (t: Throwable) { logger.error("register receiver failure", t) }
+        }
+    }
+
+    private fun unregisterReceivers() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            try { unregisterReceiver(mMsgReceiver) } catch (t: Throwable) { logger.error("unregister receiver failure", t) }
+        }
+    }
+
+    /** Recarrega listas/categorias do SDK (`ModelHelper`). Original: S2() */
+    private fun refreshChannels() {
+        mListLiveDataAll = ModelHelper.allChannels()
+        mCategoryIdList = InteractionUtils.getCategoryIds(true)
+        mMapCategoryPrograms = ModelHelper.channelsByCategory()
+        mGroupsList = ModelHelper.groups()
+    }
+
+    /**
+     * Status de expiração: -1 plano válido; 0 vencido (sem registro de experiência); 1 vencido com < 600 s de
+     * experiência; 2 com >= 600 s (guarda [expiredExperienceTimes]). Original: M2()
+     * Nota: a string de controle lida no original é um literal vazio (`""`), logo na prática o status vencido é sempre 0.
+     */
+    private fun initExpiredStatus() {
+        if (InteractionUtils.expiryTimeMillis() > ServerClock.get().now()) { mExpiredStatus = -1; return }
+        val stored = ""   // literal vazio no original (valor persistido removido do build)
+        if (stored.isEmpty()) { mExpiredStatus = 0; return }
+        val parts = stored.split(",").dropLastWhile { it.isEmpty() }
+        if (parts.size != 2 || parts[0] != DateUtils.today().toString()) { mExpiredStatus = 0; return }
+        val t = parts[1].toInt()
+        if (600 > t) { mExpiredStatus = 1; return }
+        mExpiredStatus = 2
+        expiredExperienceTimes = t.toLong()
+    }
+
+    /**
+     * Cria as camadas do OSD e o apresentador de lista; aplica as cores do skin (`SkinConfig`, "cor1,cor2" ou "cor") ao
+     * spinner de loading. Original: Q2()
+     */
+    private fun initOsd() {
+        mOsdManager = OsdLayerManager()
+        mOSDListProgramPresenter = OSDListProgramPresenter(supportFragmentManager, osdControlListener)
+        val ctx = applicationContext
+        mOsdProgramNum = ProgramNameLayer(ctx, mContainer!!)
+        mOsdNetwork = NetworkPromptLayer(ctx, mContainer!!)
+        mOsdProgramPromptSignalPoor = LoadingLayer(ctx, mContainer!!, R.string.signal_poor)
+        mOsdProgramPromptLoading = LoadingLayer(ctx, mContainer!!, R.string.video_loading, true)
+        mOsdProgramPromptRetrying = LoadingLayer(ctx, mContainer!!, R.string.video_retrying, true)
+        mOsdProgramPromptOptimizing = OptimizingLayer(ctx, mContainer!!, R.string.video_optimizing)
+        mOsdManager?.register("com.mm.droid.livetv.programnum", mOsdProgramNum!!)
+        mOsdManager?.register("com.mm.droid.livetv.networkprompt", mOsdNetwork!!)
+        mOsdManager?.register("com.mm.droid.livetv.program_prompt", mOsdProgramPromptSignalPoor!!)
+        val skin = SkinConfig.get().loadingColors() ?: ""
+        if (skin.isEmpty()) return
+        val hex = Regex("^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$")
+        val parts = skin.split(",").dropLastWhile { it.isEmpty() }
+        if (parts.size != 2) {
+            if (parts.size == 1 && parts[0].isNotEmpty() && hex.matches(parts[0])) mLoadingView?.setColorFilter(Color.parseColor(parts[0]))
+            return
+        }
+        if (parts[0].isNotEmpty() && hex.matches(parts[0])) mLoadingView?.setColorFilter(Color.parseColor(parts[0]))
+        if (parts[1].isNotEmpty() && hex.matches(parts[1])) mLoadingView?.setColorExtra(Color.parseColor(parts[1]))
+    }
+
+    /**
+     * Callback do presenter da lista (interface `persenter/c$a`, classe `LiveNewActivity$k`). Os métodos `a`, `e`, `h`, `d`, `f`
+     * têm corpo vazio no original (`q2`, `g2`, `Y1`); `m` só consulta `AppUserManager.C()` sem efeito.
+     */
+    private val osdControlListener = object : OsdPresenterCallback {
+        override fun onTypeIndex(type: Int, index: Int) { /* q2: vazio no original */ }
+        override fun onCatchUp(catchupType: String, bean: com.live.evo.model.ProgramBean, channelId: String) {
+            catchUpClickListener.onCatchUpClick(catchupType, bean, channelId) { ok -> if (ok) hideOsd(true) }
+        }
+        /** f2(tag, index): com PIP ativo agenda MSG_UNLOCK_CHANNEL(arg1 = index, obj = tag). */
+        override fun onTagIndex(tag: String, index: Int) {
+            if (UiFunctionConfig.get().pipEnabled()) {
+                mHandler.removeMessages(MSG_UNLOCK_CHANNEL)
+                val m = Message(); m.what = MSG_UNLOCK_CHANNEL; m.arg1 = index; m.obj = tag
+                mHandler.sendMessage(m)
+            }
+        }
+        override fun onTag(tag: String) { /* g2: vazio no original */ }
+        /** C2(): número lógico do canal atual (ou 0). */
+        override fun currentValue(): Int = currentChannel()?.index ?: 0
+        override fun onContainer(tag: String, container: View) { /* Y1: vazio no original */ }
+        override fun channelData(): ChannelBean? = currentChannel()
+        override fun onSelection(categorySelect: Int, programSelect: Int, inAllProgramPos: Int, playType: String?) {
+            trackAction(playType ?: "")
+            isPlayFavoriteList = false
+            playGroupIdx = categorySelect
+            playInGroupIdx = programSelect
+            mPlayType = playType ?: ""
+            changeChannel(inAllProgramPos)
+            mPlayType = ""
+        }
+        override fun onStatsToggle() { livePlayHandler?.onPlayerStatsToggle() }   // V3()
+        /** C4(): alterna o painel de estatísticas do player (`player_stat_container`) por 10 s. */
+        override fun onToggleStats() {
+            val box = player_stat_container
+            val shown = box != null && box.visibility == View.VISIBLE
+            if (!AppUserManager.get().isStatsEnabled()) {
+                if (shown) { livePlayHandler?.setStatsEnabled(false, 10000); box?.visibility = View.INVISIBLE }
+                return
+            }
+            if (shown) { livePlayHandler?.setStatsEnabled(false, 10000); box?.visibility = View.INVISIBLE; return }
+            box?.visibility = View.VISIBLE
+            livePlayHandler?.setStatsEnabled(true, 10000)
+        }
+        override fun onItemSelected(position: Int) { /* e2: só consulta AppUserManager.C(), sem efeito */ }
+    }
+
+    /**
+     * Sequência de inicialização chamada pelo onCreate. Original: J2()
+     * (callback do EcoModeHelper é vazio no original; recarga a cada 12 h só se faltam menos de [RECHARGE_REMIND_DAYS] dias).
+     */
+    private fun initServices() {
+        com.foxivid.baselib.util.EcoModeHelper.start { /* callback vazio no original (K2) */ }   // d0.i(cb)
+        // O2() — corpo vazio no APK
+        refreshChannels()
+        initExpiredStatus()
+        networkTester = NetworkStatusDialogFragment.createTester(this)
+        initOsd()
+        ecoModeAction = EcoModeAction(this)
+        if (InteractionUtils.expiryTimeMillis() < ServerClock.get().now() + InteractionUtils.reminderWindowMillis()) {   // U() (heartbeat q0)
+            rechargeAction = Runnable { showRechargeReminder(24); scheduleRechargeReminder() }   // classe `LiveNewActivity$d`
+            scheduleRechargeReminder()
+        }
+        livePlayHandler = ChannelSwitchHelper(this) { channel, headers, url ->
+            runOnUiThread { logger.info("-----onPlay: $channel"); playStream(channel, headers, url) }
+        }
+    }
+
+    /** Reagenda o lembrete de recarga (12 h) se faltam menos de [RECHARGE_REMIND_WINDOW_MS]. Original: E3() */
+    private fun scheduleRechargeReminder() {
+        try {
+            val r = rechargeAction ?: return
+            mHandler.removeCallbacks(r)
+            if (InteractionUtils.expiryTimeMillis() < ServerClock.get().now() + RECHARGE_REMIND_WINDOW_MS) mHandler.postDelayed(r, 43_200_000L)
+        } catch (_: Throwable) {}
+    }
+
+    /** Abre o popup de recarga/login com o tipo [showType]. Original: d4(int) + LiveNewActivity$y */
+    private fun showRechargeReminder(showType: Int) {
+        RechargeDialogFragment.show(supportFragmentManager, showType, object : OsdControlListener {
+            override fun onPositive() { isPopupLoginOrRenewFragment = false }
+            override fun onNegative() { isPopupLoginOrRenewFragment = false }
+            override fun onDismiss() { isPopupLoginOrRenewFragment = false }
+        })
+    }
+
+    /** Abre o diálogo de feedback (tag "feedback"), reaproveitando a instância. Original: e4() */
+    private fun showFeedbackDialog() {
+        val dlg = feedbackDialogFragment ?: FeedbackDialogFragment().also { feedbackDialogFragment = it }
+        try {
+            dlg.setChannelName(currentChannel()?.name)
+            dlg.setChannelId(currentChannel()?.channelId)
+            val fm = supportFragmentManager
+            if (fm.findFragmentByTag("feedback") == null) dlg.show(fm, "feedback")
+            else fm.beginTransaction().show(dlg).commitAllowingStateLoss()
+        } catch (e: Exception) { logger.error("open feedback error", e) }
+    }
+
+    /** Agenda reinício da reprodução (timer de replay), mostrando toast opcional. Original: I3(boolean,int,boolean,boolean) / H3 */
+    private fun scheduleReplay(resetErrCount: Boolean, delay: Int, showToast: Boolean = false, blockShowEpg: Boolean = false) {
+        if (resetErrCount) mLiveErrorCount = 0
+        val player = mVideoView ?: return
+        player.stop(true)
+        livePlayHandler?.cancel()
+        replayTask?.cancel()
+        replayTask = object : TimerTask() {   // classe `LiveNewActivity$u`
+            override fun run() {
+                mHandler.post {
+                    if (showToast) ToastUtils.show(this@LiveNewActivity, R.string.source_stream_change_restart_player)
+                    sendReplayMetric()
+                    if (blockShowEpg) mHandler.post { preparePlayAction.run() } else startPlay(currentChannel())
+                }
+            }
+        }
+        mTimer.schedule(replayTask, delay.toLong())
+    }
+
+    /** Métrica 101 (replay) com o channel_id atual. Original: l3() */
+    private fun sendReplayMetric() {
+        try { livePlayHandler?.report(101, hashMapOf<String, Any?>("channel_id" to currentChannel()?.channelId)) } catch (_: Exception) {}
+    }
+
+    // ---------------------------------------------------------------- repetição de troca de canal (RxTrigger)
+
+    /** Efetiva a troca por setas após 100 ms: toca o canal do grupo atual (ou o atual, se lista de favoritos). Original: LiveNewActivity$h (j8.c) */
+    private fun changeChannelByKeyUpDown() {
+        runOnUiThread {
+            try {
+                if (!isPlayFavoriteList) {
+                    val idx = mMapCategoryPrograms?.get(mCategoryIdList?.getOrNull(playGroupIdx) ?: "")?.getOrNull(playInGroupIdx)?.index ?: 0
+                    changeChannel(idx)
+                } else changeChannel(playInAllIdx)
+            } catch (e: Exception) { logger.error("repeater handler pulse", e) }
+        }
+    }
+
+    /**
+     * Efetiva o número digitado após 2 s: se é o canal atual mostra "is_playing"; se é adulto restaura o número
+     * anterior; senão troca para o canal. Original: LiveNewActivity$g (j8.c) — com mapa de números lógicos sempre vazio.
+     */
+    private fun changeChannelByInputCode() {
+        runOnUiThread {
+            isPlayFavoriteList = false; canClickUpDown = true; isInputProgramNum = false
+            val typed = mOsdProgramNum?.idNumber() ?: 0
+            if (typed == playInAllIdx) { mOsdProgramNum?.show(typed.toString(), CommonUtils.string(R.string.is_playing)); return@runOnUiThread }
+            if (typed >= 0 && typed < (mListLiveDataAll?.size ?: 0)) {
+                val ch = mListLiveDataAll?.get(typed) ?: return@runOnUiThread
+                if (ch.isAdult()) { mOsdProgramNum?.setProgramId(playInAllIdx.toString()); return@runOnUiThread }
+                // com numeração lógica o original consulta mapas vazios (n0.i()) e não faz nada
+                if (!com.live.evo.config.ChannelNumberMode.get().isEnabled()) {
+                    playGroupIdx = 0; playInGroupIdx = typed
+                    changeChannel(typed)
+                }
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------- listeners do player
+
+    /** Player preparado: registra [lastPlayTime], esconde o loading se não há "optimizing" e marca troca concluída. Original: i3(...) */
+    private val mVideoPrepareListener = IMediaPlayer.OnPreparedListener {
+        lastPlayTime = DateUtils.now()
+        if (mOsdProgramPromptLoading?.isLoadViewShown() == true && mOsdProgramPromptOptimizing?.visibility() != View.VISIBLE) {
+            mOsdProgramPromptLoading?.hideLoadView()
+        }
+        isChangeChannel = false
+        onPreparedDelay(1500L)
+    }
+
+    /**
+     * Erro do player: conta erros; > 2 → esconde o aviso "signal poor"; 1 (UNKNOWN) → re-tenta em 5 s sem zerar contador;
+     * qualquer outro (exceto -38) → re-tenta em 5 s zerando. Sempre devolve false. Original: g3(...)
+     */
+    private val mVideoOnErrorListener = IMediaPlayer.OnErrorListener { _, what, extra ->
+        mLiveErrorCount++
+        Log.e("LiveNewActivity", "-----player onError: what[$what] extra[$extra] err count[$mLiveErrorCount]")
+        mLiveLastError = "w[$what] ex[$extra]"
+        if (mLiveErrorCount > 2) {
+            runOnUiThread { mOsdProgramPromptSignalPoor?.let { mOsdManager?.show(it) } }
+            return@OnErrorListener false
+        }
+        if (what == 1) scheduleReplay(false, 5000) else if (what != -38) scheduleReplay(true, 5000)
+        false
+    }
+
+    /** Buffering 701/702 (se não atribuído por posição). Original: LiveNewActivity$p */
+    private val mVideoOnInfoListener = object : IMediaPlayer.OnInfoListener {
+        override fun onInfo(mp: IMediaPlayer, what: Int, extra: Int, info: String?): Boolean {
+            if (mPlayerInfoWhat != what) mPlayerInfoWhat = what
+            if (what == 701) { if (!mBufferingAllocateByPosition) onBufferingStart(); return false }
+            if (what == 702 && !mBufferingAllocateByPosition) onBufferingEnd()
+            return false
+        }
+    }
+
+    /** Original: f3(IMediaPlayer) — corpo vazio no APK. */
+    private val mVideoOnCompletionListener = IMediaPlayer.OnCompletionListener { /* no-op no original */ }
+    /** Original: e3(IMediaPlayer, int) — corpo vazio no APK (atualização de buffering). */
+    private val mVideoOnBufferingUpdateListener = IMediaPlayer.OnBufferingUpdateListener { _, _ -> /* no-op no original */ }
+
+    /**
+     * A cada segundo (mensagem do [trafficTask]): mostra a velocidade rx no loading; mantém contador de ticks sem
+     * tráfego (<= 10 B/s por 5 ticks); se há rede some o aviso e, se o player parou, reexecuta [preparePlayAction];
+     * sem rede mostra o aviso de rede. Original: LiveNewActivity$o
+     */
+    private val mTrafficHandler: Handler = object : Handler(Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            if (AppUserManager.get().isUserIdle()) return
+            val rx = mTrafficBytesRx
+            mOsdProgramPromptLoading?.setLoadViewText(rx.toString())
+            if (rx <= 10 && mTrafficCount < 5) mTrafficCount++
+            var net: Boolean
+            if (rx <= 0 || mTrafficCount >= 5) {
+                net = isNetworkAvailable()
+                if (net) mTrafficCount = 0
+            } else net = true
+            if (!net) {
+                if (mOsdNetwork?.visibility() == View.VISIBLE) return
+                mOsdNetwork?.let { mOsdManager?.show(it) }
+                return
+            }
+            if (mOsdNetwork?.visibility() == View.VISIBLE) {
+                if (mVideoView?.isPlaying() != true) post(preparePlayAction)
+                refreshNetworkState()
+            }
+            mOsdNetwork?.let { mOsdManager?.hide(it) }
+            mVideoView?.requestFocus()
+        }
+    }
+
+    /** Original: LiveNewActivity$m — implementação vazia de `SubscribeManager.Listener`. */
+    private val mSubscribeListener: SubscribeManager.Listener = object : SubscribeManager.Listener {}
+
+    /** Original: LiveNewActivity$s / $q — ambos: ao fechar chama `SubscribeManager.p()`; ao selecionar vai ao canal (grupo 0). */
+    private val subscribePopupListener: SubscribePopup.Listener = object : SubscribePopup.Listener {
+        override fun onClosed() { SubscribeManager.onPopupClosed() }
+        override fun onChannelSelected(pos: Int) {
+            if (playInAllIdx != pos) { playGroupIdx = 0; playInGroupIdx = pos; changeChannel(pos) }
+        }
+    }
+
+    /**
+     * Original: LiveNewActivity$c — runnable de prompt de OSD; o `run()` é vazio no APK
+     * (só guarda [repeatCnt] por `a(int)`).
+     */
+    private val mOsdPromptRunnable = object : Runnable { var repeatCnt = 0; override fun run() { /* corpo vazio no original */ } }
+
+    /** Original: LiveNewActivity$b — runnable do "modo eco": abre [com.live.evo.dialog.EcoModeDialog] e trata status. */
+    private class EcoModeAction(private val activity: LiveNewActivity) : Runnable {
+        override fun run() {
+            val dlg = com.live.evo.dialog.EcoModeDialog(activity)
+            dlg.show()
+            dlg.setOnStatusListener { status ->
+                when (status) {
+                    0 -> {   // continuar assistindo
+                        com.foxivid.baselib.util.EcoModeHelper.onUserActivity()   // d0.n()
+                        AppUserManager.get().setUserPlayStatus(0)
+                        if (activity.shouldResumePlayback()) {
+                            activity.mOSDListProgramPresenter?.show(activity.supportFragmentManager, "Channel List")
+                            activity.startPlay(activity.currentChannel())
+                        }
+                        dlg.cancel(); activity.startEcoTimer(); activity.startTrafficMonitor()
+                    }
+                    1 -> { dlg.dismiss(); activity.exit(true) }
+                    3 -> {
+                        com.foxivid.baselib.util.EcoModeHelper.enterEcoMode()   // d0.h()
+                        activity.mVideoView?.stop(true)
+                        AppUserManager.get().setUserPlayStatus(2)
+                    }
+                    4 -> { activity.ecoModeAction?.let { activity.mHandler.removeCallbacks(it) }; com.foxivid.baselib.util.EcoModeHelper.onUserActivity() }
+                }
+            }
+        }
+    }
 
     companion object {
         const val TAG = "LiveNewActivity"
@@ -1089,5 +1968,27 @@ class LiveNewActivity : BaseActivity(), View.OnKeyListener {
         const val MSG_RESET_BACK = 620908591
         const val MSG_UNLOCK_CHANNEL = 620908595
         const val MSG_SHOW_CURRENT = 620908596
+        /** Janela de lembrete de recarga: `com.live.evo.a.f5196p` = 72 h (TimeUnit.HOURS.toMillis(72)). */
+        const val RECHARGE_REMIND_WINDOW_MS = 72L * 60 * 60 * 1000
     }
+}
+
+/**
+ * Callback do [OSDListProgramPresenter] (interface `com.live.evo.osd.persenter.c$a`) implementado por [LiveNewActivity].
+ * Nomes legíveis; letras originais entre parênteses.
+ */
+interface OsdPresenterCallback {
+    fun onTypeIndex(type: Int, index: Int)                                                              // a
+    fun onCatchUp(catchupType: String, bean: com.live.evo.model.ProgramBean, channelId: String)         // b
+    fun onTagIndex(tag: String, index: Int)                                                             // c
+    fun onTag(tag: String)                                                                              // e
+    fun currentValue(): Int                                                                             // g
+    fun onContainer(tag: String, container: View)                                                       // h
+    fun channelData(): ChannelBean?                                                                     // i
+    fun onSelection(categorySelect: Int, programSelect: Int, inAllProgramPos: Int, playType: String?)   // j
+    fun onStatsToggle()                                                                                 // k
+    fun onToggleStats()                                                                                 // l
+    fun onItemSelected(position: Int)                                                                   // m
+    fun onUnused1() {}                                                                                  // d (vazio)
+    fun onUnused2() {}                                                                                  // f (vazio)
 }
